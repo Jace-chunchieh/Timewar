@@ -122,7 +122,7 @@ GET  /api/battles               # 战报列表
 
 所有写接口流程：校验请求 → 结算时间 → 校验状态 → 执行业务 → 事务保存 → 返回最新 GameState。错误统一为 `{ code, message, details }`。
 
-## 服务器自动部署（宝塔面板 + GitHub Webhook）
+## 服务器自动部署（宝塔 Node 项目 + GitHub Webhook，无 pm2）
 
 **前置**：宝塔 Webhook 插件（若已有其他项目走 GitHub 自动部署则直接复用），服务器已装 Node ≥ 20 与 git。
 
@@ -132,21 +132,21 @@ GET  /api/battles               # 战报列表
    git clone https://github.com/Jace-chunchieh/Timewar.git
    cd Timewar
    npm install && npm run build
-   npm install -g pm2
-   pm2 start npm --name timewar-server -- start   # 生产模式，端口 5215
-   pm2 save && pm2 startup
    ```
-2. **宝塔 Webhook 插件** → 添加：名称 `Timewar`，执行脚本：
+2. **宝塔添加 Node 项目**（面板 → 网站 → Node 项目 → 添加项目）：
+   - 项目目录：`/www/wwwroot/Timewar`
+   - 启动命令：`npm start`（脚本已内置 `NODE_ENV=production`，默认端口 5215）
+   - 端口：`5215`（可自定义）
+   - 勾选**开机自启**；宝塔自带进程守护，进程崩溃会自动拉起
+3. **宝塔 Webhook 插件** → 添加：名称 `Timewar`，执行脚本：
    ```bash
    bash /www/wwwroot/Timewar/tools/deploy.sh /www/wwwroot/Timewar main
    ```
-   保存并复制插件生成的 Webhook URL（`https://服务器IP:面板端口/hook?access_key=xxx`）。
-3. **GitHub**：仓库 Settings → Webhooks → Add webhook：
-   - Payload URL 粘贴上一步 URL（保持 HTTPS）
-   - Content type `application/json`，事件选 `Just the push event`
-4. **验证**：推送一次代码 → 宝塔 Webhook 日志显示 `部署完成` → 访问 `http://服务器IP:5215`。
+   若修改过端口，追加端口参数：`bash .../deploy.sh /www/wwwroot/Timewar main 8000`。保存并复制插件生成的 Webhook URL（HTTPS）。
+4. **GitHub**：仓库 Settings → Webhooks → Add webhook：Payload URL 粘贴上一步 URL（HTTPS），Content type `application/json`，事件 `Just the push event`。
+5. **验证**：推送一次代码 → 宝塔 Webhook 日志显示 `部署完成` → 访问 `http://服务器IP:5215`。
 
-> 注意：TimeWar 是全栈 Node 应用（非静态网页），`tools/deploy.sh` 会自动执行 `git pull → npm install → npm run build → pm2 restart`；若沿用旧项目的静态站脚本（仅 git pull）不会生效。存档位于 `apps/server/data/game.db`，部署不会丢失。
+> 说明：部署脚本执行 `git pull → npm install → npm run build → kill 端口进程`，宝塔 Node 项目守护会在数秒内自动拉起新进程（脚本内含健康检查，30 秒未恢复会提示到宝塔手动重启）。存档位于 `apps/server/data/game.db`，部署不会丢失。TimeWar 是全栈 Node 应用，请勿沿用旧静态站脚本（仅 git pull 不会生效）。
 
 ## 移动端适配
 
