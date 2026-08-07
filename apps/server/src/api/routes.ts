@@ -65,6 +65,10 @@ export function buildApi(service: GameService): FastifyPluginAsync {
       return { state: service.setTutorialStep(body.step) };
     });
 
+    app.post('/api/game/welcome-ack', async (_req, _reply) => {
+      return { state: service.ackWelcome() };
+    });
+
     app.post('/api/research/allocate', async (req, _reply) => {
       const body = researchSchema.parse(req.body);
       return { state: service.allocateResearch(body.workers) };

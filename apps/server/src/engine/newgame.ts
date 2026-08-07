@@ -72,5 +72,6 @@ export function createNewGame(
     battleReports: [],
     tech: defaultTechState(nowIso),
     tutorialStep: 1,
+    welcomeShown: false,
   };
 }

@@ -32,6 +32,7 @@ export const api = {
   newGame: () => request<{ state: GameState }>('/api/game/new', {}),
   reset: () => request<{ state: GameState }>('/api/game/reset', {}),
   setTutorialStep: (step: number) => request<{ state: GameState }>('/api/tutorial/step', { step }),
+  ackWelcome: () => request<{ state: GameState }>('/api/game/welcome-ack', {}),
   allocate: (workers: { weapon: number; armor: number; horse: number }) =>
     request<{ state: GameState }>('/api/production/allocate', { workers }),
   trainingStart: (count: number) => request<{ state: GameState }>('/api/training/start', { count }),

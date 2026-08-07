@@ -269,6 +269,7 @@ export interface GameState {
   battleReports: BattleReport[];
   tech: TechState;
   tutorialStep: number;
+  welcomeShown?: boolean;
   offlineReport?: OfflineReport;
 }
 

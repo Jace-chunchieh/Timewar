@@ -60,7 +60,20 @@ describe('API 集成（后端权威）', () => {
     expect(s.enemyCities.length).toBeGreaterThan(330);
     expect(s.version).toBe(2);
     expect(s.tech.researchWorkers).toBe(0);
+    expect(s.welcomeShown).toBe(false);
     expect(s.tutorialStep).toBe(1);
+  });
+
+  it('首次登录弹窗：ack 后 welcomeShown 变为 true', async () => {
+    await post('/api/game/new');
+    const before = stateOf(await get('/api/game/state'));
+    expect(before.welcomeShown).toBe(false);
+    const res = await post('/api/game/welcome-ack');
+    expect(res.statusCode).toBe(200);
+    const after = stateOf(res);
+    expect(after.welcomeShown).toBe(true);
+    // 持久化：再次读取仍为 true
+    expect(stateOf(await get('/api/game/state')).welcomeShown).toBe(true);
   });
 
   it('GET state 推进时间：10秒后人口+1（A市 1级）', async () => {

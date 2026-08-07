@@ -91,6 +91,12 @@ export class GameService {
     return this.commit(state);
   }
 
+  ackWelcome(): GameState {
+    const state = this.loadAndAdvance();
+    state.welcomeShown = true;
+    return this.commit(state);
+  }
+
   reports(): BattleReport[] {
     return this.loadAndAdvance().battleReports;
   }

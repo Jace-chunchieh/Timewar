@@ -14,6 +14,7 @@ import TechPage from './components/TechPage';
 import TopBar from './components/TopBar';
 import TrainingPage from './components/TrainingPage';
 import Tutorial from './components/Tutorial';
+import WelcomeModal from './components/WelcomeModal';
 import { useGame } from './store';
 
 export default function App() {
@@ -169,6 +170,7 @@ export default function App() {
       )}
 
       <OfflineReportModal />
+      <WelcomeModal />
       <Tutorial />
     </div>
   );
