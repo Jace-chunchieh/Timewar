@@ -19,6 +19,14 @@ if [ ! -d "$DIR/.git" ]; then
 fi
 
 cd "$DIR"
+
+# 解决 git 安全目录校验（dubious ownership，CVE-2022-24765）：
+# Webhook 运行用户与仓库属主不一致时 git 会拒绝操作，此处自动加入白名单
+if ! git config --global --get-all safe.directory 2>/dev/null | grep -qx "$DIR"; then
+  git config --global --add safe.directory "$DIR"
+  echo "[TimeWar] 已将 $DIR 加入 git safe.directory 白名单"
+fi
+
 echo "[TimeWar] 项目目录: $DIR"
 echo "[TimeWar] 远程仓库:"
 git remote -v || true
