@@ -1,0 +1,18 @@
+[Unit]
+Description=TimeWar Game Server
+After=network.target
+
+[Service]
+Type=simple
+# 把 ubuntu 换成你的服务器用户名
+User=ubuntu
+WorkingDirectory=/opt/timewar
+Environment=NODE_ENV=production
+Environment=PORT=5215
+# 生产模式：tsx 直接运行后端并静态服务前端构建产物
+ExecStart=/usr/bin/npm run start --workspace apps/server
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

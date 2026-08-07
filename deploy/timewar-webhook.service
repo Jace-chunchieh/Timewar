@@ -1,0 +1,18 @@
+[Unit]
+Description=TimeWar Webhook Receiver (GitHub -> Auto Deploy)
+After=network.target
+
+[Service]
+Type=simple
+# 把 ubuntu 换成你的服务器用户名
+User=ubuntu
+# 重要：WEBHOOK_SECRET 必须与 GitHub Webhook 配置中的 Secret 完全一致
+Environment=WEBHOOK_SECRET=REPLACE_WITH_RANDOM_SECRET
+Environment=WEBHOOK_PORT=9000
+Environment=DEPLOY_SCRIPT=/opt/timewar/deploy/deploy.sh
+ExecStart=/usr/bin/node /opt/timewar/deploy/webhook-server.mjs
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
