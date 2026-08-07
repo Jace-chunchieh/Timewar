@@ -20,6 +20,10 @@ fi
 
 cd "$DIR"
 
+# 权限自愈：Webhook 运行用户可能对工作区无写权限（git reset 需要写文件）
+# 属主自行添加读写执行权限（无需 root）；目录属主为他人时此处会静默跳过
+chmod -R u+rwX "$DIR" 2>/dev/null || true
+
 # 解决 git 安全目录校验（dubious ownership，CVE-2022-24765）：
 # Webhook 运行用户与仓库属主不一致时 git 会拒绝操作，此处自动加入白名单
 if ! git config --global --get-all safe.directory 2>/dev/null | grep -qx "$DIR"; then
@@ -28,21 +32,28 @@ if ! git config --global --get-all safe.directory 2>/dev/null | grep -qx "$DIR";
 fi
 
 echo "[TimeWar] 项目目录: $DIR"
+echo "[TimeWar] 运行用户: $(whoami 2>/dev/null || echo '未知')"
+echo "[TimeWar] 目录属主: $(ls -ld "$DIR" 2>/dev/null | awk '{print $3}')"
 echo "[TimeWar] 远程仓库:"
 git remote -v || true
 
 echo "[TimeWar] 拉取代码 ($BRANCH)..."
 if ! git fetch origin "$BRANCH" 2>&1; then
-  echo "[TimeWar] git fetch 失败，请检查："
-  echo "  1. 远程地址是否正确（上面 remote -v 输出）"
-  echo "  2. 目录写权限：chown -R 当前用户 /www/wwwroot/Timewar"
+  echo "[TimeWar] git fetch 失败，请把上方完整报错发给我。常见原因："
+  echo "  1. 远程地址不正确（见 remote -v）"
+  echo "  2. .git 目录写权限不足"
   exit 1
 fi
 
 echo "[TimeWar] 本地当前提交: $(git log --oneline -1 HEAD 2>/dev/null || echo '无提交')"
 echo "[TimeWar] 远程最新提交: $(git log --oneline -1 origin/$BRANCH 2>/dev/null || echo 'origin/$BRANCH 不存在')"
 
-git reset --hard "origin/$BRANCH"
+if ! git reset --hard "origin/$BRANCH" 2>&1; then
+  echo "[TimeWar] git reset 失败（多为工作区写权限不足），请 SSH 执行："
+  echo "  chown -R \$(whoami) $DIR"
+  echo "  或  chmod -R 777 $DIR"
+  exit 1
+fi
 echo "[TimeWar] 更新后提交: $(git log --oneline -1 HEAD)"
 
 echo "[TimeWar] 安装依赖..."
