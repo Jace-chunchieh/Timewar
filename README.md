@@ -122,6 +122,32 @@ GET  /api/battles               # 战报列表
 
 所有写接口流程：校验请求 → 结算时间 → 校验状态 → 执行业务 → 事务保存 → 返回最新 GameState。错误统一为 `{ code, message, details }`。
 
+## 服务器自动部署（宝塔面板 + GitHub Webhook）
+
+**前置**：宝塔 Webhook 插件（若已有其他项目走 GitHub 自动部署则直接复用），服务器已装 Node ≥ 20 与 git。
+
+1. **首次部署**（宝塔 SSH 终端）：
+   ```bash
+   cd /www/wwwroot
+   git clone https://github.com/Jace-chunchieh/Timewar.git
+   cd Timewar
+   npm install && npm run build
+   npm install -g pm2
+   pm2 start npm --name timewar-server -- start   # 生产模式，端口 5215
+   pm2 save && pm2 startup
+   ```
+2. **宝塔 Webhook 插件** → 添加：名称 `Timewar`，执行脚本：
+   ```bash
+   bash /www/wwwroot/Timewar/tools/deploy.sh /www/wwwroot/Timewar main
+   ```
+   保存并复制插件生成的 Webhook URL（`https://服务器IP:面板端口/hook?access_key=xxx`）。
+3. **GitHub**：仓库 Settings → Webhooks → Add webhook：
+   - Payload URL 粘贴上一步 URL（保持 HTTPS）
+   - Content type `application/json`，事件选 `Just the push event`
+4. **验证**：推送一次代码 → 宝塔 Webhook 日志显示 `部署完成` → 访问 `http://服务器IP:5215`。
+
+> 注意：TimeWar 是全栈 Node 应用（非静态网页），`tools/deploy.sh` 会自动执行 `git pull → npm install → npm run build → pm2 restart`；若沿用旧项目的静态站脚本（仅 git pull）不会生效。存档位于 `apps/server/data/game.db`，部署不会丢失。
+
 ## 移动端适配
 
 - 响应式断点：桌面端三栏布局（左导航 + 地图 + 右侧详情面板）；移动端（<1024px）隐藏左导航与右侧面板，使用**底部固定导航**（地图/生产/训练/军队/将领 + 更多菜单含编军/科技/战报/设置）。
