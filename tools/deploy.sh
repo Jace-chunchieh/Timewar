@@ -38,10 +38,23 @@ echo "[TimeWar] 远程仓库:"
 git remote -v || true
 
 echo "[TimeWar] 拉取代码 ($BRANCH)..."
-if ! git fetch origin "$BRANCH" 2>&1; then
-  echo "[TimeWar] git fetch 失败，请把上方完整报错发给我。常见原因："
-  echo "  1. 远程地址不正确（见 remote -v）"
-  echo "  2. .git 目录写权限不足"
+# GitHub 大陆网络不稳定（时好时坏）：快速失败 + 自动重试 5 次
+FETCH_OK=0
+for attempt in 1 2 3 4 5; do
+  echo "[TimeWar] git fetch 尝试 $attempt/5 ..."
+  if git -c http.lowSpeedLimit=1000 -c http.lowSpeedTime=30 fetch origin "$BRANCH" 2>&1; then
+    FETCH_OK=1
+    break
+  fi
+  [ "$attempt" -lt 5 ] && echo "[TimeWar] 连接 GitHub 失败，10 秒后重试..." && sleep 10
+done
+
+if [ "$FETCH_OK" != "1" ]; then
+  echo "[TimeWar] 连续 5 次 fetch 失败：服务器无法访问 github.com:443。"
+  echo "[TimeWar] 中国大陆服务器建议改用 Gitee 镜像仓库（拉取源）："
+  echo "  1) 到 gitee.com 注册并导入本仓库（新建仓库时选「导入 GitHub 仓库」）"
+  echo "  2) 服务器执行: git remote set-url origin https://gitee.com/你的账号/Timewar.git"
+  echo "  3) 重新触发本脚本即可"
   exit 1
 fi
 
