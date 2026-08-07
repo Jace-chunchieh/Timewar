@@ -1,0 +1,34 @@
+{
+  "name": "time-war",
+  "version": "2.0.0",
+  "private": true,
+  "description": "现实时间人口战争游戏 MVP（广东/广西/海南，44城市）",
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace apps/server",
+    "build": "npm run build --workspace apps/web",
+    "typecheck": "npm run typecheck --workspace apps/server && npm run typecheck --workspace apps/web",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "start": "npm run start --workspace apps/server",
+    "reset": "node tools/reset.mjs",
+    "generate:data": "node tools/generate-data.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "cross-env": "^7.0.3",
+    "playwright": "^1.62.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vite": "6.4.3",
+    "vitest": "^3.0.5"
+  },
+  "dependencies": {
+    "better-sqlite3": "^12.11.1"
+  }
+}

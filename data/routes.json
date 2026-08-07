@@ -1,0 +1,8482 @@
+[
+  {
+    "id": "aba|chamdo",
+    "from": "aba",
+    "to": "chamdo",
+    "km": 486,
+    "baseSeconds": 2915,
+    "routeType": "LAND"
+  },
+  {
+    "id": "aba|chengdu",
+    "from": "chengdu",
+    "to": "aba",
+    "km": 230,
+    "baseSeconds": 1380,
+    "routeType": "LAND"
+  },
+  {
+    "id": "aba|deyang",
+    "from": "deyang",
+    "to": "aba",
+    "km": 224,
+    "baseSeconds": 1345,
+    "routeType": "LAND"
+  },
+  {
+    "id": "aba|ganzi",
+    "from": "aba",
+    "to": "ganzi",
+    "km": 207,
+    "baseSeconds": 1240,
+    "routeType": "LAND"
+  },
+  {
+    "id": "aba|guoluo",
+    "from": "aba",
+    "to": "guoluo",
+    "km": 340,
+    "baseSeconds": 2040,
+    "routeType": "LAND"
+  },
+  {
+    "id": "aba|huangnan",
+    "from": "aba",
+    "to": "huangnan",
+    "km": 403,
+    "baseSeconds": 2420,
+    "routeType": "LAND"
+  },
+  {
+    "id": "aba|yaan",
+    "from": "yaan",
+    "to": "aba",
+    "km": 224,
+    "baseSeconds": 1345,
+    "routeType": "LAND"
+  },
+  {
+    "id": "acity|dongguan",
+    "from": "dongguan",
+    "to": "acity",
+    "km": 17,
+    "baseSeconds": 100,
+    "routeType": "LAND"
+  },
+  {
+    "id": "acity|foshan",
+    "from": "foshan",
+    "to": "acity",
+    "km": 76,
+    "baseSeconds": 455,
+    "routeType": "LAND"
+  },
+  {
+    "id": "acity|guangzhou",
+    "from": "guangzhou",
+    "to": "acity",
+    "km": 66,
+    "baseSeconds": 395,
+    "routeType": "LAND"
+  },
+  {
+    "id": "acity|heyuan",
+    "from": "heyuan",
+    "to": "acity",
+    "km": 128,
+    "baseSeconds": 770,
+    "routeType": "LAND"
+  },
+  {
+    "id": "acity|huizhou",
+    "from": "huizhou",
+    "to": "acity",
+    "km": 63,
+    "baseSeconds": 380,
+    "routeType": "LAND"
+  },
+  {
+    "id": "acity|jiangmen",
+    "from": "jiangmen",
+    "to": "acity",
+    "km": 87,
+    "baseSeconds": 520,
+    "routeType": "LAND"
+  },
+  {
+    "id": "acity|qingyuan",
+    "from": "qingyuan",
+    "to": "acity",
+    "km": 118,
+    "baseSeconds": 710,
+    "routeType": "LAND"
+  },
+  {
+    "id": "acity|shenzhen",
+    "from": "shenzhen",
+    "to": "acity",
+    "km": 44,
+    "baseSeconds": 265,
+    "routeType": "LAND"
+  },
+  {
+    "id": "acity|zhongshan",
+    "from": "zhongshan",
+    "to": "acity",
+    "km": 63,
+    "baseSeconds": 380,
+    "routeType": "LAND"
+  },
+  {
+    "id": "acity|zhuhai",
+    "from": "zhuhai",
+    "to": "acity",
+    "km": 77,
+    "baseSeconds": 460,
+    "routeType": "LAND"
+  },
+  {
+    "id": "akesu|boertala",
+    "from": "boertala",
+    "to": "akesu",
+    "km": 440,
+    "baseSeconds": 2640,
+    "routeType": "LAND"
+  },
+  {
+    "id": "akesu|hetian",
+    "from": "akesu",
+    "to": "hetian",
+    "km": 452,
+    "baseSeconds": 2710,
+    "routeType": "LAND"
+  },
+  {
+    "id": "akesu|kashi",
+    "from": "akesu",
+    "to": "kashi",
+    "km": 408,
+    "baseSeconds": 2450,
+    "routeType": "LAND"
+  },
+  {
+    "id": "akesu|kezilesu",
+    "from": "akesu",
+    "to": "kezilesu",
+    "km": 382,
+    "baseSeconds": 2290,
+    "routeType": "LAND"
+  },
+  {
+    "id": "akesu|yili",
+    "from": "akesu",
+    "to": "yili",
+    "km": 317,
+    "baseSeconds": 1900,
+    "routeType": "LAND"
+  },
+  {
+    "id": "alashanmeng|baiyin",
+    "from": "alashanmeng",
+    "to": "baiyin",
+    "km": 291,
+    "baseSeconds": 1745,
+    "routeType": "LAND"
+  },
+  {
+    "id": "alashanmeng|baotou",
+    "from": "baotou",
+    "to": "alashanmeng",
+    "km": 405,
+    "baseSeconds": 2430,
+    "routeType": "LAND"
+  },
+  {
+    "id": "alashanmeng|bayannaoer",
+    "from": "bayannaoer",
+    "to": "alashanmeng",
+    "km": 256,
+    "baseSeconds": 1535,
+    "routeType": "LAND"
+  },
+  {
+    "id": "alashanmeng|eerduosi",
+    "from": "eerduosi",
+    "to": "alashanmeng",
+    "km": 359,
+    "baseSeconds": 2155,
+    "routeType": "LAND"
+  },
+  {
+    "id": "alashanmeng|shizuishan",
+    "from": "alashanmeng",
+    "to": "shizuishan",
+    "km": 58,
+    "baseSeconds": 350,
+    "routeType": "LAND"
+  },
+  {
+    "id": "alashanmeng|wuhai",
+    "from": "wuhai",
+    "to": "alashanmeng",
+    "km": 128,
+    "baseSeconds": 770,
+    "routeType": "LAND"
+  },
+  {
+    "id": "alashanmeng|wuwei",
+    "from": "alashanmeng",
+    "to": "wuwei",
+    "km": 288,
+    "baseSeconds": 1730,
+    "routeType": "LAND"
+  },
+  {
+    "id": "alashanmeng|yinchuan",
+    "from": "alashanmeng",
+    "to": "yinchuan",
+    "km": 58,
+    "baseSeconds": 350,
+    "routeType": "LAND"
+  },
+  {
+    "id": "aletai|changji",
+    "from": "changji",
+    "to": "aletai",
+    "km": 432,
+    "baseSeconds": 2590,
+    "routeType": "LAND"
+  },
+  {
+    "id": "aletai|kelamayi",
+    "from": "kelamayi",
+    "to": "aletai",
+    "km": 353,
+    "baseSeconds": 2120,
+    "routeType": "LAND"
+  },
+  {
+    "id": "aletai|tacheng",
+    "from": "tacheng",
+    "to": "aletai",
+    "km": 408,
+    "baseSeconds": 2450,
+    "routeType": "LAND"
+  },
+  {
+    "id": "aletai|wulumuqi",
+    "from": "wulumuqi",
+    "to": "aletai",
+    "km": 449,
+    "baseSeconds": 2695,
+    "routeType": "LAND"
+  },
+  {
+    "id": "ali|hetian",
+    "from": "ali",
+    "to": "hetian",
+    "km": 513,
+    "baseSeconds": 3080,
+    "routeType": "LAND"
+  },
+  {
+    "id": "ali|kashi",
+    "from": "ali",
+    "to": "kashi",
+    "km": 858,
+    "baseSeconds": 5150,
+    "routeType": "LAND"
+  },
+  {
+    "id": "ali|lasa",
+    "from": "lasa",
+    "to": "ali",
+    "km": 1098,
+    "baseSeconds": 6590,
+    "routeType": "LAND"
+  },
+  {
+    "id": "ali|naqu",
+    "from": "naqu",
+    "to": "ali",
+    "km": 1132,
+    "baseSeconds": 6790,
+    "routeType": "LAND"
+  },
+  {
+    "id": "ali|rikaze",
+    "from": "rikaze",
+    "to": "ali",
+    "km": 911,
+    "baseSeconds": 5465,
+    "routeType": "LAND"
+  },
+  {
+    "id": "ali|shannan",
+    "from": "shannan",
+    "to": "ali",
+    "km": 1171,
+    "baseSeconds": 7025,
+    "routeType": "LAND"
+  },
+  {
+    "id": "ankang|chongqing",
+    "from": "chongqing",
+    "to": "ankang",
+    "km": 420,
+    "baseSeconds": 2520,
+    "routeType": "LAND"
+  },
+  {
+    "id": "ankang|hanzhong",
+    "from": "hanzhong",
+    "to": "ankang",
+    "km": 193,
+    "baseSeconds": 1160,
+    "routeType": "LAND"
+  },
+  {
+    "id": "ankang|shangluo",
+    "from": "ankang",
+    "to": "shangluo",
+    "km": 157,
+    "baseSeconds": 940,
+    "routeType": "LAND"
+  },
+  {
+    "id": "ankang|shiyan",
+    "from": "shiyan",
+    "to": "ankang",
+    "km": 166,
+    "baseSeconds": 995,
+    "routeType": "LAND"
+  },
+  {
+    "id": "ankang|xian",
+    "from": "xian",
+    "to": "ankang",
+    "km": 185,
+    "baseSeconds": 1110,
+    "routeType": "LAND"
+  },
+  {
+    "id": "ankang|xianyang",
+    "from": "xianyang",
+    "to": "ankang",
+    "km": 186,
+    "baseSeconds": 1115,
+    "routeType": "LAND"
+  },
+  {
+    "id": "anqing|chizhou",
+    "from": "anqing",
+    "to": "chizhou",
+    "km": 43,
+    "baseSeconds": 260,
+    "routeType": "LAND"
+  },
+  {
+    "id": "anqing|ezhou",
+    "from": "anqing",
+    "to": "ezhou",
+    "km": 209,
+    "baseSeconds": 1255,
+    "routeType": "LAND"
+  },
+  {
+    "id": "anqing|hefei",
+    "from": "hefei",
+    "to": "anqing",
+    "km": 143,
+    "baseSeconds": 860,
+    "routeType": "LAND"
+  },
+  {
+    "id": "anqing|huangshan",
+    "from": "anqing",
+    "to": "huangshan",
+    "km": 154,
+    "baseSeconds": 925,
+    "routeType": "LAND"
+  },
+  {
+    "id": "anqing|huangshi",
+    "from": "anqing",
+    "to": "huangshi",
+    "km": 197,
+    "baseSeconds": 1180,
+    "routeType": "LAND"
+  },
+  {
+    "id": "anqing|jiujiang",
+    "from": "anqing",
+    "to": "jiujiang",
+    "km": 138,
+    "baseSeconds": 830,
+    "routeType": "LAND"
+  },
+  {
+    "id": "anqing|liuan",
+    "from": "anqing",
+    "to": "liuan",
+    "km": 143,
+    "baseSeconds": 860,
+    "routeType": "LAND"
+  },
+  {
+    "id": "anqing|tongling",
+    "from": "tongling",
+    "to": "anqing",
+    "km": 85,
+    "baseSeconds": 510,
+    "routeType": "LAND"
+  },
+  {
+    "id": "anshan|benxi",
+    "from": "anshan",
+    "to": "benxi",
+    "km": 68,
+    "baseSeconds": 410,
+    "routeType": "LAND"
+  },
+  {
+    "id": "anshan|dandong",
+    "from": "anshan",
+    "to": "dandong",
+    "km": 160,
+    "baseSeconds": 960,
+    "routeType": "LAND"
+  },
+  {
+    "id": "anshan|fushun",
+    "from": "anshan",
+    "to": "fushun",
+    "km": 118,
+    "baseSeconds": 710,
+    "routeType": "LAND"
+  },
+  {
+    "id": "anshan|liaoyang",
+    "from": "anshan",
+    "to": "liaoyang",
+    "km": 27,
+    "baseSeconds": 160,
+    "routeType": "LAND"
+  },
+  {
+    "id": "anshan|panjin",
+    "from": "anshan",
+    "to": "panjin",
+    "km": 77,
+    "baseSeconds": 460,
+    "routeType": "LAND"
+  },
+  {
+    "id": "anshan|shenyang",
+    "from": "shenyang",
+    "to": "anshan",
+    "km": 85,
+    "baseSeconds": 510,
+    "routeType": "LAND"
+  },
+  {
+    "id": "anshan|yingkou",
+    "from": "anshan",
+    "to": "yingkou",
+    "km": 80,
+    "baseSeconds": 480,
+    "routeType": "LAND"
+  },
+  {
+    "id": "anshun|bijie",
+    "from": "anshun",
+    "to": "bijie",
+    "km": 134,
+    "baseSeconds": 805,
+    "routeType": "LAND"
+  },
+  {
+    "id": "anshun|guiyang",
+    "from": "guiyang",
+    "to": "anshun",
+    "km": 81,
+    "baseSeconds": 485,
+    "routeType": "LAND"
+  },
+  {
+    "id": "anshun|liupanshui",
+    "from": "liupanshui",
+    "to": "anshun",
+    "km": 118,
+    "baseSeconds": 710,
+    "routeType": "LAND"
+  },
+  {
+    "id": "anshun|qiannan",
+    "from": "anshun",
+    "to": "qiannan",
+    "km": 157,
+    "baseSeconds": 940,
+    "routeType": "LAND"
+  },
+  {
+    "id": "anshun|qianxinan",
+    "from": "anshun",
+    "to": "qianxinan",
+    "km": 166,
+    "baseSeconds": 995,
+    "routeType": "LAND"
+  },
+  {
+    "id": "anyang|handan",
+    "from": "handan",
+    "to": "anyang",
+    "km": 60,
+    "baseSeconds": 360,
+    "routeType": "LAND"
+  },
+  {
+    "id": "anyang|hebi",
+    "from": "anyang",
+    "to": "hebi",
+    "km": 40,
+    "baseSeconds": 240,
+    "routeType": "LAND"
+  },
+  {
+    "id": "anyang|jiaozuo",
+    "from": "anyang",
+    "to": "jiaozuo",
+    "km": 143,
+    "baseSeconds": 860,
+    "routeType": "LAND"
+  },
+  {
+    "id": "anyang|puyang",
+    "from": "anyang",
+    "to": "puyang",
+    "km": 69,
+    "baseSeconds": 415,
+    "routeType": "LAND"
+  },
+  {
+    "id": "anyang|xinxiang",
+    "from": "anyang",
+    "to": "xinxiang",
+    "km": 98,
+    "baseSeconds": 590,
+    "routeType": "LAND"
+  },
+  {
+    "id": "baicheng|changchun",
+    "from": "changchun",
+    "to": "baicheng",
+    "km": 274,
+    "baseSeconds": 1645,
+    "routeType": "LAND"
+  },
+  {
+    "id": "baicheng|liaoyuan",
+    "from": "liaoyuan",
+    "to": "baicheng",
+    "km": 354,
+    "baseSeconds": 2125,
+    "routeType": "LAND"
+  },
+  {
+    "id": "baicheng|siping",
+    "from": "siping",
+    "to": "baicheng",
+    "km": 298,
+    "baseSeconds": 1790,
+    "routeType": "LAND"
+  },
+  {
+    "id": "baicheng|songyuan",
+    "from": "songyuan",
+    "to": "baicheng",
+    "km": 164,
+    "baseSeconds": 985,
+    "routeType": "LAND"
+  },
+  {
+    "id": "baicheng|xinganmeng",
+    "from": "xinganmeng",
+    "to": "baicheng",
+    "km": 79,
+    "baseSeconds": 475,
+    "routeType": "LAND"
+  },
+  {
+    "id": "baise|chongzuo",
+    "from": "baise",
+    "to": "chongzuo",
+    "km": 185,
+    "baseSeconds": 1110,
+    "routeType": "LAND"
+  },
+  {
+    "id": "baise|hechi",
+    "from": "baise",
+    "to": "hechi",
+    "km": 174,
+    "baseSeconds": 1045,
+    "routeType": "LAND"
+  },
+  {
+    "id": "baise|honghe",
+    "from": "baise",
+    "to": "honghe",
+    "km": 335,
+    "baseSeconds": 2010,
+    "routeType": "LAND"
+  },
+  {
+    "id": "baise|laibin",
+    "from": "baise",
+    "to": "laibin",
+    "km": 265,
+    "baseSeconds": 1590,
+    "routeType": "LAND"
+  },
+  {
+    "id": "baise|nanning",
+    "from": "nanning",
+    "to": "baise",
+    "km": 211,
+    "baseSeconds": 1265,
+    "routeType": "LAND"
+  },
+  {
+    "id": "baise|wenshan",
+    "from": "baise",
+    "to": "wenshan",
+    "km": 250,
+    "baseSeconds": 1500,
+    "routeType": "LAND"
+  },
+  {
+    "id": "baishan|jilincity",
+    "from": "jilincity",
+    "to": "baishan",
+    "km": 212,
+    "baseSeconds": 1270,
+    "routeType": "LAND"
+  },
+  {
+    "id": "baishan|liaoyuan",
+    "from": "liaoyuan",
+    "to": "baishan",
+    "km": 150,
+    "baseSeconds": 900,
+    "routeType": "LAND"
+  },
+  {
+    "id": "baishan|siping",
+    "from": "siping",
+    "to": "baishan",
+    "km": 218,
+    "baseSeconds": 1310,
+    "routeType": "LAND"
+  },
+  {
+    "id": "baishan|tonghua",
+    "from": "tonghua",
+    "to": "baishan",
+    "km": 46,
+    "baseSeconds": 275,
+    "routeType": "LAND"
+  },
+  {
+    "id": "baishan|yanbian",
+    "from": "baishan",
+    "to": "yanbian",
+    "km": 275,
+    "baseSeconds": 1650,
+    "routeType": "LAND"
+  },
+  {
+    "id": "baiyin|dingxi",
+    "from": "baiyin",
+    "to": "dingxi",
+    "km": 117,
+    "baseSeconds": 700,
+    "routeType": "LAND"
+  },
+  {
+    "id": "baiyin|gannan",
+    "from": "baiyin",
+    "to": "gannan",
+    "km": 206,
+    "baseSeconds": 1235,
+    "routeType": "LAND"
+  },
+  {
+    "id": "baiyin|jinchang",
+    "from": "jinchang",
+    "to": "baiyin",
+    "km": 278,
+    "baseSeconds": 1670,
+    "routeType": "LAND"
+  },
+  {
+    "id": "baiyin|lanzhou",
+    "from": "lanzhou",
+    "to": "baiyin",
+    "km": 61,
+    "baseSeconds": 365,
+    "routeType": "LAND"
+  },
+  {
+    "id": "baiyin|linxia",
+    "from": "baiyin",
+    "to": "linxia",
+    "km": 135,
+    "baseSeconds": 810,
+    "routeType": "LAND"
+  },
+  {
+    "id": "baiyin|pingliang",
+    "from": "baiyin",
+    "to": "pingliang",
+    "km": 253,
+    "baseSeconds": 1520,
+    "routeType": "LAND"
+  },
+  {
+    "id": "baiyin|qingyang",
+    "from": "baiyin",
+    "to": "qingyang",
+    "km": 328,
+    "baseSeconds": 1970,
+    "routeType": "LAND"
+  },
+  {
+    "id": "baiyin|wuwei",
+    "from": "baiyin",
+    "to": "wuwei",
+    "km": 203,
+    "baseSeconds": 1220,
+    "routeType": "LAND"
+  },
+  {
+    "id": "baoding|beijing",
+    "from": "beijing",
+    "to": "baoding",
+    "km": 140,
+    "baseSeconds": 840,
+    "routeType": "LAND"
+  },
+  {
+    "id": "baoding|cangzhou",
+    "from": "baoding",
+    "to": "cangzhou",
+    "km": 136,
+    "baseSeconds": 815,
+    "routeType": "LAND"
+  },
+  {
+    "id": "baoding|handan",
+    "from": "handan",
+    "to": "baoding",
+    "km": 262,
+    "baseSeconds": 1570,
+    "routeType": "LAND"
+  },
+  {
+    "id": "baoding|hengshui",
+    "from": "baoding",
+    "to": "hengshui",
+    "km": 127,
+    "baseSeconds": 760,
+    "routeType": "LAND"
+  },
+  {
+    "id": "baoding|langfang",
+    "from": "baoding",
+    "to": "langfang",
+    "km": 129,
+    "baseSeconds": 775,
+    "routeType": "LAND"
+  },
+  {
+    "id": "baoding|shijiazhuang",
+    "from": "shijiazhuang",
+    "to": "baoding",
+    "km": 125,
+    "baseSeconds": 750,
+    "routeType": "LAND"
+  },
+  {
+    "id": "baoding|xingtai",
+    "from": "xingtai",
+    "to": "baoding",
+    "km": 217,
+    "baseSeconds": 1300,
+    "routeType": "LAND"
+  },
+  {
+    "id": "baoding|zhangjiakou",
+    "from": "baoding",
+    "to": "zhangjiakou",
+    "km": 217,
+    "baseSeconds": 1300,
+    "routeType": "LAND"
+  },
+  {
+    "id": "baoji|guyuan",
+    "from": "baoji",
+    "to": "guyuan",
+    "km": 204,
+    "baseSeconds": 1225,
+    "routeType": "LAND"
+  },
+  {
+    "id": "baoji|hanzhong",
+    "from": "baoji",
+    "to": "hanzhong",
+    "km": 145,
+    "baseSeconds": 870,
+    "routeType": "LAND"
+  },
+  {
+    "id": "baoji|pingliang",
+    "from": "baoji",
+    "to": "pingliang",
+    "km": 141,
+    "baseSeconds": 845,
+    "routeType": "LAND"
+  },
+  {
+    "id": "baoji|tianshui",
+    "from": "baoji",
+    "to": "tianshui",
+    "km": 141,
+    "baseSeconds": 845,
+    "routeType": "LAND"
+  },
+  {
+    "id": "baoji|tongchuan",
+    "from": "tongchuan",
+    "to": "baoji",
+    "km": 168,
+    "baseSeconds": 1010,
+    "routeType": "LAND"
+  },
+  {
+    "id": "baoji|xian",
+    "from": "xian",
+    "to": "baoji",
+    "km": 156,
+    "baseSeconds": 935,
+    "routeType": "LAND"
+  },
+  {
+    "id": "baoji|xianyang",
+    "from": "baoji",
+    "to": "xianyang",
+    "km": 135,
+    "baseSeconds": 810,
+    "routeType": "LAND"
+  },
+  {
+    "id": "baoshan|dali",
+    "from": "baoshan",
+    "to": "dali",
+    "km": 125,
+    "baseSeconds": 750,
+    "routeType": "LAND"
+  },
+  {
+    "id": "baoshan|dehong",
+    "from": "baoshan",
+    "to": "dehong",
+    "km": 95,
+    "baseSeconds": 570,
+    "routeType": "LAND"
+  },
+  {
+    "id": "baoshan|diqing",
+    "from": "baoshan",
+    "to": "diqing",
+    "km": 307,
+    "baseSeconds": 1840,
+    "routeType": "LAND"
+  },
+  {
+    "id": "baoshan|lijiang",
+    "from": "baoshan",
+    "to": "lijiang",
+    "km": 222,
+    "baseSeconds": 1330,
+    "routeType": "LAND"
+  },
+  {
+    "id": "baoshan|lincang",
+    "from": "baoshan",
+    "to": "lincang",
+    "km": 166,
+    "baseSeconds": 995,
+    "routeType": "LAND"
+  },
+  {
+    "id": "baoshan|nujiang",
+    "from": "baoshan",
+    "to": "nujiang",
+    "km": 88,
+    "baseSeconds": 530,
+    "routeType": "LAND"
+  },
+  {
+    "id": "baotou|bayannaoer",
+    "from": "baotou",
+    "to": "bayannaoer",
+    "km": 204,
+    "baseSeconds": 1225,
+    "routeType": "LAND"
+  },
+  {
+    "id": "baotou|eerduosi",
+    "from": "baotou",
+    "to": "eerduosi",
+    "km": 117,
+    "baseSeconds": 700,
+    "routeType": "LAND"
+  },
+  {
+    "id": "baotou|huhehaote",
+    "from": "huhehaote",
+    "to": "baotou",
+    "km": 162,
+    "baseSeconds": 970,
+    "routeType": "LAND"
+  },
+  {
+    "id": "baotou|wuhai",
+    "from": "baotou",
+    "to": "wuhai",
+    "km": 282,
+    "baseSeconds": 1690,
+    "routeType": "LAND"
+  },
+  {
+    "id": "baotou|wulanchabu",
+    "from": "baotou",
+    "to": "wulanchabu",
+    "km": 279,
+    "baseSeconds": 1675,
+    "routeType": "LAND"
+  },
+  {
+    "id": "baotou|yulinsn",
+    "from": "baotou",
+    "to": "yulinsn",
+    "km": 264,
+    "baseSeconds": 1585,
+    "routeType": "LAND"
+  },
+  {
+    "id": "bayannaoer|eerduosi",
+    "from": "eerduosi",
+    "to": "bayannaoer",
+    "km": 237,
+    "baseSeconds": 1420,
+    "routeType": "LAND"
+  },
+  {
+    "id": "bayannaoer|huhehaote",
+    "from": "huhehaote",
+    "to": "bayannaoer",
+    "km": 365,
+    "baseSeconds": 2190,
+    "routeType": "LAND"
+  },
+  {
+    "id": "bayannaoer|wuhai",
+    "from": "wuhai",
+    "to": "bayannaoer",
+    "km": 132,
+    "baseSeconds": 790,
+    "routeType": "LAND"
+  },
+  {
+    "id": "bayinguoleng|changji",
+    "from": "changji",
+    "to": "bayinguoleng",
+    "km": 267,
+    "baseSeconds": 1600,
+    "routeType": "LAND"
+  },
+  {
+    "id": "bayinguoleng|hami",
+    "from": "hami",
+    "to": "bayinguoleng",
+    "km": 617,
+    "baseSeconds": 3700,
+    "routeType": "LAND"
+  },
+  {
+    "id": "bayinguoleng|hetian",
+    "from": "bayinguoleng",
+    "to": "hetian",
+    "km": 744,
+    "baseSeconds": 4465,
+    "routeType": "LAND"
+  },
+  {
+    "id": "bayinguoleng|kelamayi",
+    "from": "kelamayi",
+    "to": "bayinguoleng",
+    "km": 439,
+    "baseSeconds": 2635,
+    "routeType": "LAND"
+  },
+  {
+    "id": "bayinguoleng|tulufan",
+    "from": "tulufan",
+    "to": "bayinguoleng",
+    "km": 283,
+    "baseSeconds": 1700,
+    "routeType": "LAND"
+  },
+  {
+    "id": "bayinguoleng|wulumuqi",
+    "from": "wulumuqi",
+    "to": "bayinguoleng",
+    "km": 260,
+    "baseSeconds": 1560,
+    "routeType": "LAND"
+  },
+  {
+    "id": "bazhong|dazhou",
+    "from": "dazhou",
+    "to": "bazhong",
+    "km": 100,
+    "baseSeconds": 600,
+    "routeType": "LAND"
+  },
+  {
+    "id": "bazhong|guangan",
+    "from": "guangan",
+    "to": "bazhong",
+    "km": 157,
+    "baseSeconds": 940,
+    "routeType": "LAND"
+  },
+  {
+    "id": "bazhong|guangyuan",
+    "from": "guangyuan",
+    "to": "bazhong",
+    "km": 107,
+    "baseSeconds": 640,
+    "routeType": "LAND"
+  },
+  {
+    "id": "bazhong|hanzhong",
+    "from": "bazhong",
+    "to": "hanzhong",
+    "km": 136,
+    "baseSeconds": 815,
+    "routeType": "LAND"
+  },
+  {
+    "id": "bazhong|nanchong",
+    "from": "nanchong",
+    "to": "bazhong",
+    "km": 130,
+    "baseSeconds": 780,
+    "routeType": "LAND"
+  },
+  {
+    "id": "beihai|fangchenggang",
+    "from": "beihai",
+    "to": "fangchenggang",
+    "km": 83,
+    "baseSeconds": 500,
+    "routeType": "LAND"
+  },
+  {
+    "id": "beihai|haikou",
+    "from": "beihai",
+    "to": "haikou",
+    "km": 203,
+    "baseSeconds": 1220,
+    "routeType": "SEA"
+  },
+  {
+    "id": "beihai|nanning",
+    "from": "nanning",
+    "to": "beihai",
+    "km": 170,
+    "baseSeconds": 1020,
+    "routeType": "LAND"
+  },
+  {
+    "id": "beihai|qinzhou",
+    "from": "beihai",
+    "to": "qinzhou",
+    "km": 71,
+    "baseSeconds": 425,
+    "routeType": "LAND"
+  },
+  {
+    "id": "beihai|yulincn",
+    "from": "beihai",
+    "to": "yulincn",
+    "km": 168,
+    "baseSeconds": 1010,
+    "routeType": "LAND"
+  },
+  {
+    "id": "beihai|zhanjiang",
+    "from": "zhanjiang",
+    "to": "beihai",
+    "km": 131,
+    "baseSeconds": 785,
+    "routeType": "LAND"
+  },
+  {
+    "id": "beijing|langfang",
+    "from": "beijing",
+    "to": "langfang",
+    "km": 47,
+    "baseSeconds": 280,
+    "routeType": "LAND"
+  },
+  {
+    "id": "beijing|tianjin",
+    "from": "beijing",
+    "to": "tianjin",
+    "km": 112,
+    "baseSeconds": 670,
+    "routeType": "LAND"
+  },
+  {
+    "id": "bengbu|chuzhou",
+    "from": "bengbu",
+    "to": "chuzhou",
+    "km": 111,
+    "baseSeconds": 665,
+    "routeType": "LAND"
+  },
+  {
+    "id": "bengbu|hefei",
+    "from": "hefei",
+    "to": "bengbu",
+    "km": 123,
+    "baseSeconds": 740,
+    "routeType": "LAND"
+  },
+  {
+    "id": "bengbu|huaibei",
+    "from": "bengbu",
+    "to": "huaibei",
+    "km": 128,
+    "baseSeconds": 770,
+    "routeType": "LAND"
+  },
+  {
+    "id": "bengbu|huainan",
+    "from": "bengbu",
+    "to": "huainan",
+    "km": 49,
+    "baseSeconds": 295,
+    "routeType": "LAND"
+  },
+  {
+    "id": "bengbu|suzhouah",
+    "from": "bengbu",
+    "to": "suzhouah",
+    "km": 90,
+    "baseSeconds": 540,
+    "routeType": "LAND"
+  },
+  {
+    "id": "benxi|dandong",
+    "from": "benxi",
+    "to": "dandong",
+    "km": 139,
+    "baseSeconds": 835,
+    "routeType": "LAND"
+  },
+  {
+    "id": "benxi|fushun",
+    "from": "fushun",
+    "to": "benxi",
+    "km": 67,
+    "baseSeconds": 400,
+    "routeType": "LAND"
+  },
+  {
+    "id": "benxi|liaoyang",
+    "from": "benxi",
+    "to": "liaoyang",
+    "km": 44,
+    "baseSeconds": 265,
+    "routeType": "LAND"
+  },
+  {
+    "id": "benxi|shenyang",
+    "from": "shenyang",
+    "to": "benxi",
+    "km": 63,
+    "baseSeconds": 380,
+    "routeType": "LAND"
+  },
+  {
+    "id": "benxi|tieling",
+    "from": "benxi",
+    "to": "tieling",
+    "km": 111,
+    "baseSeconds": 665,
+    "routeType": "LAND"
+  },
+  {
+    "id": "bijie|chongqing",
+    "from": "chongqing",
+    "to": "bijie",
+    "km": 280,
+    "baseSeconds": 1680,
+    "routeType": "LAND"
+  },
+  {
+    "id": "bijie|guiyang",
+    "from": "guiyang",
+    "to": "bijie",
+    "km": 152,
+    "baseSeconds": 910,
+    "routeType": "LAND"
+  },
+  {
+    "id": "bijie|liupanshui",
+    "from": "liupanshui",
+    "to": "bijie",
+    "km": 91,
+    "baseSeconds": 545,
+    "routeType": "LAND"
+  },
+  {
+    "id": "bijie|luzhou",
+    "from": "luzhou",
+    "to": "bijie",
+    "km": 175,
+    "baseSeconds": 1050,
+    "routeType": "LAND"
+  },
+  {
+    "id": "bijie|qianxinan",
+    "from": "bijie",
+    "to": "qianxinan",
+    "km": 249,
+    "baseSeconds": 1495,
+    "routeType": "LAND"
+  },
+  {
+    "id": "bijie|yibin",
+    "from": "yibin",
+    "to": "bijie",
+    "km": 173,
+    "baseSeconds": 1040,
+    "routeType": "LAND"
+  },
+  {
+    "id": "bijie|zunyi",
+    "from": "zunyi",
+    "to": "bijie",
+    "km": 170,
+    "baseSeconds": 1020,
+    "routeType": "LAND"
+  },
+  {
+    "id": "binzhou|dezhou",
+    "from": "dezhou",
+    "to": "binzhou",
+    "km": 142,
+    "baseSeconds": 850,
+    "routeType": "LAND"
+  },
+  {
+    "id": "binzhou|dongying",
+    "from": "dongying",
+    "to": "binzhou",
+    "km": 62,
+    "baseSeconds": 370,
+    "routeType": "LAND"
+  },
+  {
+    "id": "binzhou|jinan",
+    "from": "jinan",
+    "to": "binzhou",
+    "km": 111,
+    "baseSeconds": 665,
+    "routeType": "LAND"
+  },
+  {
+    "id": "binzhou|weifang",
+    "from": "weifang",
+    "to": "binzhou",
+    "km": 129,
+    "baseSeconds": 775,
+    "routeType": "LAND"
+  },
+  {
+    "id": "binzhou|zibo",
+    "from": "zibo",
+    "to": "binzhou",
+    "km": 64,
+    "baseSeconds": 385,
+    "routeType": "LAND"
+  },
+  {
+    "id": "boertala|changji",
+    "from": "changji",
+    "to": "boertala",
+    "km": 427,
+    "baseSeconds": 2560,
+    "routeType": "LAND"
+  },
+  {
+    "id": "boertala|kelamayi",
+    "from": "kelamayi",
+    "to": "boertala",
+    "km": 233,
+    "baseSeconds": 1400,
+    "routeType": "LAND"
+  },
+  {
+    "id": "boertala|tacheng",
+    "from": "boertala",
+    "to": "tacheng",
+    "km": 217,
+    "baseSeconds": 1300,
+    "routeType": "LAND"
+  },
+  {
+    "id": "boertala|yili",
+    "from": "boertala",
+    "to": "yili",
+    "km": 126,
+    "baseSeconds": 755,
+    "routeType": "LAND"
+  },
+  {
+    "id": "bozhou|fuyang",
+    "from": "fuyang",
+    "to": "bozhou",
+    "km": 107,
+    "baseSeconds": 640,
+    "routeType": "LAND"
+  },
+  {
+    "id": "bozhou|huaibei",
+    "from": "huaibei",
+    "to": "bozhou",
+    "km": 95,
+    "baseSeconds": 570,
+    "routeType": "LAND"
+  },
+  {
+    "id": "bozhou|huainan",
+    "from": "huainan",
+    "to": "bozhou",
+    "km": 178,
+    "baseSeconds": 1070,
+    "routeType": "LAND"
+  },
+  {
+    "id": "bozhou|shangqiu",
+    "from": "bozhou",
+    "to": "shangqiu",
+    "km": 62,
+    "baseSeconds": 370,
+    "routeType": "LAND"
+  },
+  {
+    "id": "bozhou|suzhouah",
+    "from": "suzhouah",
+    "to": "bozhou",
+    "km": 113,
+    "baseSeconds": 680,
+    "routeType": "LAND"
+  },
+  {
+    "id": "bozhou|zhoukou",
+    "from": "bozhou",
+    "to": "zhoukou",
+    "km": 103,
+    "baseSeconds": 620,
+    "routeType": "LAND"
+  },
+  {
+    "id": "cangzhou|dezhou",
+    "from": "cangzhou",
+    "to": "dezhou",
+    "km": 104,
+    "baseSeconds": 625,
+    "routeType": "LAND"
+  },
+  {
+    "id": "cangzhou|hengshui",
+    "from": "cangzhou",
+    "to": "hengshui",
+    "km": 120,
+    "baseSeconds": 720,
+    "routeType": "LAND"
+  },
+  {
+    "id": "cangzhou|langfang",
+    "from": "cangzhou",
+    "to": "langfang",
+    "km": 139,
+    "baseSeconds": 835,
+    "routeType": "LAND"
+  },
+  {
+    "id": "cangzhou|qinhuangdao",
+    "from": "qinhuangdao",
+    "to": "cangzhou",
+    "km": 300,
+    "baseSeconds": 1800,
+    "routeType": "LAND"
+  },
+  {
+    "id": "cangzhou|tangshan",
+    "from": "tangshan",
+    "to": "cangzhou",
+    "km": 188,
+    "baseSeconds": 1130,
+    "routeType": "LAND"
+  },
+  {
+    "id": "cangzhou|tianjin",
+    "from": "tianjin",
+    "to": "cangzhou",
+    "km": 94,
+    "baseSeconds": 565,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chamdo|diqing",
+    "from": "diqing",
+    "to": "chamdo",
+    "km": 442,
+    "baseSeconds": 2650,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chamdo|ganzi",
+    "from": "ganzi",
+    "to": "chamdo",
+    "km": 474,
+    "baseSeconds": 2845,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chamdo|lasa",
+    "from": "lasa",
+    "to": "chamdo",
+    "km": 602,
+    "baseSeconds": 3610,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chamdo|linzhi",
+    "from": "chamdo",
+    "to": "linzhi",
+    "km": 316,
+    "baseSeconds": 1895,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chamdo|naqu",
+    "from": "chamdo",
+    "to": "naqu",
+    "km": 488,
+    "baseSeconds": 2930,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chamdo|shannan",
+    "from": "chamdo",
+    "to": "shannan",
+    "km": 560,
+    "baseSeconds": 3360,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chamdo|yushu",
+    "from": "chamdo",
+    "to": "yushu",
+    "km": 207,
+    "baseSeconds": 1240,
+    "routeType": "LAND"
+  },
+  {
+    "id": "changchun|jilincity",
+    "from": "changchun",
+    "to": "jilincity",
+    "km": 99,
+    "baseSeconds": 595,
+    "routeType": "LAND"
+  },
+  {
+    "id": "changchun|liaoyuan",
+    "from": "changchun",
+    "to": "liaoyuan",
+    "km": 112,
+    "baseSeconds": 670,
+    "routeType": "LAND"
+  },
+  {
+    "id": "changchun|siping",
+    "from": "changchun",
+    "to": "siping",
+    "km": 113,
+    "baseSeconds": 680,
+    "routeType": "LAND"
+  },
+  {
+    "id": "changchun|songyuan",
+    "from": "changchun",
+    "to": "songyuan",
+    "km": 143,
+    "baseSeconds": 860,
+    "routeType": "LAND"
+  },
+  {
+    "id": "changde|changsha",
+    "from": "changsha",
+    "to": "changde",
+    "km": 150,
+    "baseSeconds": 900,
+    "routeType": "LAND"
+  },
+  {
+    "id": "changde|xiangxi",
+    "from": "changde",
+    "to": "xiangxi",
+    "km": 208,
+    "baseSeconds": 1250,
+    "routeType": "LAND"
+  },
+  {
+    "id": "changde|yiyang",
+    "from": "changde",
+    "to": "yiyang",
+    "km": 84,
+    "baseSeconds": 505,
+    "routeType": "LAND"
+  },
+  {
+    "id": "changde|yueyang",
+    "from": "yueyang",
+    "to": "changde",
+    "km": 144,
+    "baseSeconds": 865,
+    "routeType": "LAND"
+  },
+  {
+    "id": "changde|zhangjiajie",
+    "from": "changde",
+    "to": "zhangjiajie",
+    "km": 119,
+    "baseSeconds": 715,
+    "routeType": "LAND"
+  },
+  {
+    "id": "changji|hami",
+    "from": "hami",
+    "to": "changji",
+    "km": 518,
+    "baseSeconds": 3110,
+    "routeType": "LAND"
+  },
+  {
+    "id": "changji|kelamayi",
+    "from": "kelamayi",
+    "to": "changji",
+    "km": 261,
+    "baseSeconds": 1565,
+    "routeType": "LAND"
+  },
+  {
+    "id": "changji|tulufan",
+    "from": "tulufan",
+    "to": "changji",
+    "km": 193,
+    "baseSeconds": 1160,
+    "routeType": "LAND"
+  },
+  {
+    "id": "changji|wulumuqi",
+    "from": "wulumuqi",
+    "to": "changji",
+    "km": 33,
+    "baseSeconds": 200,
+    "routeType": "LAND"
+  },
+  {
+    "id": "changsha|loudi",
+    "from": "changsha",
+    "to": "loudi",
+    "km": 110,
+    "baseSeconds": 660,
+    "routeType": "LAND"
+  },
+  {
+    "id": "changsha|xiangtan",
+    "from": "changsha",
+    "to": "xiangtan",
+    "km": 44,
+    "baseSeconds": 265,
+    "routeType": "LAND"
+  },
+  {
+    "id": "changsha|yiyang",
+    "from": "changsha",
+    "to": "yiyang",
+    "km": 67,
+    "baseSeconds": 400,
+    "routeType": "LAND"
+  },
+  {
+    "id": "changsha|yueyang",
+    "from": "changsha",
+    "to": "yueyang",
+    "km": 127,
+    "baseSeconds": 760,
+    "routeType": "LAND"
+  },
+  {
+    "id": "changsha|zhuzhou",
+    "from": "changsha",
+    "to": "zhuzhou",
+    "km": 48,
+    "baseSeconds": 290,
+    "routeType": "LAND"
+  },
+  {
+    "id": "changzhi|jincheng",
+    "from": "changzhi",
+    "to": "jincheng",
+    "km": 83,
+    "baseSeconds": 500,
+    "routeType": "LAND"
+  },
+  {
+    "id": "changzhi|jinzhong",
+    "from": "changzhi",
+    "to": "jinzhong",
+    "km": 169,
+    "baseSeconds": 1015,
+    "routeType": "LAND"
+  },
+  {
+    "id": "changzhi|linfen",
+    "from": "changzhi",
+    "to": "linfen",
+    "km": 144,
+    "baseSeconds": 865,
+    "routeType": "LAND"
+  },
+  {
+    "id": "changzhi|yangquan",
+    "from": "yangquan",
+    "to": "changzhi",
+    "km": 189,
+    "baseSeconds": 1135,
+    "routeType": "LAND"
+  },
+  {
+    "id": "changzhi|yuncheng",
+    "from": "changzhi",
+    "to": "yuncheng",
+    "km": 232,
+    "baseSeconds": 1390,
+    "routeType": "LAND"
+  },
+  {
+    "id": "changzhou|nanjing",
+    "from": "nanjing",
+    "to": "changzhou",
+    "km": 114,
+    "baseSeconds": 685,
+    "routeType": "LAND"
+  },
+  {
+    "id": "changzhou|nantong",
+    "from": "changzhou",
+    "to": "nantong",
+    "km": 89,
+    "baseSeconds": 535,
+    "routeType": "LAND"
+  },
+  {
+    "id": "changzhou|suzhou",
+    "from": "changzhou",
+    "to": "suzhou",
+    "km": 81,
+    "baseSeconds": 485,
+    "routeType": "LAND"
+  },
+  {
+    "id": "changzhou|taizhou",
+    "from": "changzhou",
+    "to": "taizhou",
+    "km": 72,
+    "baseSeconds": 430,
+    "routeType": "LAND"
+  },
+  {
+    "id": "changzhou|wuxi",
+    "from": "wuxi",
+    "to": "changzhou",
+    "km": 48,
+    "baseSeconds": 290,
+    "routeType": "LAND"
+  },
+  {
+    "id": "changzhou|yangzhou",
+    "from": "changzhou",
+    "to": "yangzhou",
+    "km": 83,
+    "baseSeconds": 500,
+    "routeType": "LAND"
+  },
+  {
+    "id": "changzhou|zhenjiang",
+    "from": "changzhou",
+    "to": "zhenjiang",
+    "km": 67,
+    "baseSeconds": 400,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chaoyang|chifeng",
+    "from": "chifeng",
+    "to": "chaoyang",
+    "km": 150,
+    "baseSeconds": 900,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chaoyang|fuxin",
+    "from": "fuxin",
+    "to": "chaoyang",
+    "km": 113,
+    "baseSeconds": 680,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chaoyang|huludao",
+    "from": "chaoyang",
+    "to": "huludao",
+    "km": 101,
+    "baseSeconds": 605,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chaoyang|jinzhou",
+    "from": "jinzhou",
+    "to": "chaoyang",
+    "km": 77,
+    "baseSeconds": 460,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chaoyang|panjin",
+    "from": "panjin",
+    "to": "chaoyang",
+    "km": 144,
+    "baseSeconds": 865,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chaozhou|jieyang",
+    "from": "chaozhou",
+    "to": "jieyang",
+    "km": 28,
+    "baseSeconds": 170,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chaozhou|meizhou",
+    "from": "chaozhou",
+    "to": "meizhou",
+    "km": 87,
+    "baseSeconds": 520,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chaozhou|shantou",
+    "from": "shantou",
+    "to": "chaozhou",
+    "km": 35,
+    "baseSeconds": 210,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chaozhou|shanwei",
+    "from": "chaozhou",
+    "to": "shanwei",
+    "km": 159,
+    "baseSeconds": 955,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chaozhou|zhangzhou",
+    "from": "zhangzhou",
+    "to": "chaozhou",
+    "km": 141,
+    "baseSeconds": 845,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chengde|chifeng",
+    "from": "chengde",
+    "to": "chifeng",
+    "km": 165,
+    "baseSeconds": 990,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chengde|langfang",
+    "from": "chengde",
+    "to": "langfang",
+    "km": 191,
+    "baseSeconds": 1145,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chengde|qinhuangdao",
+    "from": "qinhuangdao",
+    "to": "chengde",
+    "km": 179,
+    "baseSeconds": 1075,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chengde|tangshan",
+    "from": "tangshan",
+    "to": "chengde",
+    "km": 148,
+    "baseSeconds": 890,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chengde|zhangjiakou",
+    "from": "zhangjiakou",
+    "to": "chengde",
+    "km": 260,
+    "baseSeconds": 1560,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chengdu|deyang",
+    "from": "chengdu",
+    "to": "deyang",
+    "km": 70,
+    "baseSeconds": 420,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chengdu|leshan",
+    "from": "chengdu",
+    "to": "leshan",
+    "km": 117,
+    "baseSeconds": 700,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chengdu|meishan",
+    "from": "chengdu",
+    "to": "meishan",
+    "km": 62,
+    "baseSeconds": 370,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chengdu|mianyang",
+    "from": "chengdu",
+    "to": "mianyang",
+    "km": 116,
+    "baseSeconds": 695,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chengdu|yaan",
+    "from": "chengdu",
+    "to": "yaan",
+    "km": 117,
+    "baseSeconds": 700,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chengdu|ziyang",
+    "from": "chengdu",
+    "to": "ziyang",
+    "km": 73,
+    "baseSeconds": 440,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chenzhou|hengyang",
+    "from": "hengyang",
+    "to": "chenzhou",
+    "km": 132,
+    "baseSeconds": 790,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chenzhou|hezhou",
+    "from": "chenzhou",
+    "to": "hezhou",
+    "km": 212,
+    "baseSeconds": 1270,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chenzhou|qingyuan",
+    "from": "chenzhou",
+    "to": "qingyuan",
+    "km": 232,
+    "baseSeconds": 1390,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chenzhou|shaoguan",
+    "from": "chenzhou",
+    "to": "shaoguan",
+    "km": 122,
+    "baseSeconds": 730,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chenzhou|shaoyang",
+    "from": "shaoyang",
+    "to": "chenzhou",
+    "km": 224,
+    "baseSeconds": 1345,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chenzhou|xiangtan",
+    "from": "xiangtan",
+    "to": "chenzhou",
+    "km": 229,
+    "baseSeconds": 1375,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chenzhou|yongzhou",
+    "from": "chenzhou",
+    "to": "yongzhou",
+    "km": 157,
+    "baseSeconds": 940,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chifeng|hulunbeier",
+    "from": "chifeng",
+    "to": "hulunbeier",
+    "km": 776,
+    "baseSeconds": 4655,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chifeng|tongliao",
+    "from": "chifeng",
+    "to": "tongliao",
+    "km": 313,
+    "baseSeconds": 1880,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chifeng|wulanchabu",
+    "from": "chifeng",
+    "to": "wulanchabu",
+    "km": 499,
+    "baseSeconds": 2995,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chifeng|xilinguolemeng",
+    "from": "chifeng",
+    "to": "xilinguolemeng",
+    "km": 294,
+    "baseSeconds": 1765,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chifeng|xinganmeng",
+    "from": "chifeng",
+    "to": "xinganmeng",
+    "km": 495,
+    "baseSeconds": 2970,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chizhou|hefei",
+    "from": "hefei",
+    "to": "chizhou",
+    "km": 131,
+    "baseSeconds": 785,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chizhou|huangshan",
+    "from": "huangshan",
+    "to": "chizhou",
+    "km": 134,
+    "baseSeconds": 805,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chizhou|tongling",
+    "from": "tongling",
+    "to": "chizhou",
+    "km": 44,
+    "baseSeconds": 265,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chizhou|wuhu",
+    "from": "wuhu",
+    "to": "chizhou",
+    "km": 118,
+    "baseSeconds": 710,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chizhou|xuancheng",
+    "from": "chizhou",
+    "to": "xuancheng",
+    "km": 125,
+    "baseSeconds": 750,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chongqing|enshi",
+    "from": "chongqing",
+    "to": "enshi",
+    "km": 294,
+    "baseSeconds": 1765,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chongqing|guangan",
+    "from": "chongqing",
+    "to": "guangan",
+    "km": 100,
+    "baseSeconds": 600,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chongqing|hanzhong",
+    "from": "chongqing",
+    "to": "hanzhong",
+    "km": 393,
+    "baseSeconds": 2360,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chongqing|luzhou",
+    "from": "chongqing",
+    "to": "luzhou",
+    "km": 132,
+    "baseSeconds": 790,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chongqing|xiangxi",
+    "from": "chongqing",
+    "to": "xiangxi",
+    "km": 339,
+    "baseSeconds": 2035,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chongqing|yichang",
+    "from": "chongqing",
+    "to": "yichang",
+    "km": 473,
+    "baseSeconds": 2840,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chongqing|zhangjiajie",
+    "from": "chongqing",
+    "to": "zhangjiajie",
+    "km": 384,
+    "baseSeconds": 2305,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chongqing|zunyi",
+    "from": "chongqing",
+    "to": "zunyi",
+    "km": 207,
+    "baseSeconds": 1240,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chongzuo|fangchenggang",
+    "from": "fangchenggang",
+    "to": "chongzuo",
+    "km": 128,
+    "baseSeconds": 770,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chongzuo|nanning",
+    "from": "nanning",
+    "to": "chongzuo",
+    "km": 110,
+    "baseSeconds": 660,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chongzuo|qinzhou",
+    "from": "qinzhou",
+    "to": "chongzuo",
+    "km": 141,
+    "baseSeconds": 845,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chuxiong|dali",
+    "from": "chuxiong",
+    "to": "dali",
+    "km": 143,
+    "baseSeconds": 860,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chuxiong|kunming",
+    "from": "kunming",
+    "to": "chuxiong",
+    "km": 130,
+    "baseSeconds": 780,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chuxiong|lincang",
+    "from": "lincang",
+    "to": "chuxiong",
+    "km": 196,
+    "baseSeconds": 1175,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chuxiong|qujing",
+    "from": "qujing",
+    "to": "chuxiong",
+    "km": 232,
+    "baseSeconds": 1390,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chuxiong|yuxi",
+    "from": "yuxi",
+    "to": "chuxiong",
+    "km": 127,
+    "baseSeconds": 760,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chuxiong|zhaotong",
+    "from": "zhaotong",
+    "to": "chuxiong",
+    "km": 335,
+    "baseSeconds": 2010,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chuzhou|hefei",
+    "from": "hefei",
+    "to": "chuzhou",
+    "km": 116,
+    "baseSeconds": 695,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chuzhou|huainan",
+    "from": "huainan",
+    "to": "chuzhou",
+    "km": 129,
+    "baseSeconds": 775,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chuzhou|maanshan",
+    "from": "maanshan",
+    "to": "chuzhou",
+    "km": 72,
+    "baseSeconds": 430,
+    "routeType": "LAND"
+  },
+  {
+    "id": "chuzhou|wuhu",
+    "from": "wuhu",
+    "to": "chuzhou",
+    "km": 106,
+    "baseSeconds": 635,
+    "routeType": "LAND"
+  },
+  {
+    "id": "dali|dehong",
+    "from": "dali",
+    "to": "dehong",
+    "km": 214,
+    "baseSeconds": 1285,
+    "routeType": "LAND"
+  },
+  {
+    "id": "dali|diqing",
+    "from": "dali",
+    "to": "diqing",
+    "km": 253,
+    "baseSeconds": 1520,
+    "routeType": "LAND"
+  },
+  {
+    "id": "dali|lijiang",
+    "from": "lijiang",
+    "to": "dali",
+    "km": 139,
+    "baseSeconds": 835,
+    "routeType": "LAND"
+  },
+  {
+    "id": "dali|lincang",
+    "from": "lincang",
+    "to": "dali",
+    "km": 193,
+    "baseSeconds": 1160,
+    "routeType": "LAND"
+  },
+  {
+    "id": "dali|nujiang",
+    "from": "dali",
+    "to": "nujiang",
+    "km": 144,
+    "baseSeconds": 865,
+    "routeType": "LAND"
+  },
+  {
+    "id": "dalian|huludao",
+    "from": "dalian",
+    "to": "huludao",
+    "km": 211,
+    "baseSeconds": 1265,
+    "routeType": "LAND"
+  },
+  {
+    "id": "dalian|jinzhou",
+    "from": "dalian",
+    "to": "jinzhou",
+    "km": 247,
+    "baseSeconds": 1480,
+    "routeType": "LAND"
+  },
+  {
+    "id": "dalian|panjin",
+    "from": "dalian",
+    "to": "panjin",
+    "km": 249,
+    "baseSeconds": 1495,
+    "routeType": "LAND"
+  },
+  {
+    "id": "dalian|yingkou",
+    "from": "dalian",
+    "to": "yingkou",
+    "km": 203,
+    "baseSeconds": 1220,
+    "routeType": "LAND"
+  },
+  {
+    "id": "dandong|liaoyang",
+    "from": "dandong",
+    "to": "liaoyang",
+    "km": 159,
+    "baseSeconds": 955,
+    "routeType": "LAND"
+  },
+  {
+    "id": "dandong|yingkou",
+    "from": "dandong",
+    "to": "yingkou",
+    "km": 191,
+    "baseSeconds": 1145,
+    "routeType": "LAND"
+  },
+  {
+    "id": "danzhou|dongfang",
+    "from": "danzhou",
+    "to": "dongfang",
+    "km": 108,
+    "baseSeconds": 650,
+    "routeType": "LAND"
+  },
+  {
+    "id": "danzhou|haikou",
+    "from": "haikou",
+    "to": "danzhou",
+    "km": 97,
+    "baseSeconds": 580,
+    "routeType": "LAND"
+  },
+  {
+    "id": "danzhou|qionghai",
+    "from": "danzhou",
+    "to": "qionghai",
+    "km": 98,
+    "baseSeconds": 590,
+    "routeType": "LAND"
+  },
+  {
+    "id": "danzhou|sanya",
+    "from": "sanya",
+    "to": "danzhou",
+    "km": 141,
+    "baseSeconds": 845,
+    "routeType": "LAND"
+  },
+  {
+    "id": "danzhou|wanning",
+    "from": "danzhou",
+    "to": "wanning",
+    "km": 117,
+    "baseSeconds": 700,
+    "routeType": "LAND"
+  },
+  {
+    "id": "danzhou|wenchang",
+    "from": "danzhou",
+    "to": "wenchang",
+    "km": 127,
+    "baseSeconds": 760,
+    "routeType": "LAND"
+  },
+  {
+    "id": "danzhou|wuzhishan",
+    "from": "danzhou",
+    "to": "wuzhishan",
+    "km": 83,
+    "baseSeconds": 500,
+    "routeType": "LAND"
+  },
+  {
+    "id": "daqing|daxinganling",
+    "from": "daqing",
+    "to": "daxinganling",
+    "km": 594,
+    "baseSeconds": 3565,
+    "routeType": "LAND"
+  },
+  {
+    "id": "daqing|haerbin",
+    "from": "haerbin",
+    "to": "daqing",
+    "km": 147,
+    "baseSeconds": 880,
+    "routeType": "LAND"
+  },
+  {
+    "id": "daqing|qiqihaer",
+    "from": "qiqihaer",
+    "to": "daqing",
+    "km": 123,
+    "baseSeconds": 740,
+    "routeType": "LAND"
+  },
+  {
+    "id": "daqing|songyuan",
+    "from": "songyuan",
+    "to": "daqing",
+    "km": 163,
+    "baseSeconds": 980,
+    "routeType": "LAND"
+  },
+  {
+    "id": "daqing|suihua",
+    "from": "daqing",
+    "to": "suihua",
+    "km": 144,
+    "baseSeconds": 865,
+    "routeType": "LAND"
+  },
+  {
+    "id": "daqing|xinganmeng",
+    "from": "xinganmeng",
+    "to": "daqing",
+    "km": 239,
+    "baseSeconds": 1435,
+    "routeType": "LAND"
+  },
+  {
+    "id": "daqing|yichun",
+    "from": "daqing",
+    "to": "yichun",
+    "km": 310,
+    "baseSeconds": 1860,
+    "routeType": "LAND"
+  },
+  {
+    "id": "datong|huhehaote",
+    "from": "datong",
+    "to": "huhehaote",
+    "km": 156,
+    "baseSeconds": 935,
+    "routeType": "LAND"
+  },
+  {
+    "id": "datong|shuozhou",
+    "from": "datong",
+    "to": "shuozhou",
+    "km": 112,
+    "baseSeconds": 670,
+    "routeType": "LAND"
+  },
+  {
+    "id": "datong|taiyuan",
+    "from": "taiyuan",
+    "to": "datong",
+    "km": 254,
+    "baseSeconds": 1525,
+    "routeType": "LAND"
+  },
+  {
+    "id": "datong|wulanchabu",
+    "from": "datong",
+    "to": "wulanchabu",
+    "km": 102,
+    "baseSeconds": 610,
+    "routeType": "LAND"
+  },
+  {
+    "id": "datong|xinzhou",
+    "from": "datong",
+    "to": "xinzhou",
+    "km": 191,
+    "baseSeconds": 1145,
+    "routeType": "LAND"
+  },
+  {
+    "id": "datong|yangquan",
+    "from": "datong",
+    "to": "yangquan",
+    "km": 248,
+    "baseSeconds": 1490,
+    "routeType": "LAND"
+  },
+  {
+    "id": "daxinganling|heihe",
+    "from": "heihe",
+    "to": "daxinganling",
+    "km": 271,
+    "baseSeconds": 1625,
+    "routeType": "LAND"
+  },
+  {
+    "id": "daxinganling|qiqihaer",
+    "from": "qiqihaer",
+    "to": "daxinganling",
+    "km": 512,
+    "baseSeconds": 3070,
+    "routeType": "LAND"
+  },
+  {
+    "id": "daxinganling|yichun",
+    "from": "yichun",
+    "to": "daxinganling",
+    "km": 553,
+    "baseSeconds": 3320,
+    "routeType": "LAND"
+  },
+  {
+    "id": "dazhou|guangan",
+    "from": "guangan",
+    "to": "dazhou",
+    "km": 116,
+    "baseSeconds": 695,
+    "routeType": "LAND"
+  },
+  {
+    "id": "dazhou|nanchong",
+    "from": "nanchong",
+    "to": "dazhou",
+    "km": 136,
+    "baseSeconds": 815,
+    "routeType": "LAND"
+  },
+  {
+    "id": "dazhou|suining",
+    "from": "suining",
+    "to": "dazhou",
+    "km": 197,
+    "baseSeconds": 1180,
+    "routeType": "LAND"
+  },
+  {
+    "id": "dehong|lincang",
+    "from": "lincang",
+    "to": "dehong",
+    "km": 164,
+    "baseSeconds": 985,
+    "routeType": "LAND"
+  },
+  {
+    "id": "dehong|nujiang",
+    "from": "dehong",
+    "to": "nujiang",
+    "km": 160,
+    "baseSeconds": 960,
+    "routeType": "LAND"
+  },
+  {
+    "id": "deyang|guangyuan",
+    "from": "deyang",
+    "to": "guangyuan",
+    "km": 199,
+    "baseSeconds": 1195,
+    "routeType": "LAND"
+  },
+  {
+    "id": "deyang|meishan",
+    "from": "deyang",
+    "to": "meishan",
+    "km": 131,
+    "baseSeconds": 785,
+    "routeType": "LAND"
+  },
+  {
+    "id": "deyang|mianyang",
+    "from": "deyang",
+    "to": "mianyang",
+    "km": 46,
+    "baseSeconds": 275,
+    "routeType": "LAND"
+  },
+  {
+    "id": "deyang|suining",
+    "from": "deyang",
+    "to": "suining",
+    "km": 131,
+    "baseSeconds": 785,
+    "routeType": "LAND"
+  },
+  {
+    "id": "deyang|ziyang",
+    "from": "deyang",
+    "to": "ziyang",
+    "km": 113,
+    "baseSeconds": 680,
+    "routeType": "LAND"
+  },
+  {
+    "id": "dezhou|hengshui",
+    "from": "hengshui",
+    "to": "dezhou",
+    "km": 69,
+    "baseSeconds": 415,
+    "routeType": "LAND"
+  },
+  {
+    "id": "dezhou|jinan",
+    "from": "jinan",
+    "to": "dezhou",
+    "km": 111,
+    "baseSeconds": 665,
+    "routeType": "LAND"
+  },
+  {
+    "id": "dezhou|liaocheng",
+    "from": "dezhou",
+    "to": "liaocheng",
+    "km": 114,
+    "baseSeconds": 685,
+    "routeType": "LAND"
+  },
+  {
+    "id": "dezhou|taian",
+    "from": "taian",
+    "to": "dezhou",
+    "km": 152,
+    "baseSeconds": 910,
+    "routeType": "LAND"
+  },
+  {
+    "id": "dingxi|gannan",
+    "from": "dingxi",
+    "to": "gannan",
+    "km": 169,
+    "baseSeconds": 1015,
+    "routeType": "LAND"
+  },
+  {
+    "id": "dingxi|lanzhou",
+    "from": "lanzhou",
+    "to": "dingxi",
+    "km": 90,
+    "baseSeconds": 540,
+    "routeType": "LAND"
+  },
+  {
+    "id": "dingxi|linxia",
+    "from": "dingxi",
+    "to": "linxia",
+    "km": 128,
+    "baseSeconds": 770,
+    "routeType": "LAND"
+  },
+  {
+    "id": "dingxi|longnan",
+    "from": "dingxi",
+    "to": "longnan",
+    "km": 244,
+    "baseSeconds": 1465,
+    "routeType": "LAND"
+  },
+  {
+    "id": "dingxi|pingliang",
+    "from": "pingliang",
+    "to": "dingxi",
+    "km": 184,
+    "baseSeconds": 1105,
+    "routeType": "LAND"
+  },
+  {
+    "id": "dingxi|qingyang",
+    "from": "qingyang",
+    "to": "dingxi",
+    "km": 272,
+    "baseSeconds": 1630,
+    "routeType": "LAND"
+  },
+  {
+    "id": "dingxi|tianshui",
+    "from": "tianshui",
+    "to": "dingxi",
+    "km": 149,
+    "baseSeconds": 895,
+    "routeType": "LAND"
+  },
+  {
+    "id": "diqing|lijiang",
+    "from": "lijiang",
+    "to": "diqing",
+    "km": 120,
+    "baseSeconds": 720,
+    "routeType": "LAND"
+  },
+  {
+    "id": "diqing|linzhi",
+    "from": "diqing",
+    "to": "linzhi",
+    "km": 559,
+    "baseSeconds": 3355,
+    "routeType": "LAND"
+  },
+  {
+    "id": "diqing|nujiang",
+    "from": "nujiang",
+    "to": "diqing",
+    "km": 235,
+    "baseSeconds": 1410,
+    "routeType": "LAND"
+  },
+  {
+    "id": "dongfang|sanya",
+    "from": "sanya",
+    "to": "dongfang",
+    "km": 131,
+    "baseSeconds": 785,
+    "routeType": "LAND"
+  },
+  {
+    "id": "dongfang|wanning",
+    "from": "wanning",
+    "to": "dongfang",
+    "km": 186,
+    "baseSeconds": 1115,
+    "routeType": "LAND"
+  },
+  {
+    "id": "dongfang|wuzhishan",
+    "from": "wuzhishan",
+    "to": "dongfang",
+    "km": 98,
+    "baseSeconds": 590,
+    "routeType": "LAND"
+  },
+  {
+    "id": "dongguan|foshan",
+    "from": "foshan",
+    "to": "dongguan",
+    "km": 64,
+    "baseSeconds": 385,
+    "routeType": "LAND"
+  },
+  {
+    "id": "dongguan|guangzhou",
+    "from": "guangzhou",
+    "to": "dongguan",
+    "km": 52,
+    "baseSeconds": 310,
+    "routeType": "LAND"
+  },
+  {
+    "id": "dongguan|heyuan",
+    "from": "dongguan",
+    "to": "heyuan",
+    "km": 126,
+    "baseSeconds": 755,
+    "routeType": "LAND"
+  },
+  {
+    "id": "dongguan|huizhou",
+    "from": "dongguan",
+    "to": "huizhou",
+    "km": 69,
+    "baseSeconds": 415,
+    "routeType": "LAND"
+  },
+  {
+    "id": "dongguan|jiangmen",
+    "from": "jiangmen",
+    "to": "dongguan",
+    "km": 84,
+    "baseSeconds": 505,
+    "routeType": "LAND"
+  },
+  {
+    "id": "dongguan|qingyuan",
+    "from": "qingyuan",
+    "to": "dongguan",
+    "km": 102,
+    "baseSeconds": 610,
+    "routeType": "LAND"
+  },
+  {
+    "id": "dongguan|shaoguan",
+    "from": "shaoguan",
+    "to": "dongguan",
+    "km": 200,
+    "baseSeconds": 1200,
+    "routeType": "LAND"
+  },
+  {
+    "id": "dongguan|shenzhen",
+    "from": "shenzhen",
+    "to": "dongguan",
+    "km": 61,
+    "baseSeconds": 365,
+    "routeType": "LAND"
+  },
+  {
+    "id": "dongguan|zhaoqing",
+    "from": "zhaoqing",
+    "to": "dongguan",
+    "km": 131,
+    "baseSeconds": 785,
+    "routeType": "LAND"
+  },
+  {
+    "id": "dongguan|zhongshan",
+    "from": "dongguan",
+    "to": "zhongshan",
+    "km": 67,
+    "baseSeconds": 400,
+    "routeType": "LAND"
+  },
+  {
+    "id": "dongguan|zhuhai",
+    "from": "zhuhai",
+    "to": "dongguan",
+    "km": 86,
+    "baseSeconds": 515,
+    "routeType": "LAND"
+  },
+  {
+    "id": "dongying|jinan",
+    "from": "jinan",
+    "to": "dongying",
+    "km": 163,
+    "baseSeconds": 980,
+    "routeType": "LAND"
+  },
+  {
+    "id": "dongying|qingdao",
+    "from": "qingdao",
+    "to": "dongying",
+    "km": 215,
+    "baseSeconds": 1290,
+    "routeType": "LAND"
+  },
+  {
+    "id": "dongying|weifang",
+    "from": "dongying",
+    "to": "weifang",
+    "km": 91,
+    "baseSeconds": 545,
+    "routeType": "LAND"
+  },
+  {
+    "id": "dongying|weihai",
+    "from": "dongying",
+    "to": "weihai",
+    "km": 305,
+    "baseSeconds": 1830,
+    "routeType": "LAND"
+  },
+  {
+    "id": "dongying|yantai",
+    "from": "dongying",
+    "to": "yantai",
+    "km": 245,
+    "baseSeconds": 1470,
+    "routeType": "LAND"
+  },
+  {
+    "id": "dongying|zibo",
+    "from": "zibo",
+    "to": "dongying",
+    "km": 88,
+    "baseSeconds": 530,
+    "routeType": "LAND"
+  },
+  {
+    "id": "eerduosi|huhehaote",
+    "from": "huhehaote",
+    "to": "eerduosi",
+    "km": 216,
+    "baseSeconds": 1295,
+    "routeType": "LAND"
+  },
+  {
+    "id": "eerduosi|wuhai",
+    "from": "wuhai",
+    "to": "eerduosi",
+    "km": 256,
+    "baseSeconds": 1535,
+    "routeType": "LAND"
+  },
+  {
+    "id": "eerduosi|wulanchabu",
+    "from": "eerduosi",
+    "to": "wulanchabu",
+    "km": 323,
+    "baseSeconds": 1940,
+    "routeType": "LAND"
+  },
+  {
+    "id": "eerduosi|yulinsn",
+    "from": "eerduosi",
+    "to": "yulinsn",
+    "km": 147,
+    "baseSeconds": 880,
+    "routeType": "LAND"
+  },
+  {
+    "id": "enshi|jingmen",
+    "from": "jingmen",
+    "to": "enshi",
+    "km": 273,
+    "baseSeconds": 1640,
+    "routeType": "LAND"
+  },
+  {
+    "id": "enshi|jingzhou",
+    "from": "jingzhou",
+    "to": "enshi",
+    "km": 264,
+    "baseSeconds": 1585,
+    "routeType": "LAND"
+  },
+  {
+    "id": "enshi|shiyan",
+    "from": "shiyan",
+    "to": "enshi",
+    "km": 292,
+    "baseSeconds": 1750,
+    "routeType": "LAND"
+  },
+  {
+    "id": "enshi|yichang",
+    "from": "yichang",
+    "to": "enshi",
+    "km": 179,
+    "baseSeconds": 1075,
+    "routeType": "LAND"
+  },
+  {
+    "id": "ezhou|huanggang",
+    "from": "ezhou",
+    "to": "huanggang",
+    "km": 7,
+    "baseSeconds": 60,
+    "routeType": "LAND"
+  },
+  {
+    "id": "ezhou|huangshi",
+    "from": "huangshi",
+    "to": "ezhou",
+    "km": 26,
+    "baseSeconds": 155,
+    "routeType": "LAND"
+  },
+  {
+    "id": "ezhou|jiujiang",
+    "from": "jiujiang",
+    "to": "ezhou",
+    "km": 131,
+    "baseSeconds": 785,
+    "routeType": "LAND"
+  },
+  {
+    "id": "ezhou|wuhan",
+    "from": "wuhan",
+    "to": "ezhou",
+    "km": 61,
+    "baseSeconds": 365,
+    "routeType": "LAND"
+  },
+  {
+    "id": "ezhou|xianning",
+    "from": "ezhou",
+    "to": "xianning",
+    "km": 82,
+    "baseSeconds": 490,
+    "routeType": "LAND"
+  },
+  {
+    "id": "ezhou|xiaogan",
+    "from": "ezhou",
+    "to": "xiaogan",
+    "km": 110,
+    "baseSeconds": 660,
+    "routeType": "LAND"
+  },
+  {
+    "id": "fangchenggang|nanning",
+    "from": "nanning",
+    "to": "fangchenggang",
+    "km": 126,
+    "baseSeconds": 755,
+    "routeType": "LAND"
+  },
+  {
+    "id": "fangchenggang|qinzhou",
+    "from": "fangchenggang",
+    "to": "qinzhou",
+    "km": 42,
+    "baseSeconds": 250,
+    "routeType": "LAND"
+  },
+  {
+    "id": "foshan|guangzhou",
+    "from": "guangzhou",
+    "to": "foshan",
+    "km": 19,
+    "baseSeconds": 115,
+    "routeType": "LAND"
+  },
+  {
+    "id": "foshan|huizhou",
+    "from": "foshan",
+    "to": "huizhou",
+    "km": 133,
+    "baseSeconds": 800,
+    "routeType": "LAND"
+  },
+  {
+    "id": "foshan|jiangmen",
+    "from": "foshan",
+    "to": "jiangmen",
+    "km": 49,
+    "baseSeconds": 295,
+    "routeType": "LAND"
+  },
+  {
+    "id": "foshan|qingyuan",
+    "from": "foshan",
+    "to": "qingyuan",
+    "km": 74,
+    "baseSeconds": 445,
+    "routeType": "LAND"
+  },
+  {
+    "id": "foshan|shenzhen",
+    "from": "shenzhen",
+    "to": "foshan",
+    "km": 110,
+    "baseSeconds": 660,
+    "routeType": "LAND"
+  },
+  {
+    "id": "foshan|yunfu",
+    "from": "foshan",
+    "to": "yunfu",
+    "km": 111,
+    "baseSeconds": 665,
+    "routeType": "LAND"
+  },
+  {
+    "id": "foshan|zhaoqing",
+    "from": "foshan",
+    "to": "zhaoqing",
+    "km": 67,
+    "baseSeconds": 400,
+    "routeType": "LAND"
+  },
+  {
+    "id": "foshan|zhongshan",
+    "from": "foshan",
+    "to": "zhongshan",
+    "km": 62,
+    "baseSeconds": 370,
+    "routeType": "LAND"
+  },
+  {
+    "id": "foshan|zhuhai",
+    "from": "zhuhai",
+    "to": "foshan",
+    "km": 94,
+    "baseSeconds": 565,
+    "routeType": "LAND"
+  },
+  {
+    "id": "fushun|liaoyang",
+    "from": "fushun",
+    "to": "liaoyang",
+    "km": 90,
+    "baseSeconds": 540,
+    "routeType": "LAND"
+  },
+  {
+    "id": "fushun|shenyang",
+    "from": "shenyang",
+    "to": "fushun",
+    "km": 45,
+    "baseSeconds": 270,
+    "routeType": "LAND"
+  },
+  {
+    "id": "fushun|tieling",
+    "from": "fushun",
+    "to": "tieling",
+    "km": 47,
+    "baseSeconds": 280,
+    "routeType": "LAND"
+  },
+  {
+    "id": "fuxin|jinzhou",
+    "from": "jinzhou",
+    "to": "fuxin",
+    "km": 112,
+    "baseSeconds": 670,
+    "routeType": "LAND"
+  },
+  {
+    "id": "fuxin|panjin",
+    "from": "fuxin",
+    "to": "panjin",
+    "km": 105,
+    "baseSeconds": 630,
+    "routeType": "LAND"
+  },
+  {
+    "id": "fuxin|shenyang",
+    "from": "shenyang",
+    "to": "fuxin",
+    "km": 148,
+    "baseSeconds": 890,
+    "routeType": "LAND"
+  },
+  {
+    "id": "fuxin|tongliao",
+    "from": "tongliao",
+    "to": "fuxin",
+    "km": 187,
+    "baseSeconds": 1120,
+    "routeType": "LAND"
+  },
+  {
+    "id": "fuyang|huainan",
+    "from": "huainan",
+    "to": "fuyang",
+    "km": 115,
+    "baseSeconds": 690,
+    "routeType": "LAND"
+  },
+  {
+    "id": "fuyang|liuan",
+    "from": "fuyang",
+    "to": "liuan",
+    "km": 145,
+    "baseSeconds": 870,
+    "routeType": "LAND"
+  },
+  {
+    "id": "fuyang|suzhouah",
+    "from": "fuyang",
+    "to": "suzhouah",
+    "km": 137,
+    "baseSeconds": 820,
+    "routeType": "LAND"
+  },
+  {
+    "id": "fuzhou|nanping",
+    "from": "fuzhou",
+    "to": "nanping",
+    "km": 128,
+    "baseSeconds": 770,
+    "routeType": "LAND"
+  },
+  {
+    "id": "fuzhou|ningde",
+    "from": "fuzhou",
+    "to": "ningde",
+    "km": 70,
+    "baseSeconds": 420,
+    "routeType": "LAND"
+  },
+  {
+    "id": "fuzhou|putian",
+    "from": "fuzhou",
+    "to": "putian",
+    "km": 76,
+    "baseSeconds": 455,
+    "routeType": "LAND"
+  },
+  {
+    "id": "fuzhou|quanzhou",
+    "from": "fuzhou",
+    "to": "quanzhou",
+    "km": 148,
+    "baseSeconds": 890,
+    "routeType": "LAND"
+  },
+  {
+    "id": "fuzhou|sanming",
+    "from": "fuzhou",
+    "to": "sanming",
+    "km": 167,
+    "baseSeconds": 1000,
+    "routeType": "LAND"
+  },
+  {
+    "id": "fuzhou|taipei",
+    "from": "fuzhou",
+    "to": "taipei",
+    "km": 255,
+    "baseSeconds": 1530,
+    "routeType": "SEA"
+  },
+  {
+    "id": "fuzhoujx|jian",
+    "from": "jian",
+    "to": "fuzhoujx",
+    "km": 164,
+    "baseSeconds": 985,
+    "routeType": "LAND"
+  },
+  {
+    "id": "fuzhoujx|jiujiang",
+    "from": "jiujiang",
+    "to": "fuzhoujx",
+    "km": 199,
+    "baseSeconds": 1195,
+    "routeType": "LAND"
+  },
+  {
+    "id": "fuzhoujx|nanchang",
+    "from": "nanchang",
+    "to": "fuzhoujx",
+    "km": 95,
+    "baseSeconds": 570,
+    "routeType": "LAND"
+  },
+  {
+    "id": "fuzhoujx|shangrao",
+    "from": "fuzhoujx",
+    "to": "shangrao",
+    "km": 165,
+    "baseSeconds": 990,
+    "routeType": "LAND"
+  },
+  {
+    "id": "fuzhoujx|xinyu",
+    "from": "xinyu",
+    "to": "fuzhoujx",
+    "km": 142,
+    "baseSeconds": 850,
+    "routeType": "LAND"
+  },
+  {
+    "id": "fuzhoujx|yingtan",
+    "from": "yingtan",
+    "to": "fuzhoujx",
+    "km": 78,
+    "baseSeconds": 470,
+    "routeType": "LAND"
+  },
+  {
+    "id": "gannan|huangnan",
+    "from": "gannan",
+    "to": "huangnan",
+    "km": 100,
+    "baseSeconds": 600,
+    "routeType": "LAND"
+  },
+  {
+    "id": "gannan|lanzhou",
+    "from": "lanzhou",
+    "to": "gannan",
+    "km": 145,
+    "baseSeconds": 870,
+    "routeType": "LAND"
+  },
+  {
+    "id": "gannan|linxia",
+    "from": "linxia",
+    "to": "gannan",
+    "km": 73,
+    "baseSeconds": 440,
+    "routeType": "LAND"
+  },
+  {
+    "id": "gannan|longnan",
+    "from": "longnan",
+    "to": "gannan",
+    "km": 256,
+    "baseSeconds": 1535,
+    "routeType": "LAND"
+  },
+  {
+    "id": "ganzhou|jian",
+    "from": "ganzhou",
+    "to": "jian",
+    "km": 142,
+    "baseSeconds": 850,
+    "routeType": "LAND"
+  },
+  {
+    "id": "ganzhou|meizhou",
+    "from": "ganzhou",
+    "to": "meizhou",
+    "km": 209,
+    "baseSeconds": 1255,
+    "routeType": "LAND"
+  },
+  {
+    "id": "ganzhou|pingxiang",
+    "from": "pingxiang",
+    "to": "ganzhou",
+    "km": 226,
+    "baseSeconds": 1355,
+    "routeType": "LAND"
+  },
+  {
+    "id": "ganzhou|shaoguan",
+    "from": "ganzhou",
+    "to": "shaoguan",
+    "km": 175,
+    "baseSeconds": 1050,
+    "routeType": "LAND"
+  },
+  {
+    "id": "ganzhou|xinyu",
+    "from": "xinyu",
+    "to": "ganzhou",
+    "km": 221,
+    "baseSeconds": 1325,
+    "routeType": "LAND"
+  },
+  {
+    "id": "ganzhou|yichunjx",
+    "from": "ganzhou",
+    "to": "yichunjx",
+    "km": 225,
+    "baseSeconds": 1350,
+    "routeType": "LAND"
+  },
+  {
+    "id": "ganzi|leshan",
+    "from": "leshan",
+    "to": "ganzi",
+    "km": 183,
+    "baseSeconds": 1100,
+    "routeType": "LAND"
+  },
+  {
+    "id": "ganzi|liangshan",
+    "from": "ganzi",
+    "to": "liangshan",
+    "km": 241,
+    "baseSeconds": 1445,
+    "routeType": "LAND"
+  },
+  {
+    "id": "ganzi|meishan",
+    "from": "meishan",
+    "to": "ganzi",
+    "km": 182,
+    "baseSeconds": 1090,
+    "routeType": "LAND"
+  },
+  {
+    "id": "ganzi|panzhihua",
+    "from": "panzhihua",
+    "to": "ganzi",
+    "km": 387,
+    "baseSeconds": 2320,
+    "routeType": "LAND"
+  },
+  {
+    "id": "ganzi|yaan",
+    "from": "yaan",
+    "to": "ganzi",
+    "km": 104,
+    "baseSeconds": 625,
+    "routeType": "LAND"
+  },
+  {
+    "id": "gaoxiong|tainan",
+    "from": "tainan",
+    "to": "gaoxiong",
+    "km": 43,
+    "baseSeconds": 260,
+    "routeType": "LAND"
+  },
+  {
+    "id": "gaoxiong|taizhong",
+    "from": "taizhong",
+    "to": "gaoxiong",
+    "km": 174,
+    "baseSeconds": 1045,
+    "routeType": "LAND"
+  },
+  {
+    "id": "gaoxiong|taoyuan",
+    "from": "taoyuan",
+    "to": "gaoxiong",
+    "km": 282,
+    "baseSeconds": 1690,
+    "routeType": "LAND"
+  },
+  {
+    "id": "gaoxiong|xinbei",
+    "from": "xinbei",
+    "to": "gaoxiong",
+    "km": 290,
+    "baseSeconds": 1740,
+    "routeType": "LAND"
+  },
+  {
+    "id": "guangan|nanchong",
+    "from": "nanchong",
+    "to": "guangan",
+    "km": 65,
+    "baseSeconds": 390,
+    "routeType": "LAND"
+  },
+  {
+    "id": "guangan|suining",
+    "from": "suining",
+    "to": "guangan",
+    "km": 102,
+    "baseSeconds": 610,
+    "routeType": "LAND"
+  },
+  {
+    "id": "guangyuan|hanzhong",
+    "from": "guangyuan",
+    "to": "hanzhong",
+    "km": 131,
+    "baseSeconds": 785,
+    "routeType": "LAND"
+  },
+  {
+    "id": "guangyuan|longnan",
+    "from": "guangyuan",
+    "to": "longnan",
+    "km": 137,
+    "baseSeconds": 820,
+    "routeType": "LAND"
+  },
+  {
+    "id": "guangyuan|mianyang",
+    "from": "mianyang",
+    "to": "guangyuan",
+    "km": 154,
+    "baseSeconds": 925,
+    "routeType": "LAND"
+  },
+  {
+    "id": "guangyuan|nanchong",
+    "from": "guangyuan",
+    "to": "nanchong",
+    "km": 180,
+    "baseSeconds": 1080,
+    "routeType": "LAND"
+  },
+  {
+    "id": "guangzhou|huizhou",
+    "from": "guangzhou",
+    "to": "huizhou",
+    "km": 119,
+    "baseSeconds": 715,
+    "routeType": "LAND"
+  },
+  {
+    "id": "guangzhou|jiangmen",
+    "from": "guangzhou",
+    "to": "jiangmen",
+    "km": 64,
+    "baseSeconds": 385,
+    "routeType": "LAND"
+  },
+  {
+    "id": "guangzhou|qingyuan",
+    "from": "guangzhou",
+    "to": "qingyuan",
+    "km": 64,
+    "baseSeconds": 385,
+    "routeType": "LAND"
+  },
+  {
+    "id": "guangzhou|shaoguan",
+    "from": "guangzhou",
+    "to": "shaoguan",
+    "km": 190,
+    "baseSeconds": 1140,
+    "routeType": "LAND"
+  },
+  {
+    "id": "guangzhou|shenzhen",
+    "from": "guangzhou",
+    "to": "shenzhen",
+    "km": 104,
+    "baseSeconds": 625,
+    "routeType": "LAND"
+  },
+  {
+    "id": "guangzhou|yunfu",
+    "from": "guangzhou",
+    "to": "yunfu",
+    "km": 127,
+    "baseSeconds": 760,
+    "routeType": "LAND"
+  },
+  {
+    "id": "guangzhou|zhaoqing",
+    "from": "guangzhou",
+    "to": "zhaoqing",
+    "km": 81,
+    "baseSeconds": 485,
+    "routeType": "LAND"
+  },
+  {
+    "id": "guangzhou|zhongshan",
+    "from": "guangzhou",
+    "to": "zhongshan",
+    "km": 69,
+    "baseSeconds": 415,
+    "routeType": "LAND"
+  },
+  {
+    "id": "guangzhou|zhuhai",
+    "from": "guangzhou",
+    "to": "zhuhai",
+    "km": 100,
+    "baseSeconds": 600,
+    "routeType": "LAND"
+  },
+  {
+    "id": "guigang|laibin",
+    "from": "guigang",
+    "to": "laibin",
+    "km": 81,
+    "baseSeconds": 485,
+    "routeType": "LAND"
+  },
+  {
+    "id": "guigang|liuzhou",
+    "from": "liuzhou",
+    "to": "guigang",
+    "km": 137,
+    "baseSeconds": 820,
+    "routeType": "LAND"
+  },
+  {
+    "id": "guigang|nanning",
+    "from": "nanning",
+    "to": "guigang",
+    "km": 135,
+    "baseSeconds": 810,
+    "routeType": "LAND"
+  },
+  {
+    "id": "guigang|wuzhou",
+    "from": "wuzhou",
+    "to": "guigang",
+    "km": 176,
+    "baseSeconds": 1055,
+    "routeType": "LAND"
+  },
+  {
+    "id": "guigang|yulincn",
+    "from": "guigang",
+    "to": "yulincn",
+    "km": 80,
+    "baseSeconds": 480,
+    "routeType": "LAND"
+  },
+  {
+    "id": "guilin|hezhou",
+    "from": "guilin",
+    "to": "hezhou",
+    "km": 160,
+    "baseSeconds": 960,
+    "routeType": "LAND"
+  },
+  {
+    "id": "guilin|laibin",
+    "from": "guilin",
+    "to": "laibin",
+    "km": 201,
+    "baseSeconds": 1205,
+    "routeType": "LAND"
+  },
+  {
+    "id": "guilin|liuzhou",
+    "from": "liuzhou",
+    "to": "guilin",
+    "km": 137,
+    "baseSeconds": 820,
+    "routeType": "LAND"
+  },
+  {
+    "id": "guilin|wuzhou",
+    "from": "guilin",
+    "to": "wuzhou",
+    "km": 223,
+    "baseSeconds": 1340,
+    "routeType": "LAND"
+  },
+  {
+    "id": "guilin|yongzhou",
+    "from": "yongzhou",
+    "to": "guilin",
+    "km": 184,
+    "baseSeconds": 1105,
+    "routeType": "LAND"
+  },
+  {
+    "id": "guiyang|liupanshui",
+    "from": "guiyang",
+    "to": "liupanshui",
+    "km": 179,
+    "baseSeconds": 1075,
+    "routeType": "LAND"
+  },
+  {
+    "id": "guiyang|qiandongnan",
+    "from": "guiyang",
+    "to": "qiandongnan",
+    "km": 134,
+    "baseSeconds": 805,
+    "routeType": "LAND"
+  },
+  {
+    "id": "guiyang|qiannan",
+    "from": "guiyang",
+    "to": "qiannan",
+    "km": 99,
+    "baseSeconds": 595,
+    "routeType": "LAND"
+  },
+  {
+    "id": "guiyang|qianxinan",
+    "from": "guiyang",
+    "to": "qianxinan",
+    "km": 245,
+    "baseSeconds": 1470,
+    "routeType": "LAND"
+  },
+  {
+    "id": "guiyang|tongren",
+    "from": "guiyang",
+    "to": "tongren",
+    "km": 280,
+    "baseSeconds": 1680,
+    "routeType": "LAND"
+  },
+  {
+    "id": "guiyang|zunyi",
+    "from": "guiyang",
+    "to": "zunyi",
+    "km": 124,
+    "baseSeconds": 745,
+    "routeType": "LAND"
+  },
+  {
+    "id": "guoluo|haidong",
+    "from": "haidong",
+    "to": "guoluo",
+    "km": 282,
+    "baseSeconds": 1690,
+    "routeType": "LAND"
+  },
+  {
+    "id": "guoluo|hainanzhou",
+    "from": "hainanzhou",
+    "to": "guoluo",
+    "km": 204,
+    "baseSeconds": 1225,
+    "routeType": "LAND"
+  },
+  {
+    "id": "guoluo|haixi",
+    "from": "guoluo",
+    "to": "haixi",
+    "km": 413,
+    "baseSeconds": 2480,
+    "routeType": "LAND"
+  },
+  {
+    "id": "guoluo|huangnan",
+    "from": "huangnan",
+    "to": "guoluo",
+    "km": 200,
+    "baseSeconds": 1200,
+    "routeType": "LAND"
+  },
+  {
+    "id": "guoluo|xining",
+    "from": "xining",
+    "to": "guoluo",
+    "km": 277,
+    "baseSeconds": 1660,
+    "routeType": "LAND"
+  },
+  {
+    "id": "guoluo|yushu",
+    "from": "guoluo",
+    "to": "yushu",
+    "km": 341,
+    "baseSeconds": 2045,
+    "routeType": "LAND"
+  },
+  {
+    "id": "guyuan|pingliang",
+    "from": "pingliang",
+    "to": "guyuan",
+    "km": 64,
+    "baseSeconds": 385,
+    "routeType": "LAND"
+  },
+  {
+    "id": "guyuan|qingyang",
+    "from": "qingyang",
+    "to": "guyuan",
+    "km": 130,
+    "baseSeconds": 780,
+    "routeType": "LAND"
+  },
+  {
+    "id": "guyuan|shizuishan",
+    "from": "shizuishan",
+    "to": "guyuan",
+    "km": 332,
+    "baseSeconds": 1990,
+    "routeType": "LAND"
+  },
+  {
+    "id": "guyuan|tongchuan",
+    "from": "tongchuan",
+    "to": "guyuan",
+    "km": 274,
+    "baseSeconds": 1645,
+    "routeType": "LAND"
+  },
+  {
+    "id": "guyuan|wuzhong",
+    "from": "wuzhong",
+    "to": "guyuan",
+    "km": 221,
+    "baseSeconds": 1325,
+    "routeType": "LAND"
+  },
+  {
+    "id": "guyuan|yinchuan",
+    "from": "yinchuan",
+    "to": "guyuan",
+    "km": 277,
+    "baseSeconds": 1660,
+    "routeType": "LAND"
+  },
+  {
+    "id": "guyuan|zhongwei",
+    "from": "guyuan",
+    "to": "zhongwei",
+    "km": 191,
+    "baseSeconds": 1145,
+    "routeType": "LAND"
+  },
+  {
+    "id": "haerbin|qiqihaer",
+    "from": "haerbin",
+    "to": "qiqihaer",
+    "km": 269,
+    "baseSeconds": 1615,
+    "routeType": "LAND"
+  },
+  {
+    "id": "haerbin|songyuan",
+    "from": "songyuan",
+    "to": "haerbin",
+    "km": 158,
+    "baseSeconds": 950,
+    "routeType": "LAND"
+  },
+  {
+    "id": "haerbin|suihua",
+    "from": "haerbin",
+    "to": "suihua",
+    "km": 98,
+    "baseSeconds": 590,
+    "routeType": "LAND"
+  },
+  {
+    "id": "haerbin|yichun",
+    "from": "haerbin",
+    "to": "yichun",
+    "km": 273,
+    "baseSeconds": 1640,
+    "routeType": "LAND"
+  },
+  {
+    "id": "haibei|haidong",
+    "from": "haidong",
+    "to": "haibei",
+    "km": 118,
+    "baseSeconds": 710,
+    "routeType": "LAND"
+  },
+  {
+    "id": "haibei|hainanzhou",
+    "from": "haibei",
+    "to": "hainanzhou",
+    "km": 79,
+    "baseSeconds": 475,
+    "routeType": "LAND"
+  },
+  {
+    "id": "haibei|haixi",
+    "from": "haibei",
+    "to": "haixi",
+    "km": 316,
+    "baseSeconds": 1895,
+    "routeType": "LAND"
+  },
+  {
+    "id": "haibei|hami",
+    "from": "haibei",
+    "to": "hami",
+    "km": 908,
+    "baseSeconds": 5450,
+    "routeType": "LAND"
+  },
+  {
+    "id": "haibei|huangnan",
+    "from": "haibei",
+    "to": "huangnan",
+    "km": 188,
+    "baseSeconds": 1130,
+    "routeType": "LAND"
+  },
+  {
+    "id": "haibei|xining",
+    "from": "xining",
+    "to": "haibei",
+    "km": 87,
+    "baseSeconds": 520,
+    "routeType": "LAND"
+  },
+  {
+    "id": "haidong|hainanzhou",
+    "from": "haidong",
+    "to": "hainanzhou",
+    "km": 135,
+    "baseSeconds": 810,
+    "routeType": "LAND"
+  },
+  {
+    "id": "haidong|huangnan",
+    "from": "haidong",
+    "to": "huangnan",
+    "km": 109,
+    "baseSeconds": 655,
+    "routeType": "LAND"
+  },
+  {
+    "id": "haidong|xining",
+    "from": "xining",
+    "to": "haidong",
+    "km": 32,
+    "baseSeconds": 190,
+    "routeType": "LAND"
+  },
+  {
+    "id": "haikou|qionghai",
+    "from": "haikou",
+    "to": "qionghai",
+    "km": 88,
+    "baseSeconds": 530,
+    "routeType": "LAND"
+  },
+  {
+    "id": "haikou|wanning",
+    "from": "haikou",
+    "to": "wanning",
+    "km": 138,
+    "baseSeconds": 830,
+    "routeType": "LAND"
+  },
+  {
+    "id": "haikou|wenchang",
+    "from": "haikou",
+    "to": "wenchang",
+    "km": 68,
+    "baseSeconds": 410,
+    "routeType": "LAND"
+  },
+  {
+    "id": "haikou|zhanjiang",
+    "from": "zhanjiang",
+    "to": "haikou",
+    "km": 137,
+    "baseSeconds": 820,
+    "routeType": "SEA"
+  },
+  {
+    "id": "hainanzhou|haixi",
+    "from": "hainanzhou",
+    "to": "haixi",
+    "km": 314,
+    "baseSeconds": 1885,
+    "routeType": "LAND"
+  },
+  {
+    "id": "hainanzhou|huangnan",
+    "from": "huangnan",
+    "to": "hainanzhou",
+    "km": 152,
+    "baseSeconds": 910,
+    "routeType": "LAND"
+  },
+  {
+    "id": "hainanzhou|xining",
+    "from": "xining",
+    "to": "hainanzhou",
+    "km": 110,
+    "baseSeconds": 660,
+    "routeType": "LAND"
+  },
+  {
+    "id": "hainanzhou|yushu",
+    "from": "hainanzhou",
+    "to": "yushu",
+    "km": 493,
+    "baseSeconds": 2960,
+    "routeType": "LAND"
+  },
+  {
+    "id": "haixi|hami",
+    "from": "haixi",
+    "to": "hami",
+    "km": 690,
+    "baseSeconds": 4140,
+    "routeType": "LAND"
+  },
+  {
+    "id": "haixi|xining",
+    "from": "xining",
+    "to": "haixi",
+    "km": 400,
+    "baseSeconds": 2400,
+    "routeType": "LAND"
+  },
+  {
+    "id": "haixi|yushu",
+    "from": "yushu",
+    "to": "haixi",
+    "km": 487,
+    "baseSeconds": 2920,
+    "routeType": "LAND"
+  },
+  {
+    "id": "hami|jiayuguan",
+    "from": "jiayuguan",
+    "to": "hami",
+    "km": 524,
+    "baseSeconds": 3145,
+    "routeType": "LAND"
+  },
+  {
+    "id": "hami|jiuquan",
+    "from": "jiuquan",
+    "to": "hami",
+    "km": 540,
+    "baseSeconds": 3240,
+    "routeType": "LAND"
+  },
+  {
+    "id": "hami|tulufan",
+    "from": "tulufan",
+    "to": "hami",
+    "km": 352,
+    "baseSeconds": 2110,
+    "routeType": "LAND"
+  },
+  {
+    "id": "hami|wulumuqi",
+    "from": "wulumuqi",
+    "to": "hami",
+    "km": 489,
+    "baseSeconds": 2935,
+    "routeType": "LAND"
+  },
+  {
+    "id": "handan|hebi",
+    "from": "handan",
+    "to": "hebi",
+    "km": 100,
+    "baseSeconds": 600,
+    "routeType": "LAND"
+  },
+  {
+    "id": "handan|hengshui",
+    "from": "handan",
+    "to": "hengshui",
+    "km": 159,
+    "baseSeconds": 955,
+    "routeType": "LAND"
+  },
+  {
+    "id": "handan|shijiazhuang",
+    "from": "shijiazhuang",
+    "to": "handan",
+    "km": 157,
+    "baseSeconds": 940,
+    "routeType": "LAND"
+  },
+  {
+    "id": "handan|xingtai",
+    "from": "handan",
+    "to": "xingtai",
+    "km": 49,
+    "baseSeconds": 295,
+    "routeType": "LAND"
+  },
+  {
+    "id": "hangzhou|huzhou",
+    "from": "hangzhou",
+    "to": "huzhou",
+    "km": 68,
+    "baseSeconds": 410,
+    "routeType": "LAND"
+  },
+  {
+    "id": "hangzhou|jiaxing",
+    "from": "hangzhou",
+    "to": "jiaxing",
+    "km": 78,
+    "baseSeconds": 470,
+    "routeType": "LAND"
+  },
+  {
+    "id": "hangzhou|jinhua",
+    "from": "hangzhou",
+    "to": "jinhua",
+    "km": 142,
+    "baseSeconds": 850,
+    "routeType": "LAND"
+  },
+  {
+    "id": "hangzhou|quzhou",
+    "from": "hangzhou",
+    "to": "quzhou",
+    "km": 194,
+    "baseSeconds": 1165,
+    "routeType": "LAND"
+  },
+  {
+    "id": "hangzhou|shaoxing",
+    "from": "hangzhou",
+    "to": "shaoxing",
+    "km": 50,
+    "baseSeconds": 300,
+    "routeType": "LAND"
+  },
+  {
+    "id": "hanzhong|xian",
+    "from": "xian",
+    "to": "hanzhong",
+    "km": 227,
+    "baseSeconds": 1360,
+    "routeType": "LAND"
+  },
+  {
+    "id": "hanzhong|xianyang",
+    "from": "xianyang",
+    "to": "hanzhong",
+    "km": 210,
+    "baseSeconds": 1260,
+    "routeType": "LAND"
+  },
+  {
+    "id": "hebi|jiaozuo",
+    "from": "hebi",
+    "to": "jiaozuo",
+    "km": 113,
+    "baseSeconds": 680,
+    "routeType": "LAND"
+  },
+  {
+    "id": "hebi|kaifeng",
+    "from": "kaifeng",
+    "to": "hebi",
+    "km": 106,
+    "baseSeconds": 635,
+    "routeType": "LAND"
+  },
+  {
+    "id": "hebi|puyang",
+    "from": "hebi",
+    "to": "puyang",
+    "km": 66,
+    "baseSeconds": 395,
+    "routeType": "LAND"
+  },
+  {
+    "id": "hebi|xinxiang",
+    "from": "hebi",
+    "to": "xinxiang",
+    "km": 60,
+    "baseSeconds": 360,
+    "routeType": "LAND"
+  },
+  {
+    "id": "hebi|zhengzhou",
+    "from": "zhengzhou",
+    "to": "hebi",
+    "km": 127,
+    "baseSeconds": 760,
+    "routeType": "LAND"
+  },
+  {
+    "id": "hechi|laibin",
+    "from": "hechi",
+    "to": "laibin",
+    "km": 156,
+    "baseSeconds": 935,
+    "routeType": "LAND"
+  },
+  {
+    "id": "hechi|liuzhou",
+    "from": "liuzhou",
+    "to": "hechi",
+    "km": 141,
+    "baseSeconds": 845,
+    "routeType": "LAND"
+  },
+  {
+    "id": "hechi|nanning",
+    "from": "nanning",
+    "to": "hechi",
+    "km": 210,
+    "baseSeconds": 1260,
+    "routeType": "LAND"
+  },
+  {
+    "id": "hechi|qiandongnan",
+    "from": "hechi",
+    "to": "qiandongnan",
+    "km": 209,
+    "baseSeconds": 1255,
+    "routeType": "LAND"
+  },
+  {
+    "id": "hechi|qiannan",
+    "from": "hechi",
+    "to": "qiannan",
+    "km": 182,
+    "baseSeconds": 1090,
+    "routeType": "LAND"
+  },
+  {
+    "id": "hefei|huainan",
+    "from": "hefei",
+    "to": "huainan",
+    "km": 93,
+    "baseSeconds": 560,
+    "routeType": "LAND"
+  },
+  {
+    "id": "hefei|liuan",
+    "from": "hefei",
+    "to": "liuan",
+    "km": 68,
+    "baseSeconds": 410,
+    "routeType": "LAND"
+  },
+  {
+    "id": "hefei|maanshan",
+    "from": "hefei",
+    "to": "maanshan",
+    "km": 122,
+    "baseSeconds": 730,
+    "routeType": "LAND"
+  },
+  {
+    "id": "hefei|tongling",
+    "from": "hefei",
+    "to": "tongling",
+    "km": 111,
+    "baseSeconds": 665,
+    "routeType": "LAND"
+  },
+  {
+    "id": "hefei|wuhu",
+    "from": "hefei",
+    "to": "wuhu",
+    "km": 125,
+    "baseSeconds": 750,
+    "routeType": "LAND"
+  },
+  {
+    "id": "hegang|heihe",
+    "from": "hegang",
+    "to": "heihe",
+    "km": 381,
+    "baseSeconds": 2285,
+    "routeType": "LAND"
+  },
+  {
+    "id": "hegang|jiamusi",
+    "from": "hegang",
+    "to": "jiamusi",
+    "km": 61,
+    "baseSeconds": 365,
+    "routeType": "LAND"
+  },
+  {
+    "id": "hegang|qitaihe",
+    "from": "hegang",
+    "to": "qitaihe",
+    "km": 184,
+    "baseSeconds": 1105,
+    "routeType": "LAND"
+  },
+  {
+    "id": "hegang|shuangyashan",
+    "from": "hegang",
+    "to": "shuangyashan",
+    "km": 102,
+    "baseSeconds": 610,
+    "routeType": "LAND"
+  },
+  {
+    "id": "hegang|yichun",
+    "from": "hegang",
+    "to": "yichun",
+    "km": 117,
+    "baseSeconds": 700,
+    "routeType": "LAND"
+  },
+  {
+    "id": "heihe|suihua",
+    "from": "heihe",
+    "to": "suihua",
+    "km": 402,
+    "baseSeconds": 2410,
+    "routeType": "LAND"
+  },
+  {
+    "id": "heihe|yichun",
+    "from": "yichun",
+    "to": "heihe",
+    "km": 296,
+    "baseSeconds": 1775,
+    "routeType": "LAND"
+  },
+  {
+    "id": "hengshui|shijiazhuang",
+    "from": "shijiazhuang",
+    "to": "hengshui",
+    "km": 108,
+    "baseSeconds": 650,
+    "routeType": "LAND"
+  },
+  {
+    "id": "hengshui|xingtai",
+    "from": "xingtai",
+    "to": "hengshui",
+    "km": 127,
+    "baseSeconds": 760,
+    "routeType": "LAND"
+  },
+  {
+    "id": "hengyang|loudi",
+    "from": "hengyang",
+    "to": "loudi",
+    "km": 107,
+    "baseSeconds": 640,
+    "routeType": "LAND"
+  },
+  {
+    "id": "hengyang|shaoyang",
+    "from": "hengyang",
+    "to": "shaoyang",
+    "km": 116,
+    "baseSeconds": 695,
+    "routeType": "LAND"
+  },
+  {
+    "id": "hengyang|xiangtan",
+    "from": "xiangtan",
+    "to": "hengyang",
+    "km": 111,
+    "baseSeconds": 665,
+    "routeType": "LAND"
+  },
+  {
+    "id": "hengyang|yongzhou",
+    "from": "hengyang",
+    "to": "yongzhou",
+    "km": 109,
+    "baseSeconds": 655,
+    "routeType": "LAND"
+  },
+  {
+    "id": "hengyang|zhuzhou",
+    "from": "zhuzhou",
+    "to": "hengyang",
+    "km": 118,
+    "baseSeconds": 710,
+    "routeType": "LAND"
+  },
+  {
+    "id": "hetian|kashi",
+    "from": "kashi",
+    "to": "hetian",
+    "km": 432,
+    "baseSeconds": 2590,
+    "routeType": "LAND"
+  },
+  {
+    "id": "hetian|kezilesu",
+    "from": "kezilesu",
+    "to": "hetian",
+    "km": 437,
+    "baseSeconds": 2620,
+    "routeType": "LAND"
+  },
+  {
+    "id": "heyuan|huizhou",
+    "from": "huizhou",
+    "to": "heyuan",
+    "km": 76,
+    "baseSeconds": 455,
+    "routeType": "LAND"
+  },
+  {
+    "id": "heyuan|meizhou",
+    "from": "meizhou",
+    "to": "heyuan",
+    "km": 157,
+    "baseSeconds": 940,
+    "routeType": "LAND"
+  },
+  {
+    "id": "heyuan|shanwei",
+    "from": "shanwei",
+    "to": "heyuan",
+    "km": 126,
+    "baseSeconds": 755,
+    "routeType": "LAND"
+  },
+  {
+    "id": "heyuan|shaoguan",
+    "from": "shaoguan",
+    "to": "heyuan",
+    "km": 163,
+    "baseSeconds": 980,
+    "routeType": "LAND"
+  },
+  {
+    "id": "heze|jining",
+    "from": "jining",
+    "to": "heze",
+    "km": 102,
+    "baseSeconds": 610,
+    "routeType": "LAND"
+  },
+  {
+    "id": "heze|liaocheng",
+    "from": "liaocheng",
+    "to": "heze",
+    "km": 143,
+    "baseSeconds": 860,
+    "routeType": "LAND"
+  },
+  {
+    "id": "heze|puyang",
+    "from": "heze",
+    "to": "puyang",
+    "km": 71,
+    "baseSeconds": 425,
+    "routeType": "LAND"
+  },
+  {
+    "id": "heze|shangqiu",
+    "from": "heze",
+    "to": "shangqiu",
+    "km": 94,
+    "baseSeconds": 565,
+    "routeType": "LAND"
+  },
+  {
+    "id": "heze|taian",
+    "from": "taian",
+    "to": "heze",
+    "km": 180,
+    "baseSeconds": 1080,
+    "routeType": "LAND"
+  },
+  {
+    "id": "heze|zaozhuang",
+    "from": "zaozhuang",
+    "to": "heze",
+    "km": 174,
+    "baseSeconds": 1045,
+    "routeType": "LAND"
+  },
+  {
+    "id": "hezhou|liuzhou",
+    "from": "liuzhou",
+    "to": "hezhou",
+    "km": 216,
+    "baseSeconds": 1295,
+    "routeType": "LAND"
+  },
+  {
+    "id": "hezhou|wuzhou",
+    "from": "wuzhou",
+    "to": "hezhou",
+    "km": 106,
+    "baseSeconds": 635,
+    "routeType": "LAND"
+  },
+  {
+    "id": "hezhou|yulincn",
+    "from": "yulincn",
+    "to": "hezhou",
+    "km": 241,
+    "baseSeconds": 1445,
+    "routeType": "LAND"
+  },
+  {
+    "id": "honghe|kunming",
+    "from": "kunming",
+    "to": "honghe",
+    "km": 177,
+    "baseSeconds": 1060,
+    "routeType": "LAND"
+  },
+  {
+    "id": "honghe|puer",
+    "from": "puer",
+    "to": "honghe",
+    "km": 255,
+    "baseSeconds": 1530,
+    "routeType": "LAND"
+  },
+  {
+    "id": "honghe|qujing",
+    "from": "qujing",
+    "to": "honghe",
+    "km": 240,
+    "baseSeconds": 1440,
+    "routeType": "LAND"
+  },
+  {
+    "id": "honghe|wenshan",
+    "from": "honghe",
+    "to": "wenshan",
+    "km": 88,
+    "baseSeconds": 530,
+    "routeType": "LAND"
+  },
+  {
+    "id": "honghe|xishuangbanna",
+    "from": "honghe",
+    "to": "xishuangbanna",
+    "km": 305,
+    "baseSeconds": 1830,
+    "routeType": "LAND"
+  },
+  {
+    "id": "honghe|yuxi",
+    "from": "yuxi",
+    "to": "honghe",
+    "km": 138,
+    "baseSeconds": 830,
+    "routeType": "LAND"
+  },
+  {
+    "id": "hongkong|shenzhen",
+    "from": "shenzhen",
+    "to": "hongkong",
+    "km": 28,
+    "baseSeconds": 170,
+    "routeType": "SEA"
+  },
+  {
+    "id": "hongkong|zhuhai",
+    "from": "zhuhai",
+    "to": "hongkong",
+    "km": 64,
+    "baseSeconds": 385,
+    "routeType": "LAND"
+  },
+  {
+    "id": "huaian|lianyungang",
+    "from": "lianyungang",
+    "to": "huaian",
+    "km": 112,
+    "baseSeconds": 670,
+    "routeType": "LAND"
+  },
+  {
+    "id": "huaian|suqian",
+    "from": "huaian",
+    "to": "suqian",
+    "km": 79,
+    "baseSeconds": 475,
+    "routeType": "LAND"
+  },
+  {
+    "id": "huaian|xuzhou",
+    "from": "xuzhou",
+    "to": "huaian",
+    "km": 184,
+    "baseSeconds": 1105,
+    "routeType": "LAND"
+  },
+  {
+    "id": "huaian|yancheng",
+    "from": "huaian",
+    "to": "yancheng",
+    "km": 110,
+    "baseSeconds": 660,
+    "routeType": "LAND"
+  },
+  {
+    "id": "huaian|yangzhou",
+    "from": "huaian",
+    "to": "yangzhou",
+    "km": 140,
+    "baseSeconds": 840,
+    "routeType": "LAND"
+  },
+  {
+    "id": "huaibei|huainan",
+    "from": "huainan",
+    "to": "huaibei",
+    "km": 149,
+    "baseSeconds": 895,
+    "routeType": "LAND"
+  },
+  {
+    "id": "huaibei|suzhouah",
+    "from": "huaibei",
+    "to": "suzhouah",
+    "km": 38,
+    "baseSeconds": 230,
+    "routeType": "LAND"
+  },
+  {
+    "id": "huaibei|xuzhou",
+    "from": "xuzhou",
+    "to": "huaibei",
+    "km": 48,
+    "baseSeconds": 290,
+    "routeType": "LAND"
+  },
+  {
+    "id": "huaibei|zaozhuang",
+    "from": "huaibei",
+    "to": "zaozhuang",
+    "km": 106,
+    "baseSeconds": 635,
+    "routeType": "LAND"
+  },
+  {
+    "id": "huaihua|loudi",
+    "from": "huaihua",
+    "to": "loudi",
+    "km": 197,
+    "baseSeconds": 1180,
+    "routeType": "LAND"
+  },
+  {
+    "id": "huaihua|shaoyang",
+    "from": "shaoyang",
+    "to": "huaihua",
+    "km": 149,
+    "baseSeconds": 895,
+    "routeType": "LAND"
+  },
+  {
+    "id": "huaihua|tongren",
+    "from": "huaihua",
+    "to": "tongren",
+    "km": 82,
+    "baseSeconds": 490,
+    "routeType": "LAND"
+  },
+  {
+    "id": "huaihua|xiangxi",
+    "from": "huaihua",
+    "to": "xiangxi",
+    "km": 89,
+    "baseSeconds": 535,
+    "routeType": "LAND"
+  },
+  {
+    "id": "huaihua|zhangjiajie",
+    "from": "zhangjiajie",
+    "to": "huaihua",
+    "km": 181,
+    "baseSeconds": 1085,
+    "routeType": "LAND"
+  },
+  {
+    "id": "huainan|liuan",
+    "from": "huainan",
+    "to": "liuan",
+    "km": 109,
+    "baseSeconds": 655,
+    "routeType": "LAND"
+  },
+  {
+    "id": "huainan|suzhouah",
+    "from": "huainan",
+    "to": "suzhouah",
+    "km": 113,
+    "baseSeconds": 680,
+    "routeType": "LAND"
+  },
+  {
+    "id": "huanggang|huangshi",
+    "from": "huangshi",
+    "to": "huanggang",
+    "km": 32,
+    "baseSeconds": 190,
+    "routeType": "LAND"
+  },
+  {
+    "id": "huanggang|wuhan",
+    "from": "wuhan",
+    "to": "huanggang",
+    "km": 57,
+    "baseSeconds": 340,
+    "routeType": "LAND"
+  },
+  {
+    "id": "huanggang|xianning",
+    "from": "huanggang",
+    "to": "xianning",
+    "km": 86,
+    "baseSeconds": 515,
+    "routeType": "LAND"
+  },
+  {
+    "id": "huanggang|xiaogan",
+    "from": "xiaogan",
+    "to": "huanggang",
+    "km": 105,
+    "baseSeconds": 630,
+    "routeType": "LAND"
+  },
+  {
+    "id": "huangnan|linxia",
+    "from": "linxia",
+    "to": "huangnan",
+    "km": 108,
+    "baseSeconds": 650,
+    "routeType": "LAND"
+  },
+  {
+    "id": "huangnan|xining",
+    "from": "xining",
+    "to": "huangnan",
+    "km": 124,
+    "baseSeconds": 745,
+    "routeType": "LAND"
+  },
+  {
+    "id": "huangnan|yushu",
+    "from": "huangnan",
+    "to": "yushu",
+    "km": 540,
+    "baseSeconds": 3240,
+    "routeType": "LAND"
+  },
+  {
+    "id": "huangshan|jingdezhen",
+    "from": "huangshan",
+    "to": "jingdezhen",
+    "km": 122,
+    "baseSeconds": 730,
+    "routeType": "LAND"
+  },
+  {
+    "id": "huangshan|quzhou",
+    "from": "quzhou",
+    "to": "huangshan",
+    "km": 100,
+    "baseSeconds": 600,
+    "routeType": "LAND"
+  },
+  {
+    "id": "huangshan|tongling",
+    "from": "tongling",
+    "to": "huangshan",
+    "km": 147,
+    "baseSeconds": 880,
+    "routeType": "LAND"
+  },
+  {
+    "id": "huangshan|xuancheng",
+    "from": "huangshan",
+    "to": "xuancheng",
+    "km": 143,
+    "baseSeconds": 860,
+    "routeType": "LAND"
+  },
+  {
+    "id": "huangshi|jiujiang",
+    "from": "jiujiang",
+    "to": "huangshi",
+    "km": 107,
+    "baseSeconds": 640,
+    "routeType": "LAND"
+  },
+  {
+    "id": "huangshi|wuhan",
+    "from": "wuhan",
+    "to": "huangshi",
+    "km": 83,
+    "baseSeconds": 500,
+    "routeType": "LAND"
+  },
+  {
+    "id": "huangshi|xianning",
+    "from": "huangshi",
+    "to": "xianning",
+    "km": 80,
+    "baseSeconds": 480,
+    "routeType": "LAND"
+  },
+  {
+    "id": "huangshi|xiaogan",
+    "from": "huangshi",
+    "to": "xiaogan",
+    "km": 134,
+    "baseSeconds": 805,
+    "routeType": "LAND"
+  },
+  {
+    "id": "huhehaote|wulanchabu",
+    "from": "huhehaote",
+    "to": "wulanchabu",
+    "km": 117,
+    "baseSeconds": 700,
+    "routeType": "LAND"
+  },
+  {
+    "id": "huhehaote|xilinguolemeng",
+    "from": "huhehaote",
+    "to": "xilinguolemeng",
+    "km": 496,
+    "baseSeconds": 2975,
+    "routeType": "LAND"
+  },
+  {
+    "id": "huizhou|shanwei",
+    "from": "shanwei",
+    "to": "huizhou",
+    "km": 105,
+    "baseSeconds": 630,
+    "routeType": "LAND"
+  },
+  {
+    "id": "huizhou|shenzhen",
+    "from": "shenzhen",
+    "to": "huizhou",
+    "km": 72,
+    "baseSeconds": 430,
+    "routeType": "LAND"
+  },
+  {
+    "id": "huizhou|zhongshan",
+    "from": "zhongshan",
+    "to": "huizhou",
+    "km": 124,
+    "baseSeconds": 745,
+    "routeType": "LAND"
+  },
+  {
+    "id": "huizhou|zhuhai",
+    "from": "zhuhai",
+    "to": "huizhou",
+    "km": 129,
+    "baseSeconds": 775,
+    "routeType": "LAND"
+  },
+  {
+    "id": "huludao|jinzhou",
+    "from": "jinzhou",
+    "to": "huludao",
+    "km": 50,
+    "baseSeconds": 300,
+    "routeType": "LAND"
+  },
+  {
+    "id": "huludao|panjin",
+    "from": "panjin",
+    "to": "huludao",
+    "km": 113,
+    "baseSeconds": 680,
+    "routeType": "LAND"
+  },
+  {
+    "id": "huludao|qinhuangdao",
+    "from": "qinhuangdao",
+    "to": "huludao",
+    "km": 136,
+    "baseSeconds": 815,
+    "routeType": "LAND"
+  },
+  {
+    "id": "huludao|yingkou",
+    "from": "yingkou",
+    "to": "huludao",
+    "km": 118,
+    "baseSeconds": 710,
+    "routeType": "LAND"
+  },
+  {
+    "id": "hulunbeier|tongliao",
+    "from": "tongliao",
+    "to": "hulunbeier",
+    "km": 646,
+    "baseSeconds": 3875,
+    "routeType": "LAND"
+  },
+  {
+    "id": "hulunbeier|xilinguolemeng",
+    "from": "hulunbeier",
+    "to": "xilinguolemeng",
+    "km": 650,
+    "baseSeconds": 3900,
+    "routeType": "LAND"
+  },
+  {
+    "id": "hulunbeier|xinganmeng",
+    "from": "hulunbeier",
+    "to": "xinganmeng",
+    "km": 388,
+    "baseSeconds": 2330,
+    "routeType": "LAND"
+  },
+  {
+    "id": "huzhou|jiaxing",
+    "from": "jiaxing",
+    "to": "huzhou",
+    "km": 66,
+    "baseSeconds": 395,
+    "routeType": "LAND"
+  },
+  {
+    "id": "huzhou|ningbo",
+    "from": "ningbo",
+    "to": "huzhou",
+    "km": 180,
+    "baseSeconds": 1080,
+    "routeType": "LAND"
+  },
+  {
+    "id": "huzhou|shanghai",
+    "from": "shanghai",
+    "to": "huzhou",
+    "km": 137,
+    "baseSeconds": 820,
+    "routeType": "LAND"
+  },
+  {
+    "id": "huzhou|shaoxing",
+    "from": "huzhou",
+    "to": "shaoxing",
+    "km": 107,
+    "baseSeconds": 640,
+    "routeType": "LAND"
+  },
+  {
+    "id": "huzhou|suzhou",
+    "from": "suzhou",
+    "to": "huzhou",
+    "km": 65,
+    "baseSeconds": 390,
+    "routeType": "LAND"
+  },
+  {
+    "id": "huzhou|xuancheng",
+    "from": "huzhou",
+    "to": "xuancheng",
+    "km": 127,
+    "baseSeconds": 760,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jiamusi|jixi",
+    "from": "jixi",
+    "to": "jiamusi",
+    "km": 174,
+    "baseSeconds": 1045,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jiamusi|mudanjiang",
+    "from": "jiamusi",
+    "to": "mudanjiang",
+    "km": 256,
+    "baseSeconds": 1535,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jiamusi|qitaihe",
+    "from": "jiamusi",
+    "to": "qitaihe",
+    "km": 126,
+    "baseSeconds": 755,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jiamusi|shuangyashan",
+    "from": "shuangyashan",
+    "to": "jiamusi",
+    "km": 66,
+    "baseSeconds": 395,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jiamusi|yichun",
+    "from": "yichun",
+    "to": "jiamusi",
+    "km": 152,
+    "baseSeconds": 910,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jian|pingxiang",
+    "from": "pingxiang",
+    "to": "jian",
+    "km": 126,
+    "baseSeconds": 755,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jian|xinyu",
+    "from": "xinyu",
+    "to": "jian",
+    "km": 79,
+    "baseSeconds": 475,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jian|yichunjx",
+    "from": "jian",
+    "to": "yichunjx",
+    "km": 95,
+    "baseSeconds": 570,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jiangmen|qingyuan",
+    "from": "jiangmen",
+    "to": "qingyuan",
+    "km": 122,
+    "baseSeconds": 730,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jiangmen|shenzhen",
+    "from": "shenzhen",
+    "to": "jiangmen",
+    "km": 101,
+    "baseSeconds": 605,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jiangmen|yangjiang",
+    "from": "jiangmen",
+    "to": "yangjiang",
+    "km": 139,
+    "baseSeconds": 835,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jiangmen|yunfu",
+    "from": "jiangmen",
+    "to": "yunfu",
+    "km": 113,
+    "baseSeconds": 680,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jiangmen|zhaoqing",
+    "from": "zhaoqing",
+    "to": "jiangmen",
+    "km": 81,
+    "baseSeconds": 485,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jiangmen|zhongshan",
+    "from": "jiangmen",
+    "to": "zhongshan",
+    "km": 33,
+    "baseSeconds": 200,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jiangmen|zhuhai",
+    "from": "zhuhai",
+    "to": "jiangmen",
+    "km": 59,
+    "baseSeconds": 355,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jiaozuo|jincheng",
+    "from": "jincheng",
+    "to": "jiaozuo",
+    "km": 46,
+    "baseSeconds": 275,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jiaozuo|kaifeng",
+    "from": "kaifeng",
+    "to": "jiaozuo",
+    "km": 108,
+    "baseSeconds": 650,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jiaozuo|luoyang",
+    "from": "luoyang",
+    "to": "jiaozuo",
+    "km": 98,
+    "baseSeconds": 590,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jiaozuo|sanmenxia",
+    "from": "jiaozuo",
+    "to": "sanmenxia",
+    "km": 192,
+    "baseSeconds": 1150,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jiaozuo|xinxiang",
+    "from": "xinxiang",
+    "to": "jiaozuo",
+    "km": 63,
+    "baseSeconds": 380,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jiaozuo|zhengzhou",
+    "from": "zhengzhou",
+    "to": "jiaozuo",
+    "km": 63,
+    "baseSeconds": 380,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jiaxing|ningbo",
+    "from": "ningbo",
+    "to": "jiaxing",
+    "km": 124,
+    "baseSeconds": 745,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jiaxing|shanghai",
+    "from": "shanghai",
+    "to": "jiaxing",
+    "km": 86,
+    "baseSeconds": 515,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jiaxing|shaoxing",
+    "from": "jiaxing",
+    "to": "shaoxing",
+    "km": 82,
+    "baseSeconds": 490,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jiaxing|suzhou",
+    "from": "suzhou",
+    "to": "jiaxing",
+    "km": 64,
+    "baseSeconds": 385,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jiaxing|zhoushan",
+    "from": "jiaxing",
+    "to": "zhoushan",
+    "km": 160,
+    "baseSeconds": 960,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jiayuguan|jinchang",
+    "from": "jiayuguan",
+    "to": "jinchang",
+    "km": 364,
+    "baseSeconds": 2185,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jiayuguan|jiuquan",
+    "from": "jiayuguan",
+    "to": "jiuquan",
+    "km": 18,
+    "baseSeconds": 110,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jiayuguan|wuwei",
+    "from": "jiayuguan",
+    "to": "wuwei",
+    "km": 429,
+    "baseSeconds": 2575,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jiayuguan|zhangye",
+    "from": "jiayuguan",
+    "to": "zhangye",
+    "km": 208,
+    "baseSeconds": 1250,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jieyang|meizhou",
+    "from": "jieyang",
+    "to": "meizhou",
+    "km": 86,
+    "baseSeconds": 515,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jieyang|shantou",
+    "from": "shantou",
+    "to": "jieyang",
+    "km": 39,
+    "baseSeconds": 235,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jieyang|shanwei",
+    "from": "jieyang",
+    "to": "shanwei",
+    "km": 132,
+    "baseSeconds": 790,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jilincity|liaoyuan",
+    "from": "jilincity",
+    "to": "liaoyuan",
+    "km": 155,
+    "baseSeconds": 930,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jilincity|siping",
+    "from": "jilincity",
+    "to": "siping",
+    "km": 192,
+    "baseSeconds": 1150,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jilincity|songyuan",
+    "from": "jilincity",
+    "to": "songyuan",
+    "km": 199,
+    "baseSeconds": 1195,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jilincity|tonghua",
+    "from": "jilincity",
+    "to": "tonghua",
+    "km": 240,
+    "baseSeconds": 1440,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jilincity|yanbian",
+    "from": "jilincity",
+    "to": "yanbian",
+    "km": 261,
+    "baseSeconds": 1565,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jinan|liaocheng",
+    "from": "jinan",
+    "to": "liaocheng",
+    "km": 103,
+    "baseSeconds": 620,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jinan|taian",
+    "from": "jinan",
+    "to": "taian",
+    "km": 50,
+    "baseSeconds": 300,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jinan|zibo",
+    "from": "jinan",
+    "to": "zibo",
+    "km": 85,
+    "baseSeconds": 510,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jinchang|jiuquan",
+    "from": "jinchang",
+    "to": "jiuquan",
+    "km": 346,
+    "baseSeconds": 2075,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jinchang|lanzhou",
+    "from": "lanzhou",
+    "to": "jinchang",
+    "km": 310,
+    "baseSeconds": 1860,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jinchang|wuwei",
+    "from": "jinchang",
+    "to": "wuwei",
+    "km": 76,
+    "baseSeconds": 455,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jinchang|zhangye",
+    "from": "jinchang",
+    "to": "zhangye",
+    "km": 158,
+    "baseSeconds": 950,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jincheng|jinzhong",
+    "from": "jincheng",
+    "to": "jinzhong",
+    "km": 245,
+    "baseSeconds": 1470,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jincheng|linfen",
+    "from": "jincheng",
+    "to": "linfen",
+    "km": 137,
+    "baseSeconds": 820,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jincheng|yuncheng",
+    "from": "jincheng",
+    "to": "yuncheng",
+    "km": 176,
+    "baseSeconds": 1055,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jingdezhen|jiujiang",
+    "from": "jingdezhen",
+    "to": "jiujiang",
+    "km": 124,
+    "baseSeconds": 745,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jingdezhen|nanchang",
+    "from": "nanchang",
+    "to": "jingdezhen",
+    "km": 144,
+    "baseSeconds": 865,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jingdezhen|quzhou",
+    "from": "quzhou",
+    "to": "jingdezhen",
+    "km": 168,
+    "baseSeconds": 1010,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jingdezhen|shangrao",
+    "from": "jingdezhen",
+    "to": "shangrao",
+    "km": 117,
+    "baseSeconds": 700,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jingdezhen|yingtan",
+    "from": "jingdezhen",
+    "to": "yingtan",
+    "km": 113,
+    "baseSeconds": 680,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jingmen|jingzhou",
+    "from": "jingmen",
+    "to": "jingzhou",
+    "km": 79,
+    "baseSeconds": 475,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jingmen|shiyan",
+    "from": "shiyan",
+    "to": "jingmen",
+    "km": 223,
+    "baseSeconds": 1340,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jingmen|suizhou",
+    "from": "jingmen",
+    "to": "suizhou",
+    "km": 133,
+    "baseSeconds": 800,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jingmen|xiangyang",
+    "from": "xiangyang",
+    "to": "jingmen",
+    "km": 108,
+    "baseSeconds": 650,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jingmen|yichang",
+    "from": "yichang",
+    "to": "jingmen",
+    "km": 95,
+    "baseSeconds": 570,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jingzhou|suizhou",
+    "from": "jingzhou",
+    "to": "suizhou",
+    "km": 186,
+    "baseSeconds": 1115,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jingzhou|xiaogan",
+    "from": "xiaogan",
+    "to": "jingzhou",
+    "km": 174,
+    "baseSeconds": 1045,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jingzhou|yichang",
+    "from": "yichang",
+    "to": "jingzhou",
+    "km": 99,
+    "baseSeconds": 595,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jingzhou|yueyang",
+    "from": "jingzhou",
+    "to": "yueyang",
+    "km": 138,
+    "baseSeconds": 830,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jinhua|lishui",
+    "from": "jinhua",
+    "to": "lishui",
+    "km": 75,
+    "baseSeconds": 450,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jinhua|quzhou",
+    "from": "jinhua",
+    "to": "quzhou",
+    "km": 77,
+    "baseSeconds": 460,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jinhua|shaoxing",
+    "from": "shaoxing",
+    "to": "jinhua",
+    "km": 139,
+    "baseSeconds": 835,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jinhua|wenzhou",
+    "from": "wenzhou",
+    "to": "jinhua",
+    "km": 158,
+    "baseSeconds": 950,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jining|liaocheng",
+    "from": "jining",
+    "to": "liaocheng",
+    "km": 129,
+    "baseSeconds": 775,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jining|linyi",
+    "from": "jining",
+    "to": "linyi",
+    "km": 166,
+    "baseSeconds": 995,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jining|taian",
+    "from": "jining",
+    "to": "taian",
+    "km": 99,
+    "baseSeconds": 595,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jining|zaozhuang",
+    "from": "zaozhuang",
+    "to": "jining",
+    "km": 94,
+    "baseSeconds": 565,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jinzhong|lvliang",
+    "from": "jinzhong",
+    "to": "lvliang",
+    "km": 143,
+    "baseSeconds": 860,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jinzhong|shuozhou",
+    "from": "shuozhou",
+    "to": "jinzhong",
+    "km": 184,
+    "baseSeconds": 1105,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jinzhong|taiyuan",
+    "from": "taiyuan",
+    "to": "jinzhong",
+    "km": 27,
+    "baseSeconds": 160,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jinzhong|xinzhou",
+    "from": "jinzhong",
+    "to": "xinzhou",
+    "km": 81,
+    "baseSeconds": 485,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jinzhong|yangquan",
+    "from": "yangquan",
+    "to": "jinzhong",
+    "km": 75,
+    "baseSeconds": 450,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jinzhou|panjin",
+    "from": "jinzhou",
+    "to": "panjin",
+    "km": 79,
+    "baseSeconds": 475,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jinzhou|qinhuangdao",
+    "from": "qinhuangdao",
+    "to": "jinzhou",
+    "km": 183,
+    "baseSeconds": 1100,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jinzhou|yingkou",
+    "from": "jinzhou",
+    "to": "yingkou",
+    "km": 105,
+    "baseSeconds": 630,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jiujiang|nanchang",
+    "from": "nanchang",
+    "to": "jiujiang",
+    "km": 115,
+    "baseSeconds": 690,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jiujiang|yingtan",
+    "from": "jiujiang",
+    "to": "yingtan",
+    "km": 192,
+    "baseSeconds": 1150,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jiuquan|wuwei",
+    "from": "wuwei",
+    "to": "jiuquan",
+    "km": 411,
+    "baseSeconds": 2465,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jiuquan|zhangye",
+    "from": "zhangye",
+    "to": "jiuquan",
+    "km": 191,
+    "baseSeconds": 1145,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jixi|mudanjiang",
+    "from": "jixi",
+    "to": "mudanjiang",
+    "km": 134,
+    "baseSeconds": 805,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jixi|qitaihe",
+    "from": "jixi",
+    "to": "qitaihe",
+    "km": 52,
+    "baseSeconds": 310,
+    "routeType": "LAND"
+  },
+  {
+    "id": "jixi|shuangyashan",
+    "from": "jixi",
+    "to": "shuangyashan",
+    "km": 151,
+    "baseSeconds": 905,
+    "routeType": "LAND"
+  },
+  {
+    "id": "kaifeng|puyang",
+    "from": "kaifeng",
+    "to": "puyang",
+    "km": 125,
+    "baseSeconds": 750,
+    "routeType": "LAND"
+  },
+  {
+    "id": "kaifeng|shangqiu",
+    "from": "kaifeng",
+    "to": "shangqiu",
+    "km": 130,
+    "baseSeconds": 780,
+    "routeType": "LAND"
+  },
+  {
+    "id": "kaifeng|xinxiang",
+    "from": "kaifeng",
+    "to": "xinxiang",
+    "km": 65,
+    "baseSeconds": 390,
+    "routeType": "LAND"
+  },
+  {
+    "id": "kaifeng|xuchang",
+    "from": "kaifeng",
+    "to": "xuchang",
+    "km": 94,
+    "baseSeconds": 565,
+    "routeType": "LAND"
+  },
+  {
+    "id": "kaifeng|zhengzhou",
+    "from": "zhengzhou",
+    "to": "kaifeng",
+    "km": 62,
+    "baseSeconds": 370,
+    "routeType": "LAND"
+  },
+  {
+    "id": "kaifeng|zhoukou",
+    "from": "kaifeng",
+    "to": "zhoukou",
+    "km": 135,
+    "baseSeconds": 810,
+    "routeType": "LAND"
+  },
+  {
+    "id": "kashi|kezilesu",
+    "from": "kezilesu",
+    "to": "kashi",
+    "km": 32,
+    "baseSeconds": 190,
+    "routeType": "LAND"
+  },
+  {
+    "id": "kashi|yili",
+    "from": "kashi",
+    "to": "yili",
+    "km": 661,
+    "baseSeconds": 3965,
+    "routeType": "LAND"
+  },
+  {
+    "id": "kelamayi|tacheng",
+    "from": "kelamayi",
+    "to": "tacheng",
+    "km": 194,
+    "baseSeconds": 1165,
+    "routeType": "LAND"
+  },
+  {
+    "id": "kelamayi|wulumuqi",
+    "from": "wulumuqi",
+    "to": "kelamayi",
+    "km": 293,
+    "baseSeconds": 1760,
+    "routeType": "LAND"
+  },
+  {
+    "id": "kelamayi|yili",
+    "from": "kelamayi",
+    "to": "yili",
+    "km": 339,
+    "baseSeconds": 2035,
+    "routeType": "LAND"
+  },
+  {
+    "id": "kezilesu|yili",
+    "from": "kezilesu",
+    "to": "yili",
+    "km": 630,
+    "baseSeconds": 3780,
+    "routeType": "LAND"
+  },
+  {
+    "id": "kunming|qujing",
+    "from": "kunming",
+    "to": "qujing",
+    "km": 119,
+    "baseSeconds": 715,
+    "routeType": "LAND"
+  },
+  {
+    "id": "kunming|wenshan",
+    "from": "kunming",
+    "to": "wenshan",
+    "km": 221,
+    "baseSeconds": 1325,
+    "routeType": "LAND"
+  },
+  {
+    "id": "kunming|yuxi",
+    "from": "kunming",
+    "to": "yuxi",
+    "km": 65,
+    "baseSeconds": 390,
+    "routeType": "LAND"
+  },
+  {
+    "id": "kunming|zhaotong",
+    "from": "kunming",
+    "to": "zhaotong",
+    "km": 288,
+    "baseSeconds": 1730,
+    "routeType": "LAND"
+  },
+  {
+    "id": "laibin|liuzhou",
+    "from": "liuzhou",
+    "to": "laibin",
+    "km": 68,
+    "baseSeconds": 410,
+    "routeType": "LAND"
+  },
+  {
+    "id": "laibin|nanning",
+    "from": "nanning",
+    "to": "laibin",
+    "km": 138,
+    "baseSeconds": 830,
+    "routeType": "LAND"
+  },
+  {
+    "id": "laibin|yulincn",
+    "from": "yulincn",
+    "to": "laibin",
+    "km": 159,
+    "baseSeconds": 955,
+    "routeType": "LAND"
+  },
+  {
+    "id": "langfang|qinhuangdao",
+    "from": "qinhuangdao",
+    "to": "langfang",
+    "km": 254,
+    "baseSeconds": 1525,
+    "routeType": "LAND"
+  },
+  {
+    "id": "langfang|tangshan",
+    "from": "tangshan",
+    "to": "langfang",
+    "km": 129,
+    "baseSeconds": 775,
+    "routeType": "LAND"
+  },
+  {
+    "id": "langfang|tianjin",
+    "from": "tianjin",
+    "to": "langfang",
+    "km": 66,
+    "baseSeconds": 395,
+    "routeType": "LAND"
+  },
+  {
+    "id": "langfang|zhangjiakou",
+    "from": "zhangjiakou",
+    "to": "langfang",
+    "km": 205,
+    "baseSeconds": 1230,
+    "routeType": "LAND"
+  },
+  {
+    "id": "lanzhou|linxia",
+    "from": "lanzhou",
+    "to": "linxia",
+    "km": 76,
+    "baseSeconds": 455,
+    "routeType": "LAND"
+  },
+  {
+    "id": "lanzhou|wuwei",
+    "from": "lanzhou",
+    "to": "wuwei",
+    "km": 233,
+    "baseSeconds": 1400,
+    "routeType": "LAND"
+  },
+  {
+    "id": "lasa|linzhi",
+    "from": "lasa",
+    "to": "linzhi",
+    "km": 311,
+    "baseSeconds": 1865,
+    "routeType": "LAND"
+  },
+  {
+    "id": "lasa|naqu",
+    "from": "lasa",
+    "to": "naqu",
+    "km": 221,
+    "baseSeconds": 1325,
+    "routeType": "LAND"
+  },
+  {
+    "id": "lasa|rikaze",
+    "from": "lasa",
+    "to": "rikaze",
+    "km": 223,
+    "baseSeconds": 1340,
+    "routeType": "LAND"
+  },
+  {
+    "id": "lasa|shannan",
+    "from": "lasa",
+    "to": "shannan",
+    "km": 76,
+    "baseSeconds": 455,
+    "routeType": "LAND"
+  },
+  {
+    "id": "leshan|liangshan",
+    "from": "leshan",
+    "to": "liangshan",
+    "km": 235,
+    "baseSeconds": 1410,
+    "routeType": "LAND"
+  },
+  {
+    "id": "leshan|meishan",
+    "from": "leshan",
+    "to": "meishan",
+    "km": 56,
+    "baseSeconds": 335,
+    "routeType": "LAND"
+  },
+  {
+    "id": "leshan|neijiang",
+    "from": "neijiang",
+    "to": "leshan",
+    "km": 125,
+    "baseSeconds": 750,
+    "routeType": "LAND"
+  },
+  {
+    "id": "leshan|panzhihua",
+    "from": "panzhihua",
+    "to": "leshan",
+    "km": 387,
+    "baseSeconds": 2320,
+    "routeType": "LAND"
+  },
+  {
+    "id": "leshan|yaan",
+    "from": "leshan",
+    "to": "yaan",
+    "km": 87,
+    "baseSeconds": 520,
+    "routeType": "LAND"
+  },
+  {
+    "id": "leshan|yibin",
+    "from": "leshan",
+    "to": "yibin",
+    "km": 123,
+    "baseSeconds": 740,
+    "routeType": "LAND"
+  },
+  {
+    "id": "leshan|zigong",
+    "from": "zigong",
+    "to": "leshan",
+    "km": 101,
+    "baseSeconds": 605,
+    "routeType": "LAND"
+  },
+  {
+    "id": "leshan|ziyang",
+    "from": "leshan",
+    "to": "ziyang",
+    "km": 105,
+    "baseSeconds": 630,
+    "routeType": "LAND"
+  },
+  {
+    "id": "liangshan|panzhihua",
+    "from": "panzhihua",
+    "to": "liangshan",
+    "km": 157,
+    "baseSeconds": 940,
+    "routeType": "LAND"
+  },
+  {
+    "id": "liangshan|yaan",
+    "from": "yaan",
+    "to": "liangshan",
+    "km": 246,
+    "baseSeconds": 1475,
+    "routeType": "LAND"
+  },
+  {
+    "id": "liangshan|zhaotong",
+    "from": "liangshan",
+    "to": "zhaotong",
+    "km": 156,
+    "baseSeconds": 935,
+    "routeType": "LAND"
+  },
+  {
+    "id": "lianyungang|linyi",
+    "from": "lianyungang",
+    "to": "linyi",
+    "km": 93,
+    "baseSeconds": 560,
+    "routeType": "LAND"
+  },
+  {
+    "id": "lianyungang|suqian",
+    "from": "lianyungang",
+    "to": "suqian",
+    "km": 112,
+    "baseSeconds": 670,
+    "routeType": "LAND"
+  },
+  {
+    "id": "lianyungang|xuzhou",
+    "from": "xuzhou",
+    "to": "lianyungang",
+    "km": 191,
+    "baseSeconds": 1145,
+    "routeType": "LAND"
+  },
+  {
+    "id": "lianyungang|yancheng",
+    "from": "lianyungang",
+    "to": "yancheng",
+    "km": 164,
+    "baseSeconds": 985,
+    "routeType": "LAND"
+  },
+  {
+    "id": "liaocheng|taian",
+    "from": "taian",
+    "to": "liaocheng",
+    "km": 103,
+    "baseSeconds": 620,
+    "routeType": "LAND"
+  },
+  {
+    "id": "liaoyang|panjin",
+    "from": "liaoyang",
+    "to": "panjin",
+    "km": 99,
+    "baseSeconds": 595,
+    "routeType": "LAND"
+  },
+  {
+    "id": "liaoyang|shenyang",
+    "from": "shenyang",
+    "to": "liaoyang",
+    "km": 61,
+    "baseSeconds": 365,
+    "routeType": "LAND"
+  },
+  {
+    "id": "liaoyang|tieling",
+    "from": "liaoyang",
+    "to": "tieling",
+    "km": 124,
+    "baseSeconds": 745,
+    "routeType": "LAND"
+  },
+  {
+    "id": "liaoyang|yingkou",
+    "from": "yingkou",
+    "to": "liaoyang",
+    "km": 107,
+    "baseSeconds": 640,
+    "routeType": "LAND"
+  },
+  {
+    "id": "liaoyuan|siping",
+    "from": "siping",
+    "to": "liaoyuan",
+    "km": 71,
+    "baseSeconds": 425,
+    "routeType": "LAND"
+  },
+  {
+    "id": "liaoyuan|tieling",
+    "from": "tieling",
+    "to": "liaoyuan",
+    "km": 126,
+    "baseSeconds": 755,
+    "routeType": "LAND"
+  },
+  {
+    "id": "liaoyuan|tonghua",
+    "from": "liaoyuan",
+    "to": "tonghua",
+    "km": 146,
+    "baseSeconds": 875,
+    "routeType": "LAND"
+  },
+  {
+    "id": "liaoyuan|yanbian",
+    "from": "liaoyuan",
+    "to": "yanbian",
+    "km": 356,
+    "baseSeconds": 2135,
+    "routeType": "LAND"
+  },
+  {
+    "id": "lijiang|nujiang",
+    "from": "lijiang",
+    "to": "nujiang",
+    "km": 177,
+    "baseSeconds": 1060,
+    "routeType": "LAND"
+  },
+  {
+    "id": "lijiang|panzhihua",
+    "from": "panzhihua",
+    "to": "lijiang",
+    "km": 151,
+    "baseSeconds": 905,
+    "routeType": "LAND"
+  },
+  {
+    "id": "lijiang|zhaotong",
+    "from": "zhaotong",
+    "to": "lijiang",
+    "km": 350,
+    "baseSeconds": 2100,
+    "routeType": "LAND"
+  },
+  {
+    "id": "lincang|puer",
+    "from": "puer",
+    "to": "lincang",
+    "km": 151,
+    "baseSeconds": 905,
+    "routeType": "LAND"
+  },
+  {
+    "id": "lincang|xishuangbanna",
+    "from": "lincang",
+    "to": "xishuangbanna",
+    "km": 220,
+    "baseSeconds": 1320,
+    "routeType": "LAND"
+  },
+  {
+    "id": "linfen|lvliang",
+    "from": "linfen",
+    "to": "lvliang",
+    "km": 164,
+    "baseSeconds": 985,
+    "routeType": "LAND"
+  },
+  {
+    "id": "linfen|yuncheng",
+    "from": "yuncheng",
+    "to": "linfen",
+    "km": 126,
+    "baseSeconds": 755,
+    "routeType": "LAND"
+  },
+  {
+    "id": "linyi|rizhao",
+    "from": "rizhao",
+    "to": "linyi",
+    "km": 114,
+    "baseSeconds": 685,
+    "routeType": "LAND"
+  },
+  {
+    "id": "linyi|taian",
+    "from": "taian",
+    "to": "linyi",
+    "km": 172,
+    "baseSeconds": 1030,
+    "routeType": "LAND"
+  },
+  {
+    "id": "linyi|zaozhuang",
+    "from": "zaozhuang",
+    "to": "linyi",
+    "km": 98,
+    "baseSeconds": 590,
+    "routeType": "LAND"
+  },
+  {
+    "id": "linzhi|naqu",
+    "from": "linzhi",
+    "to": "naqu",
+    "km": 301,
+    "baseSeconds": 1805,
+    "routeType": "LAND"
+  },
+  {
+    "id": "linzhi|rikaze",
+    "from": "rikaze",
+    "to": "linzhi",
+    "km": 532,
+    "baseSeconds": 3190,
+    "routeType": "LAND"
+  },
+  {
+    "id": "linzhi|shannan",
+    "from": "linzhi",
+    "to": "shannan",
+    "km": 255,
+    "baseSeconds": 1530,
+    "routeType": "LAND"
+  },
+  {
+    "id": "linzhi|yushu",
+    "from": "linzhi",
+    "to": "yushu",
+    "km": 449,
+    "baseSeconds": 2695,
+    "routeType": "LAND"
+  },
+  {
+    "id": "lishui|ningde",
+    "from": "lishui",
+    "to": "ningde",
+    "km": 201,
+    "baseSeconds": 1205,
+    "routeType": "LAND"
+  },
+  {
+    "id": "lishui|quzhou",
+    "from": "quzhou",
+    "to": "lishui",
+    "km": 116,
+    "baseSeconds": 695,
+    "routeType": "LAND"
+  },
+  {
+    "id": "lishui|taizhouzj",
+    "from": "taizhouzj",
+    "to": "lishui",
+    "km": 148,
+    "baseSeconds": 890,
+    "routeType": "LAND"
+  },
+  {
+    "id": "lishui|wenzhou",
+    "from": "wenzhou",
+    "to": "lishui",
+    "km": 91,
+    "baseSeconds": 545,
+    "routeType": "LAND"
+  },
+  {
+    "id": "liupanshui|qianxinan",
+    "from": "liupanshui",
+    "to": "qianxinan",
+    "km": 167,
+    "baseSeconds": 1000,
+    "routeType": "LAND"
+  },
+  {
+    "id": "liupanshui|zhaotong",
+    "from": "liupanshui",
+    "to": "zhaotong",
+    "km": 138,
+    "baseSeconds": 830,
+    "routeType": "LAND"
+  },
+  {
+    "id": "liuzhou|wuzhou",
+    "from": "liuzhou",
+    "to": "wuzhou",
+    "km": 211,
+    "baseSeconds": 1265,
+    "routeType": "LAND"
+  },
+  {
+    "id": "longnan|mianyang",
+    "from": "mianyang",
+    "to": "longnan",
+    "km": 216,
+    "baseSeconds": 1295,
+    "routeType": "LAND"
+  },
+  {
+    "id": "longnan|pingliang",
+    "from": "pingliang",
+    "to": "longnan",
+    "km": 286,
+    "baseSeconds": 1715,
+    "routeType": "LAND"
+  },
+  {
+    "id": "longnan|tianshui",
+    "from": "tianshui",
+    "to": "longnan",
+    "km": 151,
+    "baseSeconds": 905,
+    "routeType": "LAND"
+  },
+  {
+    "id": "longyan|meizhou",
+    "from": "longyan",
+    "to": "meizhou",
+    "km": 126,
+    "baseSeconds": 755,
+    "routeType": "LAND"
+  },
+  {
+    "id": "longyan|quanzhou",
+    "from": "quanzhou",
+    "to": "longyan",
+    "km": 169,
+    "baseSeconds": 1015,
+    "routeType": "LAND"
+  },
+  {
+    "id": "longyan|sanming",
+    "from": "sanming",
+    "to": "longyan",
+    "km": 145,
+    "baseSeconds": 870,
+    "routeType": "LAND"
+  },
+  {
+    "id": "longyan|xiamen",
+    "from": "xiamen",
+    "to": "longyan",
+    "km": 127,
+    "baseSeconds": 760,
+    "routeType": "LAND"
+  },
+  {
+    "id": "longyan|zhangzhou",
+    "from": "zhangzhou",
+    "to": "longyan",
+    "km": 90,
+    "baseSeconds": 540,
+    "routeType": "LAND"
+  },
+  {
+    "id": "loudi|shaoyang",
+    "from": "shaoyang",
+    "to": "loudi",
+    "km": 72,
+    "baseSeconds": 430,
+    "routeType": "LAND"
+  },
+  {
+    "id": "loudi|xiangtan",
+    "from": "xiangtan",
+    "to": "loudi",
+    "km": 95,
+    "baseSeconds": 570,
+    "routeType": "LAND"
+  },
+  {
+    "id": "loudi|yiyang",
+    "from": "yiyang",
+    "to": "loudi",
+    "km": 101,
+    "baseSeconds": 605,
+    "routeType": "LAND"
+  },
+  {
+    "id": "loudi|yongzhou",
+    "from": "yongzhou",
+    "to": "loudi",
+    "km": 147,
+    "baseSeconds": 880,
+    "routeType": "LAND"
+  },
+  {
+    "id": "loudi|zhuzhou",
+    "from": "zhuzhou",
+    "to": "loudi",
+    "km": 113,
+    "baseSeconds": 680,
+    "routeType": "LAND"
+  },
+  {
+    "id": "luohe|nanyang",
+    "from": "luohe",
+    "to": "nanyang",
+    "km": 153,
+    "baseSeconds": 920,
+    "routeType": "LAND"
+  },
+  {
+    "id": "luohe|pingdingshan",
+    "from": "pingdingshan",
+    "to": "luohe",
+    "km": 80,
+    "baseSeconds": 480,
+    "routeType": "LAND"
+  },
+  {
+    "id": "luohe|xinyang",
+    "from": "luohe",
+    "to": "xinyang",
+    "km": 159,
+    "baseSeconds": 955,
+    "routeType": "LAND"
+  },
+  {
+    "id": "luohe|xuchang",
+    "from": "xuchang",
+    "to": "luohe",
+    "km": 54,
+    "baseSeconds": 325,
+    "routeType": "LAND"
+  },
+  {
+    "id": "luohe|zhengzhou",
+    "from": "zhengzhou",
+    "to": "luohe",
+    "km": 135,
+    "baseSeconds": 810,
+    "routeType": "LAND"
+  },
+  {
+    "id": "luohe|zhoukou",
+    "from": "luohe",
+    "to": "zhoukou",
+    "km": 63,
+    "baseSeconds": 380,
+    "routeType": "LAND"
+  },
+  {
+    "id": "luohe|zhumadian",
+    "from": "luohe",
+    "to": "zhumadian",
+    "km": 63,
+    "baseSeconds": 380,
+    "routeType": "LAND"
+  },
+  {
+    "id": "luoyang|pingdingshan",
+    "from": "luoyang",
+    "to": "pingdingshan",
+    "km": 116,
+    "baseSeconds": 695,
+    "routeType": "LAND"
+  },
+  {
+    "id": "luoyang|sanmenxia",
+    "from": "luoyang",
+    "to": "sanmenxia",
+    "km": 115,
+    "baseSeconds": 690,
+    "routeType": "LAND"
+  },
+  {
+    "id": "luoyang|zhengzhou",
+    "from": "zhengzhou",
+    "to": "luoyang",
+    "km": 109,
+    "baseSeconds": 655,
+    "routeType": "LAND"
+  },
+  {
+    "id": "luzhou|neijiang",
+    "from": "luzhou",
+    "to": "neijiang",
+    "km": 87,
+    "baseSeconds": 520,
+    "routeType": "LAND"
+  },
+  {
+    "id": "luzhou|yibin",
+    "from": "luzhou",
+    "to": "yibin",
+    "km": 79,
+    "baseSeconds": 475,
+    "routeType": "LAND"
+  },
+  {
+    "id": "luzhou|zigong",
+    "from": "zigong",
+    "to": "luzhou",
+    "km": 83,
+    "baseSeconds": 500,
+    "routeType": "LAND"
+  },
+  {
+    "id": "luzhou|ziyang",
+    "from": "luzhou",
+    "to": "ziyang",
+    "km": 161,
+    "baseSeconds": 965,
+    "routeType": "LAND"
+  },
+  {
+    "id": "lvliang|taiyuan",
+    "from": "taiyuan",
+    "to": "lvliang",
+    "km": 130,
+    "baseSeconds": 780,
+    "routeType": "LAND"
+  },
+  {
+    "id": "lvliang|xinzhou",
+    "from": "xinzhou",
+    "to": "lvliang",
+    "km": 172,
+    "baseSeconds": 1030,
+    "routeType": "LAND"
+  },
+  {
+    "id": "lvliang|yulinsn",
+    "from": "lvliang",
+    "to": "yulinsn",
+    "km": 150,
+    "baseSeconds": 900,
+    "routeType": "LAND"
+  },
+  {
+    "id": "lvliang|yuncheng",
+    "from": "yuncheng",
+    "to": "lvliang",
+    "km": 277,
+    "baseSeconds": 1660,
+    "routeType": "LAND"
+  },
+  {
+    "id": "maanshan|nanjing",
+    "from": "nanjing",
+    "to": "maanshan",
+    "km": 51,
+    "baseSeconds": 305,
+    "routeType": "LAND"
+  },
+  {
+    "id": "maanshan|tongling",
+    "from": "maanshan",
+    "to": "tongling",
+    "km": 104,
+    "baseSeconds": 625,
+    "routeType": "LAND"
+  },
+  {
+    "id": "maanshan|wuhu",
+    "from": "wuhu",
+    "to": "maanshan",
+    "km": 36,
+    "baseSeconds": 215,
+    "routeType": "LAND"
+  },
+  {
+    "id": "maanshan|xuancheng",
+    "from": "maanshan",
+    "to": "xuancheng",
+    "km": 85,
+    "baseSeconds": 510,
+    "routeType": "LAND"
+  },
+  {
+    "id": "macau|zhongshan",
+    "from": "zhongshan",
+    "to": "macau",
+    "km": 39,
+    "baseSeconds": 235,
+    "routeType": "LAND"
+  },
+  {
+    "id": "macau|zhuhai",
+    "from": "zhuhai",
+    "to": "macau",
+    "km": 8,
+    "baseSeconds": 60,
+    "routeType": "SEA"
+  },
+  {
+    "id": "maoming|yangjiang",
+    "from": "maoming",
+    "to": "yangjiang",
+    "km": 112,
+    "baseSeconds": 670,
+    "routeType": "LAND"
+  },
+  {
+    "id": "maoming|yunfu",
+    "from": "maoming",
+    "to": "yunfu",
+    "km": 181,
+    "baseSeconds": 1085,
+    "routeType": "LAND"
+  },
+  {
+    "id": "maoming|zhanjiang",
+    "from": "zhanjiang",
+    "to": "maoming",
+    "km": 72,
+    "baseSeconds": 430,
+    "routeType": "LAND"
+  },
+  {
+    "id": "maoming|zhaoqing",
+    "from": "zhaoqing",
+    "to": "maoming",
+    "km": 222,
+    "baseSeconds": 1330,
+    "routeType": "LAND"
+  },
+  {
+    "id": "meishan|neijiang",
+    "from": "neijiang",
+    "to": "meishan",
+    "km": 128,
+    "baseSeconds": 770,
+    "routeType": "LAND"
+  },
+  {
+    "id": "meishan|yaan",
+    "from": "meishan",
+    "to": "yaan",
+    "km": 78,
+    "baseSeconds": 470,
+    "routeType": "LAND"
+  },
+  {
+    "id": "meishan|zigong",
+    "from": "zigong",
+    "to": "meishan",
+    "km": 120,
+    "baseSeconds": 720,
+    "routeType": "LAND"
+  },
+  {
+    "id": "meishan|ziyang",
+    "from": "meishan",
+    "to": "ziyang",
+    "km": 76,
+    "baseSeconds": 455,
+    "routeType": "LAND"
+  },
+  {
+    "id": "meizhou|shantou",
+    "from": "shantou",
+    "to": "meizhou",
+    "km": 119,
+    "baseSeconds": 715,
+    "routeType": "LAND"
+  },
+  {
+    "id": "mianyang|suining",
+    "from": "mianyang",
+    "to": "suining",
+    "km": 136,
+    "baseSeconds": 815,
+    "routeType": "LAND"
+  },
+  {
+    "id": "mianyang|ziyang",
+    "from": "mianyang",
+    "to": "ziyang",
+    "km": 149,
+    "baseSeconds": 895,
+    "routeType": "LAND"
+  },
+  {
+    "id": "mudanjiang|qitaihe",
+    "from": "qitaihe",
+    "to": "mudanjiang",
+    "km": 173,
+    "baseSeconds": 1040,
+    "routeType": "LAND"
+  },
+  {
+    "id": "mudanjiang|shuangyashan",
+    "from": "shuangyashan",
+    "to": "mudanjiang",
+    "km": 262,
+    "baseSeconds": 1570,
+    "routeType": "LAND"
+  },
+  {
+    "id": "nanchang|shangrao",
+    "from": "nanchang",
+    "to": "shangrao",
+    "km": 205,
+    "baseSeconds": 1230,
+    "routeType": "LAND"
+  },
+  {
+    "id": "nanchang|xinyu",
+    "from": "nanchang",
+    "to": "xinyu",
+    "km": 133,
+    "baseSeconds": 800,
+    "routeType": "LAND"
+  },
+  {
+    "id": "nanchang|yichunjx",
+    "from": "nanchang",
+    "to": "yichunjx",
+    "km": 172,
+    "baseSeconds": 1030,
+    "routeType": "LAND"
+  },
+  {
+    "id": "nanchang|yingtan",
+    "from": "nanchang",
+    "to": "yingtan",
+    "km": 127,
+    "baseSeconds": 760,
+    "routeType": "LAND"
+  },
+  {
+    "id": "nanchong|suining",
+    "from": "suining",
+    "to": "nanchong",
+    "km": 63,
+    "baseSeconds": 380,
+    "routeType": "LAND"
+  },
+  {
+    "id": "nanjing|taizhou",
+    "from": "nanjing",
+    "to": "taizhou",
+    "km": 114,
+    "baseSeconds": 685,
+    "routeType": "LAND"
+  },
+  {
+    "id": "nanjing|xuzhou",
+    "from": "nanjing",
+    "to": "xuzhou",
+    "km": 287,
+    "baseSeconds": 1720,
+    "routeType": "LAND"
+  },
+  {
+    "id": "nanjing|yangzhou",
+    "from": "nanjing",
+    "to": "yangzhou",
+    "km": 68,
+    "baseSeconds": 410,
+    "routeType": "LAND"
+  },
+  {
+    "id": "nanjing|zhenjiang",
+    "from": "nanjing",
+    "to": "zhenjiang",
+    "km": 60,
+    "baseSeconds": 360,
+    "routeType": "LAND"
+  },
+  {
+    "id": "nanning|qinzhou",
+    "from": "nanning",
+    "to": "qinzhou",
+    "km": 103,
+    "baseSeconds": 620,
+    "routeType": "LAND"
+  },
+  {
+    "id": "nanping|ningde",
+    "from": "nanping",
+    "to": "ningde",
+    "km": 136,
+    "baseSeconds": 815,
+    "routeType": "LAND"
+  },
+  {
+    "id": "nanping|putian",
+    "from": "putian",
+    "to": "nanping",
+    "km": 156,
+    "baseSeconds": 935,
+    "routeType": "LAND"
+  },
+  {
+    "id": "nanping|sanming",
+    "from": "sanming",
+    "to": "nanping",
+    "km": 68,
+    "baseSeconds": 410,
+    "routeType": "LAND"
+  },
+  {
+    "id": "nanping|shangrao",
+    "from": "nanping",
+    "to": "shangrao",
+    "km": 203,
+    "baseSeconds": 1220,
+    "routeType": "LAND"
+  },
+  {
+    "id": "nanping|yingtan",
+    "from": "nanping",
+    "to": "yingtan",
+    "km": 211,
+    "baseSeconds": 1265,
+    "routeType": "LAND"
+  },
+  {
+    "id": "nantong|shanghai",
+    "from": "shanghai",
+    "to": "nantong",
+    "km": 100,
+    "baseSeconds": 600,
+    "routeType": "LAND"
+  },
+  {
+    "id": "nantong|suzhou",
+    "from": "suzhou",
+    "to": "nantong",
+    "km": 81,
+    "baseSeconds": 485,
+    "routeType": "LAND"
+  },
+  {
+    "id": "nantong|taizhou",
+    "from": "nantong",
+    "to": "taizhou",
+    "km": 106,
+    "baseSeconds": 635,
+    "routeType": "LAND"
+  },
+  {
+    "id": "nantong|wuxi",
+    "from": "wuxi",
+    "to": "nantong",
+    "km": 77,
+    "baseSeconds": 460,
+    "routeType": "LAND"
+  },
+  {
+    "id": "nanyang|pingdingshan",
+    "from": "pingdingshan",
+    "to": "nanyang",
+    "km": 105,
+    "baseSeconds": 630,
+    "routeType": "LAND"
+  },
+  {
+    "id": "nanyang|xiangyang",
+    "from": "nanyang",
+    "to": "xiangyang",
+    "km": 117,
+    "baseSeconds": 700,
+    "routeType": "LAND"
+  },
+  {
+    "id": "nanyang|xinyang",
+    "from": "nanyang",
+    "to": "xinyang",
+    "km": 174,
+    "baseSeconds": 1045,
+    "routeType": "LAND"
+  },
+  {
+    "id": "nanyang|xuchang",
+    "from": "xuchang",
+    "to": "nanyang",
+    "km": 168,
+    "baseSeconds": 1010,
+    "routeType": "LAND"
+  },
+  {
+    "id": "nanyang|zhumadian",
+    "from": "nanyang",
+    "to": "zhumadian",
+    "km": 139,
+    "baseSeconds": 835,
+    "routeType": "LAND"
+  },
+  {
+    "id": "naqu|rikaze",
+    "from": "rikaze",
+    "to": "naqu",
+    "km": 391,
+    "baseSeconds": 2345,
+    "routeType": "LAND"
+  },
+  {
+    "id": "naqu|shannan",
+    "from": "shannan",
+    "to": "naqu",
+    "km": 251,
+    "baseSeconds": 1505,
+    "routeType": "LAND"
+  },
+  {
+    "id": "neijiang|suining",
+    "from": "suining",
+    "to": "neijiang",
+    "km": 114,
+    "baseSeconds": 685,
+    "routeType": "LAND"
+  },
+  {
+    "id": "neijiang|yibin",
+    "from": "neijiang",
+    "to": "yibin",
+    "km": 101,
+    "baseSeconds": 605,
+    "routeType": "LAND"
+  },
+  {
+    "id": "neijiang|zigong",
+    "from": "zigong",
+    "to": "neijiang",
+    "km": 38,
+    "baseSeconds": 230,
+    "routeType": "LAND"
+  },
+  {
+    "id": "neijiang|ziyang",
+    "from": "neijiang",
+    "to": "ziyang",
+    "km": 74,
+    "baseSeconds": 445,
+    "routeType": "LAND"
+  },
+  {
+    "id": "ningbo|shaoxing",
+    "from": "ningbo",
+    "to": "shaoxing",
+    "km": 95,
+    "baseSeconds": 570,
+    "routeType": "LAND"
+  },
+  {
+    "id": "ningbo|taizhouzj",
+    "from": "ningbo",
+    "to": "taizhouzj",
+    "km": 135,
+    "baseSeconds": 810,
+    "routeType": "LAND"
+  },
+  {
+    "id": "ningbo|zhoushan",
+    "from": "ningbo",
+    "to": "zhoushan",
+    "km": 65,
+    "baseSeconds": 390,
+    "routeType": "LAND"
+  },
+  {
+    "id": "ningde|putian",
+    "from": "putian",
+    "to": "ningde",
+    "km": 146,
+    "baseSeconds": 875,
+    "routeType": "LAND"
+  },
+  {
+    "id": "ningde|sanming",
+    "from": "sanming",
+    "to": "ningde",
+    "km": 196,
+    "baseSeconds": 1175,
+    "routeType": "LAND"
+  },
+  {
+    "id": "ningde|wenzhou",
+    "from": "wenzhou",
+    "to": "ningde",
+    "km": 186,
+    "baseSeconds": 1115,
+    "routeType": "LAND"
+  },
+  {
+    "id": "panjin|yingkou",
+    "from": "yingkou",
+    "to": "panjin",
+    "km": 52,
+    "baseSeconds": 310,
+    "routeType": "LAND"
+  },
+  {
+    "id": "panzhihua|yibin",
+    "from": "panzhihua",
+    "to": "yibin",
+    "km": 375,
+    "baseSeconds": 2250,
+    "routeType": "LAND"
+  },
+  {
+    "id": "pingdingshan|sanmenxia",
+    "from": "pingdingshan",
+    "to": "sanmenxia",
+    "km": 214,
+    "baseSeconds": 1285,
+    "routeType": "LAND"
+  },
+  {
+    "id": "pingdingshan|xuchang",
+    "from": "pingdingshan",
+    "to": "xuchang",
+    "km": 68,
+    "baseSeconds": 410,
+    "routeType": "LAND"
+  },
+  {
+    "id": "pingdingshan|zhengzhou",
+    "from": "zhengzhou",
+    "to": "pingdingshan",
+    "km": 116,
+    "baseSeconds": 695,
+    "routeType": "LAND"
+  },
+  {
+    "id": "pingdingshan|zhumadian",
+    "from": "pingdingshan",
+    "to": "zhumadian",
+    "km": 114,
+    "baseSeconds": 685,
+    "routeType": "LAND"
+  },
+  {
+    "id": "pingliang|qingyang",
+    "from": "pingliang",
+    "to": "qingyang",
+    "km": 91,
+    "baseSeconds": 545,
+    "routeType": "LAND"
+  },
+  {
+    "id": "pingliang|tianshui",
+    "from": "tianshui",
+    "to": "pingliang",
+    "km": 137,
+    "baseSeconds": 820,
+    "routeType": "LAND"
+  },
+  {
+    "id": "pingxiang|xiangtan",
+    "from": "pingxiang",
+    "to": "xiangtan",
+    "km": 93,
+    "baseSeconds": 560,
+    "routeType": "LAND"
+  },
+  {
+    "id": "pingxiang|xinyu",
+    "from": "pingxiang",
+    "to": "xinyu",
+    "km": 108,
+    "baseSeconds": 650,
+    "routeType": "LAND"
+  },
+  {
+    "id": "pingxiang|yichunjx",
+    "from": "pingxiang",
+    "to": "yichunjx",
+    "km": 60,
+    "baseSeconds": 360,
+    "routeType": "LAND"
+  },
+  {
+    "id": "pingxiang|zhuzhou",
+    "from": "pingxiang",
+    "to": "zhuzhou",
+    "km": 75,
+    "baseSeconds": 450,
+    "routeType": "LAND"
+  },
+  {
+    "id": "puer|xishuangbanna",
+    "from": "puer",
+    "to": "xishuangbanna",
+    "km": 88,
+    "baseSeconds": 530,
+    "routeType": "LAND"
+  },
+  {
+    "id": "puer|yuxi",
+    "from": "yuxi",
+    "to": "puer",
+    "km": 237,
+    "baseSeconds": 1420,
+    "routeType": "LAND"
+  },
+  {
+    "id": "putian|quanzhou",
+    "from": "putian",
+    "to": "quanzhou",
+    "km": 73,
+    "baseSeconds": 440,
+    "routeType": "LAND"
+  },
+  {
+    "id": "putian|sanming",
+    "from": "putian",
+    "to": "sanming",
+    "km": 164,
+    "baseSeconds": 985,
+    "routeType": "LAND"
+  },
+  {
+    "id": "putian|xiamen",
+    "from": "xiamen",
+    "to": "putian",
+    "km": 142,
+    "baseSeconds": 850,
+    "routeType": "LAND"
+  },
+  {
+    "id": "putian|zhangzhou",
+    "from": "putian",
+    "to": "zhangzhou",
+    "km": 172,
+    "baseSeconds": 1030,
+    "routeType": "LAND"
+  },
+  {
+    "id": "puyang|shangqiu",
+    "from": "puyang",
+    "to": "shangqiu",
+    "km": 160,
+    "baseSeconds": 960,
+    "routeType": "LAND"
+  },
+  {
+    "id": "puyang|xinxiang",
+    "from": "xinxiang",
+    "to": "puyang",
+    "km": 112,
+    "baseSeconds": 670,
+    "routeType": "LAND"
+  },
+  {
+    "id": "qiandongnan|qiannan",
+    "from": "qiandongnan",
+    "to": "qiannan",
+    "km": 59,
+    "baseSeconds": 355,
+    "routeType": "LAND"
+  },
+  {
+    "id": "qiandongnan|tongren",
+    "from": "tongren",
+    "to": "qiandongnan",
+    "km": 175,
+    "baseSeconds": 1050,
+    "routeType": "LAND"
+  },
+  {
+    "id": "qiandongnan|zunyi",
+    "from": "zunyi",
+    "to": "qiandongnan",
+    "km": 165,
+    "baseSeconds": 990,
+    "routeType": "LAND"
+  },
+  {
+    "id": "qiannan|tongren",
+    "from": "tongren",
+    "to": "qiannan",
+    "km": 233,
+    "baseSeconds": 1400,
+    "routeType": "LAND"
+  },
+  {
+    "id": "qiannan|zunyi",
+    "from": "zunyi",
+    "to": "qiannan",
+    "km": 175,
+    "baseSeconds": 1050,
+    "routeType": "LAND"
+  },
+  {
+    "id": "qianxinan|qujing",
+    "from": "qianxinan",
+    "to": "qujing",
+    "km": 119,
+    "baseSeconds": 715,
+    "routeType": "LAND"
+  },
+  {
+    "id": "qingdao|rizhao",
+    "from": "qingdao",
+    "to": "rizhao",
+    "km": 105,
+    "baseSeconds": 630,
+    "routeType": "LAND"
+  },
+  {
+    "id": "qingdao|weifang",
+    "from": "qingdao",
+    "to": "weifang",
+    "km": 130,
+    "baseSeconds": 780,
+    "routeType": "LAND"
+  },
+  {
+    "id": "qingdao|weihai",
+    "from": "qingdao",
+    "to": "weihai",
+    "km": 223,
+    "baseSeconds": 1340,
+    "routeType": "LAND"
+  },
+  {
+    "id": "qingdao|yantai",
+    "from": "qingdao",
+    "to": "yantai",
+    "km": 182,
+    "baseSeconds": 1090,
+    "routeType": "LAND"
+  },
+  {
+    "id": "qingyang|tianshui",
+    "from": "tianshui",
+    "to": "qingyang",
+    "km": 215,
+    "baseSeconds": 1290,
+    "routeType": "LAND"
+  },
+  {
+    "id": "qingyuan|shaoguan",
+    "from": "shaoguan",
+    "to": "qingyuan",
+    "km": 137,
+    "baseSeconds": 820,
+    "routeType": "LAND"
+  },
+  {
+    "id": "qingyuan|yunfu",
+    "from": "qingyuan",
+    "to": "yunfu",
+    "km": 134,
+    "baseSeconds": 805,
+    "routeType": "LAND"
+  },
+  {
+    "id": "qingyuan|zhaoqing",
+    "from": "zhaoqing",
+    "to": "qingyuan",
+    "km": 92,
+    "baseSeconds": 550,
+    "routeType": "LAND"
+  },
+  {
+    "id": "qingyuan|zhongshan",
+    "from": "qingyuan",
+    "to": "zhongshan",
+    "km": 133,
+    "baseSeconds": 800,
+    "routeType": "LAND"
+  },
+  {
+    "id": "qinhuangdao|tangshan",
+    "from": "tangshan",
+    "to": "qinhuangdao",
+    "km": 126,
+    "baseSeconds": 755,
+    "routeType": "LAND"
+  },
+  {
+    "id": "qionghai|sansha",
+    "from": "sansha",
+    "to": "qionghai",
+    "km": 335,
+    "baseSeconds": 2010,
+    "routeType": "LAND"
+  },
+  {
+    "id": "qionghai|wanning",
+    "from": "qionghai",
+    "to": "wanning",
+    "km": 52,
+    "baseSeconds": 310,
+    "routeType": "LAND"
+  },
+  {
+    "id": "qionghai|wenchang",
+    "from": "qionghai",
+    "to": "wenchang",
+    "km": 52,
+    "baseSeconds": 310,
+    "routeType": "LAND"
+  },
+  {
+    "id": "qionghai|wuzhishan",
+    "from": "wuzhishan",
+    "to": "qionghai",
+    "km": 113,
+    "baseSeconds": 680,
+    "routeType": "LAND"
+  },
+  {
+    "id": "qiqihaer|suihua",
+    "from": "qiqihaer",
+    "to": "suihua",
+    "km": 245,
+    "baseSeconds": 1470,
+    "routeType": "LAND"
+  },
+  {
+    "id": "qiqihaer|xinganmeng",
+    "from": "xinganmeng",
+    "to": "qiqihaer",
+    "km": 200,
+    "baseSeconds": 1200,
+    "routeType": "LAND"
+  },
+  {
+    "id": "qiqihaer|yichun",
+    "from": "qiqihaer",
+    "to": "yichun",
+    "km": 372,
+    "baseSeconds": 2230,
+    "routeType": "LAND"
+  },
+  {
+    "id": "qitaihe|shuangyashan",
+    "from": "shuangyashan",
+    "to": "qitaihe",
+    "km": 99,
+    "baseSeconds": 595,
+    "routeType": "LAND"
+  },
+  {
+    "id": "quanzhou|xiamen",
+    "from": "xiamen",
+    "to": "quanzhou",
+    "km": 74,
+    "baseSeconds": 445,
+    "routeType": "LAND"
+  },
+  {
+    "id": "quanzhou|zhangzhou",
+    "from": "quanzhou",
+    "to": "zhangzhou",
+    "km": 111,
+    "baseSeconds": 665,
+    "routeType": "LAND"
+  },
+  {
+    "id": "qujing|wenshan",
+    "from": "qujing",
+    "to": "wenshan",
+    "km": 240,
+    "baseSeconds": 1440,
+    "routeType": "LAND"
+  },
+  {
+    "id": "qujing|yuxi",
+    "from": "qujing",
+    "to": "yuxi",
+    "km": 179,
+    "baseSeconds": 1075,
+    "routeType": "LAND"
+  },
+  {
+    "id": "qujing|zhaotong",
+    "from": "qujing",
+    "to": "zhaotong",
+    "km": 206,
+    "baseSeconds": 1235,
+    "routeType": "LAND"
+  },
+  {
+    "id": "quzhou|shangrao",
+    "from": "quzhou",
+    "to": "shangrao",
+    "km": 106,
+    "baseSeconds": 635,
+    "routeType": "LAND"
+  },
+  {
+    "id": "quzhou|shaoxing",
+    "from": "shaoxing",
+    "to": "quzhou",
+    "km": 205,
+    "baseSeconds": 1230,
+    "routeType": "LAND"
+  },
+  {
+    "id": "quzhou|wenzhou",
+    "from": "wenzhou",
+    "to": "quzhou",
+    "km": 207,
+    "baseSeconds": 1240,
+    "routeType": "LAND"
+  },
+  {
+    "id": "rikaze|shannan",
+    "from": "rikaze",
+    "to": "shannan",
+    "km": 280,
+    "baseSeconds": 1680,
+    "routeType": "LAND"
+  },
+  {
+    "id": "rizhao|weifang",
+    "from": "weifang",
+    "to": "rizhao",
+    "km": 147,
+    "baseSeconds": 880,
+    "routeType": "LAND"
+  },
+  {
+    "id": "rizhao|zibo",
+    "from": "zibo",
+    "to": "rizhao",
+    "km": 204,
+    "baseSeconds": 1225,
+    "routeType": "LAND"
+  },
+  {
+    "id": "sanmenxia|shangluo",
+    "from": "sanmenxia",
+    "to": "shangluo",
+    "km": 153,
+    "baseSeconds": 920,
+    "routeType": "LAND"
+  },
+  {
+    "id": "sanmenxia|weinan",
+    "from": "sanmenxia",
+    "to": "weinan",
+    "km": 158,
+    "baseSeconds": 950,
+    "routeType": "LAND"
+  },
+  {
+    "id": "sanmenxia|yuncheng",
+    "from": "yuncheng",
+    "to": "sanmenxia",
+    "km": 34,
+    "baseSeconds": 205,
+    "routeType": "LAND"
+  },
+  {
+    "id": "sanmenxia|zhengzhou",
+    "from": "zhengzhou",
+    "to": "sanmenxia",
+    "km": 222,
+    "baseSeconds": 1330,
+    "routeType": "LAND"
+  },
+  {
+    "id": "sansha|sanya",
+    "from": "sanya",
+    "to": "sansha",
+    "km": 339,
+    "baseSeconds": 2035,
+    "routeType": "LAND"
+  },
+  {
+    "id": "sansha|wanning",
+    "from": "sansha",
+    "to": "wanning",
+    "km": 301,
+    "baseSeconds": 1805,
+    "routeType": "LAND"
+  },
+  {
+    "id": "sansha|wenchang",
+    "from": "sansha",
+    "to": "wenchang",
+    "km": 351,
+    "baseSeconds": 2105,
+    "routeType": "LAND"
+  },
+  {
+    "id": "sanya|wanning",
+    "from": "sanya",
+    "to": "wanning",
+    "km": 111,
+    "baseSeconds": 665,
+    "routeType": "LAND"
+  },
+  {
+    "id": "sanya|wuzhishan",
+    "from": "sanya",
+    "to": "wuzhishan",
+    "km": 59,
+    "baseSeconds": 355,
+    "routeType": "LAND"
+  },
+  {
+    "id": "shanghai|suzhou",
+    "from": "shanghai",
+    "to": "suzhou",
+    "km": 85,
+    "baseSeconds": 510,
+    "routeType": "LAND"
+  },
+  {
+    "id": "shangluo|shiyan",
+    "from": "shiyan",
+    "to": "shangluo",
+    "km": 157,
+    "baseSeconds": 940,
+    "routeType": "LAND"
+  },
+  {
+    "id": "shangluo|tongchuan",
+    "from": "tongchuan",
+    "to": "shangluo",
+    "km": 146,
+    "baseSeconds": 875,
+    "routeType": "LAND"
+  },
+  {
+    "id": "shangluo|weinan",
+    "from": "weinan",
+    "to": "shangluo",
+    "km": 80,
+    "baseSeconds": 480,
+    "routeType": "LAND"
+  },
+  {
+    "id": "shangluo|xian",
+    "from": "xian",
+    "to": "shangluo",
+    "km": 106,
+    "baseSeconds": 635,
+    "routeType": "LAND"
+  },
+  {
+    "id": "shangluo|xianyang",
+    "from": "xianyang",
+    "to": "shangluo",
+    "km": 124,
+    "baseSeconds": 745,
+    "routeType": "LAND"
+  },
+  {
+    "id": "shangqiu|xuchang",
+    "from": "xuchang",
+    "to": "shangqiu",
+    "km": 171,
+    "baseSeconds": 1025,
+    "routeType": "LAND"
+  },
+  {
+    "id": "shangqiu|zhoukou",
+    "from": "shangqiu",
+    "to": "zhoukou",
+    "km": 123,
+    "baseSeconds": 740,
+    "routeType": "LAND"
+  },
+  {
+    "id": "shangrao|yingtan",
+    "from": "yingtan",
+    "to": "shangrao",
+    "km": 88,
+    "baseSeconds": 530,
+    "routeType": "LAND"
+  },
+  {
+    "id": "shantou|shanwei",
+    "from": "shantou",
+    "to": "shanwei",
+    "km": 147,
+    "baseSeconds": 880,
+    "routeType": "LAND"
+  },
+  {
+    "id": "shanwei|shenzhen",
+    "from": "shenzhen",
+    "to": "shanwei",
+    "km": 138,
+    "baseSeconds": 830,
+    "routeType": "LAND"
+  },
+  {
+    "id": "shaoxing|zhoushan",
+    "from": "shaoxing",
+    "to": "zhoushan",
+    "km": 156,
+    "baseSeconds": 935,
+    "routeType": "LAND"
+  },
+  {
+    "id": "shaoyang|xiangxi",
+    "from": "shaoyang",
+    "to": "xiangxi",
+    "km": 208,
+    "baseSeconds": 1250,
+    "routeType": "LAND"
+  },
+  {
+    "id": "shaoyang|yongzhou",
+    "from": "shaoyang",
+    "to": "yongzhou",
+    "km": 92,
+    "baseSeconds": 550,
+    "routeType": "LAND"
+  },
+  {
+    "id": "shenyang|tieling",
+    "from": "shenyang",
+    "to": "tieling",
+    "km": 64,
+    "baseSeconds": 385,
+    "routeType": "LAND"
+  },
+  {
+    "id": "shenzhen|zhongshan",
+    "from": "shenzhen",
+    "to": "zhongshan",
+    "km": 69,
+    "baseSeconds": 415,
+    "routeType": "LAND"
+  },
+  {
+    "id": "shenzhen|zhuhai",
+    "from": "shenzhen",
+    "to": "zhuhai",
+    "km": 61,
+    "baseSeconds": 365,
+    "routeType": "LAND"
+  },
+  {
+    "id": "shijiazhuang|xingtai",
+    "from": "shijiazhuang",
+    "to": "xingtai",
+    "km": 108,
+    "baseSeconds": 650,
+    "routeType": "LAND"
+  },
+  {
+    "id": "shijiazhuang|yangquan",
+    "from": "shijiazhuang",
+    "to": "yangquan",
+    "km": 83,
+    "baseSeconds": 500,
+    "routeType": "LAND"
+  },
+  {
+    "id": "shijiazhuang|zhangjiakou",
+    "from": "shijiazhuang",
+    "to": "zhangjiakou",
+    "km": 305,
+    "baseSeconds": 1830,
+    "routeType": "LAND"
+  },
+  {
+    "id": "shiyan|suizhou",
+    "from": "shiyan",
+    "to": "suizhou",
+    "km": 265,
+    "baseSeconds": 1590,
+    "routeType": "LAND"
+  },
+  {
+    "id": "shiyan|xiangyang",
+    "from": "shiyan",
+    "to": "xiangyang",
+    "km": 143,
+    "baseSeconds": 860,
+    "routeType": "LAND"
+  },
+  {
+    "id": "shiyan|yichang",
+    "from": "shiyan",
+    "to": "yichang",
+    "km": 223,
+    "baseSeconds": 1340,
+    "routeType": "LAND"
+  },
+  {
+    "id": "shizuishan|wuzhong",
+    "from": "shizuishan",
+    "to": "wuzhong",
+    "km": 111,
+    "baseSeconds": 665,
+    "routeType": "LAND"
+  },
+  {
+    "id": "shizuishan|yinchuan",
+    "from": "yinchuan",
+    "to": "shizuishan",
+    "km": 56,
+    "baseSeconds": 335,
+    "routeType": "LAND"
+  },
+  {
+    "id": "shizuishan|zhongwei",
+    "from": "shizuishan",
+    "to": "zhongwei",
+    "km": 195,
+    "baseSeconds": 1170,
+    "routeType": "LAND"
+  },
+  {
+    "id": "shuangyashan|yichun",
+    "from": "shuangyashan",
+    "to": "yichun",
+    "km": 212,
+    "baseSeconds": 1270,
+    "routeType": "LAND"
+  },
+  {
+    "id": "shuozhou|taiyuan",
+    "from": "taiyuan",
+    "to": "shuozhou",
+    "km": 163,
+    "baseSeconds": 980,
+    "routeType": "LAND"
+  },
+  {
+    "id": "shuozhou|xinzhou",
+    "from": "shuozhou",
+    "to": "xinzhou",
+    "km": 104,
+    "baseSeconds": 625,
+    "routeType": "LAND"
+  },
+  {
+    "id": "siping|songyuan",
+    "from": "siping",
+    "to": "songyuan",
+    "km": 222,
+    "baseSeconds": 1330,
+    "routeType": "LAND"
+  },
+  {
+    "id": "siping|tieling",
+    "from": "tieling",
+    "to": "siping",
+    "km": 106,
+    "baseSeconds": 635,
+    "routeType": "LAND"
+  },
+  {
+    "id": "siping|tonghua",
+    "from": "siping",
+    "to": "tonghua",
+    "km": 207,
+    "baseSeconds": 1240,
+    "routeType": "LAND"
+  },
+  {
+    "id": "siping|tongliao",
+    "from": "tongliao",
+    "to": "siping",
+    "km": 179,
+    "baseSeconds": 1075,
+    "routeType": "LAND"
+  },
+  {
+    "id": "suihua|yichun",
+    "from": "yichun",
+    "to": "suihua",
+    "km": 185,
+    "baseSeconds": 1110,
+    "routeType": "LAND"
+  },
+  {
+    "id": "suining|ziyang",
+    "from": "suining",
+    "to": "ziyang",
+    "km": 100,
+    "baseSeconds": 600,
+    "routeType": "LAND"
+  },
+  {
+    "id": "suizhou|wuhan",
+    "from": "wuhan",
+    "to": "suizhou",
+    "km": 150,
+    "baseSeconds": 900,
+    "routeType": "LAND"
+  },
+  {
+    "id": "suizhou|xiangyang",
+    "from": "xiangyang",
+    "to": "suizhou",
+    "km": 124,
+    "baseSeconds": 745,
+    "routeType": "LAND"
+  },
+  {
+    "id": "suizhou|xiaogan",
+    "from": "xiaogan",
+    "to": "suizhou",
+    "km": 100,
+    "baseSeconds": 600,
+    "routeType": "LAND"
+  },
+  {
+    "id": "suizhou|xinyang",
+    "from": "xinyang",
+    "to": "suizhou",
+    "km": 84,
+    "baseSeconds": 505,
+    "routeType": "LAND"
+  },
+  {
+    "id": "suqian|xuzhou",
+    "from": "xuzhou",
+    "to": "suqian",
+    "km": 107,
+    "baseSeconds": 640,
+    "routeType": "LAND"
+  },
+  {
+    "id": "suqian|yancheng",
+    "from": "yancheng",
+    "to": "suqian",
+    "km": 187,
+    "baseSeconds": 1120,
+    "routeType": "LAND"
+  },
+  {
+    "id": "suzhou|taizhou",
+    "from": "suzhou",
+    "to": "taizhou",
+    "km": 143,
+    "baseSeconds": 860,
+    "routeType": "LAND"
+  },
+  {
+    "id": "suzhou|wuxi",
+    "from": "wuxi",
+    "to": "suzhou",
+    "km": 33,
+    "baseSeconds": 200,
+    "routeType": "LAND"
+  },
+  {
+    "id": "suzhouah|zaozhuang",
+    "from": "suzhouah",
+    "to": "zaozhuang",
+    "km": 133,
+    "baseSeconds": 800,
+    "routeType": "LAND"
+  },
+  {
+    "id": "tacheng|yili",
+    "from": "yili",
+    "to": "tacheng",
+    "km": 342,
+    "baseSeconds": 2050,
+    "routeType": "LAND"
+  },
+  {
+    "id": "taian|zaozhuang",
+    "from": "zaozhuang",
+    "to": "taian",
+    "km": 156,
+    "baseSeconds": 935,
+    "routeType": "LAND"
+  },
+  {
+    "id": "taian|zibo",
+    "from": "zibo",
+    "to": "taian",
+    "km": 109,
+    "baseSeconds": 655,
+    "routeType": "LAND"
+  },
+  {
+    "id": "tainan|taipei",
+    "from": "taipei",
+    "to": "tainan",
+    "km": 266,
+    "baseSeconds": 1595,
+    "routeType": "LAND"
+  },
+  {
+    "id": "tainan|taizhong",
+    "from": "taizhong",
+    "to": "tainan",
+    "km": 138,
+    "baseSeconds": 830,
+    "routeType": "LAND"
+  },
+  {
+    "id": "tainan|taoyuan",
+    "from": "taoyuan",
+    "to": "tainan",
+    "km": 249,
+    "baseSeconds": 1495,
+    "routeType": "LAND"
+  },
+  {
+    "id": "tainan|xinbei",
+    "from": "xinbei",
+    "to": "tainan",
+    "km": 259,
+    "baseSeconds": 1555,
+    "routeType": "LAND"
+  },
+  {
+    "id": "taipei|taizhong",
+    "from": "taipei",
+    "to": "taizhong",
+    "km": 132,
+    "baseSeconds": 790,
+    "routeType": "LAND"
+  },
+  {
+    "id": "taipei|taoyuan",
+    "from": "taipei",
+    "to": "taoyuan",
+    "km": 27,
+    "baseSeconds": 160,
+    "routeType": "LAND"
+  },
+  {
+    "id": "taipei|xinbei",
+    "from": "taipei",
+    "to": "xinbei",
+    "km": 10,
+    "baseSeconds": 60,
+    "routeType": "LAND"
+  },
+  {
+    "id": "taiyuan|xinzhou",
+    "from": "taiyuan",
+    "to": "xinzhou",
+    "km": 63,
+    "baseSeconds": 380,
+    "routeType": "LAND"
+  },
+  {
+    "id": "taiyuan|yangquan",
+    "from": "taiyuan",
+    "to": "yangquan",
+    "km": 90,
+    "baseSeconds": 540,
+    "routeType": "LAND"
+  },
+  {
+    "id": "taizhong|taoyuan",
+    "from": "taoyuan",
+    "to": "taizhong",
+    "km": 112,
+    "baseSeconds": 670,
+    "routeType": "LAND"
+  },
+  {
+    "id": "taizhong|xinbei",
+    "from": "xinbei",
+    "to": "taizhong",
+    "km": 124,
+    "baseSeconds": 745,
+    "routeType": "LAND"
+  },
+  {
+    "id": "taizhou|wuxi",
+    "from": "wuxi",
+    "to": "taizhou",
+    "km": 114,
+    "baseSeconds": 685,
+    "routeType": "LAND"
+  },
+  {
+    "id": "taizhou|yancheng",
+    "from": "yancheng",
+    "to": "taizhou",
+    "km": 101,
+    "baseSeconds": 605,
+    "routeType": "LAND"
+  },
+  {
+    "id": "taizhou|yangzhou",
+    "from": "yangzhou",
+    "to": "taizhou",
+    "km": 48,
+    "baseSeconds": 290,
+    "routeType": "LAND"
+  },
+  {
+    "id": "taizhou|zhenjiang",
+    "from": "zhenjiang",
+    "to": "taizhou",
+    "km": 56,
+    "baseSeconds": 335,
+    "routeType": "LAND"
+  },
+  {
+    "id": "taizhouzj|wenzhou",
+    "from": "wenzhou",
+    "to": "taizhouzj",
+    "km": 102,
+    "baseSeconds": 610,
+    "routeType": "LAND"
+  },
+  {
+    "id": "taizhouzj|zhoushan",
+    "from": "zhoushan",
+    "to": "taizhouzj",
+    "km": 169,
+    "baseSeconds": 1015,
+    "routeType": "LAND"
+  },
+  {
+    "id": "taoyuan|xinbei",
+    "from": "xinbei",
+    "to": "taoyuan",
+    "km": 16,
+    "baseSeconds": 95,
+    "routeType": "LAND"
+  },
+  {
+    "id": "tongchuan|weinan",
+    "from": "tongchuan",
+    "to": "weinan",
+    "km": 68,
+    "baseSeconds": 410,
+    "routeType": "LAND"
+  },
+  {
+    "id": "tongchuan|xian",
+    "from": "xian",
+    "to": "tongchuan",
+    "km": 62,
+    "baseSeconds": 370,
+    "routeType": "LAND"
+  },
+  {
+    "id": "tongchuan|xianyang",
+    "from": "tongchuan",
+    "to": "xianyang",
+    "km": 67,
+    "baseSeconds": 400,
+    "routeType": "LAND"
+  },
+  {
+    "id": "tongchuan|yanan",
+    "from": "tongchuan",
+    "to": "yanan",
+    "km": 194,
+    "baseSeconds": 1165,
+    "routeType": "LAND"
+  },
+  {
+    "id": "tongchuan|yulinsn",
+    "from": "tongchuan",
+    "to": "yulinsn",
+    "km": 383,
+    "baseSeconds": 2300,
+    "routeType": "LAND"
+  },
+  {
+    "id": "tonghua|yanbian",
+    "from": "tonghua",
+    "to": "yanbian",
+    "km": 321,
+    "baseSeconds": 1925,
+    "routeType": "LAND"
+  },
+  {
+    "id": "tongliao|xilinguolemeng",
+    "from": "tongliao",
+    "to": "xilinguolemeng",
+    "km": 495,
+    "baseSeconds": 2970,
+    "routeType": "LAND"
+  },
+  {
+    "id": "tongliao|xinganmeng",
+    "from": "tongliao",
+    "to": "xinganmeng",
+    "km": 271,
+    "baseSeconds": 1625,
+    "routeType": "LAND"
+  },
+  {
+    "id": "tongling|wuhu",
+    "from": "wuhu",
+    "to": "tongling",
+    "km": 74,
+    "baseSeconds": 445,
+    "routeType": "LAND"
+  },
+  {
+    "id": "tongling|xuancheng",
+    "from": "tongling",
+    "to": "xuancheng",
+    "km": 91,
+    "baseSeconds": 545,
+    "routeType": "LAND"
+  },
+  {
+    "id": "tongren|xiangxi",
+    "from": "xiangxi",
+    "to": "tongren",
+    "km": 83,
+    "baseSeconds": 500,
+    "routeType": "LAND"
+  },
+  {
+    "id": "tongren|zunyi",
+    "from": "zunyi",
+    "to": "tongren",
+    "km": 222,
+    "baseSeconds": 1330,
+    "routeType": "LAND"
+  },
+  {
+    "id": "tulufan|wulumuqi",
+    "from": "wulumuqi",
+    "to": "tulufan",
+    "km": 160,
+    "baseSeconds": 960,
+    "routeType": "LAND"
+  },
+  {
+    "id": "wanning|wenchang",
+    "from": "wenchang",
+    "to": "wanning",
+    "km": 100,
+    "baseSeconds": 600,
+    "routeType": "LAND"
+  },
+  {
+    "id": "wanning|wuzhishan",
+    "from": "wuzhishan",
+    "to": "wanning",
+    "km": 92,
+    "baseSeconds": 550,
+    "routeType": "LAND"
+  },
+  {
+    "id": "weifang|weihai",
+    "from": "weifang",
+    "to": "weihai",
+    "km": 277,
+    "baseSeconds": 1660,
+    "routeType": "LAND"
+  },
+  {
+    "id": "weifang|yantai",
+    "from": "yantai",
+    "to": "weifang",
+    "km": 220,
+    "baseSeconds": 1320,
+    "routeType": "LAND"
+  },
+  {
+    "id": "weifang|zibo",
+    "from": "zibo",
+    "to": "weifang",
+    "km": 100,
+    "baseSeconds": 600,
+    "routeType": "LAND"
+  },
+  {
+    "id": "weihai|yantai",
+    "from": "yantai",
+    "to": "weihai",
+    "km": 59,
+    "baseSeconds": 355,
+    "routeType": "LAND"
+  },
+  {
+    "id": "weinan|xian",
+    "from": "xian",
+    "to": "weinan",
+    "km": 55,
+    "baseSeconds": 330,
+    "routeType": "LAND"
+  },
+  {
+    "id": "weinan|xianyang",
+    "from": "xianyang",
+    "to": "weinan",
+    "km": 76,
+    "baseSeconds": 455,
+    "routeType": "LAND"
+  },
+  {
+    "id": "weinan|yanan",
+    "from": "weinan",
+    "to": "yanan",
+    "km": 232,
+    "baseSeconds": 1390,
+    "routeType": "LAND"
+  },
+  {
+    "id": "weinan|yulinsn",
+    "from": "weinan",
+    "to": "yulinsn",
+    "km": 422,
+    "baseSeconds": 2530,
+    "routeType": "LAND"
+  },
+  {
+    "id": "weinan|yuncheng",
+    "from": "yuncheng",
+    "to": "weinan",
+    "km": 148,
+    "baseSeconds": 890,
+    "routeType": "LAND"
+  },
+  {
+    "id": "wenshan|yuxi",
+    "from": "yuxi",
+    "to": "wenshan",
+    "km": 203,
+    "baseSeconds": 1220,
+    "routeType": "LAND"
+  },
+  {
+    "id": "wuhan|xianning",
+    "from": "wuhan",
+    "to": "xianning",
+    "km": 83,
+    "baseSeconds": 500,
+    "routeType": "LAND"
+  },
+  {
+    "id": "wuhan|xiaogan",
+    "from": "wuhan",
+    "to": "xiaogan",
+    "km": 52,
+    "baseSeconds": 310,
+    "routeType": "LAND"
+  },
+  {
+    "id": "wuhu|xuancheng",
+    "from": "wuhu",
+    "to": "xuancheng",
+    "km": 55,
+    "baseSeconds": 330,
+    "routeType": "LAND"
+  },
+  {
+    "id": "wulanchabu|xilinguolemeng",
+    "from": "wulanchabu",
+    "to": "xilinguolemeng",
+    "km": 408,
+    "baseSeconds": 2450,
+    "routeType": "LAND"
+  },
+  {
+    "id": "wulanchabu|zhangjiakou",
+    "from": "zhangjiakou",
+    "to": "wulanchabu",
+    "km": 149,
+    "baseSeconds": 895,
+    "routeType": "LAND"
+  },
+  {
+    "id": "wuwei|zhangye",
+    "from": "wuwei",
+    "to": "zhangye",
+    "km": 221,
+    "baseSeconds": 1325,
+    "routeType": "LAND"
+  },
+  {
+    "id": "wuxi|yangzhou",
+    "from": "wuxi",
+    "to": "yangzhou",
+    "km": 131,
+    "baseSeconds": 785,
+    "routeType": "LAND"
+  },
+  {
+    "id": "wuxi|zhenjiang",
+    "from": "wuxi",
+    "to": "zhenjiang",
+    "km": 115,
+    "baseSeconds": 690,
+    "routeType": "LAND"
+  },
+  {
+    "id": "wuzhong|yinchuan",
+    "from": "yinchuan",
+    "to": "wuzhong",
+    "km": 56,
+    "baseSeconds": 335,
+    "routeType": "LAND"
+  },
+  {
+    "id": "wuzhong|zhongwei",
+    "from": "wuzhong",
+    "to": "zhongwei",
+    "km": 104,
+    "baseSeconds": 625,
+    "routeType": "LAND"
+  },
+  {
+    "id": "wuzhou|yulincn",
+    "from": "wuzhou",
+    "to": "yulincn",
+    "km": 147,
+    "baseSeconds": 880,
+    "routeType": "LAND"
+  },
+  {
+    "id": "wuzhou|yunfu",
+    "from": "yunfu",
+    "to": "wuzhou",
+    "km": 100,
+    "baseSeconds": 600,
+    "routeType": "LAND"
+  },
+  {
+    "id": "xiamen|zhangzhou",
+    "from": "xiamen",
+    "to": "zhangzhou",
+    "km": 45,
+    "baseSeconds": 270,
+    "routeType": "LAND"
+  },
+  {
+    "id": "xian|xianyang",
+    "from": "xian",
+    "to": "xianyang",
+    "km": 21,
+    "baseSeconds": 125,
+    "routeType": "LAND"
+  },
+  {
+    "id": "xian|yanan",
+    "from": "xian",
+    "to": "yanan",
+    "km": 255,
+    "baseSeconds": 1530,
+    "routeType": "LAND"
+  },
+  {
+    "id": "xian|yulinsn",
+    "from": "xian",
+    "to": "yulinsn",
+    "km": 445,
+    "baseSeconds": 2670,
+    "routeType": "LAND"
+  },
+  {
+    "id": "xiangtan|yiyang",
+    "from": "xiangtan",
+    "to": "yiyang",
+    "km": 98,
+    "baseSeconds": 590,
+    "routeType": "LAND"
+  },
+  {
+    "id": "xiangtan|zhuzhou",
+    "from": "zhuzhou",
+    "to": "xiangtan",
+    "km": 19,
+    "baseSeconds": 115,
+    "routeType": "LAND"
+  },
+  {
+    "id": "xiangxi|zhangjiajie",
+    "from": "zhangjiajie",
+    "to": "xiangxi",
+    "km": 116,
+    "baseSeconds": 695,
+    "routeType": "LAND"
+  },
+  {
+    "id": "xiangyang|yichang",
+    "from": "yichang",
+    "to": "xiangyang",
+    "km": 167,
+    "baseSeconds": 1000,
+    "routeType": "LAND"
+  },
+  {
+    "id": "xianning|xiaogan",
+    "from": "xiaogan",
+    "to": "xianning",
+    "km": 126,
+    "baseSeconds": 755,
+    "routeType": "LAND"
+  },
+  {
+    "id": "xianning|yueyang",
+    "from": "xianning",
+    "to": "yueyang",
+    "km": 127,
+    "baseSeconds": 760,
+    "routeType": "LAND"
+  },
+  {
+    "id": "xilinguolemeng|xinganmeng",
+    "from": "xinganmeng",
+    "to": "xilinguolemeng",
+    "km": 527,
+    "baseSeconds": 3160,
+    "routeType": "LAND"
+  },
+  {
+    "id": "xingtai|yangquan",
+    "from": "xingtai",
+    "to": "yangquan",
+    "km": 120,
+    "baseSeconds": 720,
+    "routeType": "LAND"
+  },
+  {
+    "id": "xinxiang|zhengzhou",
+    "from": "zhengzhou",
+    "to": "xinxiang",
+    "km": 67,
+    "baseSeconds": 400,
+    "routeType": "LAND"
+  },
+  {
+    "id": "xinyang|zhoukou",
+    "from": "xinyang",
+    "to": "zhoukou",
+    "km": 174,
+    "baseSeconds": 1045,
+    "routeType": "LAND"
+  },
+  {
+    "id": "xinyang|zhumadian",
+    "from": "xinyang",
+    "to": "zhumadian",
+    "km": 96,
+    "baseSeconds": 575,
+    "routeType": "LAND"
+  },
+  {
+    "id": "xinyu|yichunjx",
+    "from": "xinyu",
+    "to": "yichunjx",
+    "km": 49,
+    "baseSeconds": 295,
+    "routeType": "LAND"
+  },
+  {
+    "id": "xinzhou|yangquan",
+    "from": "yangquan",
+    "to": "xinzhou",
+    "km": 97,
+    "baseSeconds": 580,
+    "routeType": "LAND"
+  },
+  {
+    "id": "xishuangbanna|yuxi",
+    "from": "yuxi",
+    "to": "xishuangbanna",
+    "km": 316,
+    "baseSeconds": 1895,
+    "routeType": "LAND"
+  },
+  {
+    "id": "xuchang|zhengzhou",
+    "from": "zhengzhou",
+    "to": "xuchang",
+    "km": 81,
+    "baseSeconds": 485,
+    "routeType": "LAND"
+  },
+  {
+    "id": "xuchang|zhoukou",
+    "from": "xuchang",
+    "to": "zhoukou",
+    "km": 91,
+    "baseSeconds": 545,
+    "routeType": "LAND"
+  },
+  {
+    "id": "xuchang|zhumadian",
+    "from": "xuchang",
+    "to": "zhumadian",
+    "km": 116,
+    "baseSeconds": 695,
+    "routeType": "LAND"
+  },
+  {
+    "id": "xuzhou|zaozhuang",
+    "from": "xuzhou",
+    "to": "zaozhuang",
+    "km": 62,
+    "baseSeconds": 370,
+    "routeType": "LAND"
+  },
+  {
+    "id": "yanan|yulinsn",
+    "from": "yanan",
+    "to": "yulinsn",
+    "km": 190,
+    "baseSeconds": 1140,
+    "routeType": "LAND"
+  },
+  {
+    "id": "yancheng|yangzhou",
+    "from": "yancheng",
+    "to": "yangzhou",
+    "km": 128,
+    "baseSeconds": 770,
+    "routeType": "LAND"
+  },
+  {
+    "id": "yancheng|zhenjiang",
+    "from": "yancheng",
+    "to": "zhenjiang",
+    "km": 146,
+    "baseSeconds": 875,
+    "routeType": "LAND"
+  },
+  {
+    "id": "yangjiang|yunfu",
+    "from": "yangjiang",
+    "to": "yunfu",
+    "km": 118,
+    "baseSeconds": 710,
+    "routeType": "LAND"
+  },
+  {
+    "id": "yangjiang|zhanjiang",
+    "from": "zhanjiang",
+    "to": "yangjiang",
+    "km": 180,
+    "baseSeconds": 1080,
+    "routeType": "LAND"
+  },
+  {
+    "id": "yangjiang|zhaoqing",
+    "from": "zhaoqing",
+    "to": "yangjiang",
+    "km": 142,
+    "baseSeconds": 850,
+    "routeType": "LAND"
+  },
+  {
+    "id": "yangzhou|zhenjiang",
+    "from": "yangzhou",
+    "to": "zhenjiang",
+    "km": 22,
+    "baseSeconds": 130,
+    "routeType": "LAND"
+  },
+  {
+    "id": "yibin|zigong",
+    "from": "zigong",
+    "to": "yibin",
+    "km": 67,
+    "baseSeconds": 400,
+    "routeType": "LAND"
+  },
+  {
+    "id": "yinchuan|zhongwei",
+    "from": "yinchuan",
+    "to": "zhongwei",
+    "km": 143,
+    "baseSeconds": 860,
+    "routeType": "LAND"
+  },
+  {
+    "id": "yiyang|yueyang",
+    "from": "yueyang",
+    "to": "yiyang",
+    "km": 117,
+    "baseSeconds": 700,
+    "routeType": "LAND"
+  },
+  {
+    "id": "yiyang|zhangjiajie",
+    "from": "zhangjiajie",
+    "to": "yiyang",
+    "km": 194,
+    "baseSeconds": 1165,
+    "routeType": "LAND"
+  },
+  {
+    "id": "yiyang|zhuzhou",
+    "from": "zhuzhou",
+    "to": "yiyang",
+    "km": 110,
+    "baseSeconds": 660,
+    "routeType": "LAND"
+  },
+  {
+    "id": "yueyang|zhuzhou",
+    "from": "zhuzhou",
+    "to": "yueyang",
+    "km": 170,
+    "baseSeconds": 1020,
+    "routeType": "LAND"
+  },
+  {
+    "id": "yunfu|zhanjiang",
+    "from": "zhanjiang",
+    "to": "yunfu",
+    "km": 252,
+    "baseSeconds": 1510,
+    "routeType": "LAND"
+  },
+  {
+    "id": "yunfu|zhaoqing",
+    "from": "zhaoqing",
+    "to": "yunfu",
+    "km": 46,
+    "baseSeconds": 275,
+    "routeType": "LAND"
+  },
+  {
+    "id": "zhanjiang|zhaoqing",
+    "from": "zhanjiang",
+    "to": "zhaoqing",
+    "km": 294,
+    "baseSeconds": 1765,
+    "routeType": "LAND"
+  },
+  {
+    "id": "zhaoqing|zhongshan",
+    "from": "zhaoqing",
+    "to": "zhongshan",
+    "km": 111,
+    "baseSeconds": 665,
+    "routeType": "LAND"
+  },
+  {
+    "id": "zhongshan|zhuhai",
+    "from": "zhuhai",
+    "to": "zhongshan",
+    "km": 32,
+    "baseSeconds": 190,
+    "routeType": "LAND"
+  },
+  {
+    "id": "zhoukou|zhumadian",
+    "from": "zhoukou",
+    "to": "zhumadian",
+    "km": 94,
+    "baseSeconds": 565,
+    "routeType": "LAND"
+  },
+  {
+    "id": "zigong|ziyang",
+    "from": "zigong",
+    "to": "ziyang",
+    "km": 89,
+    "baseSeconds": 535,
+    "routeType": "LAND"
+  }
+]

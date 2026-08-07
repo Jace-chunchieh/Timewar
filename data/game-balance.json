@@ -1,0 +1,97 @@
+{
+  "populationIntervalSeconds": 10,
+  "offlineCapSeconds": 86400,
+  "offlineReportThresholdSeconds": 60,
+  "productionWork": {
+    "weapon": 3000,
+    "armor": 4500,
+    "horse": 9000
+  },
+  "productionEfficiency": 1,
+  "trainingDurationSeconds": 600,
+  "trainingCapacityPerLevel": {
+    "5": 500,
+    "4": 400,
+    "3": 300,
+    "2": 200,
+    "1": 100
+  },
+  "trainingCancelRefundRate": 0.5,
+  "populationPerCityPerInterval": {
+    "5": 5,
+    "4": 4,
+    "3": 3,
+    "2": 2,
+    "1": 1
+  },
+  "generalProbability": 0.0001,
+  "generalMaxLevel": 50,
+  "generalBaseCommand": 200,
+  "generalCommandPerLevel": 100,
+  "generalXpPerSecond": 1,
+  "generalXpBase": 300,
+  "generalPowerPerLevel": 0.02,
+  "battleVarianceMin": 0.95,
+  "battleVarianceMax": 1.05,
+  "infantryAttack": 10,
+  "infantryDefense": 14,
+  "cavalryAttack": 18,
+  "cavalryDefense": 9,
+  "cavalrySiegeFactor": 0.7,
+  "infantrySpeed": 1.0,
+  "cavalrySpeed": 1.8,
+  "seaRouteTimeFactor": 1.5,
+  "cancelMarchWindowSeconds": 60,
+  "returnTimeFactor": 0.7,
+  "marchBaseSecondsPer100Km": 600,
+  "attackerCasualtyMin": 0.08,
+  "attackerCasualtyMax": 0.65,
+  "attackerCasualtyFactor": 0.8,
+  "defenderCasualtyMin": 0.15,
+  "defenderCasualtyMax": 0.9,
+  "defenderCasualtyFactor": 0.9,
+  "equipmentRecoveryVictory": {
+    "weapon": 0.4,
+    "armor": 0.4,
+    "horse": 0.25
+  },
+  "equipmentRecoveryDefeat": {
+    "weapon": 0.15,
+    "armor": 0.15,
+    "horse": 0.1
+  },
+  "cityLevels": {
+    "1": { "garrisonMin": 80, "garrisonMax": 160, "growthPer10Min": 4, "garrisonCap": 800, "defenseBonus": 0.06 },
+    "2": { "garrisonMin": 200, "garrisonMax": 360, "growthPer10Min": 10, "garrisonCap": 2000, "defenseBonus": 0.12 },
+    "3": { "garrisonMin": 600, "garrisonMax": 1000, "growthPer10Min": 24, "garrisonCap": 5000, "defenseBonus": 0.25 },
+    "4": { "garrisonMin": 1600, "garrisonMax": 2400, "growthPer10Min": 60, "garrisonCap": 12000, "defenseBonus": 0.4 },
+    "5": { "garrisonMin": 4000, "garrisonMax": 6000, "growthPer10Min": 160, "garrisonCap": 30000, "defenseBonus": 0.5 }
+  },
+  "talisman": {
+    "researchBaseline": 10000,
+    "baseProbability": 0.0001,
+    "probabilityPer100Workers": 0.00001,
+    "rollIntervalSeconds": 10,
+    "sameProvinceCost": 1
+  },
+  "tech": {
+    "maxLevel": 10,
+    "costBase": 5000,
+    "siege": { "label": "攻城术", "desc": "攻城时自身伤亡率降低", "effectPerLevel": 0.01 },
+    "logistics": { "label": "军驿", "desc": "全军行军速度提升", "effectPerLevel": 0.05 },
+    "smithing": { "label": "冶炼", "desc": "武器/盔甲/战马生产效率提升", "effectPerLevel": 0.05 },
+    "agronomy": { "label": "军屯", "desc": "人口产出提升", "effectPerLevel": 0.05 },
+    "discipline": { "label": "治军", "desc": "将领训练经验提升", "effectPerLevel": 0.05 },
+    "command": { "label": "统帅之道", "desc": "将领统帅上限提升", "effectPerLevel": 0.05 },
+    "talismanMastery": { "label": "神行符强化", "desc": "神行符获得概率提升", "effectPerLevel": 0.2 }
+  },
+  "startCityId": "acity",
+  "qingyuanCityId": "qingyuan",
+  "newGame": {
+    "idlePopulation": 500,
+    "infantry": 200,
+    "cavalry": 0,
+    "initialGeneralLevel": 1,
+    "qingyuanFixedGarrison": 100
+  }
+}

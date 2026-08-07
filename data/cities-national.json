@@ -1,0 +1,240 @@
+[
+  {
+    "id": "bj",
+    "name": "北京",
+    "provinceId": "bj",
+    "x": 1388,
+    "y": 482
+  },
+  {
+    "id": "tj",
+    "name": "天津",
+    "provinceId": "tj",
+    "x": 1472,
+    "y": 542
+  },
+  {
+    "id": "sh",
+    "name": "上海",
+    "provinceId": "sh",
+    "x": 1597,
+    "y": 810
+  },
+  {
+    "id": "cq",
+    "name": "重庆",
+    "provinceId": "cq",
+    "x": 1141,
+    "y": 850
+  },
+  {
+    "id": "he",
+    "name": "河北",
+    "provinceId": "he",
+    "x": 1364,
+    "y": 592
+  },
+  {
+    "id": "sx",
+    "name": "山西",
+    "provinceId": "sx",
+    "x": 1258,
+    "y": 579
+  },
+  {
+    "id": "nm",
+    "name": "内蒙古",
+    "provinceId": "nm",
+    "x": 1270,
+    "y": 460
+  },
+  {
+    "id": "ln",
+    "name": "辽宁",
+    "provinceId": "ln",
+    "x": 1594,
+    "y": 466
+  },
+  {
+    "id": "jl",
+    "name": "吉林",
+    "provinceId": "jl",
+    "x": 1691,
+    "y": 399
+  },
+  {
+    "id": "hl",
+    "name": "黑龙江",
+    "provinceId": "hl",
+    "x": 1720,
+    "y": 284
+  },
+  {
+    "id": "js",
+    "name": "江苏",
+    "provinceId": "js",
+    "x": 1510,
+    "y": 750
+  },
+  {
+    "id": "zj",
+    "name": "浙江",
+    "provinceId": "zj",
+    "x": 1501,
+    "y": 866
+  },
+  {
+    "id": "ah",
+    "name": "安徽",
+    "provinceId": "ah",
+    "x": 1404,
+    "y": 759
+  },
+  {
+    "id": "fj",
+    "name": "福建",
+    "provinceId": "fj",
+    "x": 1479,
+    "y": 984
+  },
+  {
+    "id": "jx",
+    "name": "江西",
+    "provinceId": "jx",
+    "x": 1390,
+    "y": 903
+  },
+  {
+    "id": "sd",
+    "name": "山东",
+    "provinceId": "sd",
+    "x": 1455,
+    "y": 652
+  },
+  {
+    "id": "ha",
+    "name": "河南",
+    "provinceId": "ha",
+    "x": 1304,
+    "y": 694
+  },
+  {
+    "id": "hb",
+    "name": "湖北",
+    "provinceId": "hb",
+    "x": 1311,
+    "y": 816
+  },
+  {
+    "id": "hn",
+    "name": "湖南",
+    "provinceId": "hn",
+    "x": 1276,
+    "y": 923
+  },
+  {
+    "id": "gd",
+    "name": "广东",
+    "provinceId": "gd",
+    "x": 1300,
+    "y": 1037
+  },
+  {
+    "id": "gx",
+    "name": "广西",
+    "provinceId": "gx",
+    "x": 1171,
+    "y": 1080
+  },
+  {
+    "id": "hi",
+    "name": "海南",
+    "provinceId": "hi",
+    "x": 1202,
+    "y": 1196
+  },
+  {
+    "id": "sc",
+    "name": "四川",
+    "provinceId": "sc",
+    "x": 1027,
+    "y": 819
+  },
+  {
+    "id": "gz",
+    "name": "贵州",
+    "provinceId": "gz",
+    "x": 1120,
+    "y": 968
+  },
+  {
+    "id": "yn",
+    "name": "云南",
+    "provinceId": "yn",
+    "x": 1009,
+    "y": 1014
+  },
+  {
+    "id": "xz",
+    "name": "西藏",
+    "provinceId": "xz",
+    "x": 665,
+    "y": 855
+  },
+  {
+    "id": "sn",
+    "name": "陕西",
+    "provinceId": "sn",
+    "x": 1184,
+    "y": 699
+  },
+  {
+    "id": "gs",
+    "name": "甘肃",
+    "provinceId": "gs",
+    "x": 1061,
+    "y": 660
+  },
+  {
+    "id": "qh",
+    "name": "青海",
+    "provinceId": "qh",
+    "x": 953,
+    "y": 611
+  },
+  {
+    "id": "nx",
+    "name": "宁夏",
+    "provinceId": "nx",
+    "x": 1114,
+    "y": 553
+  },
+  {
+    "id": "xj",
+    "name": "新疆",
+    "provinceId": "xj",
+    "x": 561,
+    "y": 382
+  },
+  {
+    "id": "hk",
+    "name": "香港",
+    "provinceId": "hk",
+    "x": 1382,
+    "y": 1097
+  },
+  {
+    "id": "mo",
+    "name": "澳门",
+    "provinceId": "mo",
+    "x": 1303,
+    "y": 1134
+  },
+  {
+    "id": "tw",
+    "name": "台湾",
+    "provinceId": "tw",
+    "x": 1591,
+    "y": 1018
+  }
+]

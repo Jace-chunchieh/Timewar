@@ -1,0 +1,344 @@
+[
+  {
+    "id": "bj",
+    "name": "北京",
+    "neighbors": [
+      "he",
+      "tj"
+    ]
+  },
+  {
+    "id": "tj",
+    "name": "天津",
+    "neighbors": [
+      "bj",
+      "he"
+    ]
+  },
+  {
+    "id": "sh",
+    "name": "上海",
+    "neighbors": [
+      "js",
+      "zj"
+    ]
+  },
+  {
+    "id": "cq",
+    "name": "重庆",
+    "neighbors": [
+      "gz",
+      "hb",
+      "hn",
+      "sc",
+      "sn"
+    ]
+  },
+  {
+    "id": "he",
+    "name": "河北",
+    "neighbors": [
+      "bj",
+      "ha",
+      "ln",
+      "nm",
+      "sd",
+      "sx",
+      "tj"
+    ]
+  },
+  {
+    "id": "sx",
+    "name": "山西",
+    "neighbors": [
+      "ha",
+      "he",
+      "nm",
+      "sn"
+    ]
+  },
+  {
+    "id": "nm",
+    "name": "内蒙古",
+    "neighbors": [
+      "gs",
+      "he",
+      "hl",
+      "jl",
+      "ln",
+      "nx",
+      "sn",
+      "sx"
+    ]
+  },
+  {
+    "id": "ln",
+    "name": "辽宁",
+    "neighbors": [
+      "he",
+      "jl",
+      "nm"
+    ]
+  },
+  {
+    "id": "jl",
+    "name": "吉林",
+    "neighbors": [
+      "hl",
+      "ln",
+      "nm"
+    ]
+  },
+  {
+    "id": "hl",
+    "name": "黑龙江",
+    "neighbors": [
+      "jl",
+      "nm"
+    ]
+  },
+  {
+    "id": "js",
+    "name": "江苏",
+    "neighbors": [
+      "ah",
+      "sd",
+      "sh",
+      "zj"
+    ]
+  },
+  {
+    "id": "zj",
+    "name": "浙江",
+    "neighbors": [
+      "ah",
+      "fj",
+      "js",
+      "jx",
+      "sh"
+    ]
+  },
+  {
+    "id": "ah",
+    "name": "安徽",
+    "neighbors": [
+      "ha",
+      "hb",
+      "js",
+      "jx",
+      "sd",
+      "zj"
+    ]
+  },
+  {
+    "id": "fj",
+    "name": "福建",
+    "neighbors": [
+      "gd",
+      "jx",
+      "zj"
+    ]
+  },
+  {
+    "id": "jx",
+    "name": "江西",
+    "neighbors": [
+      "ah",
+      "fj",
+      "gd",
+      "hb",
+      "hn",
+      "zj"
+    ]
+  },
+  {
+    "id": "sd",
+    "name": "山东",
+    "neighbors": [
+      "ah",
+      "ha",
+      "he",
+      "js"
+    ]
+  },
+  {
+    "id": "ha",
+    "name": "河南",
+    "neighbors": [
+      "ah",
+      "hb",
+      "he",
+      "sd",
+      "sn",
+      "sx"
+    ]
+  },
+  {
+    "id": "hb",
+    "name": "湖北",
+    "neighbors": [
+      "ah",
+      "cq",
+      "ha",
+      "hn",
+      "jx",
+      "sn"
+    ]
+  },
+  {
+    "id": "hn",
+    "name": "湖南",
+    "neighbors": [
+      "cq",
+      "gd",
+      "gx",
+      "gz",
+      "hb",
+      "jx"
+    ]
+  },
+  {
+    "id": "gd",
+    "name": "广东",
+    "neighbors": [
+      "fj",
+      "gx",
+      "hk",
+      "hn",
+      "jx",
+      "mo"
+    ]
+  },
+  {
+    "id": "gx",
+    "name": "广西",
+    "neighbors": [
+      "gd",
+      "gz",
+      "hn",
+      "yn"
+    ]
+  },
+  {
+    "id": "hi",
+    "name": "海南",
+    "neighbors": []
+  },
+  {
+    "id": "sc",
+    "name": "四川",
+    "neighbors": [
+      "cq",
+      "gs",
+      "gz",
+      "qh",
+      "sn",
+      "xz",
+      "yn"
+    ]
+  },
+  {
+    "id": "gz",
+    "name": "贵州",
+    "neighbors": [
+      "cq",
+      "gx",
+      "hn",
+      "sc",
+      "yn"
+    ]
+  },
+  {
+    "id": "yn",
+    "name": "云南",
+    "neighbors": [
+      "gx",
+      "gz",
+      "sc",
+      "xz"
+    ]
+  },
+  {
+    "id": "xz",
+    "name": "西藏",
+    "neighbors": [
+      "qh",
+      "sc",
+      "xj",
+      "yn"
+    ]
+  },
+  {
+    "id": "sn",
+    "name": "陕西",
+    "neighbors": [
+      "cq",
+      "gs",
+      "ha",
+      "hb",
+      "nm",
+      "nx",
+      "sc",
+      "sx"
+    ]
+  },
+  {
+    "id": "gs",
+    "name": "甘肃",
+    "neighbors": [
+      "nm",
+      "nx",
+      "qh",
+      "sc",
+      "sn",
+      "xj"
+    ]
+  },
+  {
+    "id": "qh",
+    "name": "青海",
+    "neighbors": [
+      "gs",
+      "sc",
+      "xj",
+      "xz"
+    ]
+  },
+  {
+    "id": "nx",
+    "name": "宁夏",
+    "neighbors": [
+      "gs",
+      "nm",
+      "sn"
+    ]
+  },
+  {
+    "id": "xj",
+    "name": "新疆",
+    "neighbors": [
+      "gs",
+      "qh",
+      "xz"
+    ]
+  },
+  {
+    "id": "hk",
+    "name": "香港",
+    "neighbors": [
+      "gd"
+    ]
+  },
+  {
+    "id": "mo",
+    "name": "澳门",
+    "neighbors": [
+      "gd"
+    ]
+  },
+  {
+    "id": "tw",
+    "name": "台湾",
+    "neighbors": []
+  }
+]

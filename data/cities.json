@@ -1,0 +1,6682 @@
+[
+  {
+    "id": "beijing",
+    "name": "北京",
+    "province": "北京",
+    "provinceId": "bj",
+    "level": 5,
+    "x": 1399,
+    "y": 391,
+    "lat": 39.9,
+    "lon": 116.4,
+    "neighbors": [
+      "baoding",
+      "langfang",
+      "tianjin"
+    ]
+  },
+  {
+    "id": "tianjin",
+    "name": "天津",
+    "province": "天津",
+    "provinceId": "tj",
+    "level": 5,
+    "x": 1454,
+    "y": 466,
+    "lat": 39.1,
+    "lon": 117.2,
+    "neighbors": [
+      "beijing",
+      "cangzhou",
+      "langfang"
+    ]
+  },
+  {
+    "id": "shanghai",
+    "name": "上海",
+    "province": "上海",
+    "provinceId": "sh",
+    "level": 5,
+    "x": 1675,
+    "y": 794,
+    "lat": 31.23,
+    "lon": 121.47,
+    "neighbors": [
+      "huzhou",
+      "jiaxing",
+      "nantong",
+      "suzhou"
+    ]
+  },
+  {
+    "id": "chongqing",
+    "name": "重庆",
+    "province": "重庆",
+    "provinceId": "cq",
+    "level": 5,
+    "x": 1077,
+    "y": 847,
+    "lat": 29.56,
+    "lon": 106.55,
+    "neighbors": [
+      "ankang",
+      "bijie",
+      "enshi",
+      "guangan",
+      "hanzhong",
+      "luzhou",
+      "xiangxi",
+      "yichang",
+      "zhangjiajie",
+      "zunyi"
+    ]
+  },
+  {
+    "id": "shijiazhuang",
+    "name": "石家庄",
+    "province": "河北",
+    "provinceId": "he",
+    "level": 4,
+    "x": 1251,
+    "y": 421,
+    "lat": 38.04,
+    "lon": 114.5,
+    "neighbors": [
+      "baoding",
+      "handan",
+      "hengshui",
+      "xingtai",
+      "yangquan",
+      "zhangjiakou"
+    ]
+  },
+  {
+    "id": "tangshan",
+    "name": "唐山",
+    "province": "河北",
+    "provinceId": "he",
+    "level": 3,
+    "x": 1602,
+    "y": 497,
+    "lat": 39.63,
+    "lon": 118.18,
+    "neighbors": [
+      "cangzhou",
+      "chengde",
+      "langfang",
+      "qinhuangdao"
+    ]
+  },
+  {
+    "id": "qinhuangdao",
+    "name": "秦皇岛",
+    "province": "河北",
+    "provinceId": "he",
+    "level": 3,
+    "x": 1554,
+    "y": 400,
+    "lat": 39.94,
+    "lon": 119.6,
+    "neighbors": [
+      "cangzhou",
+      "chengde",
+      "huludao",
+      "jinzhou",
+      "langfang",
+      "tangshan"
+    ]
+  },
+  {
+    "id": "handan",
+    "name": "邯郸",
+    "province": "河北",
+    "provinceId": "he",
+    "level": 3,
+    "x": 1298,
+    "y": 681,
+    "lat": 36.63,
+    "lon": 114.54,
+    "neighbors": [
+      "anyang",
+      "baoding",
+      "hebi",
+      "hengshui",
+      "shijiazhuang",
+      "xingtai"
+    ]
+  },
+  {
+    "id": "xingtai",
+    "name": "邢台",
+    "province": "河北",
+    "provinceId": "he",
+    "level": 2,
+    "x": 1217,
+    "y": 518,
+    "lat": 37.07,
+    "lon": 114.5,
+    "neighbors": [
+      "baoding",
+      "handan",
+      "hengshui",
+      "shijiazhuang",
+      "yangquan"
+    ]
+  },
+  {
+    "id": "baoding",
+    "name": "保定",
+    "province": "河北",
+    "provinceId": "he",
+    "level": 3,
+    "x": 1357,
+    "y": 472,
+    "lat": 38.87,
+    "lon": 115.46,
+    "neighbors": [
+      "beijing",
+      "cangzhou",
+      "handan",
+      "hengshui",
+      "langfang",
+      "shijiazhuang",
+      "xingtai",
+      "zhangjiakou"
+    ]
+  },
+  {
+    "id": "zhangjiakou",
+    "name": "张家口",
+    "province": "河北",
+    "provinceId": "he",
+    "level": 2,
+    "x": 1352,
+    "y": 348,
+    "lat": 40.77,
+    "lon": 114.88,
+    "neighbors": [
+      "baoding",
+      "chengde",
+      "langfang",
+      "shijiazhuang",
+      "wulanchabu"
+    ]
+  },
+  {
+    "id": "chengde",
+    "name": "承德",
+    "province": "河北",
+    "provinceId": "he",
+    "level": 2,
+    "x": 1443,
+    "y": 346,
+    "lat": 40.95,
+    "lon": 117.96,
+    "neighbors": [
+      "chifeng",
+      "langfang",
+      "qinhuangdao",
+      "tangshan",
+      "zhangjiakou"
+    ]
+  },
+  {
+    "id": "cangzhou",
+    "name": "沧州",
+    "province": "河北",
+    "provinceId": "he",
+    "level": 2,
+    "x": 1553,
+    "y": 577,
+    "lat": 38.3,
+    "lon": 116.84,
+    "neighbors": [
+      "baoding",
+      "dezhou",
+      "hengshui",
+      "langfang",
+      "qinhuangdao",
+      "tangshan",
+      "tianjin"
+    ]
+  },
+  {
+    "id": "langfang",
+    "name": "廊坊",
+    "province": "河北",
+    "provinceId": "he",
+    "level": 3,
+    "x": 1451,
+    "y": 408,
+    "lat": 39.54,
+    "lon": 116.68,
+    "neighbors": [
+      "baoding",
+      "beijing",
+      "cangzhou",
+      "chengde",
+      "qinhuangdao",
+      "tangshan",
+      "tianjin",
+      "zhangjiakou"
+    ]
+  },
+  {
+    "id": "hengshui",
+    "name": "衡水",
+    "province": "河北",
+    "provinceId": "he",
+    "level": 2,
+    "x": 1417,
+    "y": 604,
+    "lat": 37.74,
+    "lon": 115.67,
+    "neighbors": [
+      "baoding",
+      "cangzhou",
+      "dezhou",
+      "handan",
+      "shijiazhuang",
+      "xingtai"
+    ]
+  },
+  {
+    "id": "taiyuan",
+    "name": "太原",
+    "province": "山西",
+    "provinceId": "sx",
+    "level": 4,
+    "x": 1260,
+    "y": 481,
+    "lat": 37.87,
+    "lon": 112.55,
+    "neighbors": [
+      "datong",
+      "jinzhong",
+      "lvliang",
+      "shuozhou",
+      "xinzhou",
+      "yangquan"
+    ]
+  },
+  {
+    "id": "datong",
+    "name": "大同",
+    "province": "山西",
+    "provinceId": "sx",
+    "level": 3,
+    "x": 1296,
+    "y": 382,
+    "lat": 40.08,
+    "lon": 113.3,
+    "neighbors": [
+      "huhehaote",
+      "shuozhou",
+      "taiyuan",
+      "wulanchabu",
+      "xinzhou",
+      "yangquan"
+    ]
+  },
+  {
+    "id": "yangquan",
+    "name": "阳泉",
+    "province": "山西",
+    "provinceId": "sx",
+    "level": 2,
+    "x": 1410,
+    "y": 499,
+    "lat": 37.86,
+    "lon": 113.58,
+    "neighbors": [
+      "changzhi",
+      "datong",
+      "jinzhong",
+      "shijiazhuang",
+      "taiyuan",
+      "xingtai",
+      "xinzhou"
+    ]
+  },
+  {
+    "id": "changzhi",
+    "name": "长治",
+    "province": "山西",
+    "provinceId": "sx",
+    "level": 3,
+    "x": 1376,
+    "y": 628,
+    "lat": 36.2,
+    "lon": 113.12,
+    "neighbors": [
+      "jincheng",
+      "jinzhong",
+      "linfen",
+      "yangquan",
+      "yuncheng"
+    ]
+  },
+  {
+    "id": "jincheng",
+    "name": "晋城",
+    "province": "山西",
+    "provinceId": "sx",
+    "level": 2,
+    "x": 1277,
+    "y": 719,
+    "lat": 35.49,
+    "lon": 112.85,
+    "neighbors": [
+      "changzhi",
+      "jiaozuo",
+      "jinzhong",
+      "linfen",
+      "yuncheng"
+    ]
+  },
+  {
+    "id": "shuozhou",
+    "name": "朔州",
+    "province": "山西",
+    "provinceId": "sx",
+    "level": 2,
+    "x": 1238,
+    "y": 360,
+    "lat": 39.33,
+    "lon": 112.43,
+    "neighbors": [
+      "datong",
+      "jinzhong",
+      "taiyuan",
+      "xinzhou"
+    ]
+  },
+  {
+    "id": "jinzhong",
+    "name": "晋中",
+    "province": "山西",
+    "provinceId": "sx",
+    "level": 2,
+    "x": 1275,
+    "y": 587,
+    "lat": 37.69,
+    "lon": 112.75,
+    "neighbors": [
+      "changzhi",
+      "jincheng",
+      "lvliang",
+      "shuozhou",
+      "taiyuan",
+      "xinzhou",
+      "yangquan"
+    ]
+  },
+  {
+    "id": "yuncheng",
+    "name": "运城",
+    "province": "山西",
+    "provinceId": "sx",
+    "level": 3,
+    "x": 1200,
+    "y": 699,
+    "lat": 35.03,
+    "lon": 111,
+    "neighbors": [
+      "changzhi",
+      "jincheng",
+      "linfen",
+      "lvliang",
+      "sanmenxia",
+      "weinan"
+    ]
+  },
+  {
+    "id": "xinzhou",
+    "name": "忻州",
+    "province": "山西",
+    "provinceId": "sx",
+    "level": 2,
+    "x": 1348,
+    "y": 412,
+    "lat": 38.42,
+    "lon": 112.73,
+    "neighbors": [
+      "datong",
+      "jinzhong",
+      "lvliang",
+      "shuozhou",
+      "taiyuan",
+      "yangquan"
+    ]
+  },
+  {
+    "id": "linfen",
+    "name": "临汾",
+    "province": "山西",
+    "provinceId": "sx",
+    "level": 3,
+    "x": 1169,
+    "y": 553,
+    "lat": 36.08,
+    "lon": 111.52,
+    "neighbors": [
+      "changzhi",
+      "jincheng",
+      "lvliang",
+      "yuncheng"
+    ]
+  },
+  {
+    "id": "lvliang",
+    "name": "吕梁",
+    "province": "山西",
+    "provinceId": "sx",
+    "level": 2,
+    "x": 1152,
+    "y": 446,
+    "lat": 37.52,
+    "lon": 111.14,
+    "neighbors": [
+      "jinzhong",
+      "linfen",
+      "taiyuan",
+      "xinzhou",
+      "yulinsn",
+      "yuncheng"
+    ]
+  },
+  {
+    "id": "huhehaote",
+    "name": "呼和浩特",
+    "province": "内蒙古",
+    "provinceId": "nm",
+    "level": 4,
+    "x": 1292,
+    "y": 318,
+    "lat": 40.84,
+    "lon": 111.75,
+    "neighbors": [
+      "baotou",
+      "bayannaoer",
+      "datong",
+      "eerduosi",
+      "wulanchabu",
+      "xilinguolemeng"
+    ]
+  },
+  {
+    "id": "baotou",
+    "name": "包头",
+    "province": "内蒙古",
+    "provinceId": "nm",
+    "level": 3,
+    "x": 1141,
+    "y": 366,
+    "lat": 40.66,
+    "lon": 109.84,
+    "neighbors": [
+      "alashanmeng",
+      "bayannaoer",
+      "eerduosi",
+      "huhehaote",
+      "wuhai",
+      "wulanchabu",
+      "yulinsn"
+    ]
+  },
+  {
+    "id": "wuhai",
+    "name": "乌海",
+    "province": "内蒙古",
+    "provinceId": "nm",
+    "level": 1,
+    "x": 1102,
+    "y": 476,
+    "lat": 39.65,
+    "lon": 106.79,
+    "neighbors": [
+      "alashanmeng",
+      "baotou",
+      "bayannaoer",
+      "eerduosi"
+    ]
+  },
+  {
+    "id": "chifeng",
+    "name": "赤峰",
+    "province": "内蒙古",
+    "provinceId": "nm",
+    "level": 3,
+    "x": 1498,
+    "y": 371,
+    "lat": 42.26,
+    "lon": 118.89,
+    "neighbors": [
+      "chaoyang",
+      "chengde",
+      "hulunbeier",
+      "tongliao",
+      "wulanchabu",
+      "xilinguolemeng",
+      "xinganmeng"
+    ]
+  },
+  {
+    "id": "tongliao",
+    "name": "通辽",
+    "province": "内蒙古",
+    "provinceId": "nm",
+    "level": 2,
+    "x": 1603,
+    "y": 368,
+    "lat": 43.65,
+    "lon": 122.24,
+    "neighbors": [
+      "chifeng",
+      "fuxin",
+      "hulunbeier",
+      "siping",
+      "xilinguolemeng",
+      "xinganmeng"
+    ]
+  },
+  {
+    "id": "eerduosi",
+    "name": "鄂尔多斯",
+    "province": "内蒙古",
+    "provinceId": "nm",
+    "level": 3,
+    "x": 1161,
+    "y": 500,
+    "lat": 39.61,
+    "lon": 109.78,
+    "neighbors": [
+      "alashanmeng",
+      "baotou",
+      "bayannaoer",
+      "huhehaote",
+      "wuhai",
+      "wulanchabu",
+      "yulinsn"
+    ]
+  },
+  {
+    "id": "hulunbeier",
+    "name": "呼伦贝尔",
+    "province": "内蒙古",
+    "provinceId": "nm",
+    "level": 2,
+    "x": 1493,
+    "y": 201,
+    "lat": 49.21,
+    "lon": 119.77,
+    "neighbors": [
+      "chifeng",
+      "tongliao",
+      "xilinguolemeng",
+      "xinganmeng"
+    ]
+  },
+  {
+    "id": "bayannaoer",
+    "name": "巴彦淖尔",
+    "province": "内蒙古",
+    "provinceId": "nm",
+    "level": 2,
+    "x": 1046,
+    "y": 384,
+    "lat": 40.74,
+    "lon": 107.42,
+    "neighbors": [
+      "alashanmeng",
+      "baotou",
+      "eerduosi",
+      "huhehaote",
+      "wuhai"
+    ]
+  },
+  {
+    "id": "wulanchabu",
+    "name": "乌兰察布",
+    "province": "内蒙古",
+    "provinceId": "nm",
+    "level": 2,
+    "x": 1305,
+    "y": 443,
+    "lat": 40.99,
+    "lon": 113.13,
+    "neighbors": [
+      "baotou",
+      "chifeng",
+      "datong",
+      "eerduosi",
+      "huhehaote",
+      "xilinguolemeng",
+      "zhangjiakou"
+    ]
+  },
+  {
+    "id": "xinganmeng",
+    "name": "兴安盟",
+    "province": "内蒙古",
+    "provinceId": "nm",
+    "level": 1,
+    "x": 1550,
+    "y": 272,
+    "lat": 46.08,
+    "lon": 122.07,
+    "neighbors": [
+      "baicheng",
+      "chifeng",
+      "daqing",
+      "hulunbeier",
+      "qiqihaer",
+      "tongliao",
+      "xilinguolemeng"
+    ]
+  },
+  {
+    "id": "xilinguolemeng",
+    "name": "锡林郭勒盟",
+    "province": "内蒙古",
+    "provinceId": "nm",
+    "level": 1,
+    "x": 1395,
+    "y": 302,
+    "lat": 43.94,
+    "lon": 116.09,
+    "neighbors": [
+      "chifeng",
+      "huhehaote",
+      "hulunbeier",
+      "tongliao",
+      "wulanchabu",
+      "xinganmeng"
+    ]
+  },
+  {
+    "id": "alashanmeng",
+    "name": "阿拉善盟",
+    "province": "内蒙古",
+    "provinceId": "nm",
+    "level": 1,
+    "x": 997,
+    "y": 487,
+    "lat": 38.84,
+    "lon": 105.73,
+    "neighbors": [
+      "baiyin",
+      "baotou",
+      "bayannaoer",
+      "eerduosi",
+      "shizuishan",
+      "wuhai",
+      "wuwei",
+      "yinchuan"
+    ]
+  },
+  {
+    "id": "shenyang",
+    "name": "沈阳",
+    "province": "辽宁",
+    "provinceId": "ln",
+    "level": 4,
+    "x": 1683,
+    "y": 360,
+    "lat": 41.8,
+    "lon": 123.43,
+    "neighbors": [
+      "anshan",
+      "benxi",
+      "fushun",
+      "fuxin",
+      "liaoyang",
+      "tieling"
+    ]
+  },
+  {
+    "id": "dalian",
+    "name": "大连",
+    "province": "辽宁",
+    "provinceId": "ln",
+    "level": 4,
+    "x": 1654,
+    "y": 588,
+    "lat": 38.91,
+    "lon": 121.61,
+    "neighbors": [
+      "huludao",
+      "jinzhou",
+      "panjin",
+      "yingkou"
+    ]
+  },
+  {
+    "id": "anshan",
+    "name": "鞍山",
+    "province": "辽宁",
+    "provinceId": "ln",
+    "level": 3,
+    "x": 1708,
+    "y": 556,
+    "lat": 41.11,
+    "lon": 122.99,
+    "neighbors": [
+      "benxi",
+      "dandong",
+      "fushun",
+      "liaoyang",
+      "panjin",
+      "shenyang",
+      "yingkou"
+    ]
+  },
+  {
+    "id": "fushun",
+    "name": "抚顺",
+    "province": "辽宁",
+    "provinceId": "ln",
+    "level": 2,
+    "x": 1759,
+    "y": 456,
+    "lat": 41.88,
+    "lon": 123.96,
+    "neighbors": [
+      "anshan",
+      "benxi",
+      "liaoyang",
+      "shenyang",
+      "tieling"
+    ]
+  },
+  {
+    "id": "benxi",
+    "name": "本溪",
+    "province": "辽宁",
+    "provinceId": "ln",
+    "level": 2,
+    "x": 1708,
+    "y": 496,
+    "lat": 41.29,
+    "lon": 123.77,
+    "neighbors": [
+      "anshan",
+      "dandong",
+      "fushun",
+      "liaoyang",
+      "shenyang",
+      "tieling"
+    ]
+  },
+  {
+    "id": "dandong",
+    "name": "丹东",
+    "province": "辽宁",
+    "provinceId": "ln",
+    "level": 2,
+    "x": 1762,
+    "y": 592,
+    "lat": 40.13,
+    "lon": 124.38,
+    "neighbors": [
+      "anshan",
+      "benxi",
+      "liaoyang",
+      "yingkou"
+    ]
+  },
+  {
+    "id": "jinzhou",
+    "name": "锦州",
+    "province": "辽宁",
+    "provinceId": "ln",
+    "level": 2,
+    "x": 1505,
+    "y": 434,
+    "lat": 41.1,
+    "lon": 121.13,
+    "neighbors": [
+      "chaoyang",
+      "dalian",
+      "fuxin",
+      "huludao",
+      "panjin",
+      "qinhuangdao",
+      "yingkou"
+    ]
+  },
+  {
+    "id": "yingkou",
+    "name": "营口",
+    "province": "辽宁",
+    "provinceId": "ln",
+    "level": 2,
+    "x": 1654,
+    "y": 527,
+    "lat": 40.67,
+    "lon": 122.24,
+    "neighbors": [
+      "anshan",
+      "dalian",
+      "dandong",
+      "huludao",
+      "jinzhou",
+      "liaoyang",
+      "panjin"
+    ]
+  },
+  {
+    "id": "fuxin",
+    "name": "阜新",
+    "province": "辽宁",
+    "provinceId": "ln",
+    "level": 1,
+    "x": 1549,
+    "y": 337,
+    "lat": 42.02,
+    "lon": 121.67,
+    "neighbors": [
+      "chaoyang",
+      "jinzhou",
+      "panjin",
+      "shenyang",
+      "tongliao"
+    ]
+  },
+  {
+    "id": "liaoyang",
+    "name": "辽阳",
+    "province": "辽宁",
+    "provinceId": "ln",
+    "level": 2,
+    "x": 1702,
+    "y": 431,
+    "lat": 41.27,
+    "lon": 123.24,
+    "neighbors": [
+      "anshan",
+      "benxi",
+      "dandong",
+      "fushun",
+      "panjin",
+      "shenyang",
+      "tieling",
+      "yingkou"
+    ]
+  },
+  {
+    "id": "panjin",
+    "name": "盘锦",
+    "province": "辽宁",
+    "provinceId": "ln",
+    "level": 2,
+    "x": 1600,
+    "y": 433,
+    "lat": 41.12,
+    "lon": 122.07,
+    "neighbors": [
+      "anshan",
+      "chaoyang",
+      "dalian",
+      "fuxin",
+      "huludao",
+      "jinzhou",
+      "liaoyang",
+      "yingkou"
+    ]
+  },
+  {
+    "id": "tieling",
+    "name": "铁岭",
+    "province": "辽宁",
+    "provinceId": "ln",
+    "level": 2,
+    "x": 1667,
+    "y": 299,
+    "lat": 42.29,
+    "lon": 123.84,
+    "neighbors": [
+      "benxi",
+      "fushun",
+      "liaoyang",
+      "liaoyuan",
+      "shenyang",
+      "siping"
+    ]
+  },
+  {
+    "id": "chaoyang",
+    "name": "朝阳",
+    "province": "辽宁",
+    "provinceId": "ln",
+    "level": 1,
+    "x": 1490,
+    "y": 308,
+    "lat": 41.57,
+    "lon": 120.45,
+    "neighbors": [
+      "chifeng",
+      "fuxin",
+      "huludao",
+      "jinzhou",
+      "panjin"
+    ]
+  },
+  {
+    "id": "huludao",
+    "name": "葫芦岛",
+    "province": "辽宁",
+    "provinceId": "ln",
+    "level": 2,
+    "x": 1553,
+    "y": 522,
+    "lat": 40.71,
+    "lon": 120.84,
+    "neighbors": [
+      "chaoyang",
+      "dalian",
+      "jinzhou",
+      "panjin",
+      "qinhuangdao",
+      "yingkou"
+    ]
+  },
+  {
+    "id": "changchun",
+    "name": "长春",
+    "province": "吉林",
+    "provinceId": "jl",
+    "level": 4,
+    "x": 1743,
+    "y": 383,
+    "lat": 43.9,
+    "lon": 125.32,
+    "neighbors": [
+      "baicheng",
+      "jilincity",
+      "liaoyuan",
+      "siping",
+      "songyuan"
+    ]
+  },
+  {
+    "id": "jilincity",
+    "name": "吉林",
+    "province": "吉林",
+    "provinceId": "jl",
+    "level": 3,
+    "x": 1794,
+    "y": 344,
+    "lat": 43.84,
+    "lon": 126.55,
+    "neighbors": [
+      "baishan",
+      "changchun",
+      "liaoyuan",
+      "siping",
+      "songyuan",
+      "tonghua",
+      "yanbian"
+    ]
+  },
+  {
+    "id": "siping",
+    "name": "四平",
+    "province": "吉林",
+    "provinceId": "jl",
+    "level": 2,
+    "x": 1604,
+    "y": 310,
+    "lat": 43.17,
+    "lon": 124.35,
+    "neighbors": [
+      "baicheng",
+      "baishan",
+      "changchun",
+      "jilincity",
+      "liaoyuan",
+      "songyuan",
+      "tieling",
+      "tonghua",
+      "tongliao"
+    ]
+  },
+  {
+    "id": "liaoyuan",
+    "name": "辽源",
+    "province": "吉林",
+    "provinceId": "jl",
+    "level": 1,
+    "x": 1650,
+    "y": 407,
+    "lat": 42.9,
+    "lon": 125.14,
+    "neighbors": [
+      "baicheng",
+      "baishan",
+      "changchun",
+      "jilincity",
+      "siping",
+      "tieling",
+      "tonghua",
+      "yanbian"
+    ]
+  },
+  {
+    "id": "tonghua",
+    "name": "通化",
+    "province": "吉林",
+    "provinceId": "jl",
+    "level": 2,
+    "x": 1765,
+    "y": 526,
+    "lat": 41.73,
+    "lon": 125.94,
+    "neighbors": [
+      "baishan",
+      "jilincity",
+      "liaoyuan",
+      "siping",
+      "yanbian"
+    ]
+  },
+  {
+    "id": "baishan",
+    "name": "白山",
+    "province": "吉林",
+    "provinceId": "jl",
+    "level": 1,
+    "x": 1819,
+    "y": 473,
+    "lat": 41.94,
+    "lon": 126.42,
+    "neighbors": [
+      "jilincity",
+      "liaoyuan",
+      "siping",
+      "tonghua",
+      "yanbian"
+    ]
+  },
+  {
+    "id": "songyuan",
+    "name": "松原",
+    "province": "吉林",
+    "provinceId": "jl",
+    "level": 2,
+    "x": 1675,
+    "y": 235,
+    "lat": 45.14,
+    "lon": 124.83,
+    "neighbors": [
+      "baicheng",
+      "changchun",
+      "daqing",
+      "haerbin",
+      "jilincity",
+      "siping"
+    ]
+  },
+  {
+    "id": "baicheng",
+    "name": "白城",
+    "province": "吉林",
+    "provinceId": "jl",
+    "level": 1,
+    "x": 1558,
+    "y": 210,
+    "lat": 45.62,
+    "lon": 122.84,
+    "neighbors": [
+      "changchun",
+      "liaoyuan",
+      "siping",
+      "songyuan",
+      "xinganmeng"
+    ]
+  },
+  {
+    "id": "yanbian",
+    "name": "延边州",
+    "province": "吉林",
+    "provinceId": "jl",
+    "level": 2,
+    "x": 1855,
+    "y": 371,
+    "lat": 42.9,
+    "lon": 129.51,
+    "neighbors": [
+      "baishan",
+      "jilincity",
+      "liaoyuan",
+      "tonghua"
+    ]
+  },
+  {
+    "id": "haerbin",
+    "name": "哈尔滨",
+    "province": "黑龙江",
+    "provinceId": "hl",
+    "level": 4,
+    "x": 1734,
+    "y": 322,
+    "lat": 45.8,
+    "lon": 126.63,
+    "neighbors": [
+      "daqing",
+      "qiqihaer",
+      "songyuan",
+      "suihua",
+      "yichun"
+    ]
+  },
+  {
+    "id": "qiqihaer",
+    "name": "齐齐哈尔",
+    "province": "黑龙江",
+    "provinceId": "hl",
+    "level": 3,
+    "x": 1624,
+    "y": 184,
+    "lat": 47.35,
+    "lon": 123.92,
+    "neighbors": [
+      "daqing",
+      "daxinganling",
+      "haerbin",
+      "suihua",
+      "xinganmeng",
+      "yichun"
+    ]
+  },
+  {
+    "id": "jixi",
+    "name": "鸡西",
+    "province": "黑龙江",
+    "provinceId": "hl",
+    "level": 1,
+    "x": 1871,
+    "y": 433,
+    "lat": 45.3,
+    "lon": 130.97,
+    "neighbors": [
+      "jiamusi",
+      "mudanjiang",
+      "qitaihe",
+      "shuangyashan"
+    ]
+  },
+  {
+    "id": "hegang",
+    "name": "鹤岗",
+    "province": "黑龙江",
+    "provinceId": "hl",
+    "level": 1,
+    "x": 1819,
+    "y": 195,
+    "lat": 47.35,
+    "lon": 130.3,
+    "neighbors": [
+      "heihe",
+      "jiamusi",
+      "qitaihe",
+      "shuangyashan",
+      "yichun"
+    ]
+  },
+  {
+    "id": "shuangyashan",
+    "name": "双鸭山",
+    "province": "黑龙江",
+    "provinceId": "hl",
+    "level": 1,
+    "x": 1880,
+    "y": 246,
+    "lat": 46.65,
+    "lon": 131.16,
+    "neighbors": [
+      "hegang",
+      "jiamusi",
+      "jixi",
+      "mudanjiang",
+      "qitaihe",
+      "yichun"
+    ]
+  },
+  {
+    "id": "daqing",
+    "name": "大庆",
+    "province": "黑龙江",
+    "provinceId": "hl",
+    "level": 3,
+    "x": 1610,
+    "y": 246,
+    "lat": 46.59,
+    "lon": 125.1,
+    "neighbors": [
+      "daxinganling",
+      "haerbin",
+      "qiqihaer",
+      "songyuan",
+      "suihua",
+      "xinganmeng",
+      "yichun"
+    ]
+  },
+  {
+    "id": "yichun",
+    "name": "伊春",
+    "province": "黑龙江",
+    "provinceId": "hl",
+    "level": 1,
+    "x": 1728,
+    "y": 192,
+    "lat": 47.73,
+    "lon": 128.84,
+    "neighbors": [
+      "daqing",
+      "daxinganling",
+      "haerbin",
+      "hegang",
+      "heihe",
+      "jiamusi",
+      "qiqihaer",
+      "shuangyashan",
+      "suihua"
+    ]
+  },
+  {
+    "id": "jiamusi",
+    "name": "佳木斯",
+    "province": "黑龙江",
+    "provinceId": "hl",
+    "level": 2,
+    "x": 1795,
+    "y": 280,
+    "lat": 46.8,
+    "lon": 130.32,
+    "neighbors": [
+      "hegang",
+      "jixi",
+      "mudanjiang",
+      "qitaihe",
+      "shuangyashan",
+      "yichun"
+    ]
+  },
+  {
+    "id": "qitaihe",
+    "name": "七台河",
+    "province": "黑龙江",
+    "provinceId": "hl",
+    "level": 1,
+    "x": 1880,
+    "y": 311,
+    "lat": 45.77,
+    "lon": 131,
+    "neighbors": [
+      "hegang",
+      "jiamusi",
+      "jixi",
+      "mudanjiang",
+      "shuangyashan"
+    ]
+  },
+  {
+    "id": "mudanjiang",
+    "name": "牡丹江",
+    "province": "黑龙江",
+    "provinceId": "hl",
+    "level": 2,
+    "x": 1803,
+    "y": 410,
+    "lat": 44.55,
+    "lon": 129.63,
+    "neighbors": [
+      "jiamusi",
+      "jixi",
+      "qitaihe",
+      "shuangyashan"
+    ]
+  },
+  {
+    "id": "heihe",
+    "name": "黑河",
+    "province": "黑龙江",
+    "provinceId": "hl",
+    "level": 1,
+    "x": 1762,
+    "y": 102,
+    "lat": 50.25,
+    "lon": 127.53,
+    "neighbors": [
+      "daxinganling",
+      "hegang",
+      "suihua",
+      "yichun"
+    ]
+  },
+  {
+    "id": "suihua",
+    "name": "绥化",
+    "province": "黑龙江",
+    "provinceId": "hl",
+    "level": 1,
+    "x": 1733,
+    "y": 256,
+    "lat": 46.65,
+    "lon": 126.98,
+    "neighbors": [
+      "daqing",
+      "haerbin",
+      "heihe",
+      "qiqihaer",
+      "yichun"
+    ]
+  },
+  {
+    "id": "daxinganling",
+    "name": "大兴安岭",
+    "province": "黑龙江",
+    "provinceId": "hl",
+    "level": 1,
+    "x": 1652,
+    "y": 96,
+    "lat": 51.93,
+    "lon": 124.71,
+    "neighbors": [
+      "daqing",
+      "heihe",
+      "qiqihaer",
+      "yichun"
+    ]
+  },
+  {
+    "id": "nanjing",
+    "name": "南京",
+    "province": "江苏",
+    "provinceId": "js",
+    "level": 5,
+    "x": 1461,
+    "y": 747,
+    "lat": 32.06,
+    "lon": 118.8,
+    "neighbors": [
+      "changzhou",
+      "maanshan",
+      "taizhou",
+      "xuzhou",
+      "yangzhou",
+      "zhenjiang"
+    ]
+  },
+  {
+    "id": "wuxi",
+    "name": "无锡",
+    "province": "江苏",
+    "provinceId": "js",
+    "level": 3,
+    "x": 1653,
+    "y": 912,
+    "lat": 31.49,
+    "lon": 120.31,
+    "neighbors": [
+      "changzhou",
+      "nantong",
+      "suzhou",
+      "taizhou",
+      "yangzhou",
+      "zhenjiang"
+    ]
+  },
+  {
+    "id": "xuzhou",
+    "name": "徐州",
+    "province": "江苏",
+    "provinceId": "js",
+    "level": 3,
+    "x": 1380,
+    "y": 678,
+    "lat": 34.26,
+    "lon": 117.18,
+    "neighbors": [
+      "huaian",
+      "huaibei",
+      "lianyungang",
+      "nanjing",
+      "suqian",
+      "zaozhuang"
+    ]
+  },
+  {
+    "id": "changzhou",
+    "name": "常州",
+    "province": "江苏",
+    "provinceId": "js",
+    "level": 3,
+    "x": 1560,
+    "y": 885,
+    "lat": 31.81,
+    "lon": 119.97,
+    "neighbors": [
+      "nanjing",
+      "nantong",
+      "suzhou",
+      "taizhou",
+      "wuxi",
+      "yangzhou",
+      "zhenjiang"
+    ]
+  },
+  {
+    "id": "suzhou",
+    "name": "苏州",
+    "province": "江苏",
+    "provinceId": "js",
+    "level": 5,
+    "x": 1717,
+    "y": 834,
+    "lat": 31.3,
+    "lon": 120.58,
+    "neighbors": [
+      "changzhou",
+      "huzhou",
+      "jiaxing",
+      "nantong",
+      "shanghai",
+      "taizhou",
+      "wuxi"
+    ]
+  },
+  {
+    "id": "nantong",
+    "name": "南通",
+    "province": "江苏",
+    "provinceId": "js",
+    "level": 3,
+    "x": 1730,
+    "y": 735,
+    "lat": 31.98,
+    "lon": 120.89,
+    "neighbors": [
+      "changzhou",
+      "shanghai",
+      "suzhou",
+      "taizhou",
+      "wuxi"
+    ]
+  },
+  {
+    "id": "lianyungang",
+    "name": "连云港",
+    "province": "江苏",
+    "provinceId": "js",
+    "level": 2,
+    "x": 1601,
+    "y": 612,
+    "lat": 34.6,
+    "lon": 119.22,
+    "neighbors": [
+      "huaian",
+      "linyi",
+      "suqian",
+      "xuzhou",
+      "yancheng"
+    ]
+  },
+  {
+    "id": "huaian",
+    "name": "淮安",
+    "province": "江苏",
+    "provinceId": "js",
+    "level": 2,
+    "x": 1508,
+    "y": 604,
+    "lat": 33.61,
+    "lon": 119.02,
+    "neighbors": [
+      "lianyungang",
+      "suqian",
+      "xuzhou",
+      "yancheng",
+      "yangzhou"
+    ]
+  },
+  {
+    "id": "yancheng",
+    "name": "盐城",
+    "province": "江苏",
+    "provinceId": "js",
+    "level": 2,
+    "x": 1695,
+    "y": 682,
+    "lat": 33.35,
+    "lon": 120.16,
+    "neighbors": [
+      "huaian",
+      "lianyungang",
+      "suqian",
+      "taizhou",
+      "yangzhou",
+      "zhenjiang"
+    ]
+  },
+  {
+    "id": "yangzhou",
+    "name": "扬州",
+    "province": "江苏",
+    "provinceId": "js",
+    "level": 3,
+    "x": 1541,
+    "y": 690,
+    "lat": 32.39,
+    "lon": 119.41,
+    "neighbors": [
+      "changzhou",
+      "huaian",
+      "nanjing",
+      "taizhou",
+      "wuxi",
+      "yancheng",
+      "zhenjiang"
+    ]
+  },
+  {
+    "id": "zhenjiang",
+    "name": "镇江",
+    "province": "江苏",
+    "provinceId": "js",
+    "level": 2,
+    "x": 1494,
+    "y": 775,
+    "lat": 32.19,
+    "lon": 119.42,
+    "neighbors": [
+      "changzhou",
+      "nanjing",
+      "taizhou",
+      "wuxi",
+      "yancheng",
+      "yangzhou"
+    ]
+  },
+  {
+    "id": "taizhou",
+    "name": "泰州",
+    "province": "江苏",
+    "provinceId": "js",
+    "level": 2,
+    "x": 1579,
+    "y": 778,
+    "lat": 32.46,
+    "lon": 119.92,
+    "neighbors": [
+      "changzhou",
+      "nanjing",
+      "nantong",
+      "suzhou",
+      "wuxi",
+      "yancheng",
+      "yangzhou",
+      "zhenjiang"
+    ]
+  },
+  {
+    "id": "suqian",
+    "name": "宿迁",
+    "province": "江苏",
+    "provinceId": "js",
+    "level": 2,
+    "x": 1460,
+    "y": 628,
+    "lat": 33.96,
+    "lon": 118.28,
+    "neighbors": [
+      "huaian",
+      "lianyungang",
+      "xuzhou",
+      "yancheng"
+    ]
+  },
+  {
+    "id": "hangzhou",
+    "name": "杭州",
+    "province": "浙江",
+    "provinceId": "zj",
+    "level": 5,
+    "x": 1485,
+    "y": 832,
+    "lat": 30.28,
+    "lon": 120.15,
+    "neighbors": [
+      "huzhou",
+      "jiaxing",
+      "jinhua",
+      "quzhou",
+      "shaoxing"
+    ]
+  },
+  {
+    "id": "ningbo",
+    "name": "宁波",
+    "province": "浙江",
+    "provinceId": "zj",
+    "level": 4,
+    "x": 1713,
+    "y": 895,
+    "lat": 29.87,
+    "lon": 121.55,
+    "neighbors": [
+      "huzhou",
+      "jiaxing",
+      "shaoxing",
+      "taizhouzj",
+      "zhoushan"
+    ]
+  },
+  {
+    "id": "wenzhou",
+    "name": "温州",
+    "province": "浙江",
+    "provinceId": "zj",
+    "level": 3,
+    "x": 1614,
+    "y": 1079,
+    "lat": 28,
+    "lon": 120.7,
+    "neighbors": [
+      "jinhua",
+      "lishui",
+      "ningde",
+      "quzhou",
+      "taizhouzj"
+    ]
+  },
+  {
+    "id": "jiaxing",
+    "name": "嘉兴",
+    "province": "浙江",
+    "provinceId": "zj",
+    "level": 3,
+    "x": 1676,
+    "y": 737,
+    "lat": 30.75,
+    "lon": 120.76,
+    "neighbors": [
+      "hangzhou",
+      "huzhou",
+      "ningbo",
+      "shanghai",
+      "shaoxing",
+      "suzhou",
+      "zhoushan"
+    ]
+  },
+  {
+    "id": "huzhou",
+    "name": "湖州",
+    "province": "浙江",
+    "provinceId": "zj",
+    "level": 2,
+    "x": 1530,
+    "y": 802,
+    "lat": 30.89,
+    "lon": 120.09,
+    "neighbors": [
+      "hangzhou",
+      "jiaxing",
+      "ningbo",
+      "shanghai",
+      "shaoxing",
+      "suzhou",
+      "xuancheng"
+    ]
+  },
+  {
+    "id": "shaoxing",
+    "name": "绍兴",
+    "province": "浙江",
+    "provinceId": "zj",
+    "level": 3,
+    "x": 1664,
+    "y": 854,
+    "lat": 30.03,
+    "lon": 120.58,
+    "neighbors": [
+      "hangzhou",
+      "huzhou",
+      "jiaxing",
+      "jinhua",
+      "ningbo",
+      "quzhou",
+      "zhoushan"
+    ]
+  },
+  {
+    "id": "jinhua",
+    "name": "金华",
+    "province": "浙江",
+    "provinceId": "zj",
+    "level": 3,
+    "x": 1562,
+    "y": 947,
+    "lat": 29.08,
+    "lon": 119.65,
+    "neighbors": [
+      "hangzhou",
+      "lishui",
+      "quzhou",
+      "shaoxing",
+      "wenzhou"
+    ]
+  },
+  {
+    "id": "quzhou",
+    "name": "衢州",
+    "province": "浙江",
+    "provinceId": "zj",
+    "level": 2,
+    "x": 1436,
+    "y": 899,
+    "lat": 28.94,
+    "lon": 118.87,
+    "neighbors": [
+      "hangzhou",
+      "huangshan",
+      "jingdezhen",
+      "jinhua",
+      "lishui",
+      "shangrao",
+      "shaoxing",
+      "wenzhou"
+    ]
+  },
+  {
+    "id": "zhoushan",
+    "name": "舟山",
+    "province": "浙江",
+    "provinceId": "zj",
+    "level": 2,
+    "x": 1759,
+    "y": 790,
+    "lat": 30.02,
+    "lon": 122.2,
+    "neighbors": [
+      "jiaxing",
+      "ningbo",
+      "shaoxing",
+      "taizhouzj"
+    ]
+  },
+  {
+    "id": "taizhouzj",
+    "name": "台州",
+    "province": "浙江",
+    "provinceId": "zj",
+    "level": 3,
+    "x": 1720,
+    "y": 955,
+    "lat": 28.66,
+    "lon": 121.42,
+    "neighbors": [
+      "lishui",
+      "ningbo",
+      "wenzhou",
+      "zhoushan"
+    ]
+  },
+  {
+    "id": "lishui",
+    "name": "丽水",
+    "province": "浙江",
+    "provinceId": "zj",
+    "level": 2,
+    "x": 1517,
+    "y": 1026,
+    "lat": 28.45,
+    "lon": 119.92,
+    "neighbors": [
+      "jinhua",
+      "ningde",
+      "quzhou",
+      "taizhouzj",
+      "wenzhou"
+    ]
+  },
+  {
+    "id": "hefei",
+    "name": "合肥",
+    "province": "安徽",
+    "provinceId": "ah",
+    "level": 4,
+    "x": 1536,
+    "y": 746,
+    "lat": 31.82,
+    "lon": 117.23,
+    "neighbors": [
+      "anqing",
+      "bengbu",
+      "chizhou",
+      "chuzhou",
+      "huainan",
+      "liuan",
+      "maanshan",
+      "tongling",
+      "wuhu"
+    ]
+  },
+  {
+    "id": "wuhu",
+    "name": "芜湖",
+    "province": "安徽",
+    "provinceId": "ah",
+    "level": 3,
+    "x": 1622,
+    "y": 814,
+    "lat": 31.35,
+    "lon": 118.43,
+    "neighbors": [
+      "chizhou",
+      "chuzhou",
+      "hefei",
+      "maanshan",
+      "tongling",
+      "xuancheng"
+    ]
+  },
+  {
+    "id": "bengbu",
+    "name": "蚌埠",
+    "province": "安徽",
+    "provinceId": "ah",
+    "level": 3,
+    "x": 1590,
+    "y": 668,
+    "lat": 32.92,
+    "lon": 117.39,
+    "neighbors": [
+      "chuzhou",
+      "hefei",
+      "huaibei",
+      "huainan",
+      "suzhouah"
+    ]
+  },
+  {
+    "id": "huainan",
+    "name": "淮南",
+    "province": "安徽",
+    "provinceId": "ah",
+    "level": 2,
+    "x": 1432,
+    "y": 708,
+    "lat": 32.63,
+    "lon": 117,
+    "neighbors": [
+      "bengbu",
+      "bozhou",
+      "chuzhou",
+      "fuyang",
+      "hefei",
+      "huaibei",
+      "liuan",
+      "suzhouah"
+    ]
+  },
+  {
+    "id": "maanshan",
+    "name": "马鞍山",
+    "province": "安徽",
+    "provinceId": "ah",
+    "level": 2,
+    "x": 1627,
+    "y": 757,
+    "lat": 31.67,
+    "lon": 118.51,
+    "neighbors": [
+      "chuzhou",
+      "hefei",
+      "nanjing",
+      "tongling",
+      "wuhu",
+      "xuancheng"
+    ]
+  },
+  {
+    "id": "huaibei",
+    "name": "淮北",
+    "province": "安徽",
+    "provinceId": "ah",
+    "level": 2,
+    "x": 1367,
+    "y": 579,
+    "lat": 33.96,
+    "lon": 116.8,
+    "neighbors": [
+      "bengbu",
+      "bozhou",
+      "huainan",
+      "suzhouah",
+      "xuzhou",
+      "zaozhuang"
+    ]
+  },
+  {
+    "id": "tongling",
+    "name": "铜陵",
+    "province": "安徽",
+    "provinceId": "ah",
+    "level": 2,
+    "x": 1519,
+    "y": 857,
+    "lat": 30.95,
+    "lon": 117.81,
+    "neighbors": [
+      "anqing",
+      "chizhou",
+      "hefei",
+      "huangshan",
+      "maanshan",
+      "wuhu",
+      "xuancheng"
+    ]
+  },
+  {
+    "id": "anqing",
+    "name": "安庆",
+    "province": "安徽",
+    "provinceId": "ah",
+    "level": 2,
+    "x": 1392,
+    "y": 882,
+    "lat": 30.54,
+    "lon": 117.06,
+    "neighbors": [
+      "chizhou",
+      "ezhou",
+      "hefei",
+      "huangshan",
+      "huangshi",
+      "jiujiang",
+      "liuan",
+      "tongling"
+    ]
+  },
+  {
+    "id": "huangshan",
+    "name": "黄山",
+    "province": "安徽",
+    "provinceId": "ah",
+    "level": 2,
+    "x": 1518,
+    "y": 974,
+    "lat": 29.71,
+    "lon": 118.34,
+    "neighbors": [
+      "anqing",
+      "chizhou",
+      "jingdezhen",
+      "quzhou",
+      "tongling",
+      "xuancheng"
+    ]
+  },
+  {
+    "id": "chuzhou",
+    "name": "滁州",
+    "province": "安徽",
+    "provinceId": "ah",
+    "level": 2,
+    "x": 1634,
+    "y": 702,
+    "lat": 32.3,
+    "lon": 118.32,
+    "neighbors": [
+      "bengbu",
+      "hefei",
+      "huainan",
+      "maanshan",
+      "wuhu"
+    ]
+  },
+  {
+    "id": "fuyang",
+    "name": "阜阳",
+    "province": "安徽",
+    "provinceId": "ah",
+    "level": 2,
+    "x": 1320,
+    "y": 777,
+    "lat": 32.9,
+    "lon": 115.81,
+    "neighbors": [
+      "bozhou",
+      "huainan",
+      "liuan",
+      "suzhouah"
+    ]
+  },
+  {
+    "id": "suzhouah",
+    "name": "宿州",
+    "province": "安徽",
+    "provinceId": "ah",
+    "level": 2,
+    "x": 1461,
+    "y": 579,
+    "lat": 33.65,
+    "lon": 116.98,
+    "neighbors": [
+      "bengbu",
+      "bozhou",
+      "fuyang",
+      "huaibei",
+      "huainan",
+      "zaozhuang"
+    ]
+  },
+  {
+    "id": "liuan",
+    "name": "六安",
+    "province": "安徽",
+    "provinceId": "ah",
+    "level": 2,
+    "x": 1359,
+    "y": 829,
+    "lat": 31.74,
+    "lon": 116.52,
+    "neighbors": [
+      "anqing",
+      "fuyang",
+      "hefei",
+      "huainan"
+    ]
+  },
+  {
+    "id": "bozhou",
+    "name": "亳州",
+    "province": "安徽",
+    "provinceId": "ah",
+    "level": 2,
+    "x": 1335,
+    "y": 650,
+    "lat": 33.86,
+    "lon": 115.78,
+    "neighbors": [
+      "fuyang",
+      "huaibei",
+      "huainan",
+      "shangqiu",
+      "suzhouah",
+      "zhoukou"
+    ]
+  },
+  {
+    "id": "chizhou",
+    "name": "池州",
+    "province": "安徽",
+    "provinceId": "ah",
+    "level": 2,
+    "x": 1479,
+    "y": 943,
+    "lat": 30.66,
+    "lon": 117.49,
+    "neighbors": [
+      "anqing",
+      "hefei",
+      "huangshan",
+      "tongling",
+      "wuhu",
+      "xuancheng"
+    ]
+  },
+  {
+    "id": "xuancheng",
+    "name": "宣城",
+    "province": "安徽",
+    "provinceId": "ah",
+    "level": 2,
+    "x": 1612,
+    "y": 864,
+    "lat": 30.94,
+    "lon": 118.76,
+    "neighbors": [
+      "chizhou",
+      "huangshan",
+      "huzhou",
+      "maanshan",
+      "tongling",
+      "wuhu"
+    ]
+  },
+  {
+    "id": "fuzhou",
+    "name": "福州",
+    "province": "福建",
+    "provinceId": "fj",
+    "level": 4,
+    "x": 1671,
+    "y": 992,
+    "lat": 26.08,
+    "lon": 119.3,
+    "neighbors": [
+      "nanping",
+      "ningde",
+      "putian",
+      "quanzhou",
+      "sanming",
+      "taipei"
+    ]
+  },
+  {
+    "id": "xiamen",
+    "name": "厦门",
+    "province": "福建",
+    "provinceId": "fj",
+    "level": 5,
+    "x": 1519,
+    "y": 1151,
+    "lat": 24.48,
+    "lon": 118.09,
+    "neighbors": [
+      "longyan",
+      "putian",
+      "quanzhou",
+      "zhangzhou"
+    ]
+  },
+  {
+    "id": "putian",
+    "name": "莆田",
+    "province": "福建",
+    "provinceId": "fj",
+    "level": 2,
+    "x": 1670,
+    "y": 1055,
+    "lat": 25.45,
+    "lon": 119.01,
+    "neighbors": [
+      "fuzhou",
+      "nanping",
+      "ningde",
+      "quanzhou",
+      "sanming",
+      "xiamen",
+      "zhangzhou"
+    ]
+  },
+  {
+    "id": "sanming",
+    "name": "三明",
+    "province": "福建",
+    "provinceId": "fj",
+    "level": 2,
+    "x": 1412,
+    "y": 983,
+    "lat": 26.26,
+    "lon": 117.64,
+    "neighbors": [
+      "fuzhou",
+      "longyan",
+      "nanping",
+      "ningde",
+      "putian"
+    ]
+  },
+  {
+    "id": "quanzhou",
+    "name": "泉州",
+    "province": "福建",
+    "provinceId": "fj",
+    "level": 3,
+    "x": 1581,
+    "y": 1170,
+    "lat": 24.87,
+    "lon": 118.68,
+    "neighbors": [
+      "fuzhou",
+      "longyan",
+      "putian",
+      "xiamen",
+      "zhangzhou"
+    ]
+  },
+  {
+    "id": "zhangzhou",
+    "name": "漳州",
+    "province": "福建",
+    "provinceId": "fj",
+    "level": 3,
+    "x": 1465,
+    "y": 1132,
+    "lat": 24.51,
+    "lon": 117.65,
+    "neighbors": [
+      "chaozhou",
+      "longyan",
+      "putian",
+      "quanzhou",
+      "xiamen"
+    ]
+  },
+  {
+    "id": "nanping",
+    "name": "南平",
+    "province": "福建",
+    "provinceId": "fj",
+    "level": 2,
+    "x": 1520,
+    "y": 918,
+    "lat": 26.64,
+    "lon": 118.18,
+    "neighbors": [
+      "fuzhou",
+      "ningde",
+      "putian",
+      "sanming",
+      "shangrao",
+      "yingtan"
+    ]
+  },
+  {
+    "id": "longyan",
+    "name": "龙岩",
+    "province": "福建",
+    "provinceId": "fj",
+    "level": 2,
+    "x": 1387,
+    "y": 1072,
+    "lat": 25.08,
+    "lon": 117.02,
+    "neighbors": [
+      "meizhou",
+      "quanzhou",
+      "sanming",
+      "xiamen",
+      "zhangzhou"
+    ]
+  },
+  {
+    "id": "ningde",
+    "name": "宁德",
+    "province": "福建",
+    "provinceId": "fj",
+    "level": 2,
+    "x": 1620,
+    "y": 964,
+    "lat": 26.67,
+    "lon": 119.55,
+    "neighbors": [
+      "fuzhou",
+      "lishui",
+      "nanping",
+      "putian",
+      "sanming",
+      "wenzhou"
+    ]
+  },
+  {
+    "id": "nanchang",
+    "name": "南昌",
+    "province": "江西",
+    "provinceId": "jx",
+    "level": 4,
+    "x": 1479,
+    "y": 893,
+    "lat": 28.68,
+    "lon": 115.86,
+    "neighbors": [
+      "fuzhoujx",
+      "jingdezhen",
+      "jiujiang",
+      "shangrao",
+      "xinyu",
+      "yichunjx",
+      "yingtan"
+    ]
+  },
+  {
+    "id": "jingdezhen",
+    "name": "景德镇",
+    "province": "江西",
+    "provinceId": "jx",
+    "level": 2,
+    "x": 1567,
+    "y": 833,
+    "lat": 29.27,
+    "lon": 117.18,
+    "neighbors": [
+      "huangshan",
+      "jiujiang",
+      "nanchang",
+      "quzhou",
+      "shangrao",
+      "yingtan"
+    ]
+  },
+  {
+    "id": "pingxiang",
+    "name": "萍乡",
+    "province": "江西",
+    "provinceId": "jx",
+    "level": 2,
+    "x": 1270,
+    "y": 996,
+    "lat": 27.62,
+    "lon": 113.85,
+    "neighbors": [
+      "ganzhou",
+      "jian",
+      "xiangtan",
+      "xinyu",
+      "yichunjx",
+      "zhuzhou"
+    ]
+  },
+  {
+    "id": "jiujiang",
+    "name": "九江",
+    "province": "江西",
+    "provinceId": "jx",
+    "level": 3,
+    "x": 1409,
+    "y": 799,
+    "lat": 29.71,
+    "lon": 116,
+    "neighbors": [
+      "anqing",
+      "ezhou",
+      "fuzhoujx",
+      "huangshi",
+      "jingdezhen",
+      "nanchang",
+      "yingtan"
+    ]
+  },
+  {
+    "id": "xinyu",
+    "name": "新余",
+    "province": "江西",
+    "provinceId": "jx",
+    "level": 2,
+    "x": 1308,
+    "y": 861,
+    "lat": 27.82,
+    "lon": 114.92,
+    "neighbors": [
+      "fuzhoujx",
+      "ganzhou",
+      "jian",
+      "nanchang",
+      "pingxiang",
+      "yichunjx"
+    ]
+  },
+  {
+    "id": "yingtan",
+    "name": "鹰潭",
+    "province": "江西",
+    "provinceId": "jx",
+    "level": 2,
+    "x": 1568,
+    "y": 1000,
+    "lat": 28.26,
+    "lon": 117.07,
+    "neighbors": [
+      "fuzhoujx",
+      "jingdezhen",
+      "jiujiang",
+      "nanchang",
+      "nanping",
+      "shangrao"
+    ]
+  },
+  {
+    "id": "ganzhou",
+    "name": "赣州",
+    "province": "江西",
+    "provinceId": "jx",
+    "level": 3,
+    "x": 1403,
+    "y": 1123,
+    "lat": 25.83,
+    "lon": 114.93,
+    "neighbors": [
+      "jian",
+      "meizhou",
+      "pingxiang",
+      "shaoguan",
+      "xinyu",
+      "yichunjx"
+    ]
+  },
+  {
+    "id": "jian",
+    "name": "吉安",
+    "province": "江西",
+    "provinceId": "jx",
+    "level": 2,
+    "x": 1360,
+    "y": 970,
+    "lat": 27.11,
+    "lon": 114.99,
+    "neighbors": [
+      "fuzhoujx",
+      "ganzhou",
+      "pingxiang",
+      "xinyu",
+      "yichunjx"
+    ]
+  },
+  {
+    "id": "yichunjx",
+    "name": "宜春",
+    "province": "江西",
+    "provinceId": "jx",
+    "level": 2,
+    "x": 1296,
+    "y": 907,
+    "lat": 27.8,
+    "lon": 114.42,
+    "neighbors": [
+      "ganzhou",
+      "jian",
+      "nanchang",
+      "pingxiang",
+      "xinyu"
+    ]
+  },
+  {
+    "id": "fuzhoujx",
+    "name": "抚州",
+    "province": "江西",
+    "provinceId": "jx",
+    "level": 2,
+    "x": 1472,
+    "y": 1049,
+    "lat": 27.95,
+    "lon": 116.36,
+    "neighbors": [
+      "jian",
+      "jiujiang",
+      "nanchang",
+      "shangrao",
+      "xinyu",
+      "yingtan"
+    ]
+  },
+  {
+    "id": "shangrao",
+    "name": "上饶",
+    "province": "江西",
+    "provinceId": "jx",
+    "level": 2,
+    "x": 1602,
+    "y": 915,
+    "lat": 28.45,
+    "lon": 117.94,
+    "neighbors": [
+      "fuzhoujx",
+      "jingdezhen",
+      "nanchang",
+      "nanping",
+      "quzhou",
+      "yingtan"
+    ]
+  },
+  {
+    "id": "jinan",
+    "name": "济南",
+    "province": "山东",
+    "provinceId": "sd",
+    "level": 4,
+    "x": 1414,
+    "y": 554,
+    "lat": 36.65,
+    "lon": 117.12,
+    "neighbors": [
+      "binzhou",
+      "dezhou",
+      "dongying",
+      "liaocheng",
+      "taian",
+      "zibo"
+    ]
+  },
+  {
+    "id": "qingdao",
+    "name": "青岛",
+    "province": "山东",
+    "provinceId": "sd",
+    "level": 5,
+    "x": 1703,
+    "y": 621,
+    "lat": 36.07,
+    "lon": 120.38,
+    "neighbors": [
+      "dongying",
+      "rizhao",
+      "weifang",
+      "weihai",
+      "yantai"
+    ]
+  },
+  {
+    "id": "zibo",
+    "name": "淄博",
+    "province": "山东",
+    "provinceId": "sd",
+    "level": 3,
+    "x": 1506,
+    "y": 550,
+    "lat": 36.81,
+    "lon": 118.05,
+    "neighbors": [
+      "binzhou",
+      "dongying",
+      "jinan",
+      "rizhao",
+      "taian",
+      "weifang"
+    ]
+  },
+  {
+    "id": "zaozhuang",
+    "name": "枣庄",
+    "province": "山东",
+    "provinceId": "sd",
+    "level": 2,
+    "x": 1497,
+    "y": 717,
+    "lat": 34.81,
+    "lon": 117.32,
+    "neighbors": [
+      "heze",
+      "huaibei",
+      "jining",
+      "linyi",
+      "suzhouah",
+      "taian",
+      "xuzhou"
+    ]
+  },
+  {
+    "id": "dongying",
+    "name": "东营",
+    "province": "山东",
+    "provinceId": "sd",
+    "level": 2,
+    "x": 1552,
+    "y": 464,
+    "lat": 37.43,
+    "lon": 118.67,
+    "neighbors": [
+      "binzhou",
+      "jinan",
+      "qingdao",
+      "weifang",
+      "weihai",
+      "yantai",
+      "zibo"
+    ]
+  },
+  {
+    "id": "yantai",
+    "name": "烟台",
+    "province": "山东",
+    "provinceId": "sd",
+    "level": 3,
+    "x": 1654,
+    "y": 469,
+    "lat": 37.46,
+    "lon": 121.45,
+    "neighbors": [
+      "dongying",
+      "qingdao",
+      "weifang",
+      "weihai"
+    ]
+  },
+  {
+    "id": "weifang",
+    "name": "潍坊",
+    "province": "山东",
+    "provinceId": "sd",
+    "level": 3,
+    "x": 1602,
+    "y": 554,
+    "lat": 36.71,
+    "lon": 119.16,
+    "neighbors": [
+      "binzhou",
+      "dongying",
+      "qingdao",
+      "rizhao",
+      "weihai",
+      "yantai",
+      "zibo"
+    ]
+  },
+  {
+    "id": "jining",
+    "name": "济宁",
+    "province": "山东",
+    "provinceId": "sd",
+    "level": 3,
+    "x": 1391,
+    "y": 714,
+    "lat": 35.41,
+    "lon": 116.59,
+    "neighbors": [
+      "heze",
+      "liaocheng",
+      "linyi",
+      "taian",
+      "zaozhuang"
+    ]
+  },
+  {
+    "id": "taian",
+    "name": "泰安",
+    "province": "山东",
+    "provinceId": "sd",
+    "level": 2,
+    "x": 1552,
+    "y": 635,
+    "lat": 36.2,
+    "lon": 117.09,
+    "neighbors": [
+      "dezhou",
+      "heze",
+      "jinan",
+      "jining",
+      "liaocheng",
+      "linyi",
+      "zaozhuang",
+      "zibo"
+    ]
+  },
+  {
+    "id": "weihai",
+    "name": "威海",
+    "province": "山东",
+    "provinceId": "sd",
+    "level": 3,
+    "x": 1754,
+    "y": 655,
+    "lat": 37.51,
+    "lon": 122.12,
+    "neighbors": [
+      "dongying",
+      "qingdao",
+      "weifang",
+      "yantai"
+    ]
+  },
+  {
+    "id": "rizhao",
+    "name": "日照",
+    "province": "山东",
+    "provinceId": "sd",
+    "level": 2,
+    "x": 1646,
+    "y": 647,
+    "lat": 35.42,
+    "lon": 119.53,
+    "neighbors": [
+      "linyi",
+      "qingdao",
+      "weifang",
+      "zibo"
+    ]
+  },
+  {
+    "id": "linyi",
+    "name": "临沂",
+    "province": "山东",
+    "provinceId": "sd",
+    "level": 3,
+    "x": 1583,
+    "y": 724,
+    "lat": 35.05,
+    "lon": 118.36,
+    "neighbors": [
+      "jining",
+      "lianyungang",
+      "rizhao",
+      "taian",
+      "zaozhuang"
+    ]
+  },
+  {
+    "id": "dezhou",
+    "name": "德州",
+    "province": "山东",
+    "provinceId": "sd",
+    "level": 2,
+    "x": 1403,
+    "y": 445,
+    "lat": 37.44,
+    "lon": 116.36,
+    "neighbors": [
+      "binzhou",
+      "cangzhou",
+      "hengshui",
+      "jinan",
+      "liaocheng",
+      "taian"
+    ]
+  },
+  {
+    "id": "liaocheng",
+    "name": "聊城",
+    "province": "山东",
+    "provinceId": "sd",
+    "level": 2,
+    "x": 1322,
+    "y": 554,
+    "lat": 36.46,
+    "lon": 115.99,
+    "neighbors": [
+      "dezhou",
+      "heze",
+      "jinan",
+      "jining",
+      "taian"
+    ]
+  },
+  {
+    "id": "binzhou",
+    "name": "滨州",
+    "province": "山东",
+    "provinceId": "sd",
+    "level": 2,
+    "x": 1503,
+    "y": 492,
+    "lat": 37.38,
+    "lon": 117.97,
+    "neighbors": [
+      "dezhou",
+      "dongying",
+      "jinan",
+      "weifang",
+      "zibo"
+    ]
+  },
+  {
+    "id": "heze",
+    "name": "菏泽",
+    "province": "山东",
+    "provinceId": "sd",
+    "level": 2,
+    "x": 1280,
+    "y": 639,
+    "lat": 35.24,
+    "lon": 115.48,
+    "neighbors": [
+      "jining",
+      "liaocheng",
+      "puyang",
+      "shangqiu",
+      "taian",
+      "zaozhuang"
+    ]
+  },
+  {
+    "id": "zhengzhou",
+    "name": "郑州",
+    "province": "河南",
+    "provinceId": "ha",
+    "level": 5,
+    "x": 1325,
+    "y": 607,
+    "lat": 34.75,
+    "lon": 113.63,
+    "neighbors": [
+      "hebi",
+      "jiaozuo",
+      "kaifeng",
+      "luohe",
+      "luoyang",
+      "pingdingshan",
+      "sanmenxia",
+      "xinxiang",
+      "xuchang"
+    ]
+  },
+  {
+    "id": "kaifeng",
+    "name": "开封",
+    "province": "河南",
+    "provinceId": "ha",
+    "level": 3,
+    "x": 1421,
+    "y": 659,
+    "lat": 34.8,
+    "lon": 114.31,
+    "neighbors": [
+      "hebi",
+      "jiaozuo",
+      "puyang",
+      "shangqiu",
+      "xinxiang",
+      "xuchang",
+      "zhengzhou",
+      "zhoukou"
+    ]
+  },
+  {
+    "id": "luoyang",
+    "name": "洛阳",
+    "province": "河南",
+    "provinceId": "ha",
+    "level": 3,
+    "x": 1191,
+    "y": 655,
+    "lat": 34.62,
+    "lon": 112.45,
+    "neighbors": [
+      "jiaozuo",
+      "pingdingshan",
+      "sanmenxia",
+      "zhengzhou"
+    ]
+  },
+  {
+    "id": "pingdingshan",
+    "name": "平顶山",
+    "province": "河南",
+    "provinceId": "ha",
+    "level": 3,
+    "x": 1230,
+    "y": 736,
+    "lat": 33.77,
+    "lon": 113.19,
+    "neighbors": [
+      "luohe",
+      "luoyang",
+      "nanyang",
+      "sanmenxia",
+      "xuchang",
+      "zhengzhou",
+      "zhumadian"
+    ]
+  },
+  {
+    "id": "anyang",
+    "name": "安阳",
+    "province": "河南",
+    "provinceId": "ha",
+    "level": 3,
+    "x": 1315,
+    "y": 500,
+    "lat": 36.1,
+    "lon": 114.39,
+    "neighbors": [
+      "handan",
+      "hebi",
+      "jiaozuo",
+      "puyang",
+      "xinxiang"
+    ]
+  },
+  {
+    "id": "hebi",
+    "name": "鹤壁",
+    "province": "河南",
+    "provinceId": "ha",
+    "level": 2,
+    "x": 1365,
+    "y": 526,
+    "lat": 35.75,
+    "lon": 114.3,
+    "neighbors": [
+      "anyang",
+      "handan",
+      "jiaozuo",
+      "kaifeng",
+      "puyang",
+      "xinxiang",
+      "zhengzhou"
+    ]
+  },
+  {
+    "id": "xinxiang",
+    "name": "新乡",
+    "province": "河南",
+    "provinceId": "ha",
+    "level": 3,
+    "x": 1270,
+    "y": 535,
+    "lat": 35.3,
+    "lon": 113.93,
+    "neighbors": [
+      "anyang",
+      "hebi",
+      "jiaozuo",
+      "kaifeng",
+      "puyang",
+      "zhengzhou"
+    ]
+  },
+  {
+    "id": "jiaozuo",
+    "name": "焦作",
+    "province": "河南",
+    "provinceId": "ha",
+    "level": 2,
+    "x": 1228,
+    "y": 569,
+    "lat": 35.22,
+    "lon": 113.24,
+    "neighbors": [
+      "anyang",
+      "hebi",
+      "jincheng",
+      "kaifeng",
+      "luoyang",
+      "sanmenxia",
+      "xinxiang",
+      "zhengzhou"
+    ]
+  },
+  {
+    "id": "puyang",
+    "name": "濮阳",
+    "province": "河南",
+    "provinceId": "ha",
+    "level": 2,
+    "x": 1457,
+    "y": 525,
+    "lat": 35.76,
+    "lon": 115.03,
+    "neighbors": [
+      "anyang",
+      "hebi",
+      "heze",
+      "kaifeng",
+      "shangqiu",
+      "xinxiang"
+    ]
+  },
+  {
+    "id": "xuchang",
+    "name": "许昌",
+    "province": "河南",
+    "provinceId": "ha",
+    "level": 2,
+    "x": 1326,
+    "y": 739,
+    "lat": 34.04,
+    "lon": 113.85,
+    "neighbors": [
+      "kaifeng",
+      "luohe",
+      "nanyang",
+      "pingdingshan",
+      "shangqiu",
+      "zhengzhou",
+      "zhoukou",
+      "zhumadian"
+    ]
+  },
+  {
+    "id": "luohe",
+    "name": "漯河",
+    "province": "河南",
+    "provinceId": "ha",
+    "level": 2,
+    "x": 1418,
+    "y": 761,
+    "lat": 33.58,
+    "lon": 114.02,
+    "neighbors": [
+      "nanyang",
+      "pingdingshan",
+      "xinyang",
+      "xuchang",
+      "zhengzhou",
+      "zhoukou",
+      "zhumadian"
+    ]
+  },
+  {
+    "id": "sanmenxia",
+    "name": "三门峡",
+    "province": "河南",
+    "provinceId": "ha",
+    "level": 2,
+    "x": 1127,
+    "y": 585,
+    "lat": 34.77,
+    "lon": 111.2,
+    "neighbors": [
+      "jiaozuo",
+      "luoyang",
+      "pingdingshan",
+      "shangluo",
+      "weinan",
+      "yuncheng",
+      "zhengzhou"
+    ]
+  },
+  {
+    "id": "nanyang",
+    "name": "南阳",
+    "province": "河南",
+    "provinceId": "ha",
+    "level": 3,
+    "x": 1196,
+    "y": 775,
+    "lat": 33,
+    "lon": 112.53,
+    "neighbors": [
+      "luohe",
+      "pingdingshan",
+      "xiangyang",
+      "xinyang",
+      "xuchang",
+      "zhumadian"
+    ]
+  },
+  {
+    "id": "shangqiu",
+    "name": "商丘",
+    "province": "河南",
+    "provinceId": "ha",
+    "level": 2,
+    "x": 1506,
+    "y": 658,
+    "lat": 34.41,
+    "lon": 115.65,
+    "neighbors": [
+      "bozhou",
+      "heze",
+      "kaifeng",
+      "puyang",
+      "xuchang",
+      "zhoukou"
+    ]
+  },
+  {
+    "id": "xinyang",
+    "name": "信阳",
+    "province": "河南",
+    "provinceId": "ha",
+    "level": 2,
+    "x": 1403,
+    "y": 842,
+    "lat": 32.15,
+    "lon": 114.09,
+    "neighbors": [
+      "luohe",
+      "nanyang",
+      "suizhou",
+      "zhoukou",
+      "zhumadian"
+    ]
+  },
+  {
+    "id": "zhoukou",
+    "name": "周口",
+    "province": "河南",
+    "provinceId": "ha",
+    "level": 2,
+    "x": 1466,
+    "y": 682,
+    "lat": 33.63,
+    "lon": 114.7,
+    "neighbors": [
+      "bozhou",
+      "kaifeng",
+      "luohe",
+      "shangqiu",
+      "xinyang",
+      "xuchang",
+      "zhumadian"
+    ]
+  },
+  {
+    "id": "zhumadian",
+    "name": "驻马店",
+    "province": "河南",
+    "provinceId": "ha",
+    "level": 2,
+    "x": 1275,
+    "y": 816,
+    "lat": 33.01,
+    "lon": 114.02,
+    "neighbors": [
+      "luohe",
+      "nanyang",
+      "pingdingshan",
+      "xinyang",
+      "xuchang",
+      "zhoukou"
+    ]
+  },
+  {
+    "id": "wuhan",
+    "name": "武汉",
+    "province": "湖北",
+    "provinceId": "hb",
+    "level": 5,
+    "x": 1370,
+    "y": 749,
+    "lat": 30.59,
+    "lon": 114.3,
+    "neighbors": [
+      "ezhou",
+      "huanggang",
+      "huangshi",
+      "suizhou",
+      "xianning",
+      "xiaogan"
+    ]
+  },
+  {
+    "id": "huangshi",
+    "name": "黄石",
+    "province": "湖北",
+    "provinceId": "hb",
+    "level": 2,
+    "x": 1434,
+    "y": 947,
+    "lat": 30.2,
+    "lon": 115.04,
+    "neighbors": [
+      "anqing",
+      "ezhou",
+      "huanggang",
+      "jiujiang",
+      "wuhan",
+      "xianning",
+      "xiaogan"
+    ]
+  },
+  {
+    "id": "shiyan",
+    "name": "十堰",
+    "province": "湖北",
+    "provinceId": "hb",
+    "level": 2,
+    "x": 1146,
+    "y": 692,
+    "lat": 32.65,
+    "lon": 110.8,
+    "neighbors": [
+      "ankang",
+      "enshi",
+      "jingmen",
+      "shangluo",
+      "suizhou",
+      "xiangyang",
+      "yichang"
+    ]
+  },
+  {
+    "id": "yichang",
+    "name": "宜昌",
+    "province": "湖北",
+    "provinceId": "hb",
+    "level": 3,
+    "x": 1161,
+    "y": 875,
+    "lat": 30.69,
+    "lon": 111.29,
+    "neighbors": [
+      "chongqing",
+      "enshi",
+      "jingmen",
+      "jingzhou",
+      "shiyan",
+      "xiangyang"
+    ]
+  },
+  {
+    "id": "xiangyang",
+    "name": "襄阳",
+    "province": "湖北",
+    "provinceId": "hb",
+    "level": 3,
+    "x": 1246,
+    "y": 677,
+    "lat": 32.01,
+    "lon": 112.12,
+    "neighbors": [
+      "jingmen",
+      "nanyang",
+      "shiyan",
+      "suizhou",
+      "yichang"
+    ]
+  },
+  {
+    "id": "ezhou",
+    "name": "鄂州",
+    "province": "湖北",
+    "provinceId": "hb",
+    "level": 2,
+    "x": 1444,
+    "y": 854,
+    "lat": 30.39,
+    "lon": 114.89,
+    "neighbors": [
+      "anqing",
+      "huanggang",
+      "huangshi",
+      "jiujiang",
+      "wuhan",
+      "xianning",
+      "xiaogan"
+    ]
+  },
+  {
+    "id": "jingmen",
+    "name": "荆门",
+    "province": "湖北",
+    "provinceId": "hb",
+    "level": 2,
+    "x": 1235,
+    "y": 787,
+    "lat": 31.04,
+    "lon": 112.2,
+    "neighbors": [
+      "enshi",
+      "jingzhou",
+      "shiyan",
+      "suizhou",
+      "xiangyang",
+      "yichang"
+    ]
+  },
+  {
+    "id": "xiaogan",
+    "name": "孝感",
+    "province": "湖北",
+    "provinceId": "hb",
+    "level": 2,
+    "x": 1314,
+    "y": 825,
+    "lat": 30.92,
+    "lon": 113.92,
+    "neighbors": [
+      "ezhou",
+      "huanggang",
+      "huangshi",
+      "jingzhou",
+      "suizhou",
+      "wuhan",
+      "xianning"
+    ]
+  },
+  {
+    "id": "jingzhou",
+    "name": "荆州",
+    "province": "湖北",
+    "provinceId": "hb",
+    "level": 3,
+    "x": 1241,
+    "y": 912,
+    "lat": 30.33,
+    "lon": 112.24,
+    "neighbors": [
+      "enshi",
+      "jingmen",
+      "suizhou",
+      "xiaogan",
+      "yichang",
+      "yueyang"
+    ]
+  },
+  {
+    "id": "huanggang",
+    "name": "黄冈",
+    "province": "湖北",
+    "provinceId": "hb",
+    "level": 2,
+    "x": 1454,
+    "y": 797,
+    "lat": 30.45,
+    "lon": 114.87,
+    "neighbors": [
+      "ezhou",
+      "huangshi",
+      "wuhan",
+      "xianning",
+      "xiaogan"
+    ]
+  },
+  {
+    "id": "xianning",
+    "name": "咸宁",
+    "province": "湖北",
+    "provinceId": "hb",
+    "level": 2,
+    "x": 1341,
+    "y": 920,
+    "lat": 29.84,
+    "lon": 114.32,
+    "neighbors": [
+      "ezhou",
+      "huanggang",
+      "huangshi",
+      "wuhan",
+      "xiaogan",
+      "yueyang"
+    ]
+  },
+  {
+    "id": "suizhou",
+    "name": "随州",
+    "province": "湖北",
+    "provinceId": "hb",
+    "level": 2,
+    "x": 1339,
+    "y": 701,
+    "lat": 31.69,
+    "lon": 113.38,
+    "neighbors": [
+      "jingmen",
+      "jingzhou",
+      "shiyan",
+      "wuhan",
+      "xiangyang",
+      "xiaogan",
+      "xinyang"
+    ]
+  },
+  {
+    "id": "enshi",
+    "name": "恩施州",
+    "province": "湖北",
+    "provinceId": "hb",
+    "level": 2,
+    "x": 1096,
+    "y": 794,
+    "lat": 30.27,
+    "lon": 109.49,
+    "neighbors": [
+      "chongqing",
+      "jingmen",
+      "jingzhou",
+      "shiyan",
+      "yichang"
+    ]
+  },
+  {
+    "id": "changsha",
+    "name": "长沙",
+    "province": "湖南",
+    "provinceId": "hn",
+    "level": 5,
+    "x": 1352,
+    "y": 872,
+    "lat": 28.23,
+    "lon": 112.94,
+    "neighbors": [
+      "changde",
+      "loudi",
+      "xiangtan",
+      "yiyang",
+      "yueyang",
+      "zhuzhou"
+    ]
+  },
+  {
+    "id": "zhuzhou",
+    "name": "株洲",
+    "province": "湖南",
+    "provinceId": "hn",
+    "level": 3,
+    "x": 1387,
+    "y": 930,
+    "lat": 27.83,
+    "lon": 113.13,
+    "neighbors": [
+      "changsha",
+      "hengyang",
+      "loudi",
+      "pingxiang",
+      "xiangtan",
+      "yiyang",
+      "yueyang"
+    ]
+  },
+  {
+    "id": "xiangtan",
+    "name": "湘潭",
+    "province": "湖南",
+    "provinceId": "hn",
+    "level": 2,
+    "x": 1370,
+    "y": 1019,
+    "lat": 27.83,
+    "lon": 112.94,
+    "neighbors": [
+      "changsha",
+      "chenzhou",
+      "hengyang",
+      "loudi",
+      "pingxiang",
+      "yiyang",
+      "zhuzhou"
+    ]
+  },
+  {
+    "id": "hengyang",
+    "name": "衡阳",
+    "province": "湖南",
+    "provinceId": "hn",
+    "level": 3,
+    "x": 1284,
+    "y": 1053,
+    "lat": 26.89,
+    "lon": 112.57,
+    "neighbors": [
+      "chenzhou",
+      "loudi",
+      "shaoyang",
+      "xiangtan",
+      "yongzhou",
+      "zhuzhou"
+    ]
+  },
+  {
+    "id": "shaoyang",
+    "name": "邵阳",
+    "province": "湖南",
+    "provinceId": "hn",
+    "level": 2,
+    "x": 1192,
+    "y": 927,
+    "lat": 27.24,
+    "lon": 111.47,
+    "neighbors": [
+      "chenzhou",
+      "hengyang",
+      "huaihua",
+      "loudi",
+      "xiangxi",
+      "yongzhou"
+    ]
+  },
+  {
+    "id": "yueyang",
+    "name": "岳阳",
+    "province": "湖南",
+    "provinceId": "hn",
+    "level": 3,
+    "x": 1363,
+    "y": 787,
+    "lat": 29.36,
+    "lon": 113.13,
+    "neighbors": [
+      "changde",
+      "changsha",
+      "jingzhou",
+      "xianning",
+      "yiyang",
+      "zhuzhou"
+    ]
+  },
+  {
+    "id": "changde",
+    "name": "常德",
+    "province": "湖南",
+    "provinceId": "hn",
+    "level": 3,
+    "x": 1226,
+    "y": 831,
+    "lat": 29.03,
+    "lon": 111.7,
+    "neighbors": [
+      "changsha",
+      "xiangxi",
+      "yiyang",
+      "yueyang",
+      "zhangjiajie"
+    ]
+  },
+  {
+    "id": "zhangjiajie",
+    "name": "张家界",
+    "province": "湖南",
+    "provinceId": "hn",
+    "level": 2,
+    "x": 1145,
+    "y": 786,
+    "lat": 29.12,
+    "lon": 110.48,
+    "neighbors": [
+      "changde",
+      "chongqing",
+      "huaihua",
+      "xiangxi",
+      "yiyang"
+    ]
+  },
+  {
+    "id": "yiyang",
+    "name": "益阳",
+    "province": "湖南",
+    "provinceId": "hn",
+    "level": 2,
+    "x": 1261,
+    "y": 866,
+    "lat": 28.55,
+    "lon": 112.36,
+    "neighbors": [
+      "changde",
+      "changsha",
+      "loudi",
+      "xiangtan",
+      "yueyang",
+      "zhangjiajie",
+      "zhuzhou"
+    ]
+  },
+  {
+    "id": "chenzhou",
+    "name": "郴州",
+    "province": "湖南",
+    "provinceId": "hn",
+    "level": 2,
+    "x": 1351,
+    "y": 1112,
+    "lat": 25.77,
+    "lon": 113.01,
+    "neighbors": [
+      "hengyang",
+      "hezhou",
+      "qingyuan",
+      "shaoguan",
+      "shaoyang",
+      "xiangtan",
+      "yongzhou"
+    ]
+  },
+  {
+    "id": "yongzhou",
+    "name": "永州",
+    "province": "湖南",
+    "provinceId": "hn",
+    "level": 2,
+    "x": 1165,
+    "y": 1028,
+    "lat": 26.42,
+    "lon": 111.61,
+    "neighbors": [
+      "chenzhou",
+      "guilin",
+      "hengyang",
+      "loudi",
+      "shaoyang"
+    ]
+  },
+  {
+    "id": "huaihua",
+    "name": "怀化",
+    "province": "湖南",
+    "provinceId": "hn",
+    "level": 2,
+    "x": 1126,
+    "y": 987,
+    "lat": 27.55,
+    "lon": 110,
+    "neighbors": [
+      "loudi",
+      "shaoyang",
+      "tongren",
+      "xiangxi",
+      "zhangjiajie"
+    ]
+  },
+  {
+    "id": "loudi",
+    "name": "娄底",
+    "province": "湖南",
+    "provinceId": "hn",
+    "level": 2,
+    "x": 1274,
+    "y": 944,
+    "lat": 27.7,
+    "lon": 111.99,
+    "neighbors": [
+      "changsha",
+      "hengyang",
+      "huaihua",
+      "shaoyang",
+      "xiangtan",
+      "yiyang",
+      "yongzhou",
+      "zhuzhou"
+    ]
+  },
+  {
+    "id": "xiangxi",
+    "name": "湘西州",
+    "province": "湖南",
+    "provinceId": "hn",
+    "level": 1,
+    "x": 1138,
+    "y": 928,
+    "lat": 28.31,
+    "lon": 109.73,
+    "neighbors": [
+      "changde",
+      "chongqing",
+      "huaihua",
+      "shaoyang",
+      "tongren",
+      "zhangjiajie"
+    ]
+  },
+  {
+    "id": "guangzhou",
+    "name": "广州",
+    "province": "广东",
+    "provinceId": "gd",
+    "level": 5,
+    "x": 1338,
+    "y": 1062,
+    "lat": 23.13,
+    "lon": 113.26,
+    "neighbors": [
+      "acity",
+      "dongguan",
+      "foshan",
+      "huizhou",
+      "jiangmen",
+      "qingyuan",
+      "shaoguan",
+      "shenzhen",
+      "yunfu",
+      "zhaoqing",
+      "zhongshan",
+      "zhuhai"
+    ]
+  },
+  {
+    "id": "shenzhen",
+    "name": "深圳",
+    "province": "广东",
+    "provinceId": "gd",
+    "level": 5,
+    "x": 1420,
+    "y": 1262,
+    "lat": 22.55,
+    "lon": 114.06,
+    "neighbors": [
+      "acity",
+      "dongguan",
+      "foshan",
+      "guangzhou",
+      "hongkong",
+      "huizhou",
+      "jiangmen",
+      "shanwei",
+      "zhongshan",
+      "zhuhai"
+    ]
+  },
+  {
+    "id": "zhuhai",
+    "name": "珠海",
+    "province": "广东",
+    "provinceId": "gd",
+    "level": 4,
+    "x": 1354,
+    "y": 1261,
+    "lat": 22.27,
+    "lon": 113.55,
+    "neighbors": [
+      "acity",
+      "dongguan",
+      "foshan",
+      "guangzhou",
+      "hongkong",
+      "huizhou",
+      "jiangmen",
+      "macau",
+      "shenzhen",
+      "zhongshan"
+    ]
+  },
+  {
+    "id": "shantou",
+    "name": "汕头",
+    "province": "广东",
+    "provinceId": "gd",
+    "level": 3,
+    "x": 1532,
+    "y": 1210,
+    "lat": 23.35,
+    "lon": 116.68,
+    "neighbors": [
+      "chaozhou",
+      "jieyang",
+      "meizhou",
+      "shanwei"
+    ]
+  },
+  {
+    "id": "foshan",
+    "name": "佛山",
+    "province": "广东",
+    "provinceId": "gd",
+    "level": 4,
+    "x": 1257,
+    "y": 1150,
+    "lat": 23.02,
+    "lon": 113.12,
+    "neighbors": [
+      "acity",
+      "dongguan",
+      "guangzhou",
+      "huizhou",
+      "jiangmen",
+      "qingyuan",
+      "shenzhen",
+      "yunfu",
+      "zhaoqing",
+      "zhongshan",
+      "zhuhai"
+    ]
+  },
+  {
+    "id": "shaoguan",
+    "name": "韶关",
+    "province": "广东",
+    "provinceId": "gd",
+    "level": 2,
+    "x": 1318,
+    "y": 962,
+    "lat": 24.81,
+    "lon": 113.6,
+    "neighbors": [
+      "chenzhou",
+      "dongguan",
+      "ganzhou",
+      "guangzhou",
+      "heyuan",
+      "qingyuan"
+    ]
+  },
+  {
+    "id": "zhanjiang",
+    "name": "湛江",
+    "province": "广东",
+    "provinceId": "gd",
+    "level": 3,
+    "x": 1128,
+    "y": 1282,
+    "lat": 21.27,
+    "lon": 110.36,
+    "neighbors": [
+      "beihai",
+      "haikou",
+      "maoming",
+      "yangjiang",
+      "yunfu",
+      "zhaoqing"
+    ]
+  },
+  {
+    "id": "zhaoqing",
+    "name": "肇庆",
+    "province": "广东",
+    "provinceId": "gd",
+    "level": 3,
+    "x": 1202,
+    "y": 1069,
+    "lat": 23.05,
+    "lon": 112.47,
+    "neighbors": [
+      "dongguan",
+      "foshan",
+      "guangzhou",
+      "jiangmen",
+      "maoming",
+      "qingyuan",
+      "yangjiang",
+      "yunfu",
+      "zhanjiang",
+      "zhongshan"
+    ]
+  },
+  {
+    "id": "jiangmen",
+    "name": "江门",
+    "province": "广东",
+    "provinceId": "gd",
+    "level": 3,
+    "x": 1210,
+    "y": 1191,
+    "lat": 22.58,
+    "lon": 113.08,
+    "neighbors": [
+      "acity",
+      "dongguan",
+      "foshan",
+      "guangzhou",
+      "qingyuan",
+      "shenzhen",
+      "yangjiang",
+      "yunfu",
+      "zhaoqing",
+      "zhongshan",
+      "zhuhai"
+    ]
+  },
+  {
+    "id": "maoming",
+    "name": "茂名",
+    "province": "广东",
+    "provinceId": "gd",
+    "level": 2,
+    "x": 1100,
+    "y": 1162,
+    "lat": 21.66,
+    "lon": 110.92,
+    "neighbors": [
+      "yangjiang",
+      "yunfu",
+      "zhanjiang",
+      "zhaoqing"
+    ]
+  },
+  {
+    "id": "qingyuan",
+    "name": "清远",
+    "province": "广东",
+    "provinceId": "gd",
+    "level": 2,
+    "x": 1244,
+    "y": 1040,
+    "lat": 23.68,
+    "lon": 113.06,
+    "neighbors": [
+      "acity",
+      "chenzhou",
+      "dongguan",
+      "foshan",
+      "guangzhou",
+      "jiangmen",
+      "shaoguan",
+      "yunfu",
+      "zhaoqing",
+      "zhongshan"
+    ]
+  },
+  {
+    "id": "dongguan",
+    "name": "东莞",
+    "province": "广东",
+    "provinceId": "gd",
+    "level": 4,
+    "x": 1365,
+    "y": 1162,
+    "lat": 23.02,
+    "lon": 113.75,
+    "neighbors": [
+      "acity",
+      "foshan",
+      "guangzhou",
+      "heyuan",
+      "huizhou",
+      "jiangmen",
+      "qingyuan",
+      "shaoguan",
+      "shenzhen",
+      "zhaoqing",
+      "zhongshan",
+      "zhuhai"
+    ]
+  },
+  {
+    "id": "zhongshan",
+    "name": "中山",
+    "province": "广东",
+    "provinceId": "gd",
+    "level": 4,
+    "x": 1289,
+    "y": 1257,
+    "lat": 22.52,
+    "lon": 113.39,
+    "neighbors": [
+      "acity",
+      "dongguan",
+      "foshan",
+      "guangzhou",
+      "huizhou",
+      "jiangmen",
+      "macau",
+      "qingyuan",
+      "shenzhen",
+      "zhaoqing",
+      "zhuhai"
+    ]
+  },
+  {
+    "id": "chaozhou",
+    "name": "潮州",
+    "province": "广东",
+    "provinceId": "gd",
+    "level": 1,
+    "x": 1509,
+    "y": 1090,
+    "lat": 23.66,
+    "lon": 116.62,
+    "neighbors": [
+      "jieyang",
+      "meizhou",
+      "shantou",
+      "shanwei",
+      "zhangzhou"
+    ]
+  },
+  {
+    "id": "jieyang",
+    "name": "揭阳",
+    "province": "广东",
+    "provinceId": "gd",
+    "level": 2,
+    "x": 1566,
+    "y": 1113,
+    "lat": 23.55,
+    "lon": 116.37,
+    "neighbors": [
+      "chaozhou",
+      "meizhou",
+      "shantou",
+      "shanwei"
+    ]
+  },
+  {
+    "id": "shanwei",
+    "name": "汕尾",
+    "province": "广东",
+    "provinceId": "gd",
+    "level": 1,
+    "x": 1479,
+    "y": 1247,
+    "lat": 22.79,
+    "lon": 115.38,
+    "neighbors": [
+      "chaozhou",
+      "heyuan",
+      "huizhou",
+      "jieyang",
+      "shantou",
+      "shenzhen"
+    ]
+  },
+  {
+    "id": "huizhou",
+    "name": "惠州",
+    "province": "广东",
+    "provinceId": "gd",
+    "level": 4,
+    "x": 1444,
+    "y": 1086,
+    "lat": 23.11,
+    "lon": 114.42,
+    "neighbors": [
+      "acity",
+      "dongguan",
+      "foshan",
+      "guangzhou",
+      "heyuan",
+      "shanwei",
+      "shenzhen",
+      "zhongshan",
+      "zhuhai"
+    ]
+  },
+  {
+    "id": "meizhou",
+    "name": "梅州",
+    "province": "广东",
+    "provinceId": "gd",
+    "level": 1,
+    "x": 1463,
+    "y": 998,
+    "lat": 24.29,
+    "lon": 116.12,
+    "neighbors": [
+      "chaozhou",
+      "ganzhou",
+      "heyuan",
+      "jieyang",
+      "longyan",
+      "shantou"
+    ]
+  },
+  {
+    "id": "heyuan",
+    "name": "河源",
+    "province": "广东",
+    "provinceId": "gd",
+    "level": 1,
+    "x": 1421,
+    "y": 1034,
+    "lat": 23.74,
+    "lon": 114.7,
+    "neighbors": [
+      "acity",
+      "dongguan",
+      "huizhou",
+      "meizhou",
+      "shanwei",
+      "shaoguan"
+    ]
+  },
+  {
+    "id": "yangjiang",
+    "name": "阳江",
+    "province": "广东",
+    "provinceId": "gd",
+    "level": 2,
+    "x": 1233,
+    "y": 1251,
+    "lat": 21.86,
+    "lon": 111.98,
+    "neighbors": [
+      "jiangmen",
+      "maoming",
+      "yunfu",
+      "zhanjiang",
+      "zhaoqing"
+    ]
+  },
+  {
+    "id": "yunfu",
+    "name": "云浮",
+    "province": "广东",
+    "provinceId": "gd",
+    "level": 1,
+    "x": 1157,
+    "y": 1087,
+    "lat": 22.92,
+    "lon": 112.04,
+    "neighbors": [
+      "foshan",
+      "guangzhou",
+      "jiangmen",
+      "maoming",
+      "qingyuan",
+      "wuzhou",
+      "yangjiang",
+      "zhanjiang",
+      "zhaoqing"
+    ]
+  },
+  {
+    "id": "nanning",
+    "name": "南宁",
+    "province": "广西",
+    "provinceId": "gx",
+    "level": 4,
+    "x": 1104,
+    "y": 1102,
+    "lat": 22.82,
+    "lon": 108.32,
+    "neighbors": [
+      "baise",
+      "beihai",
+      "chongzuo",
+      "fangchenggang",
+      "guigang",
+      "hechi",
+      "laibin",
+      "qinzhou"
+    ]
+  },
+  {
+    "id": "liuzhou",
+    "name": "柳州",
+    "province": "广西",
+    "provinceId": "gx",
+    "level": 3,
+    "x": 1173,
+    "y": 975,
+    "lat": 24.33,
+    "lon": 109.42,
+    "neighbors": [
+      "guigang",
+      "guilin",
+      "hechi",
+      "hezhou",
+      "laibin",
+      "wuzhou"
+    ]
+  },
+  {
+    "id": "guilin",
+    "name": "桂林",
+    "province": "广西",
+    "provinceId": "gx",
+    "level": 3,
+    "x": 1227,
+    "y": 962,
+    "lat": 25.27,
+    "lon": 110.29,
+    "neighbors": [
+      "hezhou",
+      "laibin",
+      "liuzhou",
+      "wuzhou",
+      "yongzhou"
+    ]
+  },
+  {
+    "id": "wuzhou",
+    "name": "梧州",
+    "province": "广西",
+    "provinceId": "gx",
+    "level": 2,
+    "x": 1297,
+    "y": 1106,
+    "lat": 23.48,
+    "lon": 111.28,
+    "neighbors": [
+      "guigang",
+      "guilin",
+      "hezhou",
+      "liuzhou",
+      "yulincn",
+      "yunfu"
+    ]
+  },
+  {
+    "id": "beihai",
+    "name": "北海",
+    "province": "广西",
+    "provinceId": "gx",
+    "level": 2,
+    "x": 1176,
+    "y": 1246,
+    "lat": 21.48,
+    "lon": 109.12,
+    "neighbors": [
+      "fangchenggang",
+      "haikou",
+      "nanning",
+      "qinzhou",
+      "yulincn",
+      "zhanjiang"
+    ]
+  },
+  {
+    "id": "fangchenggang",
+    "name": "防城港",
+    "province": "广西",
+    "provinceId": "gx",
+    "level": 1,
+    "x": 1045,
+    "y": 1186,
+    "lat": 21.69,
+    "lon": 108.35,
+    "neighbors": [
+      "beihai",
+      "chongzuo",
+      "nanning",
+      "qinzhou"
+    ]
+  },
+  {
+    "id": "qinzhou",
+    "name": "钦州",
+    "province": "广西",
+    "provinceId": "gx",
+    "level": 2,
+    "x": 1098,
+    "y": 1227,
+    "lat": 21.95,
+    "lon": 108.65,
+    "neighbors": [
+      "beihai",
+      "chongzuo",
+      "fangchenggang",
+      "nanning"
+    ]
+  },
+  {
+    "id": "guigang",
+    "name": "贵港",
+    "province": "广西",
+    "provinceId": "gx",
+    "level": 2,
+    "x": 1245,
+    "y": 1094,
+    "lat": 23.11,
+    "lon": 109.6,
+    "neighbors": [
+      "laibin",
+      "liuzhou",
+      "nanning",
+      "wuzhou",
+      "yulincn"
+    ]
+  },
+  {
+    "id": "yulincn",
+    "name": "玉林",
+    "province": "广西",
+    "provinceId": "gx",
+    "level": 2,
+    "x": 1270,
+    "y": 1203,
+    "lat": 22.63,
+    "lon": 110.18,
+    "neighbors": [
+      "beihai",
+      "guigang",
+      "hezhou",
+      "laibin",
+      "wuzhou"
+    ]
+  },
+  {
+    "id": "baise",
+    "name": "百色",
+    "province": "广西",
+    "provinceId": "gx",
+    "level": 1,
+    "x": 972,
+    "y": 1043,
+    "lat": 23.9,
+    "lon": 106.62,
+    "neighbors": [
+      "chongzuo",
+      "hechi",
+      "honghe",
+      "laibin",
+      "nanning",
+      "wenshan"
+    ]
+  },
+  {
+    "id": "hezhou",
+    "name": "贺州",
+    "province": "广西",
+    "provinceId": "gx",
+    "level": 1,
+    "x": 1320,
+    "y": 1011,
+    "lat": 24.4,
+    "lon": 111.55,
+    "neighbors": [
+      "chenzhou",
+      "guilin",
+      "liuzhou",
+      "wuzhou",
+      "yulincn"
+    ]
+  },
+  {
+    "id": "hechi",
+    "name": "河池",
+    "province": "广西",
+    "provinceId": "gx",
+    "level": 1,
+    "x": 1077,
+    "y": 1003,
+    "lat": 24.7,
+    "lon": 108.09,
+    "neighbors": [
+      "baise",
+      "laibin",
+      "liuzhou",
+      "nanning",
+      "qiandongnan",
+      "qiannan"
+    ]
+  },
+  {
+    "id": "laibin",
+    "name": "来宾",
+    "province": "广西",
+    "provinceId": "gx",
+    "level": 1,
+    "x": 1150,
+    "y": 1139,
+    "lat": 23.75,
+    "lon": 109.22,
+    "neighbors": [
+      "baise",
+      "guigang",
+      "guilin",
+      "hechi",
+      "liuzhou",
+      "nanning",
+      "yulincn"
+    ]
+  },
+  {
+    "id": "chongzuo",
+    "name": "崇左",
+    "province": "广西",
+    "provinceId": "gx",
+    "level": 1,
+    "x": 996,
+    "y": 1147,
+    "lat": 22.38,
+    "lon": 107.36,
+    "neighbors": [
+      "baise",
+      "fangchenggang",
+      "nanning",
+      "qinzhou"
+    ]
+  },
+  {
+    "id": "haikou",
+    "name": "海口",
+    "province": "海南",
+    "provinceId": "hi",
+    "level": 3,
+    "x": 1201,
+    "y": 1130,
+    "lat": 20.04,
+    "lon": 110.32,
+    "neighbors": [
+      "beihai",
+      "danzhou",
+      "qionghai",
+      "wanning",
+      "wenchang",
+      "zhanjiang"
+    ]
+  },
+  {
+    "id": "sanya",
+    "name": "三亚",
+    "province": "海南",
+    "provinceId": "hi",
+    "level": 3,
+    "x": 1188,
+    "y": 1310,
+    "lat": 18.25,
+    "lon": 109.51,
+    "neighbors": [
+      "danzhou",
+      "dongfang",
+      "sansha",
+      "wanning",
+      "wuzhishan"
+    ]
+  },
+  {
+    "id": "sansha",
+    "name": "三沙",
+    "province": "海南",
+    "provinceId": "hi",
+    "level": 1,
+    "x": 1381,
+    "y": 1310,
+    "lat": 16.83,
+    "lon": 112.34,
+    "neighbors": [
+      "qionghai",
+      "sanya",
+      "wanning",
+      "wenchang"
+    ]
+  },
+  {
+    "id": "danzhou",
+    "name": "儋州",
+    "province": "海南",
+    "provinceId": "hi",
+    "level": 2,
+    "x": 1150,
+    "y": 1196,
+    "lat": 19.52,
+    "lon": 109.58,
+    "neighbors": [
+      "dongfang",
+      "haikou",
+      "qionghai",
+      "sanya",
+      "wanning",
+      "wenchang",
+      "wuzhishan"
+    ]
+  },
+  {
+    "id": "wuzhishan",
+    "name": "五指山",
+    "province": "海南",
+    "provinceId": "hi",
+    "level": 1,
+    "x": 1070,
+    "y": 1307,
+    "lat": 18.78,
+    "lon": 109.52,
+    "neighbors": [
+      "danzhou",
+      "dongfang",
+      "qionghai",
+      "sanya",
+      "wanning"
+    ]
+  },
+  {
+    "id": "qionghai",
+    "name": "琼海",
+    "province": "海南",
+    "provinceId": "hi",
+    "level": 2,
+    "x": 1316,
+    "y": 1310,
+    "lat": 19.26,
+    "lon": 110.47,
+    "neighbors": [
+      "danzhou",
+      "haikou",
+      "sansha",
+      "wanning",
+      "wenchang",
+      "wuzhishan"
+    ]
+  },
+  {
+    "id": "wenchang",
+    "name": "文昌",
+    "province": "海南",
+    "provinceId": "hi",
+    "level": 2,
+    "x": 1326,
+    "y": 1210,
+    "lat": 19.62,
+    "lon": 110.79,
+    "neighbors": [
+      "danzhou",
+      "haikou",
+      "qionghai",
+      "sansha",
+      "wanning"
+    ]
+  },
+  {
+    "id": "wanning",
+    "name": "万宁",
+    "province": "海南",
+    "provinceId": "hi",
+    "level": 2,
+    "x": 1252,
+    "y": 1310,
+    "lat": 18.8,
+    "lon": 110.39,
+    "neighbors": [
+      "danzhou",
+      "dongfang",
+      "haikou",
+      "qionghai",
+      "sansha",
+      "sanya",
+      "wenchang",
+      "wuzhishan"
+    ]
+  },
+  {
+    "id": "dongfang",
+    "name": "东方",
+    "province": "海南",
+    "provinceId": "hi",
+    "level": 1,
+    "x": 1039,
+    "y": 1250,
+    "lat": 19.1,
+    "lon": 108.65,
+    "neighbors": [
+      "danzhou",
+      "sanya",
+      "wanning",
+      "wuzhishan"
+    ]
+  },
+  {
+    "id": "chengdu",
+    "name": "成都",
+    "province": "四川",
+    "provinceId": "sc",
+    "level": 5,
+    "x": 893,
+    "y": 789,
+    "lat": 30.57,
+    "lon": 104.07,
+    "neighbors": [
+      "aba",
+      "deyang",
+      "leshan",
+      "meishan",
+      "mianyang",
+      "yaan",
+      "ziyang"
+    ]
+  },
+  {
+    "id": "zigong",
+    "name": "自贡",
+    "province": "四川",
+    "provinceId": "sc",
+    "level": 2,
+    "x": 955,
+    "y": 938,
+    "lat": 29.34,
+    "lon": 104.78,
+    "neighbors": [
+      "leshan",
+      "luzhou",
+      "meishan",
+      "neijiang",
+      "yibin",
+      "ziyang"
+    ]
+  },
+  {
+    "id": "panzhihua",
+    "name": "攀枝花",
+    "province": "四川",
+    "provinceId": "sc",
+    "level": 2,
+    "x": 912,
+    "y": 1056,
+    "lat": 26.58,
+    "lon": 101.72,
+    "neighbors": [
+      "ganzi",
+      "leshan",
+      "liangshan",
+      "lijiang",
+      "yibin"
+    ]
+  },
+  {
+    "id": "luzhou",
+    "name": "泸州",
+    "province": "四川",
+    "provinceId": "sc",
+    "level": 2,
+    "x": 1092,
+    "y": 942,
+    "lat": 28.87,
+    "lon": 105.44,
+    "neighbors": [
+      "bijie",
+      "chongqing",
+      "neijiang",
+      "yibin",
+      "zigong",
+      "ziyang"
+    ]
+  },
+  {
+    "id": "deyang",
+    "name": "德阳",
+    "province": "四川",
+    "provinceId": "sc",
+    "level": 3,
+    "x": 949,
+    "y": 771,
+    "lat": 31.13,
+    "lon": 104.4,
+    "neighbors": [
+      "aba",
+      "chengdu",
+      "guangyuan",
+      "meishan",
+      "mianyang",
+      "suining",
+      "ziyang"
+    ]
+  },
+  {
+    "id": "mianyang",
+    "name": "绵阳",
+    "province": "四川",
+    "provinceId": "sc",
+    "level": 3,
+    "x": 968,
+    "y": 716,
+    "lat": 31.47,
+    "lon": 104.68,
+    "neighbors": [
+      "chengdu",
+      "deyang",
+      "guangyuan",
+      "longnan",
+      "suining",
+      "ziyang"
+    ]
+  },
+  {
+    "id": "guangyuan",
+    "name": "广元",
+    "province": "四川",
+    "provinceId": "sc",
+    "level": 1,
+    "x": 1047,
+    "y": 660,
+    "lat": 32.44,
+    "lon": 105.84,
+    "neighbors": [
+      "bazhong",
+      "deyang",
+      "hanzhong",
+      "longnan",
+      "mianyang",
+      "nanchong"
+    ]
+  },
+  {
+    "id": "suining",
+    "name": "遂宁",
+    "province": "四川",
+    "provinceId": "sc",
+    "level": 1,
+    "x": 1042,
+    "y": 805,
+    "lat": 30.51,
+    "lon": 105.57,
+    "neighbors": [
+      "dazhou",
+      "deyang",
+      "guangan",
+      "mianyang",
+      "nanchong",
+      "neijiang",
+      "ziyang"
+    ]
+  },
+  {
+    "id": "neijiang",
+    "name": "内江",
+    "province": "四川",
+    "provinceId": "sc",
+    "level": 2,
+    "x": 1061,
+    "y": 903,
+    "lat": 29.58,
+    "lon": 105.06,
+    "neighbors": [
+      "leshan",
+      "luzhou",
+      "meishan",
+      "suining",
+      "yibin",
+      "zigong",
+      "ziyang"
+    ]
+  },
+  {
+    "id": "leshan",
+    "name": "乐山",
+    "province": "四川",
+    "provinceId": "sc",
+    "level": 3,
+    "x": 917,
+    "y": 891,
+    "lat": 29.55,
+    "lon": 103.77,
+    "neighbors": [
+      "chengdu",
+      "ganzi",
+      "liangshan",
+      "meishan",
+      "neijiang",
+      "panzhihua",
+      "yaan",
+      "yibin",
+      "zigong",
+      "ziyang"
+    ]
+  },
+  {
+    "id": "nanchong",
+    "name": "南充",
+    "province": "四川",
+    "provinceId": "sc",
+    "level": 2,
+    "x": 1118,
+    "y": 743,
+    "lat": 30.84,
+    "lon": 106.11,
+    "neighbors": [
+      "bazhong",
+      "dazhou",
+      "guangan",
+      "guangyuan",
+      "suining"
+    ]
+  },
+  {
+    "id": "meishan",
+    "name": "眉山",
+    "province": "四川",
+    "provinceId": "sc",
+    "level": 2,
+    "x": 935,
+    "y": 833,
+    "lat": 30.05,
+    "lon": 103.85,
+    "neighbors": [
+      "chengdu",
+      "deyang",
+      "ganzi",
+      "leshan",
+      "neijiang",
+      "yaan",
+      "zigong",
+      "ziyang"
+    ]
+  },
+  {
+    "id": "yibin",
+    "name": "宜宾",
+    "province": "四川",
+    "provinceId": "sc",
+    "level": 3,
+    "x": 991,
+    "y": 979,
+    "lat": 28.75,
+    "lon": 104.64,
+    "neighbors": [
+      "bijie",
+      "leshan",
+      "luzhou",
+      "neijiang",
+      "panzhihua",
+      "zigong"
+    ]
+  },
+  {
+    "id": "guangan",
+    "name": "广安",
+    "province": "四川",
+    "provinceId": "sc",
+    "level": 1,
+    "x": 1112,
+    "y": 887,
+    "lat": 30.46,
+    "lon": 106.63,
+    "neighbors": [
+      "bazhong",
+      "chongqing",
+      "dazhou",
+      "nanchong",
+      "suining"
+    ]
+  },
+  {
+    "id": "dazhou",
+    "name": "达州",
+    "province": "四川",
+    "provinceId": "sc",
+    "level": 2,
+    "x": 1172,
+    "y": 737,
+    "lat": 31.21,
+    "lon": 107.47,
+    "neighbors": [
+      "bazhong",
+      "guangan",
+      "nanchong",
+      "suining"
+    ]
+  },
+  {
+    "id": "yaan",
+    "name": "雅安",
+    "province": "四川",
+    "provinceId": "sc",
+    "level": 1,
+    "x": 877,
+    "y": 847,
+    "lat": 30.01,
+    "lon": 103.04,
+    "neighbors": [
+      "aba",
+      "chengdu",
+      "ganzi",
+      "leshan",
+      "liangshan",
+      "meishan"
+    ]
+  },
+  {
+    "id": "bazhong",
+    "name": "巴中",
+    "province": "四川",
+    "provinceId": "sc",
+    "level": 1,
+    "x": 1102,
+    "y": 666,
+    "lat": 31.87,
+    "lon": 106.75,
+    "neighbors": [
+      "dazhou",
+      "guangan",
+      "guangyuan",
+      "hanzhong",
+      "nanchong"
+    ]
+  },
+  {
+    "id": "ziyang",
+    "name": "资阳",
+    "province": "四川",
+    "provinceId": "sc",
+    "level": 1,
+    "x": 1025,
+    "y": 860,
+    "lat": 30.13,
+    "lon": 104.63,
+    "neighbors": [
+      "chengdu",
+      "deyang",
+      "leshan",
+      "luzhou",
+      "meishan",
+      "mianyang",
+      "neijiang",
+      "suining",
+      "zigong"
+    ]
+  },
+  {
+    "id": "aba",
+    "name": "阿坝州",
+    "province": "四川",
+    "provinceId": "sc",
+    "level": 1,
+    "x": 866,
+    "y": 687,
+    "lat": 31.9,
+    "lon": 102.22,
+    "neighbors": [
+      "chamdo",
+      "chengdu",
+      "deyang",
+      "ganzi",
+      "guoluo",
+      "huangnan",
+      "yaan"
+    ]
+  },
+  {
+    "id": "ganzi",
+    "name": "甘孜州",
+    "province": "四川",
+    "provinceId": "sc",
+    "level": 1,
+    "x": 833,
+    "y": 808,
+    "lat": 30.05,
+    "lon": 101.96,
+    "neighbors": [
+      "aba",
+      "chamdo",
+      "leshan",
+      "liangshan",
+      "meishan",
+      "panzhihua",
+      "yaan"
+    ]
+  },
+  {
+    "id": "liangshan",
+    "name": "凉山州",
+    "province": "四川",
+    "provinceId": "sc",
+    "level": 2,
+    "x": 875,
+    "y": 1009,
+    "lat": 27.9,
+    "lon": 102.27,
+    "neighbors": [
+      "ganzi",
+      "leshan",
+      "panzhihua",
+      "yaan",
+      "zhaotong"
+    ]
+  },
+  {
+    "id": "guiyang",
+    "name": "贵阳",
+    "province": "贵州",
+    "provinceId": "gz",
+    "level": 4,
+    "x": 1043,
+    "y": 960,
+    "lat": 26.65,
+    "lon": 106.63,
+    "neighbors": [
+      "anshun",
+      "bijie",
+      "liupanshui",
+      "qiandongnan",
+      "qiannan",
+      "qianxinan",
+      "tongren",
+      "zunyi"
+    ]
+  },
+  {
+    "id": "liupanshui",
+    "name": "六盘水",
+    "province": "贵州",
+    "provinceId": "gz",
+    "level": 2,
+    "x": 897,
+    "y": 952,
+    "lat": 26.59,
+    "lon": 104.83,
+    "neighbors": [
+      "anshun",
+      "bijie",
+      "guiyang",
+      "qianxinan",
+      "zhaotong"
+    ]
+  },
+  {
+    "id": "zunyi",
+    "name": "遵义",
+    "province": "贵州",
+    "provinceId": "gz",
+    "level": 3,
+    "x": 1131,
+    "y": 834,
+    "lat": 27.73,
+    "lon": 106.93,
+    "neighbors": [
+      "bijie",
+      "chongqing",
+      "guiyang",
+      "qiandongnan",
+      "qiannan",
+      "tongren"
+    ]
+  },
+  {
+    "id": "anshun",
+    "name": "安顺",
+    "province": "贵州",
+    "provinceId": "gz",
+    "level": 2,
+    "x": 1062,
+    "y": 1061,
+    "lat": 26.25,
+    "lon": 105.95,
+    "neighbors": [
+      "bijie",
+      "guiyang",
+      "liupanshui",
+      "qiannan",
+      "qianxinan"
+    ]
+  },
+  {
+    "id": "bijie",
+    "name": "毕节",
+    "province": "贵州",
+    "provinceId": "gz",
+    "level": 2,
+    "x": 972,
+    "y": 876,
+    "lat": 27.3,
+    "lon": 105.28,
+    "neighbors": [
+      "anshun",
+      "chongqing",
+      "guiyang",
+      "liupanshui",
+      "luzhou",
+      "qianxinan",
+      "yibin",
+      "zunyi"
+    ]
+  },
+  {
+    "id": "tongren",
+    "name": "铜仁",
+    "province": "贵州",
+    "provinceId": "gz",
+    "level": 2,
+    "x": 1206,
+    "y": 872,
+    "lat": 27.73,
+    "lon": 109.19,
+    "neighbors": [
+      "guiyang",
+      "huaihua",
+      "qiandongnan",
+      "qiannan",
+      "xiangxi",
+      "zunyi"
+    ]
+  },
+  {
+    "id": "qianxinan",
+    "name": "黔西南州",
+    "province": "贵州",
+    "provinceId": "gz",
+    "level": 2,
+    "x": 953,
+    "y": 1104,
+    "lat": 25.09,
+    "lon": 104.9,
+    "neighbors": [
+      "anshun",
+      "bijie",
+      "guiyang",
+      "liupanshui",
+      "qujing"
+    ]
+  },
+  {
+    "id": "qiandongnan",
+    "name": "黔东南州",
+    "province": "贵州",
+    "provinceId": "gz",
+    "level": 2,
+    "x": 1209,
+    "y": 1007,
+    "lat": 26.58,
+    "lon": 107.98,
+    "neighbors": [
+      "guiyang",
+      "hechi",
+      "qiannan",
+      "tongren",
+      "zunyi"
+    ]
+  },
+  {
+    "id": "qiannan",
+    "name": "黔南州",
+    "province": "贵州",
+    "provinceId": "gz",
+    "level": 2,
+    "x": 1116,
+    "y": 1044,
+    "lat": 26.25,
+    "lon": 107.52,
+    "neighbors": [
+      "anshun",
+      "guiyang",
+      "hechi",
+      "qiandongnan",
+      "tongren",
+      "zunyi"
+    ]
+  },
+  {
+    "id": "kunming",
+    "name": "昆明",
+    "province": "云南",
+    "provinceId": "yn",
+    "level": 4,
+    "x": 935,
+    "y": 996,
+    "lat": 24.88,
+    "lon": 102.83,
+    "neighbors": [
+      "chuxiong",
+      "honghe",
+      "qujing",
+      "wenshan",
+      "yuxi",
+      "zhaotong"
+    ]
+  },
+  {
+    "id": "qujing",
+    "name": "曲靖",
+    "province": "云南",
+    "provinceId": "yn",
+    "level": 2,
+    "x": 1026,
+    "y": 1023,
+    "lat": 25.49,
+    "lon": 103.8,
+    "neighbors": [
+      "chuxiong",
+      "honghe",
+      "kunming",
+      "qianxinan",
+      "wenshan",
+      "yuxi",
+      "zhaotong"
+    ]
+  },
+  {
+    "id": "yuxi",
+    "name": "玉溪",
+    "province": "云南",
+    "provinceId": "yn",
+    "level": 2,
+    "x": 1009,
+    "y": 1085,
+    "lat": 24.35,
+    "lon": 102.55,
+    "neighbors": [
+      "chuxiong",
+      "honghe",
+      "kunming",
+      "puer",
+      "qujing",
+      "wenshan",
+      "xishuangbanna"
+    ]
+  },
+  {
+    "id": "baoshan",
+    "name": "保山",
+    "province": "云南",
+    "provinceId": "yn",
+    "level": 1,
+    "x": 805,
+    "y": 1020,
+    "lat": 25.11,
+    "lon": 99.16,
+    "neighbors": [
+      "dali",
+      "dehong",
+      "diqing",
+      "lijiang",
+      "lincang",
+      "nujiang"
+    ]
+  },
+  {
+    "id": "zhaotong",
+    "name": "昭通",
+    "province": "云南",
+    "provinceId": "yn",
+    "level": 2,
+    "x": 1009,
+    "y": 919,
+    "lat": 27.34,
+    "lon": 103.72,
+    "neighbors": [
+      "chuxiong",
+      "kunming",
+      "liangshan",
+      "lijiang",
+      "liupanshui",
+      "qujing"
+    ]
+  },
+  {
+    "id": "lijiang",
+    "name": "丽江",
+    "province": "云南",
+    "provinceId": "yn",
+    "level": 2,
+    "x": 858,
+    "y": 905,
+    "lat": 26.86,
+    "lon": 100.23,
+    "neighbors": [
+      "baoshan",
+      "dali",
+      "diqing",
+      "nujiang",
+      "panzhihua",
+      "zhaotong"
+    ]
+  },
+  {
+    "id": "puer",
+    "name": "普洱",
+    "province": "云南",
+    "provinceId": "yn",
+    "level": 1,
+    "x": 935,
+    "y": 1163,
+    "lat": 22.79,
+    "lon": 100.97,
+    "neighbors": [
+      "honghe",
+      "lincang",
+      "xishuangbanna",
+      "yuxi"
+    ]
+  },
+  {
+    "id": "lincang",
+    "name": "临沧",
+    "province": "云南",
+    "provinceId": "yn",
+    "level": 1,
+    "x": 890,
+    "y": 1120,
+    "lat": 23.88,
+    "lon": 100.09,
+    "neighbors": [
+      "baoshan",
+      "chuxiong",
+      "dali",
+      "dehong",
+      "puer",
+      "xishuangbanna"
+    ]
+  },
+  {
+    "id": "chuxiong",
+    "name": "楚雄州",
+    "province": "云南",
+    "provinceId": "yn",
+    "level": 2,
+    "x": 850,
+    "y": 1066,
+    "lat": 25.04,
+    "lon": 101.55,
+    "neighbors": [
+      "dali",
+      "kunming",
+      "lincang",
+      "qujing",
+      "yuxi",
+      "zhaotong"
+    ]
+  },
+  {
+    "id": "honghe",
+    "name": "红河州",
+    "province": "云南",
+    "provinceId": "yn",
+    "level": 2,
+    "x": 987,
+    "y": 1211,
+    "lat": 23.37,
+    "lon": 103.38,
+    "neighbors": [
+      "baise",
+      "kunming",
+      "puer",
+      "qujing",
+      "wenshan",
+      "xishuangbanna",
+      "yuxi"
+    ]
+  },
+  {
+    "id": "wenshan",
+    "name": "文山州",
+    "province": "云南",
+    "provinceId": "yn",
+    "level": 1,
+    "x": 1054,
+    "y": 1125,
+    "lat": 23.37,
+    "lon": 104.24,
+    "neighbors": [
+      "baise",
+      "honghe",
+      "kunming",
+      "qujing",
+      "yuxi"
+    ]
+  },
+  {
+    "id": "xishuangbanna",
+    "name": "西双版纳",
+    "province": "云南",
+    "provinceId": "yn",
+    "level": 1,
+    "x": 924,
+    "y": 1227,
+    "lat": 22.01,
+    "lon": 100.8,
+    "neighbors": [
+      "honghe",
+      "lincang",
+      "puer",
+      "yuxi"
+    ]
+  },
+  {
+    "id": "dali",
+    "name": "大理州",
+    "province": "云南",
+    "provinceId": "yn",
+    "level": 2,
+    "x": 834,
+    "y": 962,
+    "lat": 25.61,
+    "lon": 100.27,
+    "neighbors": [
+      "baoshan",
+      "chuxiong",
+      "dehong",
+      "diqing",
+      "lijiang",
+      "lincang",
+      "nujiang"
+    ]
+  },
+  {
+    "id": "dehong",
+    "name": "德宏州",
+    "province": "云南",
+    "provinceId": "yn",
+    "level": 1,
+    "x": 789,
+    "y": 1084,
+    "lat": 24.43,
+    "lon": 98.59,
+    "neighbors": [
+      "baoshan",
+      "dali",
+      "lincang",
+      "nujiang"
+    ]
+  },
+  {
+    "id": "nujiang",
+    "name": "怒江州",
+    "province": "云南",
+    "provinceId": "yn",
+    "level": 1,
+    "x": 783,
+    "y": 925,
+    "lat": 25.85,
+    "lon": 98.86,
+    "neighbors": [
+      "baoshan",
+      "dali",
+      "dehong",
+      "diqing",
+      "lijiang"
+    ]
+  },
+  {
+    "id": "diqing",
+    "name": "迪庆州",
+    "province": "云南",
+    "provinceId": "yn",
+    "level": 1,
+    "x": 809,
+    "y": 864,
+    "lat": 27.83,
+    "lon": 99.7,
+    "neighbors": [
+      "baoshan",
+      "chamdo",
+      "dali",
+      "lijiang",
+      "linzhi",
+      "nujiang"
+    ]
+  },
+  {
+    "id": "lasa",
+    "name": "拉萨",
+    "province": "西藏",
+    "provinceId": "xz",
+    "level": 4,
+    "x": 651,
+    "y": 837,
+    "lat": 29.65,
+    "lon": 91.14,
+    "neighbors": [
+      "ali",
+      "chamdo",
+      "linzhi",
+      "naqu",
+      "rikaze",
+      "shannan"
+    ]
+  },
+  {
+    "id": "rikaze",
+    "name": "日喀则",
+    "province": "西藏",
+    "provinceId": "xz",
+    "level": 2,
+    "x": 557,
+    "y": 891,
+    "lat": 29.27,
+    "lon": 88.88,
+    "neighbors": [
+      "ali",
+      "lasa",
+      "linzhi",
+      "naqu",
+      "shannan"
+    ]
+  },
+  {
+    "id": "chamdo",
+    "name": "昌都",
+    "province": "西藏",
+    "provinceId": "xz",
+    "level": 1,
+    "x": 784,
+    "y": 766,
+    "lat": 31.14,
+    "lon": 97.17,
+    "neighbors": [
+      "aba",
+      "diqing",
+      "ganzi",
+      "lasa",
+      "linzhi",
+      "naqu",
+      "shannan",
+      "yushu"
+    ]
+  },
+  {
+    "id": "linzhi",
+    "name": "林芝",
+    "province": "西藏",
+    "provinceId": "xz",
+    "level": 2,
+    "x": 747,
+    "y": 850,
+    "lat": 29.65,
+    "lon": 94.36,
+    "neighbors": [
+      "chamdo",
+      "diqing",
+      "lasa",
+      "naqu",
+      "rikaze",
+      "shannan",
+      "yushu"
+    ]
+  },
+  {
+    "id": "shannan",
+    "name": "山南",
+    "province": "西藏",
+    "provinceId": "xz",
+    "level": 1,
+    "x": 694,
+    "y": 936,
+    "lat": 29.24,
+    "lon": 91.77,
+    "neighbors": [
+      "ali",
+      "chamdo",
+      "lasa",
+      "linzhi",
+      "naqu",
+      "rikaze"
+    ]
+  },
+  {
+    "id": "naqu",
+    "name": "那曲",
+    "province": "西藏",
+    "provinceId": "xz",
+    "level": 1,
+    "x": 714,
+    "y": 755,
+    "lat": 31.48,
+    "lon": 92.05,
+    "neighbors": [
+      "ali",
+      "chamdo",
+      "lasa",
+      "linzhi",
+      "rikaze",
+      "shannan"
+    ]
+  },
+  {
+    "id": "ali",
+    "name": "阿里",
+    "province": "西藏",
+    "provinceId": "xz",
+    "level": 1,
+    "x": 339,
+    "y": 760,
+    "lat": 32.5,
+    "lon": 80.1,
+    "neighbors": [
+      "hetian",
+      "kashi",
+      "lasa",
+      "naqu",
+      "rikaze",
+      "shannan"
+    ]
+  },
+  {
+    "id": "xian",
+    "name": "西安",
+    "province": "陕西",
+    "provinceId": "sn",
+    "level": 5,
+    "x": 1062,
+    "y": 752,
+    "lat": 34.34,
+    "lon": 108.94,
+    "neighbors": [
+      "ankang",
+      "baoji",
+      "hanzhong",
+      "shangluo",
+      "tongchuan",
+      "weinan",
+      "xianyang",
+      "yanan",
+      "yulinsn"
+    ]
+  },
+  {
+    "id": "tongchuan",
+    "name": "铜川",
+    "province": "陕西",
+    "provinceId": "sn",
+    "level": 2,
+    "x": 1083,
+    "y": 618,
+    "lat": 34.9,
+    "lon": 108.95,
+    "neighbors": [
+      "baoji",
+      "guyuan",
+      "shangluo",
+      "weinan",
+      "xian",
+      "xianyang",
+      "yanan",
+      "yulinsn"
+    ]
+  },
+  {
+    "id": "baoji",
+    "name": "宝鸡",
+    "province": "陕西",
+    "provinceId": "sn",
+    "level": 3,
+    "x": 1022,
+    "y": 610,
+    "lat": 34.36,
+    "lon": 107.24,
+    "neighbors": [
+      "guyuan",
+      "hanzhong",
+      "pingliang",
+      "tianshui",
+      "tongchuan",
+      "xian",
+      "xianyang"
+    ]
+  },
+  {
+    "id": "xianyang",
+    "name": "咸阳",
+    "province": "陕西",
+    "provinceId": "sn",
+    "level": 3,
+    "x": 1141,
+    "y": 637,
+    "lat": 34.33,
+    "lon": 108.71,
+    "neighbors": [
+      "ankang",
+      "baoji",
+      "hanzhong",
+      "shangluo",
+      "tongchuan",
+      "weinan",
+      "xian"
+    ]
+  },
+  {
+    "id": "weinan",
+    "name": "渭南",
+    "province": "陕西",
+    "provinceId": "sn",
+    "level": 3,
+    "x": 1236,
+    "y": 623,
+    "lat": 34.5,
+    "lon": 109.51,
+    "neighbors": [
+      "sanmenxia",
+      "shangluo",
+      "tongchuan",
+      "xian",
+      "xianyang",
+      "yanan",
+      "yulinsn",
+      "yuncheng"
+    ]
+  },
+  {
+    "id": "yanan",
+    "name": "延安",
+    "province": "陕西",
+    "provinceId": "sn",
+    "level": 2,
+    "x": 1207,
+    "y": 462,
+    "lat": 36.59,
+    "lon": 109.49,
+    "neighbors": [
+      "tongchuan",
+      "weinan",
+      "xian",
+      "yulinsn"
+    ]
+  },
+  {
+    "id": "hanzhong",
+    "name": "汉中",
+    "province": "陕西",
+    "provinceId": "sn",
+    "level": 2,
+    "x": 1005,
+    "y": 761,
+    "lat": 33.07,
+    "lon": 107.02,
+    "neighbors": [
+      "ankang",
+      "baoji",
+      "bazhong",
+      "chongqing",
+      "guangyuan",
+      "xian",
+      "xianyang"
+    ]
+  },
+  {
+    "id": "yulinsn",
+    "name": "榆林",
+    "province": "陕西",
+    "provinceId": "sn",
+    "level": 2,
+    "x": 1191,
+    "y": 401,
+    "lat": 38.29,
+    "lon": 109.73,
+    "neighbors": [
+      "baotou",
+      "eerduosi",
+      "lvliang",
+      "tongchuan",
+      "weinan",
+      "xian",
+      "yanan"
+    ]
+  },
+  {
+    "id": "ankang",
+    "name": "安康",
+    "province": "陕西",
+    "provinceId": "sn",
+    "level": 1,
+    "x": 1180,
+    "y": 824,
+    "lat": 32.68,
+    "lon": 109.03,
+    "neighbors": [
+      "chongqing",
+      "hanzhong",
+      "shangluo",
+      "shiyan",
+      "xian",
+      "xianyang"
+    ]
+  },
+  {
+    "id": "shangluo",
+    "name": "商洛",
+    "province": "陕西",
+    "provinceId": "sn",
+    "level": 1,
+    "x": 1272,
+    "y": 764,
+    "lat": 33.87,
+    "lon": 109.94,
+    "neighbors": [
+      "ankang",
+      "sanmenxia",
+      "shiyan",
+      "tongchuan",
+      "weinan",
+      "xian",
+      "xianyang"
+    ]
+  },
+  {
+    "id": "lanzhou",
+    "name": "兰州",
+    "province": "甘肃",
+    "provinceId": "gs",
+    "level": 4,
+    "x": 913,
+    "y": 572,
+    "lat": 36.06,
+    "lon": 103.83,
+    "neighbors": [
+      "baiyin",
+      "dingxi",
+      "gannan",
+      "jinchang",
+      "linxia",
+      "wuwei"
+    ]
+  },
+  {
+    "id": "jiayuguan",
+    "name": "嘉峪关",
+    "province": "甘肃",
+    "provinceId": "gs",
+    "level": 1,
+    "x": 802,
+    "y": 527,
+    "lat": 39.77,
+    "lon": 98.29,
+    "neighbors": [
+      "hami",
+      "jinchang",
+      "jiuquan",
+      "wuwei",
+      "zhangye"
+    ]
+  },
+  {
+    "id": "jinchang",
+    "name": "金昌",
+    "province": "甘肃",
+    "provinceId": "gs",
+    "level": 1,
+    "x": 922,
+    "y": 463,
+    "lat": 38.52,
+    "lon": 102.19,
+    "neighbors": [
+      "baiyin",
+      "jiayuguan",
+      "jiuquan",
+      "lanzhou",
+      "wuwei",
+      "zhangye"
+    ]
+  },
+  {
+    "id": "baiyin",
+    "name": "白银",
+    "province": "甘肃",
+    "provinceId": "gs",
+    "level": 1,
+    "x": 1051,
+    "y": 512,
+    "lat": 36.55,
+    "lon": 104.14,
+    "neighbors": [
+      "alashanmeng",
+      "dingxi",
+      "gannan",
+      "jinchang",
+      "lanzhou",
+      "linxia",
+      "pingliang",
+      "qingyang",
+      "wuwei"
+    ]
+  },
+  {
+    "id": "tianshui",
+    "name": "天水",
+    "province": "甘肃",
+    "provinceId": "gs",
+    "level": 2,
+    "x": 1082,
+    "y": 709,
+    "lat": 34.58,
+    "lon": 105.72,
+    "neighbors": [
+      "baoji",
+      "dingxi",
+      "longnan",
+      "pingliang",
+      "qingyang"
+    ]
+  },
+  {
+    "id": "wuwei",
+    "name": "武威",
+    "province": "甘肃",
+    "provinceId": "gs",
+    "level": 2,
+    "x": 986,
+    "y": 426,
+    "lat": 37.93,
+    "lon": 102.64,
+    "neighbors": [
+      "alashanmeng",
+      "baiyin",
+      "jiayuguan",
+      "jinchang",
+      "jiuquan",
+      "lanzhou",
+      "zhangye"
+    ]
+  },
+  {
+    "id": "zhangye",
+    "name": "张掖",
+    "province": "甘肃",
+    "provinceId": "gs",
+    "level": 1,
+    "x": 848,
+    "y": 573,
+    "lat": 38.93,
+    "lon": 100.45,
+    "neighbors": [
+      "jiayuguan",
+      "jinchang",
+      "jiuquan",
+      "wuwei"
+    ]
+  },
+  {
+    "id": "pingliang",
+    "name": "平凉",
+    "province": "甘肃",
+    "provinceId": "gs",
+    "level": 1,
+    "x": 1110,
+    "y": 534,
+    "lat": 35.54,
+    "lon": 106.66,
+    "neighbors": [
+      "baiyin",
+      "baoji",
+      "dingxi",
+      "guyuan",
+      "longnan",
+      "qingyang",
+      "tianshui"
+    ]
+  },
+  {
+    "id": "jiuquan",
+    "name": "酒泉",
+    "province": "甘肃",
+    "provinceId": "gs",
+    "level": 2,
+    "x": 858,
+    "y": 451,
+    "lat": 39.73,
+    "lon": 98.49,
+    "neighbors": [
+      "hami",
+      "jiayuguan",
+      "jinchang",
+      "wuwei",
+      "zhangye"
+    ]
+  },
+  {
+    "id": "qingyang",
+    "name": "庆阳",
+    "province": "甘肃",
+    "provinceId": "gs",
+    "level": 1,
+    "x": 1183,
+    "y": 603,
+    "lat": 35.71,
+    "lon": 107.64,
+    "neighbors": [
+      "baiyin",
+      "dingxi",
+      "guyuan",
+      "pingliang",
+      "tianshui"
+    ]
+  },
+  {
+    "id": "dingxi",
+    "name": "定西",
+    "province": "甘肃",
+    "provinceId": "gs",
+    "level": 1,
+    "x": 989,
+    "y": 658,
+    "lat": 35.58,
+    "lon": 104.63,
+    "neighbors": [
+      "baiyin",
+      "gannan",
+      "lanzhou",
+      "linxia",
+      "longnan",
+      "pingliang",
+      "qingyang",
+      "tianshui"
+    ]
+  },
+  {
+    "id": "longnan",
+    "name": "陇南",
+    "province": "甘肃",
+    "provinceId": "gs",
+    "level": 1,
+    "x": 990,
+    "y": 818,
+    "lat": 33.4,
+    "lon": 104.92,
+    "neighbors": [
+      "dingxi",
+      "gannan",
+      "guangyuan",
+      "mianyang",
+      "pingliang",
+      "tianshui"
+    ]
+  },
+  {
+    "id": "linxia",
+    "name": "临夏州",
+    "province": "甘肃",
+    "provinceId": "gs",
+    "level": 1,
+    "x": 884,
+    "y": 628,
+    "lat": 35.6,
+    "lon": 103.21,
+    "neighbors": [
+      "baiyin",
+      "dingxi",
+      "gannan",
+      "huangnan",
+      "lanzhou"
+    ]
+  },
+  {
+    "id": "gannan",
+    "name": "甘南州",
+    "province": "甘肃",
+    "provinceId": "gs",
+    "level": 1,
+    "x": 909,
+    "y": 727,
+    "lat": 34.99,
+    "lon": 102.91,
+    "neighbors": [
+      "baiyin",
+      "dingxi",
+      "huangnan",
+      "lanzhou",
+      "linxia",
+      "longnan"
+    ]
+  },
+  {
+    "id": "xining",
+    "name": "西宁",
+    "province": "青海",
+    "provinceId": "qh",
+    "level": 4,
+    "x": 946,
+    "y": 523,
+    "lat": 36.62,
+    "lon": 101.78,
+    "neighbors": [
+      "guoluo",
+      "haibei",
+      "haidong",
+      "hainanzhou",
+      "haixi",
+      "huangnan"
+    ]
+  },
+  {
+    "id": "haidong",
+    "name": "海东",
+    "province": "青海",
+    "provinceId": "qh",
+    "level": 1,
+    "x": 964,
+    "y": 605,
+    "lat": 36.5,
+    "lon": 102.1,
+    "neighbors": [
+      "guoluo",
+      "haibei",
+      "hainanzhou",
+      "huangnan",
+      "xining"
+    ]
+  },
+  {
+    "id": "haibei",
+    "name": "海北州",
+    "province": "青海",
+    "provinceId": "qh",
+    "level": 1,
+    "x": 881,
+    "y": 517,
+    "lat": 36.95,
+    "lon": 100.9,
+    "neighbors": [
+      "haidong",
+      "hainanzhou",
+      "haixi",
+      "hami",
+      "huangnan",
+      "xining"
+    ]
+  },
+  {
+    "id": "huangnan",
+    "name": "黄南州",
+    "province": "青海",
+    "provinceId": "qh",
+    "level": 1,
+    "x": 929,
+    "y": 669,
+    "lat": 35.52,
+    "lon": 102.02,
+    "neighbors": [
+      "aba",
+      "gannan",
+      "guoluo",
+      "haibei",
+      "haidong",
+      "hainanzhou",
+      "linxia",
+      "xining",
+      "yushu"
+    ]
+  },
+  {
+    "id": "hainanzhou",
+    "name": "海南州",
+    "province": "青海",
+    "provinceId": "qh",
+    "level": 1,
+    "x": 822,
+    "y": 642,
+    "lat": 36.28,
+    "lon": 100.62,
+    "neighbors": [
+      "guoluo",
+      "haibei",
+      "haidong",
+      "haixi",
+      "huangnan",
+      "xining",
+      "yushu"
+    ]
+  },
+  {
+    "id": "guoluo",
+    "name": "果洛州",
+    "province": "青海",
+    "provinceId": "qh",
+    "level": 1,
+    "x": 847,
+    "y": 746,
+    "lat": 34.47,
+    "lon": 100.24,
+    "neighbors": [
+      "aba",
+      "haidong",
+      "hainanzhou",
+      "haixi",
+      "huangnan",
+      "xining",
+      "yushu"
+    ]
+  },
+  {
+    "id": "yushu",
+    "name": "玉树州",
+    "province": "青海",
+    "provinceId": "qh",
+    "level": 1,
+    "x": 798,
+    "y": 704,
+    "lat": 33,
+    "lon": 97,
+    "neighbors": [
+      "chamdo",
+      "guoluo",
+      "hainanzhou",
+      "haixi",
+      "huangnan",
+      "linzhi"
+    ]
+  },
+  {
+    "id": "haixi",
+    "name": "海西州",
+    "province": "青海",
+    "provinceId": "qh",
+    "level": 2,
+    "x": 785,
+    "y": 590,
+    "lat": 37.37,
+    "lon": 97.37,
+    "neighbors": [
+      "guoluo",
+      "haibei",
+      "hainanzhou",
+      "hami",
+      "xining",
+      "yushu"
+    ]
+  },
+  {
+    "id": "yinchuan",
+    "name": "银川",
+    "province": "宁夏",
+    "provinceId": "nx",
+    "level": 4,
+    "x": 1101,
+    "y": 415,
+    "lat": 38.49,
+    "lon": 106.23,
+    "neighbors": [
+      "alashanmeng",
+      "guyuan",
+      "shizuishan",
+      "wuzhong",
+      "zhongwei"
+    ]
+  },
+  {
+    "id": "shizuishan",
+    "name": "石嘴山",
+    "province": "宁夏",
+    "provinceId": "nx",
+    "level": 2,
+    "x": 1045,
+    "y": 448,
+    "lat": 38.98,
+    "lon": 106.38,
+    "neighbors": [
+      "alashanmeng",
+      "guyuan",
+      "wuzhong",
+      "yinchuan",
+      "zhongwei"
+    ]
+  },
+  {
+    "id": "wuzhong",
+    "name": "吴忠",
+    "province": "宁夏",
+    "provinceId": "nx",
+    "level": 1,
+    "x": 1065,
+    "y": 566,
+    "lat": 37.99,
+    "lon": 106.2,
+    "neighbors": [
+      "guyuan",
+      "shizuishan",
+      "yinchuan",
+      "zhongwei"
+    ]
+  },
+  {
+    "id": "guyuan",
+    "name": "固原",
+    "province": "宁夏",
+    "provinceId": "nx",
+    "level": 1,
+    "x": 1025,
+    "y": 710,
+    "lat": 36,
+    "lon": 106.24,
+    "neighbors": [
+      "baoji",
+      "pingliang",
+      "qingyang",
+      "shizuishan",
+      "tongchuan",
+      "wuzhong",
+      "yinchuan",
+      "zhongwei"
+    ]
+  },
+  {
+    "id": "zhongwei",
+    "name": "中卫",
+    "province": "宁夏",
+    "provinceId": "nx",
+    "level": 1,
+    "x": 1002,
+    "y": 551,
+    "lat": 37.5,
+    "lon": 105.19,
+    "neighbors": [
+      "guyuan",
+      "shizuishan",
+      "wuzhong",
+      "yinchuan"
+    ]
+  },
+  {
+    "id": "wulumuqi",
+    "name": "乌鲁木齐",
+    "province": "新疆",
+    "provinceId": "xj",
+    "level": 4,
+    "x": 608,
+    "y": 338,
+    "lat": 43.83,
+    "lon": 87.62,
+    "neighbors": [
+      "aletai",
+      "bayinguoleng",
+      "changji",
+      "hami",
+      "kelamayi",
+      "tulufan"
+    ]
+  },
+  {
+    "id": "kelamayi",
+    "name": "克拉玛依",
+    "province": "新疆",
+    "provinceId": "xj",
+    "level": 2,
+    "x": 501,
+    "y": 292,
+    "lat": 45.6,
+    "lon": 84.87,
+    "neighbors": [
+      "aletai",
+      "bayinguoleng",
+      "boertala",
+      "changji",
+      "tacheng",
+      "wulumuqi",
+      "yili"
+    ]
+  },
+  {
+    "id": "tulufan",
+    "name": "吐鲁番",
+    "province": "新疆",
+    "provinceId": "xj",
+    "level": 1,
+    "x": 618,
+    "y": 444,
+    "lat": 42.95,
+    "lon": 89.19,
+    "neighbors": [
+      "bayinguoleng",
+      "changji",
+      "hami",
+      "wulumuqi"
+    ]
+  },
+  {
+    "id": "hami",
+    "name": "哈密",
+    "province": "新疆",
+    "provinceId": "xj",
+    "level": 2,
+    "x": 735,
+    "y": 416,
+    "lat": 42.83,
+    "lon": 93.51,
+    "neighbors": [
+      "bayinguoleng",
+      "changji",
+      "haibei",
+      "haixi",
+      "jiayuguan",
+      "jiuquan",
+      "tulufan",
+      "wulumuqi"
+    ]
+  },
+  {
+    "id": "changji",
+    "name": "昌吉州",
+    "province": "新疆",
+    "provinceId": "xj",
+    "level": 2,
+    "x": 520,
+    "y": 397,
+    "lat": 44.01,
+    "lon": 87.3,
+    "neighbors": [
+      "aletai",
+      "bayinguoleng",
+      "boertala",
+      "hami",
+      "kelamayi",
+      "tulufan",
+      "wulumuqi"
+    ]
+  },
+  {
+    "id": "boertala",
+    "name": "博尔塔拉",
+    "province": "新疆",
+    "provinceId": "xj",
+    "level": 1,
+    "x": 342,
+    "y": 329,
+    "lat": 44.9,
+    "lon": 82.07,
+    "neighbors": [
+      "akesu",
+      "changji",
+      "kelamayi",
+      "tacheng",
+      "yili"
+    ]
+  },
+  {
+    "id": "bayinguoleng",
+    "name": "巴音郭楞",
+    "province": "新疆",
+    "provinceId": "xj",
+    "level": 2,
+    "x": 516,
+    "y": 501,
+    "lat": 41.76,
+    "lon": 86.15,
+    "neighbors": [
+      "changji",
+      "hami",
+      "hetian",
+      "kelamayi",
+      "tulufan",
+      "wulumuqi"
+    ]
+  },
+  {
+    "id": "akesu",
+    "name": "阿克苏",
+    "province": "新疆",
+    "provinceId": "xj",
+    "level": 1,
+    "x": 334,
+    "y": 486,
+    "lat": 41.17,
+    "lon": 80.26,
+    "neighbors": [
+      "boertala",
+      "hetian",
+      "kashi",
+      "kezilesu",
+      "yili"
+    ]
+  },
+  {
+    "id": "kezilesu",
+    "name": "克孜勒苏",
+    "province": "新疆",
+    "provinceId": "xj",
+    "level": 1,
+    "x": 224,
+    "y": 470,
+    "lat": 39.72,
+    "lon": 76.17,
+    "neighbors": [
+      "akesu",
+      "hetian",
+      "kashi",
+      "yili"
+    ]
+  },
+  {
+    "id": "kashi",
+    "name": "喀什",
+    "province": "新疆",
+    "provinceId": "xj",
+    "level": 2,
+    "x": 213,
+    "y": 576,
+    "lat": 39.47,
+    "lon": 75.99,
+    "neighbors": [
+      "akesu",
+      "ali",
+      "hetian",
+      "kezilesu",
+      "yili"
+    ]
+  },
+  {
+    "id": "hetian",
+    "name": "和田",
+    "province": "新疆",
+    "provinceId": "xj",
+    "level": 1,
+    "x": 334,
+    "y": 606,
+    "lat": 37.11,
+    "lon": 79.92,
+    "neighbors": [
+      "akesu",
+      "ali",
+      "bayinguoleng",
+      "kashi",
+      "kezilesu"
+    ]
+  },
+  {
+    "id": "yili",
+    "name": "伊犁州",
+    "province": "新疆",
+    "provinceId": "xj",
+    "level": 2,
+    "x": 409,
+    "y": 409,
+    "lat": 43.92,
+    "lon": 81.28,
+    "neighbors": [
+      "akesu",
+      "boertala",
+      "kashi",
+      "kelamayi",
+      "kezilesu",
+      "tacheng"
+    ]
+  },
+  {
+    "id": "tacheng",
+    "name": "塔城",
+    "province": "新疆",
+    "provinceId": "xj",
+    "level": 1,
+    "x": 410,
+    "y": 242,
+    "lat": 46.75,
+    "lon": 82.98,
+    "neighbors": [
+      "aletai",
+      "boertala",
+      "kelamayi",
+      "yili"
+    ]
+  },
+  {
+    "id": "aletai",
+    "name": "阿勒泰",
+    "province": "新疆",
+    "provinceId": "xj",
+    "level": 1,
+    "x": 591,
+    "y": 228,
+    "lat": 47.85,
+    "lon": 88.14,
+    "neighbors": [
+      "changji",
+      "kelamayi",
+      "tacheng",
+      "wulumuqi"
+    ]
+  },
+  {
+    "id": "hongkong",
+    "name": "香港",
+    "province": "香港",
+    "provinceId": "hk",
+    "level": 5,
+    "x": 1386,
+    "y": 1212,
+    "lat": 22.32,
+    "lon": 114.17,
+    "neighbors": [
+      "shenzhen",
+      "zhuhai"
+    ]
+  },
+  {
+    "id": "macau",
+    "name": "澳门",
+    "province": "澳门",
+    "provinceId": "mo",
+    "level": 5,
+    "x": 1309,
+    "y": 1157,
+    "lat": 22.2,
+    "lon": 113.55,
+    "neighbors": [
+      "zhongshan",
+      "zhuhai"
+    ]
+  },
+  {
+    "id": "taipei",
+    "name": "台北",
+    "province": "台湾",
+    "provinceId": "tw",
+    "level": 5,
+    "x": 1636,
+    "y": 1138,
+    "lat": 25.03,
+    "lon": 121.56,
+    "neighbors": [
+      "fuzhou",
+      "tainan",
+      "taizhong",
+      "taoyuan",
+      "xinbei"
+    ]
+  },
+  {
+    "id": "xinbei",
+    "name": "新北",
+    "province": "台湾",
+    "provinceId": "tw",
+    "level": 4,
+    "x": 1726,
+    "y": 1024,
+    "lat": 25.01,
+    "lon": 121.46,
+    "neighbors": [
+      "gaoxiong",
+      "tainan",
+      "taipei",
+      "taizhong",
+      "taoyuan"
+    ]
+  },
+  {
+    "id": "taoyuan",
+    "name": "桃园",
+    "province": "台湾",
+    "provinceId": "tw",
+    "level": 3,
+    "x": 1619,
+    "y": 1022,
+    "lat": 24.99,
+    "lon": 121.3,
+    "neighbors": [
+      "gaoxiong",
+      "tainan",
+      "taipei",
+      "taizhong",
+      "xinbei"
+    ]
+  },
+  {
+    "id": "taizhong",
+    "name": "台中",
+    "province": "台湾",
+    "provinceId": "tw",
+    "level": 3,
+    "x": 1562,
+    "y": 1056,
+    "lat": 24.15,
+    "lon": 120.68,
+    "neighbors": [
+      "gaoxiong",
+      "tainan",
+      "taipei",
+      "taoyuan",
+      "xinbei"
+    ]
+  },
+  {
+    "id": "tainan",
+    "name": "台南",
+    "province": "台湾",
+    "provinceId": "tw",
+    "level": 3,
+    "x": 1476,
+    "y": 1190,
+    "lat": 22.99,
+    "lon": 120.2,
+    "neighbors": [
+      "gaoxiong",
+      "taipei",
+      "taizhong",
+      "taoyuan",
+      "xinbei"
+    ]
+  },
+  {
+    "id": "gaoxiong",
+    "name": "高雄",
+    "province": "台湾",
+    "provinceId": "tw",
+    "level": 4,
+    "x": 1593,
+    "y": 1233,
+    "lat": 22.62,
+    "lon": 120.31,
+    "neighbors": [
+      "tainan",
+      "taizhong",
+      "taoyuan",
+      "xinbei"
+    ]
+  },
+  {
+    "id": "acity",
+    "name": "A市",
+    "province": "广东",
+    "provinceId": "gd",
+    "level": 1,
+    "x": 1422,
+    "y": 1173,
+    "lat": 22.9,
+    "lon": 113.85,
+    "neighbors": [
+      "dongguan",
+      "guangzhou",
+      "huizhou",
+      "qingyuan",
+      "shenzhen",
+      "zhongshan"
+    ],
+    "virtual": true
+  }
+]
