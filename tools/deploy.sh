@@ -19,9 +19,23 @@ if [ ! -d "$DIR/.git" ]; then
 fi
 
 cd "$DIR"
+echo "[TimeWar] 项目目录: $DIR"
+echo "[TimeWar] 远程仓库:"
+git remote -v || true
+
 echo "[TimeWar] 拉取代码 ($BRANCH)..."
-git fetch origin "$BRANCH"
+if ! git fetch origin "$BRANCH" 2>&1; then
+  echo "[TimeWar] git fetch 失败，请检查："
+  echo "  1. 远程地址是否正确（上面 remote -v 输出）"
+  echo "  2. 目录写权限：chown -R 当前用户 /www/wwwroot/Timewar"
+  exit 1
+fi
+
+echo "[TimeWar] 本地当前提交: $(git log --oneline -1 HEAD 2>/dev/null || echo '无提交')"
+echo "[TimeWar] 远程最新提交: $(git log --oneline -1 origin/$BRANCH 2>/dev/null || echo 'origin/$BRANCH 不存在')"
+
 git reset --hard "origin/$BRANCH"
+echo "[TimeWar] 更新后提交: $(git log --oneline -1 HEAD)"
 
 echo "[TimeWar] 安装依赖..."
 npm install --no-audit --no-fund
