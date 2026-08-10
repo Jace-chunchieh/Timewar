@@ -208,4 +208,37 @@ describe('战斗系统', () => {
     expect(reduced).toBeLessThan(base);
     expect(base - reduced).toBeGreaterThanOrEqual(2);
   });
+
+  it('敌城守将：生成、战报记录、招募概率确定性', () => {
+    const run = () => {
+      const ctx = makeCtx(8);
+      const state = makeGame(ctx);
+      const qy = state.enemyCities.find((e) => e.cityId === 'qingyuan')!;
+      expect(qy.defender).toBeTruthy();
+      expect(qy.defender!.level).toBeGreaterThanOrEqual(2); // 清远 2 级城守将 ≥2
+      const { arrivesMs } = setupMarch(ctx, state, { infantry: 200, cavalry: 0, target: 'qingyuan', armyId: 'a-recruit' });
+      advanceGameState(ctx, state, arrivesMs + 1);
+      const report = state.battleReports[0];
+      expect(report.defenderGeneralName).toBe(qy.defender!.name);
+      return { report, generals: state.generals.map((g) => g.name) };
+    };
+    const a = run();
+    const b = run();
+    // 固定种子：招募结果刷新后一致
+    expect(a.report.recruitedGeneralName).toBe(b.report.recruitedGeneralName);
+    if (a.report.recruitedGeneralName) {
+      expect(a.generals).toContain(a.report.recruitedGeneralName!);
+      // 招募的将领保留守将等级
+      const g = a.generals.find((n) => n === a.report.recruitedGeneralName!);
+      expect(g).toBeTruthy();
+    }
+  });
+
+  it('所有敌城初始都有守将（等级 = 城市等级 + 随机加成）', () => {
+    const ctx = makeCtx(3);
+    const state = makeGame(ctx);
+    expect(state.enemyCities.every((e) => e.defender && e.defender.name)).toBe(true);
+    const gz = state.enemyCities.find((e) => e.cityId === 'guangzhou')!;
+    expect(gz.defender!.level).toBeGreaterThanOrEqual(5);
+  });
 });

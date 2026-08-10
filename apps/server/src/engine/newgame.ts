@@ -1,6 +1,6 @@
 import type { BalanceConfig, CityConfig, GameState } from '@timewar/shared';
 import { seededGarrison } from './enemy.js';
-import { randomChineseName } from './rng.js';
+import { randomChineseName, randomInt } from './rng.js';
 import { defaultTechState } from './tech.js';
 
 export function createNewGame(
@@ -21,6 +21,11 @@ export function createNewGame(
         garrison,
         lastGrowthAt: nowIso,
         initialGarrison: garrison,
+        // 每座敌方城市有一名守将（等级 = 城市等级 + 随机加成）
+        defender: {
+          name: randomChineseName(rng),
+          level: Math.max(1, c.level + randomInt(balance.defender.levelBonusMin, balance.defender.levelBonusMax, rng)),
+        },
       };
     });
 
@@ -28,7 +33,7 @@ export function createNewGame(
 
   return {
     id: crypto.randomUUID ? crypto.randomUUID() : `game-${Date.now()}`,
-    version: 2,
+    version: 3,
     createdAt: nowIso,
     updatedAt: nowIso,
     lastCalculatedAt: nowIso,

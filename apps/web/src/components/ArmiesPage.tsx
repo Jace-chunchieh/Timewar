@@ -192,6 +192,19 @@ export default function ArmiesPage() {
             <Btn onClick={createArmy} disabled={busy || !general || !target || infantry + cavalry <= 0 || talismanShort} className="w-full py-2">
               {busy ? '提交中…' : '确认出征'}
             </Btn>
+            {!busy && (!general || !target || infantry + cavalry <= 0 || talismanShort) && (
+              <div className="text-xs text-muted">
+                {!general
+                  ? '请先选择将领（需空闲状态）'
+                  : !target
+                    ? '请选择目标城市'
+                    : infantry + cavalry <= 0
+                      ? '请填写步兵/骑兵数量'
+                      : talismanShort
+                        ? `神行符不足：需要 ${talismanNeed} 张，持有 ${fmt(display.tech?.talismans ?? 0)}`
+                        : '尚不满足出征条件'}
+              </div>
+            )}
           </div>
         </Card>
 

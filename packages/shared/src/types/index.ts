@@ -61,6 +61,12 @@ export interface TalismanBalance {
   sameProvinceCost: number;
 }
 
+export interface DefenderBalance {
+  recruitChance: number;
+  levelBonusMin: number;
+  levelBonusMax: number;
+}
+
 export interface TechBalanceItem {
   label: string;
   desc: string;
@@ -86,7 +92,7 @@ export interface BalanceConfig {
   productionWork: { weapon: number; armor: number; horse: number };
   productionEfficiency: number;
   trainingDurationSeconds: number;
-  trainingCapacityPerLevel: Record<string, number>;
+  trainingTimePerPersonExtra: number;
   trainingCancelRefundRate: number;
   populationPerCityPerInterval: Record<string, number>;
   generalProbability: number;
@@ -119,6 +125,7 @@ export interface BalanceConfig {
   equipmentRecoveryDefeat: { weapon: number; armor: number; horse: number };
   cityLevels: Record<string, CityLevelBalance>;
   talisman: TalismanBalance;
+  defender: DefenderBalance;
   tech: TechBalance;
   startCityId: string;
   qingyuanCityId: string;
@@ -196,6 +203,7 @@ export interface EnemyCityState {
   garrison: number;
   lastGrowthAt: string;
   initialGarrison: number;
+  defender?: { name: string; level: number };
 }
 
 export interface TrainingBatch {
@@ -226,6 +234,8 @@ export interface BattleReport {
   recoveredHorses: number;
   victory: boolean;
   captured: boolean;
+  defenderGeneralName?: string;
+  recruitedGeneralName?: string;
 }
 
 export interface OfflineReport {

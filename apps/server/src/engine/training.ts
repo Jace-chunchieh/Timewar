@@ -8,11 +8,10 @@ export interface TrainingCompletionResult {
   newGeneralNames: string[];
 }
 
-// 训练容量 = Σ 已占领城市等级容量
-export function trainingCapacity(balance: BalanceConfig, state: GameState): number {
-  return state.cities.reduce(
-    (sum, c) => sum + (balance.trainingCapacityPerLevel[String(c.level)] ?? 100),
-    0
+// 训练时长 = 基础 600 秒 + 每人 × trainingTimePerPersonExtra（人数越多耗时越长，无上限）
+export function trainingDurationFor(balance: BalanceConfig, count: number): number {
+  return Math.round(
+    balance.trainingDurationSeconds + Math.max(0, count - 1) * balance.trainingTimePerPersonExtra
   );
 }
 

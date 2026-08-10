@@ -58,10 +58,12 @@ describe('API 集成（后端权威）', () => {
     expect(s.enemyCities.find((e) => e.cityId === 'qingyuan')?.garrison).toBe(100);
     expect(s.enemyCities.find((e) => e.cityId === 'guangzhou')?.level ?? s.enemyCities.some((e) => e.cityId === 'guangzhou')).toBe(true);
     expect(s.enemyCities.length).toBeGreaterThan(330);
-    expect(s.version).toBe(2);
+    expect(s.version).toBe(3);
     expect(s.tech.researchWorkers).toBe(0);
     expect(s.welcomeShown).toBe(false);
     expect(s.tutorialStep).toBe(1);
+    // 每座敌城都有守将
+    expect(s.enemyCities.every((e) => e.defender && e.defender.name)).toBe(true);
   });
 
   it('首次登录弹窗：ack 后 welcomeShown 变为 true', async () => {
@@ -142,20 +144,24 @@ describe('API 集成（后端权威）', () => {
     expect(bad.json().code).toBe('INSUFFICIENT_POPULATION');
   });
 
-  it('训练：启动批次、容量限制（A市 1级=100）、600秒后完成', async () => {
+  it('训练：无人数上限、时长随人数增长、到点完成', async () => {
     await post('/api/game/new');
     const res = await post('/api/training/start', { count: 100 });
     expect(res.statusCode).toBe(200);
     let s = stateOf(res);
     expect(s.resources.idlePopulation).toBe(400);
     expect(s.trainingBatches).toHaveLength(1);
-    const over = await post('/api/training/start', { count: 1 });
-    expect(over.statusCode).toBe(400);
-    expect(over.json().code).toBe('TRAINING_CAPACITY_EXCEEDED');
-    now += 600_000;
+    // 时长 = round(600 + 99×0.6) = 659 秒
+    const durationMs = Date.parse(s.trainingBatches[0].completesAt) - Date.parse(s.trainingBatches[0].startedAt);
+    expect(durationMs).toBe(Math.round(600 + 99 * 0.6) * 1000);
+    // 无容量上限：1 人也可继续开批（无 TRAINING_CAPACITY_EXCEEDED）
+    const more = await post('/api/training/start', { count: 1 });
+    expect(more.statusCode).toBe(200);
+    now += Math.round(600 + 99 * 0.6) * 1000;
     s = stateOf(await get('/api/game/state'));
+    // 两个批次（100 人 659s + 1 人 600s）均已到期完成
     expect(s.trainingBatches).toHaveLength(0);
-    expect(s.resources.trainedPopulation + s.generals.length - 1).toBe(100);
+    expect(s.resources.trainedPopulation + s.generals.length - 1).toBe(101);
   });
 
   it('训练取消：返还50%人口', async () => {

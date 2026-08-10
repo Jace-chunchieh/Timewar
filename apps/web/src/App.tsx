@@ -15,6 +15,19 @@ import TopBar from './components/TopBar';
 import TrainingPage from './components/TrainingPage';
 import Tutorial from './components/Tutorial';
 import WelcomeModal from './components/WelcomeModal';
+
+// 全局错误提示条：所有 API 失败都会在此可见（自动消失）
+function ErrorToast() {
+  const error = useGame((s) => s.error);
+  if (!error) return null;
+  return (
+    <div className="fixed top-14 inset-x-0 z-[70] flex justify-center px-3 pointer-events-none">
+      <div className="bg-danger/95 text-white text-sm rounded-lg px-4 py-2 shadow-lg rise-in max-w-md text-center">
+        {error}
+      </div>
+    </div>
+  );
+}
 import { useGame } from './store';
 
 export default function App() {
@@ -99,6 +112,7 @@ export default function App() {
   return (
     <div className="h-full flex flex-col overflow-hidden">
       <TopBar />
+      <ErrorToast />
       <div className="flex-1 flex min-h-0">
         <DesktopNav />
         <main className="flex-1 min-w-0 relative">{renderView()}</main>

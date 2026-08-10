@@ -2,35 +2,45 @@ import { describe, expect, it } from 'vitest';
 import {
   activeTrainingCount,
   advanceGameState,
-  trainingCapacity,
+  trainingDurationFor,
 } from '../apps/server/src/engine/index.js';
-import { iso, makeCtx, makeGame, occupy, T0 } from './helpers.js';
+import { iso, makeCtx, makeGame, T0 } from './helpers.js';
 
 describe('人口训练', () => {
-  it('100人训练600秒后完成', () => {
-    const ctx = makeCtx(7);
-    const state = makeGame(ctx);
-    state.trainingBatches.push({
-      id: 't1',
-      count: 100,
-      startedAt: iso(T0),
-      completesAt: iso(T0 + 600_000),
-    });
-    advanceGameState(ctx, state, T0 + 600_000);
-    expect(state.trainingBatches.length).toBe(0);
-    expect(state.resources.trainedPopulation).toBe(100);
+  it('训练时长随人数增长：100人 = 600 + 99×0.6 ≈ 659 秒', () => {
+    const ctx = makeCtx();
+    expect(trainingDurationFor(ctx.balance, 1)).toBe(600);
+    expect(trainingDurationFor(ctx.balance, 100)).toBe(Math.round(600 + 99 * 0.6));
+    expect(trainingDurationFor(ctx.balance, 1000)).toBe(Math.round(600 + 999 * 0.6));
+    expect(trainingDurationFor(ctx.balance, 5000)).toBe(Math.round(600 + 4999 * 0.6));
   });
 
-  it('训练未满600秒不能提前产生结果', () => {
+  it('训练无人数上限（1 人即可开批，万人批也允许）', () => {
     const ctx = makeCtx(7);
     const state = makeGame(ctx);
+    state.resources.idlePopulation = 20000;
+    state.trainingBatches.push({
+      id: 't1',
+      count: 10000,
+      startedAt: iso(T0),
+      completesAt: iso(T0 + trainingDurationFor(ctx.balance, 10000) * 1000),
+    });
+    advanceGameState(ctx, state, T0 + trainingDurationFor(ctx.balance, 10000) * 1000);
+    expect(state.trainingBatches.length).toBe(0);
+    expect(state.resources.trainedPopulation + state.generals.length - 1).toBe(10000);
+  });
+
+  it('训练未到完成时间不能提前产生结果', () => {
+    const ctx = makeCtx(7);
+    const state = makeGame(ctx);
+    const durationMs = trainingDurationFor(ctx.balance, 100) * 1000;
     state.trainingBatches.push({
       id: 't1',
       count: 100,
       startedAt: iso(T0),
-      completesAt: iso(T0 + 600_000),
+      completesAt: iso(T0 + durationMs),
     });
-    advanceGameState(ctx, state, T0 + 599_999);
+    advanceGameState(ctx, state, T0 + durationMs - 1);
     expect(state.trainingBatches.length).toBe(1);
     expect(state.resources.trainedPopulation).toBe(0);
   });
@@ -42,9 +52,9 @@ describe('人口训练', () => {
       id: 't1',
       count: 100,
       startedAt: iso(T0),
-      completesAt: iso(T0 + 600_000),
+      completesAt: iso(T0 + trainingDurationFor(ctx.balance, 100) * 1000),
     });
-    advanceGameState(ctx, state, T0 + 600_000);
+    advanceGameState(ctx, state, T0 + trainingDurationFor(ctx.balance, 100) * 1000);
     const newGenerals = state.generals.length - 1;
     expect(state.resources.trainedPopulation + newGenerals).toBe(100);
   });
@@ -57,9 +67,9 @@ describe('人口训练', () => {
         id: 't1',
         count: 100_000,
         startedAt: iso(T0),
-        completesAt: iso(T0 + 600_000),
+        completesAt: iso(T0 + trainingDurationFor(ctx.balance, 100_000) * 1000),
       });
-      advanceGameState(ctx, state, T0 + 600_000);
+      advanceGameState(ctx, state, T0 + trainingDurationFor(ctx.balance, 100_000) * 1000);
       return {
         generals: state.generals.slice(1).map((g) => g.name),
         trained: state.resources.trainedPopulation,
@@ -67,15 +77,6 @@ describe('人口训练', () => {
     };
     expect(run(11)).toEqual(run(11));
     expect(run(11)).not.toEqual(run(12));
-  });
-
-  it('训练容量按城市等级加权：A市(1级)=100，加两座4级城=900', () => {
-    const ctx = makeCtx();
-    const state = makeGame(ctx);
-    expect(trainingCapacity(ctx.balance, state)).toBe(100);
-    occupy(ctx, state, 'foshan'); // 4级 400
-    occupy(ctx, state, 'dongguan'); // 4级 400
-    expect(trainingCapacity(ctx.balance, state)).toBe(900);
   });
 
   it('训练批次人数计入同时训练名额', () => {

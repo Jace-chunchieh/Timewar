@@ -1,9 +1,9 @@
 import type { BalanceConfig, CityConfig, GameState } from '@timewar/shared';
 import { defaultTechState } from './tech.js';
 import { seededGarrison } from './enemy.js';
-import { hashString, mulberry32 } from './rng.js';
+import { hashString, mulberry32, randomChineseName, randomInt } from './rng.js';
 
-export const CURRENT_VERSION = 2;
+export const CURRENT_VERSION = 3;
 
 // 存档迁移：v1（粤桂琼 44 城版）→ v2（全国版 + A市 + 科技）
 // 规则：旧玩家城市保留；新配置城市补为敌方城市（seed 生成守军）；补全 tech；A市 若不存在则加入为敌方城市
@@ -41,6 +41,18 @@ export function migrateGameState(
     const cfg = cities.find((x) => x.id === c.cityId);
     if (cfg) c.level = cfg.level;
     else c.level = 1;
+  }
+
+  // 旧版敌方城市补守将（固定种子生成，幂等）
+  for (const e of state.enemyCities) {
+    if (!e.defender) {
+      const rng = mulberry32(hashString(`defender:${e.cityId}`));
+      const cfg = cities.find((x) => x.id === e.cityId);
+      e.defender = {
+        name: randomChineseName(rng),
+        level: Math.max(1, (cfg?.level ?? 1) + randomInt(balance.defender.levelBonusMin, balance.defender.levelBonusMax, rng)),
+      };
+    }
   }
 
   return state;

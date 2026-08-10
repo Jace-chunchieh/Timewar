@@ -43,6 +43,17 @@ export default function ReportsPage() {
                 {open && (
                   <div className="mt-2 bg-panel2/70 rounded p-3 text-xs space-y-1.5 rise-in">
                     <div className="text-gold2 font-semibold mb-1">计算明细</div>
+                    {r.defenderGeneralName && (
+                      <div className="flex justify-between"><span className="text-muted">敌方守将</span><span className="text-orange">{r.defenderGeneralName}</span></div>
+                    )}
+                    {r.victory && r.defenderGeneralName && (
+                      <div className="flex justify-between">
+                        <span className="text-muted">守将去向</span>
+                        <span className={r.recruitedGeneralName ? 'text-gold2' : 'text-muted'}>
+                          {r.recruitedGeneralName ? `已招募 ${r.recruitedGeneralName} 为我方将领` : '逃散（招募失败）'}
+                        </span>
+                      </div>
+                    )}
                     <div className="flex justify-between"><span className="text-muted">进攻战力</span><span className="tabular">{fmt(r.attackerPower)}</span></div>
                     <div className="flex justify-between"><span className="text-muted">防守战力</span><span className="tabular">{fmt(r.defenderPower)}</span></div>
                     <div className="flex justify-between"><span className="text-muted">将领等级</span><span className="tabular">Lv.{r.generalLevel}（加成 +{fmtPct(r.generalLevel * 0.02)}）</span></div>

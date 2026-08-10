@@ -18,7 +18,7 @@ import {
   talismanCost,
   techEffects,
   techUpgradeCostNext,
-  trainingCapacity,
+  trainingDurationFor,
   activeTrainingCount,
   troopPool,
   CURRENT_VERSION,
@@ -162,15 +162,6 @@ export class GameService {
     const state = this.loadAndAdvance();
     const balance = this.ctx.balance;
     if (count <= 0) fail('INVALID_COUNT', '训练人数必须大于 0');
-    const capacity = trainingCapacity(balance, state);
-    const active = activeTrainingCount(state);
-    if (active + count > capacity) {
-      fail('TRAINING_CAPACITY_EXCEEDED', `训练名额不足：当前 ${active}/${capacity}`, {
-        active,
-        capacity,
-        requested: count,
-      });
-    }
     if (state.resources.idlePopulation < count) {
       fail('INSUFFICIENT_IDLE_POPULATION', '空闲人口不足', { need: count, idle: state.resources.idlePopulation });
     }
@@ -179,7 +170,8 @@ export class GameService {
       id: `tb-${now}-${state.trainingBatches.length}`,
       count,
       startedAt: nowIso(now),
-      completesAt: nowIso(now + balance.trainingDurationSeconds * 1000),
+      // 训练时长随人数增长（无容量上限）
+      completesAt: nowIso(now + trainingDurationFor(balance, count) * 1000),
     });
     state.resources.idlePopulation -= count;
     return this.commit(state);

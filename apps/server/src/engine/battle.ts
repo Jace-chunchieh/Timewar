@@ -26,6 +26,11 @@ export function battleVariance(balance: BalanceConfig, battleId: string): number
   return randomBetween(balance.battleVarianceMin, balance.battleVarianceMax, rng);
 }
 
+// 招募判定使用独立派生种子（与波动同源，刷新一致）
+function battleRng(balance: BalanceConfig, seedKey: string): () => number {
+  return mulberry32(hashString(seedKey));
+}
+
 export function computeBattlePowers(
   balance: BalanceConfig,
   cities: CityConfig[],
@@ -120,6 +125,7 @@ export function resolveBattle(
   state.resources.deadPopulation += deadTotal;
 
   const levelConfig = balance.cityLevels[String(cityLevelOf(cities, targetCityId))];
+  const defender = state.enemyCities[enemyIndex].defender;
   const report: BattleReport = {
     id: `b-${army.id}-${Date.parse(army.arrivesAt ?? '')}`,
     time: new Date(nowMs).toISOString(),
@@ -141,11 +147,23 @@ export function resolveBattle(
     recoveredHorses,
     victory,
     captured: false,
+    defenderGeneralName: defender?.name,
   };
 
   if (victory) {
     // 敌方剩余守军清零（视为逃散），城市被占领
     state.enemyCities.splice(enemyIndex, 1);
+    // 占领后按概率招募守将为我方将领（确定性种子，刷新结果一致）
+    if (defender && battleRng(balance, `${army.id}:${army.arrivesAt}:recruit`)() < balance.defender.recruitChance) {
+      state.generals.push({
+        id: `g-defender-${Date.now()}-${state.generals.length}`,
+        name: defender.name,
+        level: defender.level,
+        xp: 0,
+        status: 'IDLE',
+      });
+      report.recruitedGeneralName = defender.name;
+    }
     state.cities.push({
       cityId: targetCityId,
       occupiedAt: new Date(nowMs).toISOString(),

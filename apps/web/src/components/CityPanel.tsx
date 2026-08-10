@@ -152,6 +152,21 @@ export function AttackForm({ targetCityId, originCityId }: { targetCityId: strin
           </div>
         )}
         {localErr && <div className="text-danger text-xs">{localErr}</div>}
+        {!canSubmit && !busy && (
+          <div className="text-xs text-muted">
+            {!general
+              ? '请先选择将领（需空闲状态）'
+              : infantry + cavalry <= 0
+                ? '请填写步兵/骑兵数量'
+                : infantry > maxInf
+                  ? `步兵不足：可用士兵池 ${fmt(pool.infantry)}，当前上限 ${fmt(maxInf)}（受统帅与士兵池限制）`
+                  : cavalry > maxCav
+                    ? `骑兵不足：可用士兵池 ${fmt(pool.cavalry)}，当前上限 ${fmt(maxCav)}`
+                    : useTalisman && talismanShort
+                      ? `神行符不足：需要 ${talismanNeed} 张，持有 ${fmt(display?.tech.talismans ?? 0)}`
+                      : '尚不满足出征条件'}
+          </div>
+        )}
         <Btn variant="orange" disabled={!canSubmit} onClick={submit} className="w-full py-2">
           {busy ? '出征中…' : '确认出征'}
         </Btn>
@@ -288,11 +303,20 @@ export default function CityPanel({ cityId }: { cityId: string }) {
           <Card title="敌方情报">
             <div className="space-y-1.5 text-sm">
               <div className="flex justify-between"><span className="text-muted">守军</span><span className="text-danger tabular">{fmt(enemy.garrison)}</span></div>
+              {enemy.defender && (
+                <div className="flex justify-between">
+                  <span className="text-muted">守将</span>
+                  <span className="text-orange">{enemy.defender.name}（Lv.{enemy.defender.level}）</span>
+                </div>
+              )}
               <div className="flex justify-between"><span className="text-muted">城防加成</span><span className="text-text tabular">+{fmtPct(defenseBonusOf(cityId))}</span></div>
               <div className="flex justify-between"><span className="text-muted">守军上限</span><span className="text-text tabular">{fmt(balance.cityLevels[String(config.level)].garrisonCap)}</span></div>
               <div className="flex justify-between"><span className="text-muted">增长</span><span className="text-text tabular">每10分钟 +{balance.cityLevels[String(config.level)].growthPer10Min}</span></div>
             </div>
-            <div className="mt-2 text-xs text-muted">相邻：{neighborNames}</div>
+            <div className="mt-2 text-xs text-muted">
+              相邻：{neighborNames}
+              {enemy.defender && <div className="mt-1 text-gold">占领后有 {fmtPct(balance.defender.recruitChance)} 概率招募守将{enemy.defender.name}为我方将领</div>}
+            </div>
           </Card>
           <AttackForm targetCityId={cityId} />
         </>

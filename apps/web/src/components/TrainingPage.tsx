@@ -13,13 +13,9 @@ export default function TrainingPage() {
   const [busy, setBusy] = useState(false);
 
   if (!display) return null;
-  const capacity = display.cities.reduce(
-    (s, c) => s + (balance.trainingCapacityPerLevel[String(c.level)] ?? 100),
-    0
-  );
   const active = display.trainingBatches.reduce((s, b) => s + b.count, 0);
   const idle = display.resources.idlePopulation;
-  const durationMs = balance.trainingDurationSeconds * 1000;
+  const durationMs = (balance.trainingDurationSeconds + Math.max(0, count - 1) * balance.trainingTimePerPersonExtra) * 1000;
   const now = Date.now();
 
   const start = async () => {
@@ -42,11 +38,11 @@ export default function TrainingPage() {
       <div className="max-w-3xl mx-auto space-y-3">
         <h2 className="text-lg font-bold text-gold2">人口训练</h2>
 
-        <Card title={`新建训练批次 · 名额 ${fmt(active)}/${fmt(capacity)}`}>
+        <Card title={`新建训练批次 · 训练中 ${fmt(active)} 人`}>
           <div className="space-y-2.5">
             <div className="grid grid-cols-2 gap-2 text-xs">
               <div className="bg-panel2/60 rounded p-2">
-                <div className="text-muted">训练时间</div>
+                <div className="text-muted">当前批次耗时</div>
                 <div className="text-base font-semibold text-text tabular">{fmtDur(durationMs)}</div>
               </div>
               <div className="bg-panel2/60 rounded p-2">
@@ -54,10 +50,10 @@ export default function TrainingPage() {
                 <div className="text-base font-semibold text-gold tabular">{fmt(display.resources.trainedPopulation)}</div>
               </div>
             </div>
-            <NumInput value={count} onChange={setCount} max={Math.min(idle, capacity - active)} step={10} ariaLabel="训练人数" />
+            <NumInput value={count} onChange={setCount} max={idle} step={10} ariaLabel="训练人数" />
             <div className="flex gap-2">
               {[100, 500, 1000, 5000].map((n) => (
-                <Btn key={n} variant="ghost" onClick={() => setCount(Math.min(n, Math.max(0, capacity - active), idle))} className="!py-1 text-xs">
+                <Btn key={n} variant="ghost" onClick={() => setCount(Math.min(n, idle))} className="!py-1 text-xs">
                   {n}
                 </Btn>
               ))}
@@ -68,13 +64,13 @@ export default function TrainingPage() {
               <div className="flex justify-between"><span className="text-muted">期望将领数量</span><span className="text-gold tabular">≈{((count * balance.generalProbability)).toFixed(2)} 名</span></div>
               <div className="text-xs text-muted">
                 本批训练 {fmt(count)} 人，期望将领数量约为 {((count * balance.generalProbability)).toFixed(2)}，但不保证产生将领（概率 1/10,000）。
+                训练无人数上限，批次越大耗时越长（每 100 人约增加 1 分钟）。
               </div>
             </div>
-            <Btn onClick={start} disabled={busy || count <= 0 || count > idle || active + count > capacity} className="w-full py-2">
+            <Btn onClick={start} disabled={busy || count <= 0 || count > idle} className="w-full py-2">
               {busy ? '提交中…' : '开始训练'}
             </Btn>
             {count > idle && <div className="text-danger text-xs">空闲人口不足（需求 {fmt(count)}，现有 {fmt(idle)}）</div>}
-            {active + count > capacity && <div className="text-danger text-xs">训练名额不足（当前 {fmt(active)}/{fmt(capacity)}）</div>}
           </div>
         </Card>
 
@@ -121,7 +117,7 @@ export default function TrainingPage() {
         </Card>
 
         <div className="text-xs text-muted pb-4">
-          提示：合成士兵需要 训练后人口 + 武器 + 盔甲（骑兵另需战马）。训练容量 = Σ 已占领城市等级容量（1级 100 … 5级 500）。
+          提示：合成士兵需要 训练后人口 + 武器 + 盔甲（骑兵另需战马）。训练无人数上限，批次耗时 = 10 分钟基础 + 每人 0.6 秒（100 人约 11 分钟、1000 人约 20 分钟）。
         </div>
       </div>
     </div>

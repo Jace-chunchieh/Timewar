@@ -179,7 +179,9 @@ export const useGame = create<StoreState>((set, get) => ({
         error: null,
       }));
     } catch (e) {
-      set({ error: (e as Error).message });
+      const msg = (e as Error).message;
+      set({ error: msg });
+      setTimeout(() => set({ error: null }), 4000);
     }
   },
 
@@ -189,7 +191,9 @@ export const useGame = create<StoreState>((set, get) => ({
       await get().refresh();
       return true;
     } catch (e) {
-      set({ error: (e as Error).message });
+      const msg = (e as Error).message;
+      set({ error: msg });
+      setTimeout(() => set({ error: null }), 4000);
       return false;
     }
   },
