@@ -12,6 +12,7 @@ import {
   expectedBattle,
   marchTimeClient,
   marchTimeFallbackClient,
+  routeBetweenClient,
   talismanCostClient,
   troopPoolClient,
 } from '../lib/game';
@@ -187,16 +188,31 @@ export function TransferForm({ originCityId }: { originCityId: string }) {
   const [generalId, setGeneralId] = useState('');
   const [infantry, setInfantry] = useState(0);
   const [cavalry, setCavalry] = useState(0);
+  const [useTalisman, setUseTalisman] = useState(false);
   const [busy, setBusy] = useState(false);
   const city = display?.cities.find((c) => c.cityId === originCityId);
   const idleGenerals = generals.filter((g) => g.status === 'IDLE');
-  const routeTime = target && display ? marchTimeClient(originCityId, target, infantry, cavalry) : 0;
-  const canSubmit = !!target && infantry + cavalry > 0 && infantry <= (city?.infantry ?? 0) && cavalry <= (city?.cavalry ?? 0);
+  const hasRoute = !!target && !!routeBetweenClient(originCityId, target);
+  const speedMul = 1 + (display?.tech?.levels?.logistics ?? 0) * balance.tech.logistics.effectPerLevel;
+  const routeTime = target && display
+    ? (marchTimeClient(originCityId, target, infantry, cavalry, speedMul) ||
+        marchTimeFallbackClient(originCityId, target, infantry, cavalry, speedMul))
+    : 0;
+  const talismanNeed = target ? talismanCostClient(cityProvinceId(originCityId), cityProvinceId(target)) : 0;
+  const talismanShort = useTalisman && !hasRoute && (display?.tech.talismans ?? 0) < talismanNeed;
+  const canSubmit = !!target && infantry + cavalry > 0 && infantry <= (city?.infantry ?? 0) && cavalry <= (city?.cavalry ?? 0) && !talismanShort;
 
   const submit = async () => {
     setBusy(true);
     const ok = await mutate(() =>
-      api.armyTransfer({ originCityId, targetCityId: target, infantry, cavalry, generalId: generalId || undefined })
+      api.armyTransfer({
+        originCityId,
+        targetCityId: target,
+        infantry,
+        cavalry,
+        generalId: generalId || undefined,
+        useTalisman: useTalisman && !hasRoute,
+      })
     );
     setBusy(false);
     if (ok) {
@@ -211,9 +227,14 @@ export function TransferForm({ originCityId }: { originCityId: string }) {
         <Field label="目标城市" hint="须为已占领城市">
           <select className="w-full h-8 rounded bg-bg border border-line text-text text-sm" value={target} onChange={(e) => setTarget(e.target.value)}>
             <option value="">选择己方城市</option>
-            {citiesOwned.filter((c) => c.cityId !== originCityId).map((c) => (
-              <option key={c.cityId} value={c.cityId}>{cityName(c.cityId)}</option>
-            ))}
+            {citiesOwned.filter((c) => c.cityId !== originCityId).map((c) => {
+              const noRoute = !routeBetweenClient(originCityId, c.cityId);
+              return (
+                <option key={c.cityId} value={c.cityId}>
+                  {cityName(c.cityId)}{noRoute ? `（无路线，需神行符 ${talismanCostClient(cityProvinceId(originCityId), cityProvinceId(c.cityId))} 张）` : ''}
+                </option>
+              );
+            })}
           </select>
         </Field>
         <Field label="随行将领（可选）">
@@ -230,13 +251,141 @@ export function TransferForm({ originCityId }: { originCityId: string }) {
         <Field label="骑兵" hint={`驻军 ${fmt(city?.cavalry ?? 0)}`}>
           <NumInput value={cavalry} onChange={setCavalry} max={city?.cavalry ?? 0} step={10} />
         </Field>
+        {!hasRoute && target && (
+          <div className="bg-panel2/60 rounded p-2 flex items-center justify-between">
+            <span className="text-xs text-muted">两城无直达路线，使用神行符增援（需 {talismanNeed} 张）</span>
+            <input type="checkbox" checked={useTalisman} onChange={(e) => setUseTalisman(e.target.checked)} className="accent-[#d4a94e] w-4 h-4" />
+          </div>
+        )}
         <div className="flex justify-between text-xs">
           <span className="text-muted">行军时间</span>
           <span className="text-text tabular">{routeTime > 0 ? fmtDur(routeTime * 1000) : '—'}</span>
         </div>
+        {talismanShort && <div className="text-danger text-xs">神行符不足：需要 {talismanNeed} 张，持有 {fmt(display?.tech.talismans ?? 0)}</div>}
         <Btn variant="gold" disabled={!canSubmit || busy} onClick={submit} className="w-full py-2">
           {busy ? '派遣中…' : '派遣增援'}
         </Btn>
+      </div>
+    </Card>
+  );
+}
+
+// 驻守将领从驻守地调兵攻打周边
+export function GarrisonAttackForm({ cityId }: { cityId: string }) {
+  const display = useDisplay();
+  const mutate = useGame((s) => s.mutate);
+  const [target, setTarget] = useState('');
+  const [infantry, setInfantry] = useState(0);
+  const [cavalry, setCavalry] = useState(0);
+  const [useTalisman, setUseTalisman] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const city = display?.cities.find((c) => c.cityId === cityId);
+  const general = display?.generals.find((g) => g.id === city?.generalId);
+  if (!display || !city) return null;
+  const cap = general ? commandCapClient(general.level, display) : 0;
+  const attackableTargets = display.enemyCities.filter((e) => canAttackClient(display, e.cityId));
+  const speedMul = 1 + (display.tech?.levels?.logistics ?? 0) * balance.tech.logistics.effectPerLevel;
+  const hasRoute = !!target && !!routeBetweenClient(cityId, target);
+  const routeTime = target
+    ? (marchTimeClient(cityId, target, infantry, cavalry, speedMul) ||
+        marchTimeFallbackClient(cityId, target, infantry, cavalry, speedMul))
+    : 0;
+  const talismanNeed = target ? talismanCostClient(cityProvinceId(cityId), cityProvinceId(target)) : 0;
+  const talismanShort = useTalisman && !hasRoute && (display.tech.talismans ?? 0) < talismanNeed;
+  const expected = general && target
+    ? expectedBattle(display, general.level, infantry, cavalry, target)
+    : null;
+  const canSubmit = !!target && !!general && infantry + cavalry > 0 && infantry <= city.infantry && cavalry <= city.cavalry && !talismanShort;
+
+  const submit = async () => {
+    if (!general || !target) return;
+    setBusy(true);
+    const ok = await mutate(() =>
+      api.garrisonAttack({
+        garrisonCityId: cityId,
+        generalId: general.id,
+        targetCityId: target,
+        infantry,
+        cavalry,
+        useTalisman: useTalisman && !hasRoute,
+      })
+    );
+    setBusy(false);
+    if (ok) {
+      setInfantry(0);
+      setCavalry(0);
+      setTarget('');
+    }
+  };
+
+  return (
+    <Card title="驻守出征 · 攻占周边">
+      <div className="space-y-2.5">
+        {general ? (
+          <>
+            <div className="text-xs text-muted">
+              统率将领：<span className="text-gold">{general.name}</span>（Lv.{general.level} 统帅 {fmt(cap)}）
+            </div>
+            <Field label="目标城市" hint="敌方城市">
+              <select className="w-full h-8 rounded bg-bg border border-line text-text text-sm" value={target} onChange={(e) => setTarget(e.target.value)}>
+                <option value="">选择目标</option>
+                <optgroup label="相邻敌方城市">
+                  {attackableTargets.map((e) => (
+                    <option key={e.cityId} value={e.cityId}>{cityName(e.cityId)}（守军 {fmt(e.garrison)}）</option>
+                  ))}
+                </optgroup>
+                {useTalisman && (
+                  <optgroup label="全部敌方城市（神行符）">
+                    {display.enemyCities.map((e) => (
+                      <option key={e.cityId} value={e.cityId}>
+                        {cityName(e.cityId)}（{fmt(e.garrison)} · {talismanCostClient(cityProvinceId(cityId), cityProvinceId(e.cityId))}张）
+                      </option>
+                    ))}
+                  </optgroup>
+                )}
+              </select>
+            </Field>
+            <Field label="步兵" hint={`驻军 ${fmt(city.infantry)}`}>
+              <NumInput value={infantry} onChange={setInfantry} max={Math.min(city.infantry, Math.max(0, cap - cavalry))} step={10} ariaLabel="驻守步兵" />
+            </Field>
+            <Field label="骑兵" hint={`驻军 ${fmt(city.cavalry)}`}>
+              <NumInput value={cavalry} onChange={setCavalry} max={Math.min(city.cavalry, Math.max(0, cap - infantry))} step={10} ariaLabel="驻守骑兵" />
+            </Field>
+            <div className="flex justify-between text-xs">
+              <span className="text-muted">统帅占用</span>
+              <span className={`tabular ${infantry + cavalry > cap ? 'text-danger' : 'text-text'}`}>{infantry + cavalry} / {cap}</span>
+            </div>
+            <ProgressBar value={infantry + cavalry} max={Math.max(1, cap)} />
+            {!hasRoute && target && (
+              <div className="bg-panel2/60 rounded p-2 flex items-center justify-between">
+                <span className="text-xs text-muted">无直达路线，使用神行符远征（需 {talismanNeed} 张）</span>
+                <input type="checkbox" checked={useTalisman} onChange={(e) => setUseTalisman(e.target.checked)} className="accent-[#d4a94e] w-4 h-4" />
+              </div>
+            )}
+            <div className="flex justify-between text-xs">
+              <span className="text-muted">行军时间</span>
+              <span className="text-text tabular">{routeTime > 0 ? fmtDur(routeTime * 1000) : '—'}</span>
+            </div>
+            {expected && infantry + cavalry > 0 && (
+              <div className="bg-panel2/70 rounded p-2 space-y-1 text-xs">
+                <div className="flex justify-between"><span className="text-muted">预计进攻战力</span><span className="text-gold tabular">{fmt(expected.attackerPower)}</span></div>
+                <div className="flex justify-between"><span className="text-muted">敌方防守战力</span><span className="text-danger tabular">{fmt(expected.defenderPower)}</span></div>
+                <div className="flex justify-between"><span className="text-muted">预计胜率（估算）</span><span className="text-gold2 tabular">{fmtPct(expected.winProbability)}</span></div>
+              </div>
+            )}
+            {talismanShort && <div className="text-danger text-xs">神行符不足：需要 {talismanNeed} 张，持有 {fmt(display.tech.talismans ?? 0)}</div>}
+            {!canSubmit && !busy && (
+              <div className="text-xs text-muted">
+                {!target ? '请选择目标城市' : infantry + cavalry <= 0 ? '请填写兵力' : infantry > city.infantry || cavalry > city.cavalry ? '兵力超出驻军' : infantry + cavalry > cap ? '超出统帅上限' : talismanShort ? '神行符不足' : '尚不满足出征条件'}
+              </div>
+            )}
+            <Btn variant="orange" disabled={!canSubmit} onClick={submit} className="w-full py-2">
+              {busy ? '出征中…' : '确认出征'}
+            </Btn>
+          </>
+        ) : (
+          <div className="text-xs text-muted py-1">本城无驻守将领，无法率驻军出征。可在将领页指派将领驻守。</div>
+        )}
       </div>
     </Card>
   );
@@ -297,6 +446,7 @@ export default function CityPanel({ cityId }: { cityId: string }) {
             <div className="mt-1 text-xs text-muted">无驻军也不影响人口产出（MVP 暂无双城反攻）</div>
           </Card>
           <TransferForm originCityId={cityId} />
+          <GarrisonAttackForm cityId={cityId} />
         </>
       ) : enemy ? (
         <>

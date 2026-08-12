@@ -8,10 +8,16 @@ export class ApiError extends Error {
   }
 }
 
+const getCode = () => localStorage.getItem('timewar-code') ?? '';
+
 async function request<T>(path: string, body?: unknown): Promise<T> {
+  const headers: Record<string, string> = {};
+  if (body !== undefined) headers['content-type'] = 'application/json';
+  const code = getCode();
+  if (code) headers['x-auth-code'] = code;
   const res = await fetch(path, {
     method: body === undefined ? 'GET' : 'POST',
-    headers: body === undefined ? undefined : { 'content-type': 'application/json' },
+    headers,
     body: body === undefined ? undefined : JSON.stringify(body),
   });
   let json: unknown = null;
@@ -28,6 +34,12 @@ async function request<T>(path: string, body?: unknown): Promise<T> {
 }
 
 export const api = {
+  login: (code: string) =>
+    request<{ auth: { code: string; name: string; isAdmin: boolean } }>('/api/auth/login', { code }),
+  addCode: (code: string, name: string) =>
+    request<{ auth: { code: string; name: string; isAdmin: boolean } }>('/api/auth/add-code', { code, name }),
+  listCodes: () =>
+    request<{ codes: { code: string; name: string; isAdmin: boolean }[] }>('/api/auth/list'),
   state: () => request<{ state: GameState }>('/api/game/state'),
   newGame: () => request<{ state: GameState }>('/api/game/new', {}),
   reset: () => request<{ state: GameState }>('/api/game/reset', {}),
@@ -63,7 +75,16 @@ export const api = {
     infantry: number;
     cavalry: number;
     generalId?: string;
+    useTalisman?: boolean;
   }) => request<{ state: GameState }>('/api/armies/transfer', input),
+  garrisonAttack: (input: {
+    garrisonCityId: string;
+    generalId: string;
+    targetCityId: string;
+    infantry: number;
+    cavalry: number;
+    useTalisman?: boolean;
+  }) => request<{ state: GameState }>('/api/armies/garrison-attack', input),
   researchAllocate: (workers: number) =>
     request<{ state: GameState }>('/api/research/allocate', { workers }),
   techUpgrade: (key: string) => request<{ state: GameState }>('/api/tech/upgrade', { key }),

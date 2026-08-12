@@ -1,12 +1,15 @@
 import type { FastifyInstance, FastifyPluginAsync } from 'fastify';
 import {
+  addCodeSchema,
   allocateSchema,
   armyCancelSchema,
   armyCreateSchema,
   armyMarchSchema,
   armyTransferSchema,
   craftSchema,
+  garrisonAttackSchema,
   generalIdSchema,
+  loginSchema,
   researchSchema,
   techUpgradeSchema,
   trainingCancelSchema,
@@ -49,10 +52,36 @@ export function buildApi(service: GameService): FastifyPluginAsync {
       return reply.code(500).send({ code: 'INTERNAL_ERROR', message: '服务器内部错误' });
     });
 
+    // 授权码校验：除登录接口外，所有请求须携带有效授权码（Header: x-auth-code）
+    app.addHook('onRequest', (req, reply, done) => {
+      if (req.url === '/api/auth/login') return done();
+      const code = (req.headers['x-auth-code'] as string | undefined) ?? '';
+      const info = service.authInfo(code);
+      if (!info) {
+        reply.code(401).send({ code: 'AUTH_REQUIRED', message: '请先使用授权码登录' });
+        return done();
+      }
+      service.setCode(code);
+      done();
+    });
+
     const handle = (fn: () => unknown) => async () => {
       const result = await fn();
       return result;
     };
+
+    // 登录与授权码管理
+    app.post('/api/auth/login', async (req, _reply) => {
+      const body = loginSchema.parse(req.body);
+      return { auth: service.authLogin(body.code) };
+    });
+
+    app.post('/api/auth/add-code', async (req, _reply) => {
+      const body = addCodeSchema.parse(req.body);
+      return { auth: service.authAddCode(body.code, body.name) };
+    });
+
+    app.get('/api/auth/list', handle(() => ({ codes: service.authList() })));
 
     app.get('/api/game/state', handle(() => ({ state: service.state() })));
     app.get('/api/battles', handle(() => ({ reports: service.reports() })));
@@ -153,6 +182,21 @@ export function buildApi(service: GameService): FastifyPluginAsync {
           infantry: body.infantry,
           cavalry: body.cavalry,
           generalId: body.generalId,
+          useTalisman: body.useTalisman,
+        }),
+      };
+    });
+
+    app.post('/api/armies/garrison-attack', async (req, _reply) => {
+      const body = garrisonAttackSchema.parse(req.body);
+      return {
+        state: service.garrisonAttack({
+          garrisonCityId: body.garrisonCityId,
+          generalId: body.generalId,
+          targetCityId: body.targetCityId,
+          infantry: body.infantry,
+          cavalry: body.cavalry,
+          useTalisman: body.useTalisman,
         }),
       };
     });

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import ArmiesPage from './components/ArmiesPage';
+import AuthPage from './components/AuthPage';
 import CityPanel from './components/CityPanel';
 import CraftPage from './components/CraftPage';
 import EventLog from './components/EventLog';
@@ -34,6 +35,7 @@ export default function App() {
   const state = useGame((s) => s.state);
   const loading = useGame((s) => s.loading);
   const error = useGame((s) => s.error);
+  const authed = useGame((s) => s.authed);
   const view = useGame((s) => s.view);
   const selectedCityId = useGame((s) => s.selectedCityId);
   const init = useGame((s) => s.init);
@@ -58,6 +60,10 @@ export default function App() {
   useEffect(() => {
     setCitySheetOpen(false);
   }, [view]);
+
+  if (!authed) {
+    return <AuthPage />;
+  }
 
   if (loading) {
     return (

@@ -26,22 +26,49 @@ import {
 } from '../engine/index.js';
 import type { GameRepository } from '../repositories/gameRepository.js';
 import { fail } from './gameError.js';
+import { ADMIN_CODE } from '../db/database.js';
 
 const nowIso = (t?: number) => new Date(t ?? Date.now()).toISOString();
 
 export class GameService {
+  private code: string = ADMIN_CODE;
+
   constructor(
     private repo: GameRepository,
     private ctx: EngineContext,
     private clock: () => number = () => Date.now()
   ) {}
 
+  // 授权码上下文：同一请求内同步执行（无 await 交错），保存/恢复安全
+  withCode<T>(code: string, fn: () => T): T {
+    const prev = this.code;
+    this.code = code;
+    try {
+      return fn();
+    } finally {
+      this.code = prev;
+    }
+  }
+
+  setCode(code: string): void {
+    this.code = code;
+  }
+
+  authInfo(code: string): { code: string; name: string; isAdmin: boolean } | undefined {
+    const info = this.repo.authCode(code);
+    return info ? { code: info.code, name: info.name, isAdmin: info.isAdmin } : undefined;
+  }
+
+  get currentCode(): string {
+    return this.code;
+  }
+
   private nowMs(): number {
     return this.clock();
   }
 
   private loadAndAdvance(): GameState {
-    let state = this.repo.get();
+    let state = this.repo.get(this.code);
     if (!state) {
       state = createNewGame(this.ctx.balance, this.ctx.cities, this.ctx.rng, this.nowMs());
     } else if ((state.version ?? 1) < CURRENT_VERSION) {
@@ -53,7 +80,7 @@ export class GameService {
 
   private commit(state: GameState): GameState {
     state.updatedAt = nowIso(this.nowMs());
-    this.repo.save(state);
+    this.repo.save(state, this.code);
     return state;
   }
 
@@ -69,6 +96,29 @@ export class GameService {
     return c;
   }
 
+  // ---------- 授权码 ----------
+
+  authLogin(code: string): { code: string; name: string; isAdmin: boolean } {
+    const info = this.repo.authCode(code);
+    if (!info) fail('AUTH_INVALID', '授权码无效');
+    return { code: info.code, name: info.name, isAdmin: info.isAdmin };
+  }
+
+  authAddCode(code: string, name: string): { code: string; name: string; isAdmin: boolean } {
+    const current = this.repo.authCode(this.code);
+    if (!current?.isAdmin) fail('AUTH_FORBIDDEN', '仅管理员可新增授权码');
+    if (!/^[\w\u4e00-\u9fa5-]{2,32}$/.test(code)) {
+      fail('AUTH_CODE_FORMAT', '授权码需为 2~32 位字母/数字/中文/下划线/连字符');
+    }
+    if (this.repo.authCode(code)) fail('AUTH_CODE_EXISTS', '授权码已存在');
+    const info = this.repo.addAuthCode(code, name);
+    return { code: info.code, name: info.name, isAdmin: info.isAdmin };
+  }
+
+  authList(): { code: string; name: string; isAdmin: boolean }[] {
+    return this.repo.authCodes().map((c) => ({ code: c.code, name: c.name, isAdmin: c.isAdmin }));
+  }
+
   // ---------- 基础 ----------
 
   state(): GameState {
@@ -77,7 +127,7 @@ export class GameService {
 
   newGame(): GameState {
     const state = createNewGame(this.ctx.balance, this.ctx.cities, this.ctx.rng, this.nowMs());
-    this.repo.deleteAll();
+    this.repo.deleteAll(this.code);
     return this.commit(state);
   }
 
@@ -211,14 +261,14 @@ export class GameService {
   startGeneralTraining(generalId: string): GameState {
     const state = this.loadAndAdvance();
     const g = this.general(state, generalId);
-    if (g.status !== 'IDLE') {
-      fail('GENERAL_NOT_IDLE', '只有空闲将领可以开始训练', { status: g.status });
+    // 空闲或驻守将领均可开始训练；训练期间保留驻守地标记
+    if (g.status !== 'IDLE' && g.status !== 'GARRISON') {
+      fail('GENERAL_NOT_IDLE', '只有空闲或驻守中的将领可以开始训练', { status: g.status });
     }
     const now = this.nowMs();
     g.status = 'TRAINING';
     g.trainingStartedAt = nowIso(now);
     g.lastXpCalculatedAt = nowIso(now);
-    g.cityId = undefined;
     g.armyId = undefined;
     return this.commit(state);
   }
@@ -227,9 +277,12 @@ export class GameService {
     const state = this.loadAndAdvance();
     const g = this.general(state, generalId);
     if (g.status !== 'TRAINING') fail('GENERAL_NOT_TRAINING', '该将领不在训练中', { status: g.status });
-    g.status = 'IDLE';
+    // 若训练前驻守某城，停止后恢复驻守状态
+    const city = g.cityId ? state.cities.find((c) => c.cityId === g.cityId) : undefined;
+    g.status = city ? 'GARRISON' : 'IDLE';
     g.trainingStartedAt = undefined;
     g.lastXpCalculatedAt = undefined;
+    if (city && !city.generalId) city.generalId = g.id;
     return this.commit(state);
   }
 
@@ -313,10 +366,12 @@ export class GameService {
     const targetConfig = this.cityConfig(targetCityId);
 
     const isFriendly = state.cities.some((c) => c.cityId === targetCityId);
-    if (isFriendly && useTalisman) {
-      fail('TALISMAN_NOT_NEEDED', '目标为已方城市，无需使用神行符');
-    }
-    if (!isFriendly && !canAttack(this.ctx.cities, state, targetCityId) && !useTalisman) {
+    // 目标为己方：须有路线或用神行符；目标为敌方：须相邻或用神行符
+    if (isFriendly) {
+      if (!routeBetween(this.ctx.routes, army.originCityId, targetCityId) && !useTalisman) {
+        fail('NO_ROUTE', '出发城市与目标城市之间没有路线，可开启神行符增援', { targetCityId });
+      }
+    } else if (!canAttack(this.ctx.cities, state, targetCityId) && !useTalisman) {
       fail('NOT_ATTACKABLE', '目标城市不满足进攻条件（必须为相邻敌方城市或己方城市）', { targetCityId });
     }
 
@@ -326,7 +381,7 @@ export class GameService {
 
     if (useTalisman) {
       if (!isFriendly && !state.enemyCities.some((e) => e.cityId === targetCityId)) {
-        fail('TARGET_NOT_ENEMY', '神行符只能用于攻打敌方城市');
+        fail('TARGET_NOT_ENEMY', '目标城市不存在');
       }
       talismanCostUsed = talismanCost(
         this.ctx.balance,
@@ -381,6 +436,94 @@ export class GameService {
     }
   }
 
+  // 驻守将领从驻守地调兵攻打周边（兵力取自驻军）
+  garrisonAttack(input: {
+    garrisonCityId: string;
+    generalId: string;
+    targetCityId: string;
+    infantry: number;
+    cavalry: number;
+    useTalisman?: boolean;
+  }): GameState {
+    const state = this.loadAndAdvance();
+    const city = this.playerCity(state, input.garrisonCityId);
+    const g = this.general(state, input.generalId);
+    if (g.status !== 'GARRISON' || g.cityId !== input.garrisonCityId) {
+      fail('GENERAL_NOT_GARRISON', '该将领未驻守于此城市，无法率驻军出征', {
+        status: g.status,
+        cityId: g.cityId,
+      });
+    }
+    if (input.targetCityId === input.garrisonCityId) fail('INVALID_TARGET', '目标城市不能是驻守城市');
+    if (input.infantry + input.cavalry <= 0) fail('EMPTY_ARMY', '兵力必须大于 0');
+    if (input.infantry > city.infantry || input.cavalry > city.cavalry) {
+      fail('INSUFFICIENT_GARRISON', '驻军不足', {
+        need: { infantry: input.infantry, cavalry: input.cavalry },
+        have: { infantry: city.infantry, cavalry: city.cavalry },
+      });
+    }
+    const cap = commandCap(this.ctx.balance, g.level, state);
+    if (input.infantry + input.cavalry > cap) {
+      fail('COMMAND_LIMIT_EXCEEDED', `当前军团 ${input.infantry + input.cavalry} 人，将领统帅 ${cap} 人，超出 ${input.infantry + input.cavalry - cap} 人`);
+    }
+    if (!state.enemyCities.some((e) => e.cityId === input.targetCityId)) {
+      fail('TARGET_NOT_ENEMY', '目标必须是敌方城市');
+    }
+    const useTalisman = input.useTalisman ?? false;
+    if (!canAttack(this.ctx.cities, state, input.targetCityId) && !useTalisman) {
+      fail('NOT_ATTACKABLE', '目标城市不满足进攻条件（必须相邻或使用神行符）', { targetCityId: input.targetCityId });
+    }
+
+    const originConfig = this.cityConfig(input.garrisonCityId);
+    const targetConfig = this.cityConfig(input.targetCityId);
+    let noRouteKm: number | undefined;
+    if (useTalisman) {
+      const cost = talismanCost(this.ctx.balance, originConfig.provinceId, targetConfig.provinceId);
+      if ((state.tech.talismans ?? 0) < cost) {
+        fail('INSUFFICIENT_TALISMANS', `神行符不足：需要 ${cost} 张，当前持有 ${state.tech.talismans ?? 0}`);
+      }
+      state.tech.talismans -= cost;
+      if (!routeBetween(this.ctx.routes, input.garrisonCityId, input.targetCityId)) {
+        noRouteKm = haversineKm(originConfig, targetConfig);
+      }
+    } else if (!routeBetween(this.ctx.routes, input.garrisonCityId, input.targetCityId)) {
+      fail('NO_ROUTE', '出发城市与目标城市之间没有路线', { targetCityId: input.targetCityId });
+    }
+
+    city.infantry -= input.infantry;
+    city.cavalry -= input.cavalry;
+    city.generalId = undefined;
+
+    const speedMultiplier = techEffects(this.ctx.balance, state).marchSpeed;
+    const seconds = marchTimeSeconds(
+      this.ctx.balance,
+      this.ctx.routes,
+      input.garrisonCityId,
+      input.targetCityId,
+      input.infantry,
+      input.cavalry,
+      speedMultiplier,
+      noRouteKm
+    );
+    const now = this.nowMs();
+    const army = {
+      id: `a-${Date.now()}-${Math.floor(Math.random() * 1e6)}`,
+      generalId: g.id,
+      infantry: input.infantry,
+      cavalry: input.cavalry,
+      status: 'MARCHING' as const,
+      originCityId: input.garrisonCityId,
+      targetCityId: input.targetCityId,
+      departedAt: nowIso(now),
+      arrivesAt: nowIso(now + seconds * 1000),
+    };
+    state.armies.push(army);
+    g.status = 'MARCHING';
+    g.armyId = army.id;
+    g.cityId = undefined;
+    return this.commit(state);
+  }
+
   cancelMarch(armyId: string): GameState {
     const state = this.loadAndAdvance();
     const army = state.armies.find((a) => a.id === armyId);
@@ -410,14 +553,16 @@ export class GameService {
     infantry: number;
     cavalry: number;
     generalId?: string;
+    useTalisman?: boolean;
   }): GameState {
     const state = this.loadAndAdvance();
     this.playerCity(state, input.originCityId);
     this.playerCity(state, input.targetCityId);
     if (input.originCityId === input.targetCityId) fail('INVALID_TARGET', '目标城市不能是出发城市');
     if (input.infantry + input.cavalry <= 0) fail('EMPTY_ARMY', '调兵数量必须大于 0');
-    if (!routeBetween(this.ctx.routes, input.originCityId, input.targetCityId)) {
-      fail('NO_ROUTE', '两城之间没有路线', { targetCityId: input.targetCityId });
+    const useTalisman = input.useTalisman ?? false;
+    if (!routeBetween(this.ctx.routes, input.originCityId, input.targetCityId) && !useTalisman) {
+      fail('NO_ROUTE', '两城之间没有路线，可开启神行符增援', { targetCityId: input.targetCityId });
     }
     const origin = state.cities.find((c) => c.cityId === input.originCityId)!;
     if (input.infantry > origin.infantry || input.cavalry > origin.cavalry) {
@@ -439,6 +584,21 @@ export class GameService {
     origin.infantry -= input.infantry;
     origin.cavalry -= input.cavalry;
 
+    // 神行符增援：无直达路线时消耗神行符并兜底行军时间
+    let noRouteKm: number | undefined;
+    if (useTalisman && !routeBetween(this.ctx.routes, input.originCityId, input.targetCityId)) {
+      const cost = talismanCost(
+        this.ctx.balance,
+        this.cityConfig(input.originCityId).provinceId,
+        this.cityConfig(input.targetCityId).provinceId
+      );
+      if ((state.tech.talismans ?? 0) < cost) {
+        fail('INSUFFICIENT_TALISMANS', `神行符不足：需要 ${cost} 张，当前持有 ${state.tech.talismans ?? 0}`);
+      }
+      state.tech.talismans -= cost;
+      noRouteKm = haversineKm(this.cityConfig(input.originCityId), this.cityConfig(input.targetCityId));
+    }
+
     const speedMultiplier = techEffects(this.ctx.balance, state).marchSpeed;
     const seconds = marchTimeSeconds(
       this.ctx.balance,
@@ -447,7 +607,8 @@ export class GameService {
       input.targetCityId,
       input.infantry,
       input.cavalry,
-      speedMultiplier
+      speedMultiplier,
+      noRouteKm
     );
     const now = this.nowMs();
     const army = {

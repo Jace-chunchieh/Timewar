@@ -1,7 +1,11 @@
 import { expect, test } from 'playwright/test';
 
 async function resetGame() {
-  const res = await fetch('http://localhost:5215/api/game/reset', { method: 'POST', body: '{}', headers: { 'content-type': 'application/json' } });
+  const res = await fetch('http://localhost:5215/api/game/reset', {
+    method: 'POST',
+    body: '{}',
+    headers: { 'content-type': 'application/json', 'x-auth-code': 'ainiyiwannian' },
+  });
   expect(res.status).toBe(200);
 }
 
@@ -14,7 +18,16 @@ test.describe.configure({ mode: 'serial' });
 test('全国版完整流程：教程 → 两级地图 → 生产 → 训练 → 出征 → 占领 → A市升级 → 离线报告', async ({ page, request, browser }) => {
   await resetGame();
   await page.goto('/');
-  await page.waitForSelector('text=TIME WAR');
+
+  // ---- 授权码登录（管理员）----
+  await page.waitForSelector('text=授权码登录');
+  await page.locator('input[type="password"]').fill('ainiyiwannian');
+  await page.getByRole('button', { name: '进入游戏' }).click();
+
+  // ---- 欢迎弹窗（新档展示一次）----
+  await page.waitForSelector('text=开始游戏', { timeout: 30000 });
+  await page.getByRole('button', { name: '开始游戏' }).click();
+  await page.waitForSelector('text=新手引导 · 1/6', { timeout: 15000 });
 
   // ---- 全国层地图（标题可见）----
   await expect(page.locator('text=全国 · 点选省份进入')).toBeVisible();
@@ -82,7 +95,7 @@ test('全国版完整流程：教程 → 两级地图 → 生产 → 训练 → 
   let captured = false;
   for (let i = 0; i < 90; i++) {
     await page.waitForTimeout(10_000);
-    const res = await request.get('/api/game/state');
+    const res = await request.get('/api/game/state', { headers: { 'x-auth-code': 'ainiyiwannian' } });
     const s = await res.json();
     if (s.state.cities.length >= 2) {
       captured = true;
@@ -114,7 +127,7 @@ test('全国版完整流程：教程 → 两级地图 → 生产 → 训练 → 
   db.close();
 
   // 1) API 层验证离线报告已生成
-  const offRes = await request.get('/api/game/state');
+  const offRes = await request.get('/api/game/state', { headers: { 'x-auth-code': 'ainiyiwannian' } });
   const offState = (await offRes.json()).state;
   expect(offState.offlineReport).toBeTruthy();
   expect(offState.offlineReport.offlineMs).toBeGreaterThan(60_000);
@@ -125,6 +138,10 @@ test('全国版完整流程：教程 → 两级地图 → 生产 → 训练 → 
   try {
     const page2 = await browser2.newPage();
     await page2.goto('/');
+    // 新上下文需重新授权码登录
+    await page2.waitForSelector('text=授权码登录');
+    await page2.locator('input[type="password"]').fill('ainiyiwannian');
+    await page2.getByRole('button', { name: '进入游戏' }).click();
     await expect(page2.locator('text=离线报告').first()).toBeVisible({ timeout: 15000 });
     await page2.locator('button', { hasText: '确认' }).click();
     await expect(page2.locator('text=离线报告')).toBeHidden();

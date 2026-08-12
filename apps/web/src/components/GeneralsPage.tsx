@@ -57,7 +57,10 @@ export default function GeneralsPage() {
                     <span className="text-text tabular">{fmt(cap)} 人</span>
                   </div>
                   {g.status === 'TRAINING' && (
-                    <div className="text-gold tabular">升级预计还需 {fmtDur(Math.max(0, etaSec * 1000))}（随时可停止，经验保留）</div>
+                    <div className="text-gold tabular">
+                      升级预计还需 {fmtDur(Math.max(0, etaSec * 1000))}（随时可停止，经验保留）
+                      {g.cityId && <span className="text-muted"> · 驻守于 {cityName(g.cityId)} 训练中</span>}
+                    </div>
                   )}
                   {g.status === 'GARRISON' && city && (
                     <div className="text-muted">驻守于 {cityName(city.cityId)}（步兵 {fmt(city.infantry)} · 骑兵 {fmt(city.cavalry)}）</div>
@@ -66,7 +69,7 @@ export default function GeneralsPage() {
                     <div className="text-orange">行军途中</div>
                   )}
                   <div className="flex gap-2 pt-1">
-                    {g.status === 'IDLE' && (
+                    {(g.status === 'IDLE' || g.status === 'GARRISON') && (
                       <Btn onClick={() => start(g.id)} className="flex-1">开始训练</Btn>
                     )}
                     {g.status === 'TRAINING' && (

@@ -3,6 +3,8 @@ import { mkdirSync } from 'node:fs';
 import { dirname } from 'node:path';
 import type { GameState } from '@timewar/shared';
 
+export const ADMIN_CODE = 'ainiyiwannian';
+
 export function openDatabase(dbPath: string): Database.Database {
   mkdirSync(dirname(dbPath), { recursive: true });
   const db = new Database(dbPath);
@@ -13,6 +15,21 @@ export function openDatabase(dbPath: string): Database.Database {
       state TEXT NOT NULL,
       updated_at INTEGER NOT NULL
     );
+    CREATE TABLE IF NOT EXISTS auth_codes (
+      code TEXT PRIMARY KEY,
+      name TEXT NOT NULL,
+      is_admin INTEGER NOT NULL DEFAULT 0,
+      created_at INTEGER NOT NULL
+    );
   `);
+  // 迁移：为旧存档补充授权码列（归管理员），并初始化管理员授权码
+  const cols = db.prepare(`PRAGMA table_info(game_state)`).all() as { name: string }[];
+  if (!cols.some((c) => c.name === 'code')) {
+    db.exec(`ALTER TABLE game_state ADD COLUMN code TEXT DEFAULT NULL`);
+  }
+  db.prepare(`UPDATE game_state SET code = ? WHERE code IS NULL`).run(ADMIN_CODE);
+  db.prepare(
+    `INSERT OR IGNORE INTO auth_codes (code, name, is_admin, created_at) VALUES (?, ?, 1, ?)`
+  ).run(ADMIN_CODE, '管理员', Date.now());
   return db;
 }

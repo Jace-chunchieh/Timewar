@@ -39,12 +39,66 @@ afterEach(async () => {
   rmSync(dir, { recursive: true, force: true });
 });
 
+const AUTH = { 'x-auth-code': 'ainiyiwannian' };
 const post = (url: string, body?: unknown) =>
-  app.inject({ method: 'POST', url, payload: body ?? {}, headers: { 'content-type': 'application/json' } });
-const get = (url: string) => app.inject({ method: 'GET', url });
+  app.inject({ method: 'POST', url, payload: body ?? {}, headers: { 'content-type': 'application/json', ...AUTH } });
+const get = (url: string) => app.inject({ method: 'GET', url, headers: AUTH });
 const stateOf = (res: { json: () => { state: GameState } }) => res.json().state;
 
 describe('API 集成（后端权威）', () => {
+  it('授权码登录：未登录 401、正确登录返回管理员、错误码拒绝', async () => {
+    // 无授权码 → 401
+    const noAuth = await app.inject({ method: 'GET', url: '/api/game/state' });
+    expect(noAuth.statusCode).toBe(401);
+    expect(noAuth.json().code).toBe('AUTH_REQUIRED');
+    // 错误授权码 → 401
+    const bad = await app.inject({ method: 'GET', url: '/api/game/state', headers: { 'x-auth-code': 'wrong' } });
+    expect(bad.statusCode).toBe(401);
+    // 登录接口放行
+    const login = await app.inject({
+      method: 'POST',
+      url: '/api/auth/login',
+      payload: { code: 'ainiyiwannian' },
+      headers: { 'content-type': 'application/json' },
+    });
+    expect(login.statusCode).toBe(200);
+    expect(login.json().auth.isAdmin).toBe(true);
+  });
+
+  it('管理员可新增授权码，非管理员被拒绝；新授权码拥有独立存档', async () => {
+    // 管理员新增
+    const add = await post('/api/auth/add-code', { code: 'player01', name: '玩家一' });
+    expect(add.statusCode).toBe(200);
+    expect(add.json().auth.code).toBe('player01');
+    // 重复 → 拒绝
+    const dup = await post('/api/auth/add-code', { code: 'player01', name: 'x' });
+    expect(dup.statusCode).toBe(400);
+    expect(dup.json().code).toBe('AUTH_CODE_EXISTS');
+    // 非管理员（player01）新增 → 拒绝
+    const p1Add = await app.inject({
+      method: 'POST',
+      url: '/api/auth/add-code',
+      payload: { code: 'player02', name: 'x' },
+      headers: { 'content-type': 'application/json', 'x-auth-code': 'player01' },
+    });
+    expect(p1Add.statusCode).toBe(400);
+    expect(p1Add.json().code).toBe('AUTH_FORBIDDEN');
+    // 管理员存档：占领清远
+    await post('/api/armies/create', {
+      originCityId: 'acity',
+      generalId: stateOf(await get('/api/game/state')).generals[0].id,
+      infantry: 200,
+      cavalry: 0,
+      targetCityId: 'qingyuan',
+    });
+    const s = stateOf(await get('/api/game/state'));
+    // 玩家一存档独立：仍是初始状态
+    const p1 = await app.inject({ method: 'GET', url: '/api/game/state', headers: { 'x-auth-code': 'player01' } });
+    const p1s = p1.json().state as GameState;
+    expect(p1s.cities).toHaveLength(1);
+    expect(p1s.cities[0].cityId).toBe('acity');
+    expect(p1s.id).not.toBe(s.id);
+  });
   it('新建游戏：初始城 A市(1级)、广州为5级敌城、清远守军100、初始将领', async () => {
     const res = await post('/api/game/new');
     expect(res.statusCode).toBe(200);
@@ -210,6 +264,120 @@ describe('API 集成（后端权威）', () => {
     expect(bad.statusCode).toBe(400);
     expect(bad.json().code).toBe('GENERAL_NOT_IDLE');
     await post('/api/generals/stop-training', { generalId: gid });
+  });
+
+  it('驻守将领可训练：占领清远后驻守将领训练，停止后恢复驻守', async () => {
+    await post('/api/game/new');
+    const gid = stateOf(await get('/api/game/state')).generals[0].id;
+    await post('/api/armies/create', {
+      originCityId: 'acity',
+      generalId: gid,
+      infantry: 200,
+      cavalry: 0,
+      targetCityId: 'qingyuan',
+    });
+    let s = stateOf(await get('/api/game/state'));
+    now = Date.parse(s.armies[0].arrivesAt!) + 1000;
+    s = stateOf(await get('/api/game/state'));
+    const qy = s.cities.find((c) => c.cityId === 'qingyuan')!;
+    expect(qy.generalId).toBe(gid);
+    // 驻守将领开始训练（允许）
+    const tr = await post('/api/generals/start-training', { generalId: gid });
+    expect(tr.statusCode).toBe(200);
+    s = stateOf(tr);
+    expect(s.generals[0].status).toBe('TRAINING');
+    expect(s.generals[0].cityId).toBe('qingyuan'); // 驻守地保留
+    expect(s.cities.find((c) => c.cityId === 'qingyuan')!.generalId).toBe(gid);
+    // 停止训练后恢复驻守
+    const st = await post('/api/generals/stop-training', { generalId: gid });
+    s = stateOf(st);
+    expect(s.generals[0].status).toBe('GARRISON');
+    expect(s.generals[0].cityId).toBe('qingyuan');
+  });
+
+  it('神行符：攻打任意城市 + 己方城市无路线增援', async () => {
+    await post('/api/game/new');
+    const gid = stateOf(await get('/api/game/state')).generals[0].id;
+    // 注入神行符 + 第二座己方城市（阳江，与清远无直达路线）
+    const row = db.prepare('SELECT state FROM game_state LIMIT 1').get() as { state: string };
+    const injected = JSON.parse(row.state) as GameState;
+    injected.tech.talismans = 10;
+    injected.cities.push({ cityId: 'yangjiang', occupiedAt: new Date().toISOString(), level: 2, infantry: 0, cavalry: 0 });
+    injected.enemyCities = injected.enemyCities.filter((e) => e.cityId !== 'yangjiang');
+    db.prepare('UPDATE game_state SET state = ?').run(JSON.stringify(injected));
+    // 占领清远获得驻军
+    await post('/api/armies/create', {
+      originCityId: 'acity',
+      generalId: gid,
+      infantry: 200,
+      cavalry: 0,
+      targetCityId: 'qingyuan',
+    });
+    let s = stateOf(await get('/api/game/state'));
+    now = Date.parse(s.armies[0].arrivesAt!) + 1000;
+    s = stateOf(await get('/api/game/state'));
+    // 无神行符时 transfer 到无路线己方城市 → 拒绝
+    const noT = await post('/api/armies/transfer', {
+      originCityId: 'qingyuan',
+      targetCityId: 'yangjiang',
+      infantry: 10,
+      cavalry: 0,
+    });
+    expect(noT.statusCode).toBe(400);
+    expect(noT.json().code).toBe('NO_ROUTE');
+    // 使用神行符 → 成功（同省 1 张）
+    const ok = await post('/api/armies/transfer', {
+      originCityId: 'qingyuan',
+      targetCityId: 'yangjiang',
+      infantry: 10,
+      cavalry: 0,
+      useTalisman: true,
+    });
+    expect(ok.statusCode).toBe(200);
+    s = stateOf(ok);
+    expect(s.armies[0].status).toBe('MARCHING');
+    expect(s.tech.talismans).toBe(9);
+  });
+
+  it('驻守出征：驻守将领从驻守地调兵攻打周边', async () => {
+    await post('/api/game/new');
+    const gid = stateOf(await get('/api/game/state')).generals[0].id;
+    await post('/api/armies/create', {
+      originCityId: 'acity',
+      generalId: gid,
+      infantry: 200,
+      cavalry: 0,
+      targetCityId: 'qingyuan',
+    });
+    let s = stateOf(await get('/api/game/state'));
+    now = Date.parse(s.armies[0].arrivesAt!) + 1000;
+    s = stateOf(await get('/api/game/state'));
+    const qy = s.cities.find((c) => c.cityId === 'qingyuan')!;
+    expect(qy.infantry).toBeGreaterThan(0);
+    // 驻守出征：清远驻军攻打相邻的阳山？——清远邻接 acity 等，选 zhaoqing（清远邻接肇庆）
+    const attack = await post('/api/armies/garrison-attack', {
+      garrisonCityId: 'qingyuan',
+      generalId: gid,
+      targetCityId: 'zhaoqing',
+      infantry: qy.infantry,
+      cavalry: 0,
+    });
+    expect(attack.statusCode).toBe(200);
+    s = stateOf(attack);
+    expect(s.armies[0].status).toBe('MARCHING');
+    expect(s.armies[0].originCityId).toBe('qingyuan');
+    expect(s.cities.find((c) => c.cityId === 'qingyuan')!.infantry).toBe(0);
+    expect(s.generals[0].status).toBe('MARCHING');
+    // 将领非驻守时拒绝
+    const bad = await post('/api/armies/garrison-attack', {
+      garrisonCityId: 'qingyuan',
+      generalId: gid,
+      targetCityId: 'zhaoqing',
+      infantry: 1,
+      cavalry: 0,
+    });
+    expect(bad.statusCode).toBe(400);
+    expect(bad.json().code).toBe('GENERAL_NOT_GARRISON');
   });
 
   it('统帅上限：超出200人禁止创建军团', async () => {

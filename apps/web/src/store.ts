@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import type { GameState } from '@timewar/shared';
-import { api } from './api';
+import { api, ApiError } from './api';
 import { balance, cityName } from './lib/game';
 
 export type View =
@@ -42,6 +42,9 @@ interface StoreState {
   state: GameState | null;
   loading: boolean;
   error: string | null;
+  authed: boolean;
+  authName: string | null;
+  isAdmin: boolean;
   view: View;
   selectedCityId: string | null;
   mapLevel: 'national' | 'province';
@@ -53,6 +56,8 @@ interface StoreState {
   init: () => Promise<void>;
   refresh: () => Promise<void>;
   mutate: (fn: () => Promise<unknown>) => Promise<boolean>;
+  login: (code: string) => Promise<boolean>;
+  logout: () => void;
   setView: (v: View) => void;
   selectCity: (id: string | null) => void;
   enterProvince: (provinceId: string | null) => void;
@@ -66,6 +71,9 @@ export const useGame = create<StoreState>((set, get) => ({
   state: null,
   loading: true,
   error: null,
+  authed: !!localStorage.getItem('timewar-code'),
+  authName: null,
+  isAdmin: false,
   view: 'map',
   selectedCityId: null,
   mapLevel: 'national',
@@ -76,12 +84,24 @@ export const useGame = create<StoreState>((set, get) => ({
   lastSnapshot: null,
 
   init: async () => {
+    if (!localStorage.getItem('timewar-code')) {
+      set({ loading: false, authed: false });
+      return;
+    }
     try {
+      // 刷新后恢复授权信息（登录接口放行，可校验 code 有效性）
+      const { auth } = await api.login(localStorage.getItem('timewar-code')!);
+      set({ authed: true, authName: auth.name, isAdmin: auth.isAdmin });
       const { state } = await api.state();
       set({ state, loading: false });
       get().refresh();
     } catch (e) {
-      set({ loading: false, error: (e as Error).message });
+      if ((e as ApiError).code === 'AUTH_REQUIRED' || (e as ApiError).code === 'AUTH_INVALID') {
+        localStorage.removeItem('timewar-code');
+        set({ loading: false, authed: false });
+      } else {
+        set({ loading: false, error: (e as Error).message });
+      }
     }
   },
 
@@ -179,6 +199,11 @@ export const useGame = create<StoreState>((set, get) => ({
         error: null,
       }));
     } catch (e) {
+      if ((e as ApiError).code === 'AUTH_REQUIRED') {
+        localStorage.removeItem('timewar-code');
+        set({ authed: false, state: null });
+        return;
+      }
       const msg = (e as Error).message;
       set({ error: msg });
       setTimeout(() => set({ error: null }), 4000);
@@ -191,11 +216,36 @@ export const useGame = create<StoreState>((set, get) => ({
       await get().refresh();
       return true;
     } catch (e) {
+      if ((e as ApiError).code === 'AUTH_REQUIRED') {
+        localStorage.removeItem('timewar-code');
+        set({ authed: false, state: null });
+        return false;
+      }
       const msg = (e as Error).message;
       set({ error: msg });
       setTimeout(() => set({ error: null }), 4000);
       return false;
     }
+  },
+
+  login: async (code) => {
+    try {
+      const { auth } = await api.login(code);
+      localStorage.setItem('timewar-code', auth.code);
+      set({ authed: true, authName: auth.name, isAdmin: auth.isAdmin, error: null });
+      await get().init();
+      return true;
+    } catch (e) {
+      const msg = (e as Error).message;
+      set({ error: msg });
+      setTimeout(() => set({ error: null }), 4000);
+      return false;
+    }
+  },
+
+  logout: () => {
+    localStorage.removeItem('timewar-code');
+    set({ authed: false, state: null, authName: null, isAdmin: false });
   },
 
   setView: (v) => set({ view: v }),

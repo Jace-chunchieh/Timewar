@@ -7,13 +7,36 @@ import { Btn, Card } from './ui';
 export default function SettingsPage() {
   const mutate = useGame((s) => s.mutate);
   const refresh = useGame((s) => s.refresh);
+  const isAdmin = useGame((s) => s.isAdmin);
+  const authName = useGame((s) => s.authName);
+  const logout = useGame((s) => s.logout);
   const [confirming, setConfirming] = useState(false);
+  const [newCode, setNewCode] = useState('');
+  const [newName, setNewName] = useState('');
+  const [codes, setCodes] = useState<{ code: string; name: string; isAdmin: boolean }[] | null>(null);
+  const [msg, setMsg] = useState<string | null>(null);
 
   const reset = async () => {
     await mutate(() => api.reset());
     setConfirming(false);
     localStorage.removeItem('timewar-offline-seen');
     window.location.reload();
+  };
+
+  const addCode = async () => {
+    setMsg(null);
+    const ok = await mutate(() => api.addCode(newCode.trim(), newName.trim() || newCode.trim()));
+    if (ok) {
+      setNewCode('');
+      setNewName('');
+      setMsg('授权码已创建');
+      setTimeout(() => setMsg(null), 3000);
+    }
+  };
+
+  const loadCodes = async () => {
+    const { codes } = await api.listCodes();
+    setCodes(codes);
   };
 
   return (
@@ -36,8 +59,55 @@ export default function SettingsPage() {
           </div>
         </Card>
 
+        <Card title="账号">
+          <div className="text-xs text-muted mb-2">
+            当前授权码：<span className="text-gold tabular">{localStorage.getItem('timewar-code')}</span>
+            {authName ? `（${authName}${isAdmin ? ' · 管理员' : ''}）` : ''}
+          </div>
+          <div className="flex gap-2">
+            <Btn variant="ghost" onClick={logout}>退出登录</Btn>
+          </div>
+        </Card>
+
+        {isAdmin && (
+          <Card title="授权码管理（管理员）">
+            <div className="space-y-2.5">
+              <div className="grid grid-cols-2 gap-2">
+                <input
+                  value={newCode}
+                  onChange={(e) => setNewCode(e.target.value)}
+                  placeholder="新授权码"
+                  className="h-9 px-2 rounded bg-bg border border-line text-text text-sm outline-none focus:border-gold/70"
+                />
+                <input
+                  value={newName}
+                  onChange={(e) => setNewName(e.target.value)}
+                  placeholder="备注名（可选）"
+                  className="h-9 px-2 rounded bg-bg border border-line text-text text-sm outline-none focus:border-gold/70"
+                />
+              </div>
+              <div className="flex gap-2 items-center">
+                <Btn onClick={addCode} disabled={!newCode.trim()}>新增授权码</Btn>
+                <Btn variant="ghost" onClick={loadCodes}>查看列表</Btn>
+                {msg && <span className="text-gold text-xs">{msg}</span>}
+              </div>
+              {codes && (
+                <div className="bg-panel2/50 rounded p-2 space-y-1 text-xs max-h-48 overflow-y-auto">
+                  {codes.map((c) => (
+                    <div key={c.code} className="flex justify-between">
+                      <span className="text-text tabular">{c.code}</span>
+                      <span className="text-muted">{c.name}{c.isAdmin ? '（管理员）' : ''}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+              <div className="text-[11px] text-muted">每位授权码拥有独立存档，互不影响。</div>
+            </div>
+          </Card>
+        )}
+
         <Card title="存档">
-          <div className="text-xs text-muted mb-2">游戏自动保存至服务端 SQLite（apps/server/data/game.db）。重置后将清除全部进度并开始新游戏。</div>
+          <div className="text-xs text-muted mb-2">游戏自动保存至服务端 SQLite（当前授权码独立存档）。重置将清除本授权码的全部进度并开始新游戏。</div>
           <div className="flex gap-2">
             <Btn variant="ghost" onClick={() => refresh()}>立即保存</Btn>
             {!confirming ? (

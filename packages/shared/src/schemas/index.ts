@@ -53,10 +53,29 @@ export const armyTransferSchema = z.object({
   infantry: nonNegativeInt,
   cavalry: nonNegativeInt,
   generalId: z.string().min(1).optional(),
+  useTalisman: z.boolean().optional(),
+});
+
+export const garrisonAttackSchema = z.object({
+  garrisonCityId: z.string().min(1),
+  generalId: z.string().min(1),
+  targetCityId: z.string().min(1),
+  infantry: nonNegativeInt,
+  cavalry: nonNegativeInt,
+  useTalisman: z.boolean().optional(),
 });
 
 export const tutorialStepSchema = z.object({
   step: z.number().int().min(0).max(6),
+});
+
+export const loginSchema = z.object({
+  code: z.string().min(1).max(64),
+});
+
+export const addCodeSchema = z.object({
+  code: z.string().min(2).max(32),
+  name: z.string().min(1).max(32),
 });
 
 export const researchSchema = z.object({

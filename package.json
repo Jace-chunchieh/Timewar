@@ -1,6 +1,6 @@
 {
   "name": "time-war",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "private": true,
   "description": "现实时间人口战争游戏 MVP（广东/广西/海南，44城市）",
   "type": "module",
