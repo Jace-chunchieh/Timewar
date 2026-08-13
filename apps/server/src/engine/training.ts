@@ -48,6 +48,7 @@ export function completeTrainingBatches(
         level: 1,
         xp: 0,
         status: 'IDLE',
+        talents: [],
       });
     }
   }

@@ -74,7 +74,8 @@ test('全国版完整流程：教程 → 两级地图 → 生产 → 训练 → 
   await page.getByRole('button', { name: '军团' }).click();
   await expect(page.locator('text=组建军团并出征')).toBeVisible();
   await setNumberInput(page, '军团步兵', 200);
-  await page.locator('label', { hasText: '将领' }).first().locator('select').selectOption({ index: 1 });
+  // 多将领选择：点选第一名将领
+  await page.locator('button:has-text("统帅")').first().click();
   await page.locator('label', { hasText: '目标城市' }).first().locator('select').selectOption('qingyuan');
   await expect(page.locator('text=预计胜率')).toBeVisible();
   await page.getByRole('button', { name: '确认出征' }).click();

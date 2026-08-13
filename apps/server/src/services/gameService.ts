@@ -8,6 +8,9 @@ import type {
 } from '@timewar/shared';
 import {
   advanceGameState,
+  armyCommandCap,
+  armyGeneralIds,
+  armySpeedCoefficient,
   canAttack,
   commandCap,
   craftSoldiers,
@@ -302,7 +305,10 @@ export class GameService {
 
   createArmy(input: {
     originCityId: string;
-    generalId: string;
+    generalId?: string;
+    generalIds?: string[];
+    name?: string;
+    strategy?: string;
     infantry: number;
     cavalry: number;
     targetCityId?: string;
@@ -310,16 +316,36 @@ export class GameService {
   }): GameState {
     const state = this.loadAndAdvance();
     this.playerCity(state, input.originCityId);
-    const g = this.general(state, input.generalId);
-    if (g.status !== 'IDLE') {
-      fail('GENERAL_NOT_IDLE', '只有空闲将领可以组建军团', { status: g.status });
+    // 将领列表：generalIds 优先（主将为第一个），兼容旧参数 generalId
+    let generalIds: string[] = [];
+    if (input.generalIds && input.generalIds.length > 0) {
+      generalIds = input.generalIds;
+    } else if (input.generalId) {
+      generalIds = [input.generalId];
+    }
+    const isFriendlyTarget = input.targetCityId
+      ? state.cities.some((c) => c.cityId === input.targetCityId)
+      : false;
+
+    // 攻城（敌方目标）必须有将领；增援（己方目标）可无将领
+    if (!isFriendlyTarget && input.targetCityId && generalIds.length === 0) {
+      fail('GENERAL_REQUIRED_FOR_ATTACK', '攻城必须由将领统率，请选择将领');
+    }
+    if (generalIds.length > this.ctx.balance.maxGeneralsPerArmy) {
+      fail('TOO_MANY_GENERALS', `一个军团最多编入 ${this.ctx.balance.maxGeneralsPerArmy} 名将领`);
+    }
+    const generals = generalIds.map((id) => this.general(state, id));
+    for (const g of generals) {
+      if (g.status !== 'IDLE') {
+        fail('GENERAL_NOT_IDLE', '只有空闲将领可以组建军团', { status: g.status, name: g.name });
+      }
     }
     const pool = troopPool(state);
     if (input.infantry + input.cavalry <= 0) fail('EMPTY_ARMY', '军团人数必须大于 0');
-    const cap = commandCap(this.ctx.balance, g.level, state);
+    const cap = armyCommandCap(this.ctx.balance, state, generalIds);
     const used = input.infantry + input.cavalry;
     if (used > cap) {
-      fail('COMMAND_LIMIT_EXCEEDED', `当前军团 ${used} 人，将领统帅 ${cap} 人，超出 ${used - cap} 人`, {
+      fail('COMMAND_LIMIT_EXCEEDED', `当前军团 ${used} 人，将领合计统帅 ${cap} 人，超出 ${used - cap} 人`, {
         used,
         cap,
         over: used - cap,
@@ -331,16 +357,22 @@ export class GameService {
         pool,
       });
     }
+    const name = (input.name ?? '').trim().slice(0, this.ctx.balance.maxArmyNameLength);
     const army = {
       id: `a-${Date.now()}-${Math.floor(Math.random() * 1e6)}`,
-      generalId: g.id,
+      generalId: generals[0]?.id,
+      generalIds,
+      name: name || undefined,
+      strategy: (input.strategy as 'NORMAL' | 'DEFENSIVE' | 'CHARGE') ?? 'NORMAL',
       infantry: input.infantry,
       cavalry: input.cavalry,
       status: 'IDLE' as const,
       originCityId: input.originCityId,
     };
     state.armies.push(army);
-    g.armyId = army.id;
+    for (const g of generals) {
+      g.armyId = army.id;
+    }
     if (input.targetCityId) {
       this.doMarch(state, army.id, input.targetCityId, input.useTalisman ?? false);
     }
@@ -402,18 +434,21 @@ export class GameService {
       fail('NO_ROUTE', '出发城市与目标城市之间没有路线', { targetCityId });
     }
 
-    const general = state.generals.find((g) => g.id === army.generalId);
-    if (general && general.status !== 'IDLE') {
-      fail('GENERAL_NOT_IDLE', '将领当前状态不可出征', { status: general.status });
-    }
-    if (general) {
-      const cap = commandCap(this.ctx.balance, general.level, state);
-      if (army.infantry + army.cavalry > cap) {
-        fail('COMMAND_LIMIT_EXCEEDED', `当前军团 ${army.infantry + army.cavalry} 人，将领统帅 ${cap} 人，超出 ${army.infantry + army.cavalry - cap} 人`);
+    const generalIds = armyGeneralIds(state, army);
+    for (const id of generalIds) {
+      const general = state.generals.find((g) => g.id === id);
+      if (general && general.status !== 'IDLE') {
+        fail('GENERAL_NOT_IDLE', '将领当前状态不可出征', { status: general.status });
       }
     }
+    const cap = armyCommandCap(this.ctx.balance, state, generalIds);
+    if (army.infantry + army.cavalry > cap) {
+      fail('COMMAND_LIMIT_EXCEEDED', `当前军团 ${army.infantry + army.cavalry} 人，将领合计统帅 ${cap} 人，超出 ${army.infantry + army.cavalry - cap} 人`);
+    }
 
-    const speedMultiplier = techEffects(this.ctx.balance, state).marchSpeed;
+    const speedMultiplier =
+      techEffects(this.ctx.balance, state).marchSpeed *
+      (1 + (state.capitalCityId === army.originCityId ? this.ctx.balance.capitalMarchSpeedBonus : 0));
     const seconds = marchTimeSeconds(
       this.ctx.balance,
       this.ctx.routes,
@@ -429,10 +464,13 @@ export class GameService {
     army.targetCityId = targetCityId;
     army.departedAt = nowIso(now);
     army.arrivesAt = nowIso(now + seconds * 1000);
-    if (general) {
-      general.status = 'MARCHING';
-      general.cityId = undefined;
-      general.armyId = army.id;
+    for (const id of generalIds) {
+      const general = state.generals.find((g) => g.id === id);
+      if (general) {
+        general.status = 'MARCHING';
+        general.cityId = undefined;
+        general.armyId = army.id;
+      }
     }
   }
 
@@ -535,14 +573,92 @@ export class GameService {
         elapsedSeconds: Math.round(elapsed / 1000),
       });
     }
-    const general = state.generals.find((g) => g.id === army.generalId);
+    const generalIds = armyGeneralIds(state, army);
     army.status = 'IDLE';
     army.targetCityId = undefined;
     army.departedAt = undefined;
     army.arrivesAt = undefined;
-    if (general) {
-      general.status = 'IDLE';
-      general.armyId = army.id;
+    for (const id of generalIds) {
+      const general = state.generals.find((g) => g.id === id);
+      if (general) {
+        general.status = 'IDLE';
+        general.armyId = army.id;
+      }
+    }
+    return this.commit(state);
+  }
+
+  // 首都迁移：迁都后首都人口 ×1.5、从首都出发行军 +5%
+  moveCapital(cityId: string): GameState {
+    const state = this.loadAndAdvance();
+    this.playerCity(state, cityId);
+    state.capitalCityId = cityId;
+    return this.commit(state);
+  }
+
+  // 攻打蛮族营地（无接壤要求，行军 = 大圆距离，不耗神行符；攻城仍需将领）
+  barbarianAttack(input: {
+    campId: string;
+    generalIds: string[];
+    name?: string;
+    strategy?: string;
+    infantry: number;
+    cavalry: number;
+  }): GameState {
+    const state = this.loadAndAdvance();
+    const camp = state.barbarianCamps.find((c) => c.id === input.campId);
+    if (!camp) fail('CAMP_NOT_FOUND', '蛮族营地不存在');
+    if (input.generalIds.length === 0) {
+      fail('GENERAL_REQUIRED_FOR_ATTACK', '攻打营地必须由将领统率');
+    }
+    if (input.generalIds.length > this.ctx.balance.maxGeneralsPerArmy) {
+      fail('TOO_MANY_GENERALS', `一个军团最多编入 ${this.ctx.balance.maxGeneralsPerArmy} 名将领`);
+    }
+    const generals = input.generalIds.map((id) => this.general(state, id));
+    for (const g of generals) {
+      if (g.status !== 'IDLE') fail('GENERAL_NOT_IDLE', '只有空闲将领可以出征', { status: g.status });
+    }
+    const pool = troopPool(state);
+    if (input.infantry + input.cavalry <= 0) fail('EMPTY_ARMY', '兵力必须大于 0');
+    const cap = armyCommandCap(this.ctx.balance, state, input.generalIds);
+    if (input.infantry + input.cavalry > cap) {
+      fail('COMMAND_LIMIT_EXCEEDED', `当前军团 ${input.infantry + input.cavalry} 人，将领合计统帅 ${cap} 人，超出 ${input.infantry + input.cavalry - cap} 人`);
+    }
+    if (input.infantry > pool.infantry || input.cavalry > pool.cavalry) {
+      fail('INSUFFICIENT_TROOPS', '可用士兵不足');
+    }
+    // 从首都（或首个己方城市）出发，大圆距离行军
+    const from = state.cities.find((c) => c.cityId === state.capitalCityId) ?? state.cities[0];
+    const hostConfig = this.cityConfig(camp.hostCityId);
+    const speedMultiplier =
+      techEffects(this.ctx.balance, state).marchSpeed *
+      (1 + (from.cityId === state.capitalCityId ? this.ctx.balance.capitalMarchSpeedBonus : 0));
+    const seconds = Math.ceil(
+      ((campDistance(camp, hostConfig) / 100) * this.ctx.balance.marchBaseSecondsPer100Km) /
+        armySpeedCoefficient(input.infantry, input.cavalry) /
+        speedMultiplier
+    );
+    const now = this.nowMs();
+    const name = (input.name ?? '').trim().slice(0, this.ctx.balance.maxArmyNameLength);
+    const army = {
+      id: `a-${Date.now()}-${Math.floor(Math.random() * 1e6)}`,
+      generalId: input.generalIds[0],
+      generalIds: input.generalIds,
+      name: name || undefined,
+      strategy: (input.strategy as 'NORMAL' | 'DEFENSIVE' | 'CHARGE') ?? 'NORMAL',
+      infantry: input.infantry,
+      cavalry: input.cavalry,
+      status: 'MARCHING' as const,
+      originCityId: from.cityId,
+      targetCityId: input.campId,
+      departedAt: nowIso(now),
+      arrivesAt: nowIso(now + seconds * 1000),
+    };
+    state.armies.push(army);
+    for (const g of generals) {
+      g.status = 'MARCHING';
+      g.armyId = army.id;
+      g.cityId = undefined;
     }
     return this.commit(state);
   }
@@ -643,4 +759,11 @@ function haversineKm(a: CityConfig, b: CityConfig): number {
     Math.sin(dLat / 2) ** 2 +
     Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLon / 2) ** 2;
   return Math.round(2 * R * Math.asin(Math.sqrt(h)));
+}
+
+// 蛮族营地到其宿主城市的大圆距离（营地坐标偏移 ±30px 内）
+function campDistance(camp: { x: number; y: number }, host: CityConfig): number {
+  const dx = (camp.x - host.x) / 1.7;
+  const dy = (camp.y - host.y) / 1.7;
+  return Math.max(50, Math.round(Math.sqrt(dx * dx + dy * dy) * 4));
 }

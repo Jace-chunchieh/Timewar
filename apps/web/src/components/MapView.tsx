@@ -114,7 +114,10 @@ function NationalView({ display, now }: { display: import('@timewar/shared').Gam
       {/* 省级节点 */}
       {nationalCities.map((p) => {
         const player = playerProvinces.has(p.id);
-        const count = display.cities.filter((c) => cities.find((x) => x.id === c.cityId)?.provinceId === p.id).length;
+        const provinceCityCount = cities.filter((c) => c.provinceId === p.id).length;
+        const ownedInProvince = display.cities.filter((c) => cities.find((x) => x.id === c.cityId)?.provinceId === p.id).length;
+        const complete = player && ownedInProvince >= provinceCityCount;
+        const count = ownedInProvince;
         return (
           <g
             key={p.id}
@@ -133,9 +136,9 @@ function NationalView({ display, now }: { display: import('@timewar/shared').Gam
               strokeWidth={2}
             />
             <text x={p.x} y={p.y + 30} textAnchor="middle" fontSize={17} fontWeight={player ? 700 : 500} fill={player ? '#f0c96a' : '#8b96b3'}>
-              {p.name}
+              {p.name}{complete ? ' ✓' : ''}
             </text>
-            <text x={p.x} y={p.y + 45} textAnchor="middle" fontSize={12} fill="#6b7c9e">
+            <text x={p.x} y={p.y + 45} textAnchor="middle" fontSize={12} fill={complete ? '#f0c96a' : '#6b7c9e'}>
               {player ? `已占 ${count}` : '未攻入'}
             </text>
           </g>
@@ -179,6 +182,11 @@ export default function MapView() {
     return (
       <div className="h-full w-full bg-[#0d1526] overflow-hidden relative">
         <NationalView display={display} now={now} />
+        {display.completedAt && (
+          <div className="absolute top-2 left-1/2 -translate-x-1/2 bg-gold/90 text-[#1a1406] text-sm font-bold px-4 py-1.5 rounded-full">
+            已统一全国！
+          </div>
+        )}
         <div className="absolute top-2 right-2 text-xs text-muted bg-panel/80 rounded px-2 py-1">
           已占领 {display.cities.length} / {cities.length} 城市
         </div>
@@ -229,6 +237,16 @@ export default function MapView() {
         {/* 省内行军 */}
         <MarchMarkers now={now} display={display} />
 
+        {/* 蛮族营地 */}
+        {(display.barbarianCamps ?? []).map((camp) => (
+          <g key={camp.id} className="cursor-pointer" onClick={() => useGame.getState().setView('armies')}>
+            <circle cx={camp.x} cy={camp.y} r={8} fill="#7a3b1e" stroke="#e67e22" strokeWidth={1.5} className="pulse-ring" />
+            <text x={camp.x} y={camp.y - 12} textAnchor="middle" fontSize={12} fill="#e67e22" fontWeight={600}>
+              蛮族营地
+            </text>
+          </g>
+        ))}
+
         {/* 城市节点 */}
         {provinceCities.map((c) => {
           const isPlayer = status.playerSet.has(c.id);
@@ -236,6 +254,7 @@ export default function MapView() {
           const isSelected = selectedCityId === c.id;
           const enemy = display.enemyCities.find((e) => e.cityId === c.id);
           const garrison = enemy?.garrison ?? 0;
+          const isCapital = display.capitalCityId === c.id;
           const side = labelSide(c, provinceCities);
           const labelX = side === 'left' ? c.x - 13 : c.x + 13;
           const labelAnchor = side === 'left' ? 'end' : 'start';
@@ -257,9 +276,12 @@ export default function MapView() {
               <circle cx={c.x} cy={c.y} r={22} fill="transparent" style={{ pointerEvents: 'all' }} />
               {isAttackable && <circle cx={c.x} cy={c.y} r={14} fill="none" stroke="#e67e22" className="pulse-ring" />}
               {isSelected && <circle cx={c.x} cy={c.y} r={15} fill="none" stroke="#f0c96a" strokeWidth={2} />}
+              {isCapital && (
+                <path d={`M ${c.x - 7} ${c.y - 10} l 3.5 -6 l 3.5 6 z`} fill="#f0c96a" stroke="#0b1020" strokeWidth={0.8} />
+              )}
               <circle cx={c.x} cy={c.y} r={isPlayer ? 10 : 9} fill={fill} stroke={stroke} strokeWidth={2} />
               <text x={labelX} y={c.y + 4} textAnchor={labelAnchor} fontSize={16} fill={isPlayer ? '#f0c96a' : isAttackable ? '#e67e22' : '#8b96b3'} fontWeight={isPlayer ? 700 : 500}>
-                {c.name}
+                {c.name}{isCapital ? '（首都）' : ''}
               </text>
               <text x={labelX} y={c.y + 21} textAnchor={labelAnchor} fontSize={12.5} fill="#6b7c9e">
                 {isPlayer ? `Lv.${c.level}${isVirtual ? ' 虚拟城' : ''}` : `敌 ${garrison}`}

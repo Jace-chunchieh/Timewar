@@ -30,14 +30,32 @@ export default function ReportsPage() {
               >
                 <button className="w-full text-left" onClick={() => setOpenId(open ? null : r.id)}>
                   <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted">
-                    <span>出发 {cityName(r.originCityId)}</span>
-                    <span>兵力 {fmt(r.attackerInfantry + r.attackerCavalry)}</span>
-                    <span className={r.victory ? 'text-gold' : 'text-danger'}>
-                      伤亡 {fmt(r.attackerCasualtiesInfantry + r.attackerCasualtiesCavalry)}
+                    <span>
+                      {r.counterAttack
+                        ? `反攻 ${cityName(r.targetCityId)}`
+                        : r.isBarbarian
+                          ? '蛮族营地'
+                          : `出发 ${cityName(r.originCityId)}`}
                     </span>
-                    <span>敌伤亡 {fmt(r.defenderCasualties)}</span>
-                    {r.captured && <span className="text-gold2">已占领</span>}
-                    <span className="text-muted">{open ? '收起明细 ▲' : '展开明细 ▼'}</span>
+                    {r.counterAttack ? (
+                      <span className={r.victory ? 'text-danger' : 'text-gold2'}>
+                        {r.victory ? '城市被夺回' : '防守成功'}
+                      </span>
+                    ) : (
+                      <>
+                        <span>兵力 {fmt(r.attackerInfantry + r.attackerCavalry)}</span>
+                        <span className={r.victory ? 'text-gold' : 'text-danger'}>
+                          伤亡 {fmt(r.attackerCasualtiesInfantry + r.attackerCasualtiesCavalry)}
+                        </span>
+                        <span>敌伤亡 {fmt(r.defenderCasualties)}</span>
+                        {r.captured && <span className="text-gold2">已占领</span>}
+                        {r.gainedXp !== undefined && <span className="text-gold tabular">将领经验 +{r.gainedXp}</span>}
+                        {r.strategy && r.strategy !== 'NORMAL' && (
+                          <span className="text-orange">{r.strategy === 'DEFENSIVE' ? '稳守' : '突袭'}</span>
+                        )}
+                        <span className="text-muted">{open ? '收起明细 ▲' : '展开明细 ▼'}</span>
+                      </>
+                    )}
                   </div>
                 </button>
                 {open && (

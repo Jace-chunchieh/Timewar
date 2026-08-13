@@ -21,7 +21,7 @@ describe('离线结算（验收 22.7）', () => {
     const state = makeGame(ctx);
     advanceGameState(ctx, state, T0 + 48 * HOUR);
     // 24 小时 = 86400 秒 → 8640 个 10 秒周期 × 1 城市
-    expect(state.resources.idlePopulation - 500).toBe((24 * HOUR / 10_000) * 1);
+    expect(state.resources.idlePopulation - 500).toBe(Math.round((24 * HOUR / 10_000) * 1.5)); // A市1级×1.5首都
     expect(state.populationRemainderMs).toBe(0);
   });
 

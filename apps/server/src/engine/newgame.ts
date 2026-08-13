@@ -1,5 +1,6 @@
 import type { BalanceConfig, CityConfig, GameState } from '@timewar/shared';
 import { seededGarrison } from './enemy.js';
+import { syncTalents } from './generals.js';
 import { randomChineseName, randomInt } from './rng.js';
 import { defaultTechState } from './tech.js';
 
@@ -30,10 +31,19 @@ export function createNewGame(
     });
 
   const generalName = randomChineseName(rng);
+  const initialGeneral = {
+    id: 'g-initial',
+    name: generalName,
+    level: balance.newGame.initialGeneralLevel,
+    xp: 0,
+    status: 'IDLE' as const,
+    talents: [] as string[],
+  };
+  syncTalents(balance, initialGeneral);
 
   return {
     id: crypto.randomUUID ? crypto.randomUUID() : `game-${Date.now()}`,
-    version: 3,
+    version: 5,
     createdAt: nowIso,
     updatedAt: nowIso,
     lastCalculatedAt: nowIso,
@@ -54,15 +64,7 @@ export function createNewGame(
       horse: { workers: 0, progress: 0 },
     },
     trainingBatches: [],
-    generals: [
-      {
-        id: 'g-initial',
-        name: generalName,
-        level: balance.newGame.initialGeneralLevel,
-        xp: 0,
-        status: 'IDLE',
-      },
-    ],
+    generals: [initialGeneral],
     cities: [
       {
         cityId: startCityId,
@@ -75,7 +77,9 @@ export function createNewGame(
     enemyCities,
     armies: [],
     battleReports: [],
+    barbarianCamps: [],
     tech: defaultTechState(nowIso),
+    capitalCityId: balance.capitalCityId,
     tutorialStep: 1,
     welcomeShown: false,
   };

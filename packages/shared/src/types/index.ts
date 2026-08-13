@@ -102,6 +102,8 @@ export interface BalanceConfig {
   generalXpPerSecond: number;
   generalXpBase: number;
   generalPowerPerLevel: number;
+  maxGeneralsPerArmy: number;
+  subGeneralPowerPerLevel: number;
   battleVarianceMin: number;
   battleVarianceMax: number;
   infantryAttack: number;
@@ -123,6 +125,32 @@ export interface BalanceConfig {
   defenderCasualtyFactor: number;
   equipmentRecoveryVictory: { weapon: number; armor: number; horse: number };
   equipmentRecoveryDefeat: { weapon: number; armor: number; horse: number };
+  battleXpVictoryBase: number;
+  battleXpDefeatBase: number;
+  battleXpPerDefenderKilled: number;
+  battleXpKillCap: number;
+  injuredChance: number;
+  injuredDurationSeconds: number;
+  strategy: Record<string, { powerFactor: number; casualtyFactor: number }>;
+  talentPool: TalentDef[];
+  talentLevels: number[];
+  capitalCityId: string;
+  capitalPopulationBonus: number;
+  capitalMarchSpeedBonus: number;
+  provinceCompleteBonus: number;
+  barbarianMaxCamps: number;
+  barbarianRespawnMinutes: number;
+  barbarianGarrison: number;
+  barbarianRewardPopulationMin: number;
+  barbarianRewardPopulationMax: number;
+  barbarianRewardEquipmentMin: number;
+  barbarianRewardEquipmentMax: number;
+  barbarianRewardTalismanChance: number;
+  counterAttackMinCities: number;
+  counterAttackIntervalMinutes: number;
+  counterAttackChance: number;
+  counterAttackThreshold: number;
+  maxArmyNameLength: number;
   cityLevels: Record<string, CityLevelBalance>;
   talisman: TalismanBalance;
   defender: DefenderBalance;
@@ -161,7 +189,18 @@ export interface ProductionState {
   horse: ProductionLine;
 }
 
-export type GeneralStatus = 'IDLE' | 'TRAINING' | 'MARCHING' | 'GARRISON' | 'BATTLE';
+export type GeneralStatus = 'IDLE' | 'TRAINING' | 'MARCHING' | 'GARRISON' | 'BATTLE' | 'WOUNDED';
+
+export interface TalentDef {
+  id: string;
+  name: string;
+  desc: string;
+  attack?: number;
+  marchSpeed?: number;
+  casualtyReduction?: number;
+  trainingXp?: number;
+  command?: number;
+}
 
 export interface General {
   id: string;
@@ -173,13 +212,20 @@ export interface General {
   armyId?: string;
   trainingStartedAt?: string;
   lastXpCalculatedAt?: string;
+  injuredUntil?: string;
+  talents: string[];
 }
 
 export type ArmyStatus = 'IDLE' | 'MARCHING' | 'GARRISON' | 'RETURNING' | 'BATTLE';
 
+export type BattleStrategy = 'NORMAL' | 'DEFENSIVE' | 'CHARGE';
+
 export interface Army {
   id: string;
   generalId?: string;
+  generalIds?: string[];
+  name?: string;
+  strategy?: BattleStrategy;
   infantry: number;
   cavalry: number;
   status: ArmyStatus;
@@ -236,6 +282,19 @@ export interface BattleReport {
   captured: boolean;
   defenderGeneralName?: string;
   recruitedGeneralName?: string;
+  strategy?: string;
+  gainedXp?: number;
+  counterAttack?: boolean;
+  isBarbarian?: boolean;
+}
+
+export interface BarbarianCamp {
+  id: string;
+  hostCityId: string;
+  x: number;
+  y: number;
+  garrison: number;
+  createdAt: string;
 }
 
 export interface OfflineReport {
@@ -277,7 +336,10 @@ export interface GameState {
   enemyCities: EnemyCityState[];
   armies: Army[];
   battleReports: BattleReport[];
+  barbarianCamps: BarbarianCamp[];
   tech: TechState;
+  capitalCityId: string;
+  completedAt?: string;
   tutorialStep: number;
   welcomeShown?: boolean;
   offlineReport?: OfflineReport;
@@ -295,6 +357,7 @@ export const GENERAL_STATUS_LABEL: Record<GeneralStatus, string> = {
   MARCHING: '行军中',
   GARRISON: '驻守中',
   BATTLE: '战斗中',
+  WOUNDED: '负伤中',
 };
 
 export const ARMY_STATUS_LABEL: Record<ArmyStatus, string> = {

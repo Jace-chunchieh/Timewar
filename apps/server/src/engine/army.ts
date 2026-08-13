@@ -68,20 +68,44 @@ export function canAttack(cities: CityConfig[], state: GameState, targetCityId: 
   return target.neighbors.some((n) => isPlayerCity(state, n));
 }
 
+// 军团将领列表（兼容旧数据）
+export function armyGeneralIds(state: GameState, army: { generalId?: string; generalIds?: string[] }): string[] {
+  if (army.generalIds && army.generalIds.length > 0) return army.generalIds;
+  return army.generalId ? [army.generalId] : [];
+}
+
+// 多将领合计统帅
+export function armyCommandCap(
+  balance: BalanceConfig,
+  state: GameState,
+  generalIds: string[]
+): number {
+  let sum = 0;
+  for (const id of generalIds) {
+    const g = state.generals.find((x) => x.id === id);
+    if (g) sum += commandCap(balance, g.level, state, g);
+  }
+  return sum;
+}
+
 export function marchEligibility(
   balance: BalanceConfig,
   state: GameState,
   army: Army
 ): { ok: boolean; reason?: string; maxCommand?: number; commandUsed?: number } {
-  const general = state.generals.find((g) => g.id === army.generalId);
-  if (!general) return { ok: false, reason: '将领不存在' };
-  if (general.status !== 'IDLE') return { ok: false, reason: '将领当前不可出征' };
-  const cap = commandCap(balance, general.level, state);
+  const generalIds = armyGeneralIds(state, army);
+  if (generalIds.length === 0) return { ok: true };
+  for (const id of generalIds) {
+    const general = state.generals.find((g) => g.id === id);
+    if (!general) return { ok: false, reason: '将领不存在' };
+    if (general.status !== 'IDLE') return { ok: false, reason: '将领当前不可出征' };
+  }
+  const cap = armyCommandCap(balance, state, generalIds);
   const used = army.infantry + army.cavalry;
   if (used > cap) {
     return {
       ok: false,
-      reason: `当前军团 ${used} 人，将领统帅 ${cap} 人，超出 ${used - cap} 人`,
+      reason: `当前军团 ${used} 人，将领合计统帅 ${cap} 人，超出 ${used - cap} 人`,
       maxCommand: cap,
       commandUsed: used,
     };
@@ -89,27 +113,37 @@ export function marchEligibility(
   return { ok: true, maxCommand: cap, commandUsed: used };
 }
 
-// 到达己方城市：转为驻军
+// 到达己方城市：转为驻军（主将驻守，副将空闲）
 export function mergeIntoCity(
   state: GameState,
   cityId: string,
   infantry: number,
   cavalry: number,
   generalId?: string,
+  generalIds?: string[],
   nowMs?: number
 ): void {
   const city = state.cities.find((c) => c.cityId === cityId);
   if (!city) return;
   city.infantry += infantry;
   city.cavalry += cavalry;
-  if (generalId) {
-    const general = state.generals.find((g) => g.id === generalId);
-    if (general) {
-      general.status = 'GARRISON';
-      general.cityId = cityId;
-      general.armyId = undefined;
+  const ids = generalIds && generalIds.length > 0 ? generalIds : generalId ? [generalId] : [];
+  if (ids.length > 0) {
+    const lead = state.generals.find((g) => g.id === ids[0]);
+    if (lead) {
+      lead.status = 'GARRISON';
+      lead.cityId = cityId;
+      lead.armyId = undefined;
+      city.generalId = lead.id;
     }
-    city.generalId = generalId;
+    for (let i = 1; i < ids.length; i++) {
+      const sub = state.generals.find((g) => g.id === ids[i]);
+      if (sub) {
+        sub.status = 'IDLE';
+        sub.cityId = undefined;
+        sub.armyId = undefined;
+      }
+    }
   }
   if (nowMs) city.occupiedAt = new Date(nowMs).toISOString();
 }

@@ -112,7 +112,7 @@ describe('API 集成（后端权威）', () => {
     expect(s.enemyCities.find((e) => e.cityId === 'qingyuan')?.garrison).toBe(100);
     expect(s.enemyCities.find((e) => e.cityId === 'guangzhou')?.level ?? s.enemyCities.some((e) => e.cityId === 'guangzhou')).toBe(true);
     expect(s.enemyCities.length).toBeGreaterThan(330);
-    expect(s.version).toBe(3);
+    expect(s.version).toBe(5);
     expect(s.tech.researchWorkers).toBe(0);
     expect(s.welcomeShown).toBe(false);
     expect(s.tutorialStep).toBe(1);
@@ -415,7 +415,7 @@ describe('API 集成（后端权威）', () => {
     now += 10_000;
     const popBefore = s.resources.idlePopulation;
     s = stateOf(await get('/api/game/state'));
-    expect(s.resources.idlePopulation - popBefore).toBe(4);
+    expect(s.resources.idlePopulation - popBefore).toBe(5); // A市(2×1.5首都)+清远2
     const reports = (await get('/api/battles')).json().reports;
     expect(reports).toHaveLength(1);
   });

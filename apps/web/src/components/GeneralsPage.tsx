@@ -21,6 +21,7 @@ export default function GeneralsPage() {
     MARCHING: '行军中',
     GARRISON: '驻守中',
     BATTLE: '战斗中',
+    WOUNDED: '负伤中',
   };
   const statusColor: Record<string, string> = {
     IDLE: 'text-muted border-line',
@@ -28,6 +29,15 @@ export default function GeneralsPage() {
     MARCHING: 'text-orange border-orange/50',
     GARRISON: 'text-gold2 border-gold/70',
     BATTLE: 'text-danger border-danger/60',
+    WOUNDED: 'text-danger border-danger/80',
+  };
+
+  const TALENT_NAMES: Record<string, string> = {
+    valiant: '骁勇',
+    swift: '疾行',
+    steadfast: '善守',
+    drillmaster: '练兵',
+    majestic: '威仪',
   };
 
   return (
@@ -56,6 +66,18 @@ export default function GeneralsPage() {
                     <span className="text-muted">统帅上限</span>
                     <span className="text-text tabular">{fmt(cap)} 人</span>
                   </div>
+                  {(g.talents ?? []).length > 0 && (
+                    <div className="flex flex-wrap gap-1">
+                      {g.talents.map((t) => (
+                        <span key={t} className="bg-gold/10 border border-gold/40 text-gold text-[11px] px-1.5 py-0.5 rounded">
+                          {TALENT_NAMES[t] ?? t}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                  {g.status === 'WOUNDED' && g.injuredUntil && (
+                    <div className="text-danger tabular">负伤休养中 · 剩余 {fmtDur(Math.max(0, Date.parse(g.injuredUntil) - now))}</div>
+                  )}
                   {g.status === 'TRAINING' && (
                     <div className="text-gold tabular">
                       升级预计还需 {fmtDur(Math.max(0, etaSec * 1000))}（随时可停止，经验保留）
@@ -65,9 +87,12 @@ export default function GeneralsPage() {
                   {g.status === 'GARRISON' && city && (
                     <div className="text-muted">驻守于 {cityName(city.cityId)}（步兵 {fmt(city.infantry)} · 骑兵 {fmt(city.cavalry)}）</div>
                   )}
-                  {g.status === 'MARCHING' && (
-                    <div className="text-orange">行军途中</div>
-                  )}
+                    {g.status === 'MARCHING' && (
+                      <div className="text-orange">行军途中</div>
+                    )}
+                    {g.status === 'WOUNDED' && (
+                      <div className="text-muted">负伤期间不可出征与训练</div>
+                    )}
                   <div className="flex gap-2 pt-1">
                     {(g.status === 'IDLE' || g.status === 'GARRISON') && (
                       <Btn onClick={() => start(g.id)} className="flex-1">开始训练</Btn>

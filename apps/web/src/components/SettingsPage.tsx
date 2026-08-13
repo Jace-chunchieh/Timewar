@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { api } from '../api';
-import { balance } from '../lib/game';
+import { balance, cityName } from '../lib/game';
 import { useGame } from '../store';
 import { Btn, Card } from './ui';
 
 export default function SettingsPage() {
+  const state = useGame((s) => s.state);
   const mutate = useGame((s) => s.mutate);
   const refresh = useGame((s) => s.refresh);
   const isAdmin = useGame((s) => s.isAdmin);
@@ -15,6 +16,13 @@ export default function SettingsPage() {
   const [newName, setNewName] = useState('');
   const [codes, setCodes] = useState<{ code: string; name: string; isAdmin: boolean }[] | null>(null);
   const [msg, setMsg] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (state?.completedAt) {
+      setMsg(`已统一全国！通关时间 ${new Date(state.completedAt).toLocaleString()}`);
+      setTimeout(() => setMsg(null), 8000);
+    }
+  }, [state?.completedAt]);
 
   const reset = async () => {
     await mutate(() => api.reset());
@@ -56,6 +64,28 @@ export default function SettingsPage() {
             <div>· 科技树：攻城术/军驿/冶炼/军屯/治军/统帅之道/神行符强化，一次性人口升级永久生效。</div>
             <div>· 军团出发 60 秒内可撤回；战败幸存军队按 70% 行军时间返回。</div>
             <div>· 离线收益最多结算 {Math.floor(balance.offlineCapSeconds / 3600)} 小时。</div>
+          </div>
+        </Card>
+
+        <Card title="首都">
+          <div className="text-xs text-muted mb-2">
+            当前首都：<span className="text-gold">{state?.capitalCityId ? cityName(state.capitalCityId) : '—'}</span>
+            （首都城市人口产出 ×1.5，从首都出发行军速度 +5%）
+          </div>
+          <div className="flex flex-wrap gap-1.5">
+            {(state?.cities ?? []).map((c) => (
+              <Btn
+                key={c.cityId}
+                variant={c.cityId === state?.capitalCityId ? 'gold' : 'ghost'}
+                onClick={async () => {
+                  await mutate(() => api.moveCapital(c.cityId));
+                }}
+                className="!py-1 text-xs"
+              >
+                {cityName(c.cityId)}
+                {c.cityId === state?.capitalCityId ? '（首都）' : ''}
+              </Btn>
+            ))}
           </div>
         </Card>
 

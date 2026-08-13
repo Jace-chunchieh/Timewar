@@ -112,7 +112,7 @@ describe('战斗系统', () => {
     expect(state.armies.length).toBe(0);
   });
 
-  it('占领清远后：A市 升 2 级，每10秒 +4（2+2）', () => {
+  it('占领清远后：A市 升 2 级，每10秒 +5（A市2×1.5首都 + 清远2）', () => {
     const ctx = makeCtx(8);
     const state = makeGame(ctx);
     const { arrivesMs } = setupMarch(ctx, state, { infantry: 200, cavalry: 0, target: 'qingyuan' });
@@ -121,7 +121,7 @@ describe('战斗系统', () => {
     expect(acity.level).toBe(2);
     const popBefore = state.resources.idlePopulation;
     advanceGameState(ctx, state, arrivesMs + 10_001);
-    expect(state.resources.idlePopulation - popBefore).toBe(4);
+    expect(state.resources.idlePopulation - popBefore).toBe(5);
   });
 
   it('战斗波动在 0.95~1.05 之间，且结果刷新后一致', () => {
@@ -173,7 +173,13 @@ describe('战斗系统', () => {
     advanceGameState(ctx, state, Date.parse(army.arrivesAt!) + 1);
     const acity = state.cities.find((c) => c.cityId === 'acity')!;
     expect(acity.infantry).toBe(beforeInf + 10 - state.battleReports[0].attackerCasualtiesInfantry);
-    expect(state.generals[0].status).toBe('IDLE');
+    // 战败可能负伤（WOUNDED），否则恢复空闲
+    const g = state.generals[0];
+    if (g.status === 'WOUNDED') {
+      expect(g.injuredUntil).toBeTruthy();
+    } else {
+      expect(g.status).toBe('IDLE');
+    }
     expect(state.armies.length).toBe(0);
   });
 

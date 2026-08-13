@@ -6,10 +6,12 @@ import {
   armyCreateSchema,
   armyMarchSchema,
   armyTransferSchema,
+  barbarianAttackSchema,
   craftSchema,
   garrisonAttackSchema,
   generalIdSchema,
   loginSchema,
+  moveCapitalSchema,
   researchSchema,
   techUpgradeSchema,
   trainingCancelSchema,
@@ -149,10 +151,32 @@ export function buildApi(service: GameService): FastifyPluginAsync {
         state: service.createArmy({
           originCityId: body.originCityId,
           generalId: body.generalId,
+          generalIds: body.generalIds,
+          name: body.name,
+          strategy: body.strategy,
           infantry: body.infantry,
           cavalry: body.cavalry,
           targetCityId: body.targetCityId,
           useTalisman: body.useTalisman,
+        }),
+      };
+    });
+
+    app.post('/api/city/move-capital', async (req, _reply) => {
+      const body = moveCapitalSchema.parse(req.body);
+      return { state: service.moveCapital(body.cityId) };
+    });
+
+    app.post('/api/barbarians/attack', async (req, _reply) => {
+      const body = barbarianAttackSchema.parse(req.body);
+      return {
+        state: service.barbarianAttack({
+          campId: body.campId,
+          generalIds: body.generalIds,
+          name: body.name,
+          strategy: body.strategy,
+          infantry: body.infantry,
+          cavalry: body.cavalry,
         }),
       };
     });

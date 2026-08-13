@@ -59,12 +59,25 @@ export const api = {
     request<{ state: GameState }>('/api/generals/dismiss-garrison', { generalId }),
   armyCreate: (input: {
     originCityId: string;
-    generalId: string;
+    generalId?: string;
+    generalIds?: string[];
+    name?: string;
+    strategy?: 'NORMAL' | 'DEFENSIVE' | 'CHARGE';
     infantry: number;
     cavalry: number;
     targetCityId?: string;
     useTalisman?: boolean;
   }) => request<{ state: GameState }>('/api/armies/create', input),
+  moveCapital: (cityId: string) =>
+    request<{ state: GameState }>('/api/city/move-capital', { cityId }),
+  barbarianAttack: (input: {
+    campId: string;
+    generalIds: string[];
+    name?: string;
+    strategy?: 'NORMAL' | 'DEFENSIVE' | 'CHARGE';
+    infantry: number;
+    cavalry: number;
+  }) => request<{ state: GameState }>('/api/barbarians/attack', input),
   armyMarch: (armyId: string, targetCityId: string, useTalisman?: boolean) =>
     request<{ state: GameState }>('/api/armies/march', { armyId, targetCityId, useTalisman }),
   armyCancelMarch: (armyId: string) =>

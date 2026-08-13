@@ -1,5 +1,6 @@
 import type {
   BalanceConfig,
+  BarbarianCamp,
   CityConfig,
   GameState,
   OfflineReport,
@@ -7,11 +8,12 @@ import type {
 } from '@timewar/shared';
 import { syncAcityLevel } from './acity.js';
 import { isEnemyCity, isPlayerCity, mergeIntoCity } from './army.js';
-import { resolveBattle } from './battle.js';
+import { resolveBattle, resolveCounterAttack } from './battle.js';
 import { advanceEnemyGrowth } from './enemy.js';
 import { advanceGeneralXp } from './generals.js';
 import { advancePopulation } from './population.js';
 import { advanceProduction } from './production.js';
+import { battleRng } from './battle.js';
 import { completeTrainingBatches } from './training.js';
 import { rollTalisman } from './tech.js';
 
@@ -39,10 +41,13 @@ export function advanceGameState(ctx: EngineContext, state: GameState, nowMs: nu
   // 0. A市 动态等级同步（幂等）
   syncAcityLevel(ctx.cities, state);
 
+  // 0.5 负伤将领到期自动恢复
+  recoverWounded(state, settleUntil);
+
   // 1. 敌方城市成长
   advanceEnemyGrowth(balance, ctx.cities, state, settleUntil);
-  // 2. 玩家人口增长（等级加权 + 军屯）
-  advancePopulation(balance, state, settleUntil);
+  // 2. 玩家人口增长（等级加权 + 军屯 + 首都 + 省域）
+  advancePopulation(balance, ctx.cities, state, settleUntil);
   // 3. 武器生产 / 4. 盔甲生产 / 5. 战马生产（冶炼加成）
   advanceProduction(balance, state, effectiveMs);
   // 6. 人口训练完成（含将领随机产生）
@@ -53,7 +58,13 @@ export function advanceGameState(ctx: EngineContext, state: GameState, nowMs: nu
   advanceGeneralXp(balance, state, settleUntil);
   // 8. 军团行军到达 / 9. 战斗 / 10. 返回军团到达
   resolveArrivals(ctx, state, settleUntil);
-  // 11. 占领后再次同步 A市 等级（新占领城市立即生效）
+  // 11. 敌方反攻
+  processCounterAttacks(ctx, state, settleUntil);
+  // 12. 蛮族营地刷新
+  refreshBarbarianCamps(ctx, state, settleUntil);
+  // 13. 通关检测（占领全部城市）
+  checkCompletion(balance, ctx.cities, state, settleUntil);
+  // 14. 占领后再次同步 A市 等级
   syncAcityLevel(ctx.cities, state);
 
   state.lastCalculatedAt = new Date(settleUntil).toISOString();
@@ -66,6 +77,89 @@ export function advanceGameState(ctx: EngineContext, state: GameState, nowMs: nu
   return state;
 }
 
+// 负伤恢复：到期自动恢复空闲
+function recoverWounded(state: GameState, nowMs: number): void {
+  for (const g of state.generals) {
+    if (g.status === 'WOUNDED' && g.injuredUntil && Date.parse(g.injuredUntil) <= nowMs) {
+      g.status = 'IDLE';
+      g.injuredUntil = undefined;
+    }
+  }
+}
+
+// 敌方反攻：≥minCities 后，间隔内检查弱驻军相邻城
+function processCounterAttacks(ctx: EngineContext, state: GameState, nowMs: number): void {
+  const { balance, cities } = ctx;
+  if (state.cities.length < balance.counterAttackMinCities) return;
+  const intervalMs = balance.counterAttackIntervalMinutes * 60 * 1000;
+  const lastAt = Date.parse(state.lastCalculatedAt);
+  const ticks = Math.floor((nowMs - lastAt) / intervalMs);
+  if (ticks <= 0) return;
+
+  for (let t = 0; t < ticks; t++) {
+    const checkAt = lastAt + (t + 1) * intervalMs;
+    if (checkAt > nowMs) break;
+    for (const enemy of state.enemyCities) {
+      const config = cities.find((c) => c.id === enemy.cityId);
+      if (!config) continue;
+      const neighbors = config.neighbors.filter((n) => isPlayerCity(state, n) && n !== balance.startCityId);
+      if (neighbors.length === 0) continue;
+      // 找出驻军战力低于敌方×阈值的弱驻军城
+      const weak = neighbors.filter((n) => {
+        const pc = state.cities.find((c) => c.cityId === n);
+        if (!pc) return false;
+        const levelConfig = balance.cityLevels[String(cityLevelOf(cities, n))];
+        const defenderPower = (pc.infantry + pc.cavalry) * balance.infantryDefense * (1 + (levelConfig?.defenseBonus ?? 0));
+        const attackerPower = enemy.garrison * balance.infantryAttack;
+        return attackerPower > defenderPower * (1 / balance.counterAttackThreshold);
+      });
+      if (weak.length === 0) continue;
+      if (battleRng(balance, `counter:${enemy.cityId}:${Math.floor(checkAt / 600000)}`)() < balance.counterAttackChance) {
+        const target = weak[Math.floor(battleRng(balance, `counter-target:${enemy.cityId}:${Math.floor(checkAt / 600000)}`)() * weak.length)];
+        resolveCounterAttack(balance, cities, state, enemy.cityId, target, checkAt);
+      }
+    }
+  }
+}
+
+function cityLevelOf(cities: CityConfig[], cityId: string): number {
+  return cities.find((c) => c.id === cityId)?.level ?? 1;
+}
+
+// 蛮族营地：每 interval 在随机敌方城市旁补充营地（最多 maxCamps）
+function refreshBarbarianCamps(ctx: EngineContext, state: GameState, nowMs: number): void {
+  const { balance, cities } = ctx;
+  if (!state.barbarianCamps) state.barbarianCamps = [];
+  const intervalMs = balance.barbarianRespawnMinutes * 60 * 1000;
+  const lastAt = Date.parse(state.lastCalculatedAt);
+  const ticks = Math.floor((nowMs - lastAt) / intervalMs);
+  if (ticks <= 0) return;
+  for (let t = 0; t < ticks; t++) {
+    if (state.barbarianCamps.length >= balance.barbarianMaxCamps) break;
+    const enemyCities = state.enemyCities;
+    if (enemyCities.length === 0) break;
+    const host = enemyCities[Math.floor(battleRng(balance, `camp:${nowMs}:${t}`)() * enemyCities.length)];
+    const hostConfig = cities.find((c) => c.id === host.cityId);
+    if (!hostConfig) continue;
+    if (state.barbarianCamps.some((c) => c.hostCityId === host.cityId)) continue;
+    state.barbarianCamps.push({
+      id: `camp-${host.cityId}`,
+      hostCityId: host.cityId,
+      x: hostConfig.x + (battleRng(balance, `camp-x:${host.cityId}`)() - 0.5) * 60,
+      y: hostConfig.y + (battleRng(balance, `camp-y:${host.cityId}`)() - 0.5) * 60,
+      garrison: balance.barbarianGarrison,
+      createdAt: new Date(nowMs).toISOString(),
+    });
+  }
+}
+
+// 通关：占领全部城市
+function checkCompletion(balance: BalanceConfig, cities: CityConfig[], state: GameState, nowMs: number): void {
+  if (!state.completedAt && state.cities.length >= cities.length) {
+    state.completedAt = new Date(nowMs).toISOString();
+  }
+}
+
 function resolveArrivals(ctx: EngineContext, state: GameState, nowMs: number): void {
   const marching = state.armies
     .filter(
@@ -74,9 +168,41 @@ function resolveArrivals(ctx: EngineContext, state: GameState, nowMs: number): v
     .sort((a, b) => Date.parse(a.arrivesAt!) - Date.parse(b.arrivesAt!));
 
   for (const army of marching) {
-    if (isEnemyCity(state, army.targetCityId!)) {
+    if (army.targetCityId?.startsWith('camp-')) {
+      // 蛮族营地战斗
+      resolveBattle(ctx.balance, ctx.cities, state, {
+        army: {
+          id: army.id,
+          generalId: army.generalId,
+          generalIds: army.generalIds,
+          infantry: army.infantry,
+          cavalry: army.cavalry,
+          originCityId: army.originCityId,
+          targetCityId: army.targetCityId,
+          arrivesAt: army.arrivesAt,
+          strategy: army.strategy,
+          name: army.name,
+        },
+        nowMs,
+        isBarbarian: true,
+      });
+    } else if (isEnemyCity(state, army.targetCityId!)) {
       // 到达敌方城市：自动进入战斗
-      resolveBattle(ctx.balance, ctx.cities, state, army, nowMs);
+      resolveBattle(ctx.balance, ctx.cities, state, {
+        army: {
+          id: army.id,
+          generalId: army.generalId,
+          generalIds: army.generalIds,
+          infantry: army.infantry,
+          cavalry: army.cavalry,
+          originCityId: army.originCityId,
+          targetCityId: army.targetCityId,
+          arrivesAt: army.arrivesAt,
+          strategy: army.strategy,
+          name: army.name,
+        },
+        nowMs,
+      });
     } else if (isPlayerCity(state, army.targetCityId!)) {
       // 到达己方城市：自动转为驻军
       mergeIntoCity(
@@ -85,6 +211,7 @@ function resolveArrivals(ctx: EngineContext, state: GameState, nowMs: number): v
         army.infantry,
         army.cavalry,
         army.generalId,
+        army.generalIds,
         nowMs
       );
       state.armies = state.armies.filter((a) => a.id !== army.id);
@@ -95,17 +222,20 @@ function resolveArrivals(ctx: EngineContext, state: GameState, nowMs: number): v
     (a) => a.status === 'RETURNING' && a.arrivesAt && Date.parse(a.arrivesAt) <= nowMs
   );
   for (const army of returning) {
-    // 失败军团返回：兵力并入出发城市驻军，将领恢复空闲
+    // 失败军团返回：兵力并入出发城市驻军，将领恢复空闲（负伤者保持负伤）
     const city = state.cities.find((c) => c.cityId === army.originCityId);
     if (city) {
       city.infantry += army.infantry;
       city.cavalry += army.cavalry;
     }
-    const general = state.generals.find((g) => g.id === army.generalId);
-    if (general) {
-      general.status = 'IDLE';
-      general.cityId = army.originCityId;
-      general.armyId = undefined;
+    const ids = army.generalIds && army.generalIds.length > 0 ? army.generalIds : army.generalId ? [army.generalId] : [];
+    for (const id of ids) {
+      const general = state.generals.find((g) => g.id === id);
+      if (general && general.status !== 'WOUNDED') {
+        general.status = 'IDLE';
+        general.cityId = army.originCityId;
+        general.armyId = undefined;
+      }
     }
     state.armies = state.armies.filter((a) => a.id !== army.id);
   }

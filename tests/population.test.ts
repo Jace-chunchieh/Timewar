@@ -20,7 +20,7 @@ describe('人口增长（等级加权）', () => {
     advanceGameState(ctx, state, T0 + 10_000);
     const acity = state.cities.find((c) => c.cityId === 'acity')!;
     expect(acity.level).toBe(2);
-    expect(state.resources.idlePopulation).toBe(504);
+    expect(state.resources.idlePopulation).toBe(505); // A市2级×1.5首都+清远2
   });
 
   it('占领 5 级城市后 A市 升到 5 级（动态取玩家真实城市最高等级）', () => {
@@ -38,7 +38,7 @@ describe('人口增长（等级加权）', () => {
     occupy(ctx, state, 'dongguan');
     advanceGameState(ctx, state, T0 + HOUR);
     // A市 随最高真实城市(4级)升到 4 级 → 4+4+4 = 12/10秒
-    expect(state.resources.idlePopulation).toBe(500 + 360 * 12);
+    expect(state.resources.idlePopulation).toBe(500 + 360 * 14); // A市4级×1.5首都=6+4+4
   });
 
   it('经过9秒不增加人口，累计到10秒后增加', () => {
@@ -66,6 +66,6 @@ describe('人口增长（等级加权）', () => {
     state.tech.levels.agronomy = 2;
     advanceGameState(ctx, state, T0 + 100_000);
     // 10 周期 × 1 × 1.1 = 11
-    expect(state.resources.idlePopulation - 500).toBe(11);
+    expect(state.resources.idlePopulation - 500).toBe(16); // 1×1.5首都×1.1军屯
   });
 });

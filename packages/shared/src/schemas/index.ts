@@ -30,7 +30,10 @@ export const generalIdSchema = z.object({
 
 export const armyCreateSchema = z.object({
   originCityId: z.string().min(1),
-  generalId: z.string().min(1),
+  generalId: z.string().min(1).optional(),
+  generalIds: z.array(z.string().min(1)).max(3).optional(),
+  name: z.string().max(8).optional(),
+  strategy: z.enum(['NORMAL', 'DEFENSIVE', 'CHARGE']).optional(),
   infantry: nonNegativeInt,
   cavalry: nonNegativeInt,
   targetCityId: z.string().min(1).optional(),
@@ -41,6 +44,19 @@ export const armyMarchSchema = z.object({
   armyId: z.string().min(1),
   targetCityId: z.string().min(1),
   useTalisman: z.boolean().optional(),
+});
+
+export const moveCapitalSchema = z.object({
+  cityId: z.string().min(1),
+});
+
+export const barbarianAttackSchema = z.object({
+  campId: z.string().min(1),
+  generalIds: z.array(z.string().min(1)).max(3),
+  name: z.string().max(8).optional(),
+  strategy: z.enum(['NORMAL', 'DEFENSIVE', 'CHARGE']).optional(),
+  infantry: nonNegativeInt,
+  cavalry: nonNegativeInt,
 });
 
 export const armyCancelSchema = z.object({
