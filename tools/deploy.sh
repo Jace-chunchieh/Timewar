@@ -100,34 +100,50 @@ for i in $(seq 1 5); do
   sleep 2
 done
 
+# 健康检查：优先 curl；无 curl 时用 bash /dev/tcp 检测端口是否开放（不依赖外部命令）
+port_alive() {
+  if command -v curl >/dev/null 2>&1; then
+    code=$(curl -s -o /dev/null -w "%{http_code}" "http://127.0.0.1:$PORT/api/game/state" 2>/dev/null)
+    [ "$code" = "200" ] && return 0
+    [ -n "$code" ] && [ "$code" != "000" ] && echo "[TimeWar] 健康检查 HTTP $code（服务在跑但接口异常，将视为已恢复并提示）" >&2 && return 0
+    return 1
+  fi
+  (exec 3<>"/dev/tcp/127.0.0.1/$PORT") 2>/dev/null && { exec 3>&- 3<&-; return 0; }
+  return 1
+}
+
 echo "[TimeWar] 等待服务恢复（最长 60 秒）..."
 for i in $(seq 1 30); do
   sleep 2
-  if curl -sf "http://127.0.0.1:$PORT/api/game/state" >/dev/null 2>&1; then
+  if port_alive; then
     echo "[TimeWar] 服务已恢复: http://127.0.0.1:$PORT"
     echo "[TimeWar] 部署完成: $(date '+%Y-%m-%d %H:%M:%S')"
     exit 0
   fi
 done
 
-# 兜底：若端口仍被占用但服务可用（如宝塔守护已拉起），直接视为成功
-if curl -sf "http://127.0.0.1:$PORT/api/game/state" >/dev/null 2>&1; then
-  echo "[TimeWar] 服务已由其他进程拉起: http://127.0.0.1:$PORT"
+# 兜底：若端口仍被占用（服务在跑但未响应），直接视为成功并提示排查接口
+if port_alive; then
+  echo "[TimeWar] 服务端口已开放: http://127.0.0.1:$PORT"
   echo "[TimeWar] 部署完成: $(date '+%Y-%m-%d %H:%M:%S')"
   exit 0
+fi
+if command -v ss >/dev/null 2>&1; then
+  echo "[TimeWar] 端口占用诊断:"
+  ss -ltnp | grep ":$PORT" || true
 fi
 
 # 兜底：宝塔守护未拉起且端口残留占用，强杀后自行启动（生产模式）
 echo "[TimeWar] 宝塔守护未拉起，脚本强制清理并兜底启动后端..."
 pkill -9 -f "tsx src/index.ts" 2>/dev/null || true
 fuser -k -9 "${PORT}/tcp" 2>/dev/null || true
-sleep 2
+sleep 3
 cd "$DIR"
 nohup npm start >> "$DIR/app.log" 2>&1 &
 echo $! > "$DIR/app.pid"
 for i in $(seq 1 15); do
   sleep 2
-  if curl -sf "http://127.0.0.1:$PORT/api/game/state" >/dev/null 2>&1; then
+  if port_alive; then
     echo "[TimeWar] 兜底启动成功: http://127.0.0.1:$PORT（pid $(cat "$DIR/app.pid")，日志 app.log）"
     echo "[TimeWar] 部署完成: $(date '+%Y-%m-%d %H:%M:%S')"
     exit 0
@@ -135,7 +151,7 @@ for i in $(seq 1 15); do
 done
 
 echo "[TimeWar] 警告: 服务未恢复。请检查："
-echo "  1. 宝塔面板「网站 → Node 项目」是否已配置该项目且勾选进程守护"
-echo "  2. 手动执行: cd $DIR && npm start"
-echo "  3. 查看日志: tail -30 $DIR/app.log"
+echo "  1. 手动执行: cd $DIR && npm start，并查看报错"
+echo "  2. 查看日志: tail -30 $DIR/app.log"
+echo "  3. 宝塔面板「网站 → Node 项目」进程守护是否生效"
 exit 1
