@@ -73,6 +73,7 @@ export const gmMailSchema = z.object({
 export const soloAttackSchema = z.object({
   generalId: z.string().min(1),
   targetCityId: z.string().min(1),
+  originCityId: z.string().min(1).optional(),
   infantry: nonNegativeInt,
   cavalry: nonNegativeInt,
   useTalisman: z.boolean().optional(),

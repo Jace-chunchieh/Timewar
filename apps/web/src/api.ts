@@ -93,6 +93,7 @@ export const api = {
   soloAttack: (input: {
     generalId: string;
     targetCityId: string;
+    originCityId?: string;
     infantry: number;
     cavalry: number;
     useTalisman?: boolean;

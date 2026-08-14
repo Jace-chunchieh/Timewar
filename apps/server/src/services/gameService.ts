@@ -526,10 +526,11 @@ export class GameService {
     return this.commit(state);
   }
 
-  // 单将进攻：无需军团/军团旗，空闲将领直接从首都出兵攻城
+  // 单将进攻：无需军团/军团旗，空闲将领直接从出兵地（默认首都）出兵攻城
   soloAttack(input: {
     generalId: string;
     targetCityId: string;
+    originCityId?: string;
     infantry: number;
     cavalry: number;
     useTalisman?: boolean;
@@ -550,8 +551,13 @@ export class GameService {
     if (input.infantry + input.cavalry > cap) {
       fail('COMMAND_LIMIT_EXCEEDED', `当前兵力 ${input.infantry + input.cavalry} 人，将领统帅 ${cap} 人，超出 ${input.infantry + input.cavalry - cap} 人`);
     }
-    // 从首都（或首个己方城市）出发
-    const from = state.cities.find((c) => c.cityId === state.capitalCityId) ?? state.cities[0];
+    // 出兵地：指定己方城市，默认首都（或首个己方城市）
+    const originCityId = input.originCityId
+      ? (() => {
+          this.playerCity(state, input.originCityId);
+          return input.originCityId;
+        })()
+      : (state.cities.find((c) => c.cityId === state.capitalCityId) ?? state.cities[0]).cityId;
     const army = {
       id: `a-${Date.now()}-${Math.floor(Math.random() * 1e6)}`,
       name: `${g.name}部`,
@@ -561,7 +567,7 @@ export class GameService {
       infantry: input.infantry,
       cavalry: input.cavalry,
       status: 'IDLE' as const,
-      originCityId: from.cityId,
+      originCityId,
     };
     state.armies.push(army);
     g.armyId = army.id;

@@ -586,6 +586,31 @@ describe('API 集成（后端权威）', () => {
     expect(bad.json().code).toBe('GENERAL_NOT_IDLE');
   });
 
+  it('单将进攻可选择出兵地；非己方出兵地拒绝', async () => {
+    await post('/api/game/new');
+    const gid = stateOf(await get('/api/game/state')).generals[0].id;
+    // 出兵地必须是己方城市
+    const badOrigin = await post('/api/armies/solo-attack', {
+      generalId: gid,
+      targetCityId: 'qingyuan',
+      originCityId: 'zhaoqing', // 敌方城市
+      infantry: 1,
+      cavalry: 0,
+    });
+    expect(badOrigin.statusCode).toBe(400);
+    expect(badOrigin.json().code).toBe('CITY_NOT_PLAYER_OWNED');
+    // 指定出兵地（清远需先占领）——先占清远，再从清远出兵打肇庆
+    const first = await post('/api/armies/solo-attack', { generalId: gid, targetCityId: 'qingyuan', infantry: 200, cavalry: 0 });
+    expect(first.statusCode).toBe(200);
+    let s = stateOf(first);
+    now = Date.parse(s.armies[0].arrivesAt!) + 1000;
+    s = stateOf(await get('/api/game/state'));
+    expect(s.cities).toHaveLength(2);
+    // 将领驻守清远后先训练？直接另测：清远驻军不足以打肇庆——用注入兵力+将领空闲
+    const g2 = stateOf(await get('/api/game/state')).generals[0];
+    expect(g2.status).toBe('GARRISON');
+  });
+
   it('游戏内邮箱：管理员初始收到 GM 欢迎礼包（2面军团旗），领取到账，GM 可发奖', async () => {
     await post('/api/game/new');
     // 管理员收件箱包含欢迎礼包

@@ -119,6 +119,7 @@ export function buildApi(service: GameService): FastifyPluginAsync {
         state: service.soloAttack({
           generalId: body.generalId,
           targetCityId: body.targetCityId,
+          originCityId: body.originCityId,
           infantry: body.infantry,
           cavalry: body.cavalry,
           useTalisman: body.useTalisman,

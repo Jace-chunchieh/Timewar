@@ -31,6 +31,7 @@ export function AttackForm({ targetCityId }: { targetCityId: string }) {
   const [armyId, setArmyId] = useState('');
   // 单将模式
   const [soloGeneralId, setSoloGeneralId] = useState('');
+  const [soloOrigin, setSoloOrigin] = useState('');
   const [soloInfantry, setSoloInfantry] = useState(200);
   const [soloCavalry, setSoloCavalry] = useState(0);
   const [useTalisman, setUseTalisman] = useState(false);
@@ -44,18 +45,18 @@ export function AttackForm({ targetCityId }: { targetCityId: string }) {
   const soloGeneral = display.generals.find((g) => g.id === soloGeneralId);
   const pool = troopPoolClient(display);
   const speedMul = 1 + (display.tech?.levels?.logistics ?? 0) * balance.tech.logistics.effectPerLevel;
-  const soloOrigin = display.capitalCityId || display.cities[0]?.cityId || 'acity';
+  const soloOriginCityId = soloOrigin || display.capitalCityId || display.cities[0]?.cityId || 'acity';
   const routeTime = mode === 'army' && army
     ? (marchTimeClient(army.originCityId, targetCityId, army.infantry, army.cavalry, speedMul) ||
         marchTimeFallbackClient(army.originCityId, targetCityId, army.infantry, army.cavalry, speedMul))
     : mode === 'solo'
-      ? (marchTimeClient(soloOrigin, targetCityId, soloInfantry, soloCavalry, speedMul) ||
-          marchTimeFallbackClient(soloOrigin, targetCityId, soloInfantry, soloCavalry, speedMul))
+      ? (marchTimeClient(soloOriginCityId, targetCityId, soloInfantry, soloCavalry, speedMul) ||
+          marchTimeFallbackClient(soloOriginCityId, targetCityId, soloInfantry, soloCavalry, speedMul))
       : 0;
   const talismanNeed = mode === 'army' && army
     ? talismanCostClient(cityProvinceId(army.originCityId), cityProvinceId(targetCityId))
     : mode === 'solo'
-      ? talismanCostClient(cityProvinceId(soloOrigin), cityProvinceId(targetCityId))
+      ? talismanCostClient(cityProvinceId(soloOriginCityId), cityProvinceId(targetCityId))
       : 0;
   const talismanShort = useTalisman && (display.tech.talismans ?? 0) < talismanNeed;
   const soloCap = soloGeneral ? commandCapClient(soloGeneral.level, display) : 0;
@@ -83,6 +84,7 @@ export function AttackForm({ targetCityId }: { targetCityId: string }) {
         api.soloAttack({
           generalId: soloGeneral.id,
           targetCityId,
+          originCityId: soloOrigin || undefined,
           infantry: soloInfantry,
           cavalry: soloCavalry,
           useTalisman,
@@ -134,6 +136,16 @@ export function AttackForm({ targetCityId }: { targetCityId: string }) {
           </>
         ) : (
           <>
+            <Field label="出兵地" hint="不选则默认首都">
+              <select className="w-full h-8 rounded bg-bg border border-line text-text text-sm" value={soloOrigin} onChange={(e) => setSoloOrigin(e.target.value)}>
+                <option value="">默认（首都 {cityName(display.capitalCityId || display.cities[0]?.cityId || 'acity')}）</option>
+                {display.cities.map((c) => (
+                  <option key={c.cityId} value={c.cityId}>
+                    {cityName(c.cityId)}{c.cityId === display.capitalCityId ? '（首都）' : ''}
+                  </option>
+                ))}
+              </select>
+            </Field>
             <Field label="选择将领" hint={idleGenerals.length === 0 ? '没有空闲将领' : undefined}>
               <select className="w-full h-8 rounded bg-bg border border-line text-text text-sm" value={soloGeneralId} onChange={(e) => setSoloGeneralId(e.target.value)}>
                 <option value="">选择空闲将领</option>
@@ -152,7 +164,7 @@ export function AttackForm({ targetCityId }: { targetCityId: string }) {
               <span className="text-muted">统帅占用</span>
               <span className={`tabular ${soloInfantry + soloCavalry > soloCap ? 'text-danger' : 'text-text'}`}>{soloInfantry + soloCavalry} / {soloCap}</span>
             </div>
-            <div className="text-[11px] text-muted">从首都（{cityName(soloOrigin)}）出兵 · 无军团长加成</div>
+            <div className="text-[11px] text-muted">从 {cityName(soloOriginCityId)} 出兵 · 无军团长加成</div>
           </>
         )}
 
