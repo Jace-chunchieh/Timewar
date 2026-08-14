@@ -22,79 +22,65 @@ export default function ArmiesPage() {
   const state = useGame((s) => s.state);
   const mutate = useGame((s) => s.mutate);
   const selectCity = useGame((s) => s.selectCity);
+  const [busy, setBusy] = useState(false);
+  const [busyArmyId, setBusyArmyId] = useState<string | null>(null);
+
+  // 创建军团表单
   const [origin, setOrigin] = useState('acity');
-  const [selectedGeneralIds, setSelectedGeneralIds] = useState<string[]>([]);
   const [armyName, setArmyName] = useState('');
+  const [bannerGeneralId, setBannerGeneralId] = useState('');
+  const [memberIds, setMemberIds] = useState<string[]>([]);
   const [strategy, setStrategy] = useState<'NORMAL' | 'DEFENSIVE' | 'CHARGE'>('NORMAL');
   const [infantry, setInfantry] = useState(200);
   const [cavalry, setCavalry] = useState(0);
-  const [target, setTarget] = useState('');
-  const [useTalisman, setUseTalisman] = useState(false);
-  const [busy, setBusy] = useState(false);
-  const [busyArmyId, setBusyArmyId] = useState<string | null>(null);
+
+  // 出征表单（按军团）
+  const [marchTarget, setMarchTarget] = useState<Record<string, string>>({});
+  const [marchTalisman, setMarchTalisman] = useState<Record<string, boolean>>({});
 
   if (!display || !state) return null;
   const now = Date.now();
   const pool = troopPoolClient(display);
   const idleGenerals = display.generals.filter((g) => g.status === 'IDLE');
-  const selectedGenerals = selectedGeneralIds
-    .map((id) => display.generals.find((g) => g.id === id))
-    .filter((g): g is NonNullable<typeof g> => !!g);
-  const isFriendlyTarget = !!target && display.cities.some((c) => c.cityId === target);
-  const cap = selectedGenerals.reduce((s, g) => s + commandCapClient(g.level, display), 0);
-  const maxInf = Math.min(pool.infantry, Math.max(0, cap - cavalry));
-  const maxCav = Math.min(pool.cavalry, Math.max(0, cap - infantry));
-  const attackableTargets = display.enemyCities.filter((e) => canAttackClient(display, e.cityId));
-  const friendlyTargets = display.cities;
-  const allEnemyTargets = display.enemyCities;
-  const speedMul = 1 + (display.tech?.levels?.logistics ?? 0) * balance.tech.logistics.effectPerLevel;
-  const routeTime = target
-    ? (marchTimeClient(origin, target, infantry, cavalry, speedMul) ||
-        marchTimeFallbackClient(origin, target, infantry, cavalry, speedMul))
-    : 0;
-  const talismanNeed = target ? talismanCostClient(cityProvinceId(origin), cityProvinceId(target)) : 0;
-  const talismanShort = useTalisman && (display.tech?.talismans ?? 0) < talismanNeed;
-  const expected = selectedGenerals.length > 0 && target && display.enemyCities.some((e) => e.cityId === target)
-    ? expectedBattle(display, selectedGenerals[0].level, infantry, cavalry, target)
-    : null;
-  // 攻城必须将领
-  const attackWithoutGeneral = !!target && !isFriendlyTarget && selectedGenerals.length === 0;
+  const bannerFlags = display.tech?.bannerFlags ?? 0;
+  const speedUps = display.tech?.speedUps ?? 0;
 
-  const toggleGeneral = (id: string) => {
-    setSelectedGeneralIds((prev) =>
-      prev.includes(id) ? prev.filter((x) => x !== id) : prev.length >= 3 ? prev : [...prev, id]
+  const toggleMember = (id: string) => {
+    setMemberIds((prev) =>
+      prev.includes(id) ? prev.filter((x) => x !== id) : prev.length >= balance.maxGeneralsPerArmy ? prev : [...prev, id]
     );
   };
 
   const createArmy = async () => {
-    if (!target || infantry + cavalry <= 0 || attackWithoutGeneral) return;
+    const members = [...new Set([...memberIds, bannerGeneralId])].filter(Boolean);
+    if (!armyName.trim() || !bannerGeneralId || members.length === 0 || infantry + cavalry <= 0) return;
     setBusy(true);
     const ok = await mutate(() =>
       api.armyCreate({
         originCityId: origin,
-        generalIds: selectedGenerals.map((g) => g.id),
-        name: armyName || undefined,
+        name: armyName.trim(),
+        bannerGeneralId,
+        memberGeneralIds: members,
         strategy,
         infantry,
         cavalry,
-        targetCityId: target,
-        useTalisman,
       })
     );
     setBusy(false);
     if (ok) {
+      setArmyName('');
+      setBannerGeneralId('');
+      setMemberIds([]);
       setInfantry(0);
       setCavalry(0);
-      setTarget('');
-      setUseTalisman(false);
-      setSelectedGeneralIds([]);
-      setArmyName('');
     }
   };
 
-  const march = async (armyId: string, targetCityId: string) => {
+  const armies = display.armies;
+
+  const doMarch = async (armyId: string, target: string, useTalisman: boolean) => {
     setBusyArmyId(armyId);
-    await mutate(() => api.armyMarch(armyId, targetCityId));
+    await mutate(() => api.armyMarch(armyId, target, useTalisman));
     setBusyArmyId(null);
   };
 
@@ -104,11 +90,28 @@ export default function ArmiesPage() {
     setBusyArmyId(null);
   };
 
-  const marching = display.armies.filter((a) => a.status === 'MARCHING');
-  const returning = display.armies.filter((a) => a.status === 'RETURNING');
-  const idleArmies = display.armies.filter((a) => a.status === 'IDLE');
-  const garrisoned = display.cities.filter((c) => c.generalId);
-  const camps = display.barbarianCamps ?? [];
+  const useSpeedup = async (targetType: 'training' | 'army', targetId: string) => {
+    setBusyArmyId(targetId);
+    await mutate(() => api.useSpeedup(targetType, targetId));
+    setBusyArmyId(null);
+  };
+
+  const addGeneral = async (armyId: string, generalId: string) => {
+    await mutate(() => api.armyAddGeneral(armyId, generalId));
+  };
+
+  const removeGeneral = async (armyId: string, generalId: string) => {
+    await mutate(() => api.armyRemoveGeneral(armyId, generalId));
+  };
+
+  const reinforce = async (armyId: string, inf: number, cav: number) => {
+    await mutate(() => api.armyReinforce(armyId, inf, cav));
+  };
+
+  const selectedGenerals = [...new Set([...memberIds, bannerGeneralId])].filter(Boolean)
+    .map((id) => display.generals.find((g) => g.id === id))
+    .filter((g): g is NonNullable<typeof g> => !!g);
+  const cap = selectedGenerals.reduce((s, g) => s + commandCapClient(g.level, display), 0);
 
   return (
     <div className="h-full overflow-y-auto p-4">
@@ -116,41 +119,18 @@ export default function ArmiesPage() {
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-bold text-gold2">军团</h2>
           <div className="text-xs text-muted">
-            可用士兵池：步兵 <span className="text-gold tabular">{fmt(pool.infantry)}</span> · 骑兵 <span className="text-gold tabular">{fmt(pool.cavalry)}</span>
+            军团旗 <span className="text-gold tabular">{fmt(bannerFlags)}</span> · 加速符 <span className="text-orange tabular">{fmt(speedUps)}</span> · 士兵池 步{fmt(pool.infantry)}/骑{fmt(pool.cavalry)}
           </div>
         </div>
 
-        <Card title="组建军团并出征">
+        {/* 组建军团（需军团旗 + 军团长） */}
+        <Card title={`组建军团（消耗 1 面军团旗）`}>
           <div className="space-y-2.5">
+            <div className="bg-panel2/60 rounded p-2 text-xs text-muted">
+              军团永久存在；军团长不可更换（统帅 +50%），成员可加入/撤走（上限 {balance.maxGeneralsPerArmy} 人）；攻占城市后军团全体驻守当地。
+            </div>
             <div className="grid md:grid-cols-2 gap-2.5">
-              <Field label="出发城市">
-                <select className="w-full h-8 rounded bg-bg border border-line text-text text-sm" value={origin} onChange={(e) => setOrigin(e.target.value)}>
-                  {display.cities.map((c) => (
-                    <option key={c.cityId} value={c.cityId}>{cityName(c.cityId)}</option>
-                  ))}
-                </select>
-              </Field>
-              <Field label="将领（可多选 ≤3）" hint={isFriendlyTarget ? '增援可无将领' : '攻城必须选择将领'}>
-                <div className="flex flex-wrap gap-1.5">
-                  {idleGenerals.slice(0, 8).map((g) => {
-                    const checked = selectedGeneralIds.includes(g.id);
-                    return (
-                      <button
-                        key={g.id}
-                        type="button"
-                        onClick={() => toggleGeneral(g.id)}
-                        className={`px-2 py-1 rounded text-xs border cursor-pointer transition-colors ${
-                          checked ? 'bg-gold/20 border-gold text-gold2' : 'bg-panel2 border-line text-muted hover:text-text'
-                        }`}
-                      >
-                        {g.name}（Lv.{g.level} 统帅{fmt(commandCapClient(g.level, display))}）
-                      </button>
-                    );
-                  })}
-                  {idleGenerals.length > 8 && <span className="text-xs text-muted self-center">…</span>}
-                </div>
-              </Field>
-              <Field label="军团番号（可选）">
+              <Field label="军团番号">
                 <input
                   value={armyName}
                   onChange={(e) => setArmyName(e.target.value)}
@@ -159,11 +139,45 @@ export default function ArmiesPage() {
                   className="w-full h-8 px-2 rounded bg-bg border border-line text-text text-sm outline-none focus:border-gold/70"
                 />
               </Field>
+              <Field label="驻地">
+                <select className="w-full h-8 rounded bg-bg border border-line text-text text-sm" value={origin} onChange={(e) => setOrigin(e.target.value)}>
+                  {display.cities.map((c) => (
+                    <option key={c.cityId} value={c.cityId}>{cityName(c.cityId)}</option>
+                  ))}
+                </select>
+              </Field>
+              <Field label="军团长（不可更换）">
+                <select className="w-full h-8 rounded bg-bg border border-line text-text text-sm" value={bannerGeneralId} onChange={(e) => setBannerGeneralId(e.target.value)}>
+                  <option value="">选择军团长（空闲将领）</option>
+                  {idleGenerals.map((g) => (
+                    <option key={g.id} value={g.id}>{g.name}（Lv.{g.level}）</option>
+                  ))}
+                </select>
+              </Field>
+              <Field label="军团成员（可多选）" hint={`${selectedGenerals.length}/${balance.maxGeneralsPerArmy}`}>
+                <div className="flex flex-wrap gap-1.5">
+                  {idleGenerals.map((g) => {
+                    const checked = selectedGenerals.includes(g);
+                    return (
+                      <button
+                        key={g.id}
+                        type="button"
+                        onClick={() => toggleMember(g.id)}
+                        className={`px-2 py-1 rounded text-xs border cursor-pointer transition-colors ${
+                          checked ? 'bg-gold/20 border-gold text-gold2' : 'bg-panel2 border-line text-muted hover:text-text'
+                        }`}
+                      >
+                        {g.name}
+                      </button>
+                    );
+                  })}
+                </div>
+              </Field>
               <Field label="步兵" hint={`池 ${fmt(pool.infantry)}`}>
-                <NumInput value={infantry} onChange={setInfantry} max={maxInf} step={10} ariaLabel="军团步兵" />
+                <NumInput value={infantry} onChange={setInfantry} max={pool.infantry} step={10} ariaLabel="军团步兵" />
               </Field>
               <Field label="骑兵" hint={`池 ${fmt(pool.cavalry)}`}>
-                <NumInput value={cavalry} onChange={setCavalry} max={maxCav} step={10} ariaLabel="军团骑兵" />
+                <NumInput value={cavalry} onChange={setCavalry} max={pool.cavalry} step={10} ariaLabel="军团骑兵" />
               </Field>
             </div>
             <Field label="战斗策略">
@@ -174,278 +188,203 @@ export default function ArmiesPage() {
               </select>
             </Field>
             <div className="flex justify-between text-xs">
-              <span className="text-muted">统帅占用（{selectedGenerals.length} 将）</span>
-              <span className={`tabular ${infantry + cavalry > cap ? 'text-danger' : 'text-text'}`}>{infantry + cavalry} / {cap}</span>
+              <span className="text-muted">统帅占用</span>
+              <span className="text-text tabular">{infantry + cavalry} / {cap}</span>
             </div>
-            <ProgressBar value={infantry + cavalry} max={Math.max(1, cap)} />
-            <Field label="目标城市" hint={attackableTargets.length === 0 ? '暂无相邻敌方城市' : undefined}>
-              <select className="w-full h-8 rounded bg-bg border border-line text-text text-sm" value={target} onChange={(e) => setTarget(e.target.value)}>
-                <option value="">选择目标（敌方/己方）</option>
-                <optgroup label="可进攻的敌方城市">
-                  {attackableTargets.map((e) => (
-                    <option key={e.cityId} value={e.cityId}>{cityName(e.cityId)}（守军 {fmt(e.garrison)}）</option>
-                  ))}
-                </optgroup>
-                {useTalisman && (
-                  <optgroup label="全部敌方城市（神行符远征）">
-                    {allEnemyTargets.map((e) => (
-                      <option key={e.cityId} value={e.cityId}>
-                        {cityName(e.cityId)}（{fmt(e.garrison)} · 需{talismanCostClient(cityProvinceId(origin), cityProvinceId(e.cityId))}张）
-                      </option>
-                    ))}
-                  </optgroup>
-                )}
-                <optgroup label="己方城市（增援）">
-                  {friendlyTargets.filter((c) => c.cityId !== origin).map((c) => (
-                    <option key={c.cityId} value={c.cityId}>{cityName(c.cityId)}</option>
-                  ))}
-                </optgroup>
-              </select>
-            </Field>
-            {routeTime > 0 && (
-              <div className="flex justify-between text-xs">
-                <span className="text-muted">行军时间</span>
-                <span className="text-text tabular">{fmtDur(routeTime * 1000)}</span>
-              </div>
+            {bannerFlags < 1 && (
+              <div className="text-orange text-xs">军团旗不足（科研院投入 ≥100 万人口后概率获得，无保底）</div>
             )}
-            {expected && infantry + cavalry > 0 && (
-              <div className="bg-panel2/70 rounded p-2 space-y-1 text-xs">
-                <div className="flex justify-between"><span className="text-muted">预计进攻战力</span><span className="text-gold tabular">{fmt(expected.attackerPower)}</span></div>
-                <div className="flex justify-between"><span className="text-muted">敌方防守战力</span><span className="text-danger tabular">{fmt(expected.defenderPower)}</span></div>
-                <div className="flex justify-between"><span className="text-muted">预计胜率（估算）</span><span className="text-gold2 tabular">{Math.round(expected.winProbability * 100)}%</span></div>
-              </div>
-            )}
-            {infantry + cavalry > cap && (
-              <div className="text-danger text-xs">当前军团 {infantry + cavalry} 人，将领合计统帅 {cap} 人，超出 {infantry + cavalry - cap} 人</div>
-            )}
-            {attackWithoutGeneral && (
-              <div className="text-danger text-xs">攻城必须由将领统率，请至少选择 1 名将领</div>
-            )}
-            {useTalisman && target && (
-              <div className="text-xs text-muted">
-                神行符远征：消耗 <span className={talismanShort ? 'text-danger' : 'text-gold'}>{talismanNeed} 张</span>（持有 {fmt(display.tech?.talismans ?? 0)}）
-              </div>
-            )}
-            <label className="flex items-center justify-between bg-panel2/50 rounded p-2 cursor-pointer">
-              <span className="text-xs text-muted">神行符：突破接壤限制，可攻打任意省份城市</span>
-              <input
-                type="checkbox"
-                checked={useTalisman}
-                onChange={(e) => {
-                  setUseTalisman(e.target.checked);
-                  if (!e.target.checked) setTarget('');
-                }}
-                className="accent-[#d4a94e] w-4 h-4"
-              />
-            </label>
-            <Btn onClick={createArmy} disabled={busy || !target || infantry + cavalry <= 0 || talismanShort || attackWithoutGeneral} className="w-full py-2">
-              {busy ? '提交中…' : '确认出征'}
+            <Btn onClick={createArmy} disabled={busy || bannerFlags < 1 || !armyName.trim() || !bannerGeneralId || infantry + cavalry <= 0} className="w-full py-2">
+              {busy ? '组建中…' : '组建军团（消耗 1 军团旗）'}
             </Btn>
-            {!busy && (!target || infantry + cavalry <= 0 || talismanShort || attackWithoutGeneral) && (
-              <div className="text-xs text-muted">
-                {attackWithoutGeneral
-                  ? '攻城必须由将领统率，请选择将领'
-                  : !target
-                    ? '请选择目标城市'
-                    : infantry + cavalry <= 0
-                      ? '请填写步兵/骑兵数量'
-                      : talismanShort
-                        ? `神行符不足：需要 ${talismanNeed} 张，持有 ${fmt(display.tech?.talismans ?? 0)}`
-                        : '尚不满足出征条件'}
-              </div>
-            )}
           </div>
         </Card>
 
-        {idleArmies.length > 0 && (
-          <Card title={`空闲军团（${idleArmies.length}）`}>
-            <div className="space-y-2">
-              {idleArmies.map((a) => {
-                const g = display.generals.find((x) => x.id === a.generalId);
-                const targets = display.enemyCities.filter((e) => canAttackClient(display, e.cityId));
-                return (
-                  <div key={a.id} className="bg-panel2/60 rounded p-2">
-                    <div className="flex items-center justify-between text-xs">
-                      <span>{g?.name} · 步兵 {fmt(a.infantry)} · 骑兵 {fmt(a.cavalry)}</span>
-                      <span className="text-muted">位于 {cityName(a.originCityId)}</span>
-                    </div>
-                    <div className="flex gap-2 mt-1.5">
-                      <select className="flex-1 h-8 rounded bg-bg border border-line text-text text-xs" id={`t-${a.id}`}>
-                        <option value="">选择目标</option>
-                        {targets.map((e) => (
-                          <option key={e.cityId} value={e.cityId}>{cityName(e.cityId)}（守军 {fmt(e.garrison)}）</option>
-                        ))}
-                        {display.cities.filter((c) => c.cityId !== a.originCityId).map((c) => (
-                          <option key={c.cityId} value={c.cityId}>{cityName(c.cityId)}（增援）</option>
-                        ))}
-                      </select>
-                      <Btn
-                        variant="orange"
-                        disabled={busyArmyId === a.id}
-                        onClick={() => {
-                          const sel = document.getElementById(`t-${a.id}`) as HTMLSelectElement;
-                          if (sel.value) march(a.id, sel.value);
-                        }}
-                        className="!py-1 text-xs"
-                      >
-                        出征
-                      </Btn>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </Card>
-        )}
-
-        {camps.length > 0 && (
-          <Card title={`蛮族营地（${camps.length}）`}>
-            <div className="text-xs text-muted mb-2">地图上的蛮族营地，可从任意己方城市攻打（无需接壤）。胜利获得人口与装备，有概率掉落神行符。</div>
-            <div className="space-y-2">
-              {camps.map((c) => {
-                const host = cityName(c.hostCityId);
-                return (
-                  <div key={c.id} className="bg-panel2/60 rounded p-2">
-                    <div className="flex items-center justify-between text-xs mb-1.5">
-                      <span className="text-orange">营地 · 近{host} · 守军 {fmt(c.garrison)}</span>
-                      <button
-                        className="text-gold hover:text-gold2 cursor-pointer"
-                        onClick={() => {
-                          selectCity(c.hostCityId);
-                          useGame.getState().setView('map');
-                        }}
-                      >
-                        地图查看
-                      </button>
-                    </div>
-                    <div className="flex gap-1.5 flex-wrap">
-                      {idleGenerals.slice(0, 8).map((g) => {
-                        const checked = selectedGeneralIds.includes(g.id);
-                        return (
-                          <button
-                            key={g.id}
-                            type="button"
-                            onClick={() => toggleGeneral(g.id)}
-                            className={`px-2 py-0.5 rounded text-[11px] border cursor-pointer ${
-                              checked ? 'bg-gold/20 border-gold text-gold2' : 'bg-panel border-line text-muted'
-                            }`}
-                          >
-                            {g.name}
-                          </button>
-                        );
-                      })}
-                    </div>
-                    <div className="flex gap-2 items-center mt-1.5">
-                      <input
-                        type="number"
-                        min={0}
-                        max={pool.infantry}
-                        value={infantry}
-                        onChange={(e) => setInfantry(Number(e.target.value) || 0)}
-                        aria-label="营地步兵"
-                        className="w-24 h-8 px-2 rounded bg-bg border border-line text-text text-sm tabular"
-                      />
-                      <Btn
-                        variant="orange"
-                        disabled={busy || selectedGenerals.length === 0 || infantry <= 0}
-                        onClick={async () => {
-                          setBusy(true);
-                          await mutate(() =>
-                            api.barbarianAttack({
-                              campId: c.id,
-                              generalIds: selectedGenerals.map((g) => g.id),
-                              name: armyName || undefined,
-                              strategy,
-                              infantry,
-                              cavalry: 0,
-                            })
-                          );
-                          setBusy(false);
-                          setInfantry(0);
-                          setSelectedGeneralIds([]);
-                        }}
-                        className="!py-1 text-xs"
-                      >
-                        攻打营地
-                      </Btn>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </Card>
-        )}
-
-        {marching.length > 0 && (
-          <Card title={`行军中（${marching.length}）`}>
-            <div className="space-y-2">
-              {marching.map((a) => {
-                const g = display.generals.find((x) => x.id === a.generalId);
-                const departed = Date.parse(a.departedAt ?? '');
-                const arrives = Date.parse(a.arrivesAt ?? '');
-                const pct = Math.min(1, Math.max(0, (now - departed) / (arrives - departed)));
-                const cancellable = now - departed < 60_000;
-                return (
-                  <div key={a.id} className="bg-panel2/60 rounded p-2">
-                    <div className="flex justify-between text-xs mb-1">
-                      <span>{g?.name ?? '增援'} · {fmt(a.infantry + a.cavalry)} 人 → {cityName(a.targetCityId ?? '')}</span>
-                      <span className="text-muted tabular">{fmtDur(Math.max(0, arrives - now))}</span>
-                    </div>
-                    <ProgressBar value={pct} max={1} color="bg-orange" />
-                    <div className="flex justify-between items-center mt-1.5">
-                      <span className="text-xs text-muted">{cancellable ? '出发 60 秒内可撤回' : '已超出撤回窗口'}</span>
-                      <Btn variant="danger" disabled={!cancellable || busyArmyId === a.id} onClick={() => cancelMarch(a.id)} className="!py-0.5 !px-2 text-xs">
-                        撤回
-                      </Btn>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </Card>
-        )}
-
-        {returning.length > 0 && (
-          <Card title={`返回中（${returning.length}）`}>
-            {returning.map((a) => {
-              const g = display.generals.find((x) => x.id === a.generalId);
+        {/* 军团列表 */}
+        <Card title={`军团（${armies.length}）`}>
+          {armies.length === 0 && (
+            <div className="text-xs text-muted py-2">暂无军团。获得军团旗后组建第一支军团。</div>
+          )}
+          <div className="space-y-3">
+            {armies.map((a) => {
+              const banner = display.generals.find((g) => g.id === a.bannerGeneralId);
+              const members = a.memberGeneralIds
+                .map((id) => display.generals.find((g) => g.id === id))
+                .filter((g): g is NonNullable<typeof g> => !!g);
+              const attackableTargets = display.enemyCities.filter((e) => canAttackClient(display, e.cityId));
+              const isFriendly = !!a.targetCityId && display.cities.some((c) => c.cityId === a.targetCityId);
+              const target = marchTarget[a.id] ?? '';
+              const useTalisman = marchTalisman[a.id] ?? false;
+              const speedMul = 1 + (display.tech?.levels?.logistics ?? 0) * balance.tech.logistics.effectPerLevel;
+              const routeTime = target
+                ? (marchTimeClient(a.originCityId, target, a.infantry, a.cavalry, speedMul) ||
+                    marchTimeFallbackClient(a.originCityId, target, a.infantry, a.cavalry, speedMul))
+                : 0;
+              const talismanNeed = target ? talismanCostClient(cityProvinceId(a.originCityId), cityProvinceId(target)) : 0;
+              const expected = banner && target && display.enemyCities.some((e) => e.cityId === target)
+                ? expectedBattle(display, banner.level, a.infantry, a.cavalry, target)
+                : null;
               const departed = Date.parse(a.departedAt ?? '');
               const arrives = Date.parse(a.arrivesAt ?? '');
-              const pct = Math.min(1, Math.max(0, (now - departed) / (arrives - departed)));
+              const pct = arrives > departed ? Math.min(1, Math.max(0, (now - departed) / (arrives - departed))) : 0;
+              const isStatic = a.status === 'IDLE' || a.status === 'GARRISON';
+              const addTargets = idleGenerals.filter((g) => !a.memberGeneralIds.includes(g.id));
               return (
-                <div key={a.id} className="bg-panel2/60 rounded p-2 mb-2">
-                  <div className="flex justify-between text-xs mb-1">
-                    <span>{g?.name} · 残部返回 {cityName(a.originCityId)}</span>
-                    <span className="text-muted tabular">{fmtDur(Math.max(0, arrives - now))}</span>
+                <div key={a.id} className="bg-panel2/60 rounded p-2.5 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <div className="text-sm font-bold text-gold2">
+                      🚩 {a.name}
+                      <span className="ml-2 text-xs font-normal text-muted">
+                        {a.status === 'MARCHING' ? `行军中 → ${cityName(a.targetCityId ?? '')}` : a.status === 'RETURNING' ? '返回中' : a.status === 'GARRISON' ? `驻守 ${cityName(a.originCityId)}` : `驻地 ${cityName(a.originCityId)}`}
+                      </span>
+                    </div>
+                    <span className="text-xs text-muted tabular">步 {fmt(a.infantry)} · 骑 {fmt(a.cavalry)}</span>
                   </div>
-                  <ProgressBar value={pct} max={1} color="bg-muted" />
+                  <div className="flex flex-wrap gap-1.5">
+                    {members.map((g) => (
+                      <span key={g.id} className={`px-2 py-0.5 rounded text-[11px] border ${g.id === a.bannerGeneralId ? 'bg-gold/20 border-gold text-gold2' : 'bg-panel border-line text-text'}`}>
+                        {g.name} Lv.{g.level}
+                        {g.id === a.bannerGeneralId ? ' 🚩军团长' : ''}
+                        {isStatic && g.id !== a.bannerGeneralId && (
+                          <button className="ml-1 text-danger hover:text-text cursor-pointer" onClick={() => removeGeneral(a.id, g.id)} title="撤走该将领">✕</button>
+                        )}
+                      </span>
+                    ))}
+                    {addTargets.length > 0 && isStatic && (
+                      <select className="h-6 rounded bg-bg border border-line text-text text-[11px]" value="" onChange={(e) => e.target.value && addGeneral(a.id, e.target.value)}>
+                        <option value="">+ 加入将领</option>
+                        {addTargets.map((g) => (
+                          <option key={g.id} value={g.id}>{g.name}（Lv.{g.level}）</option>
+                        ))}
+                      </select>
+                    )}
+                  </div>
+
+                  {isStatic && (
+                    <>
+                      <div className="flex gap-2 items-center flex-wrap">
+                        <select className="flex-1 min-w-[180px] h-8 rounded bg-bg border border-line text-text text-xs" value={target} onChange={(e) => setMarchTarget((m) => ({ ...m, [a.id]: e.target.value }))}>
+                          <option value="">选择出征目标</option>
+                          <optgroup label="可进攻的敌方城市">
+                            {attackableTargets.map((e) => (
+                              <option key={e.cityId} value={e.cityId}>{cityName(e.cityId)}（守军 {fmt(e.garrison)}）</option>
+                            ))}
+                          </optgroup>
+                          {useTalisman && (
+                            <optgroup label="全部敌方城市（神行符远征）">
+                              {display.enemyCities.map((e) => (
+                                <option key={e.cityId} value={e.cityId}>
+                                  {cityName(e.cityId)}（{fmt(e.garrison)} · {talismanCostClient(cityProvinceId(a.originCityId), cityProvinceId(e.cityId))}张）
+                                </option>
+                              ))}
+                            </optgroup>
+                          )}
+                          <optgroup label="己方城市（增援）">
+                            {display.cities.filter((c) => c.cityId !== a.originCityId).map((c) => (
+                              <option key={c.cityId} value={c.cityId}>{cityName(c.cityId)}</option>
+                            ))}
+                          </optgroup>
+                        </select>
+                        <Btn variant="orange" disabled={!target || busyArmyId === a.id} onClick={() => doMarch(a.id, target, useTalisman)} className="!py-1 text-xs">
+                          出征
+                        </Btn>
+                        {!target && (
+                          <label className="flex items-center gap-1 text-[11px] text-muted">
+                            <input type="checkbox" checked={useTalisman} onChange={(e) => setMarchTalisman((m) => ({ ...m, [a.id]: e.target.checked }))} className="accent-[#d4a94e]" />
+                            神行符远征
+                          </label>
+                        )}
+                      </div>
+                      {routeTime > 0 && (
+                        <div className="flex justify-between text-xs">
+                          <span className="text-muted">行军时间</span>
+                          <span className="text-text tabular">{fmtDur(routeTime * 1000)}</span>
+                        </div>
+                      )}
+                      {expected && <div className="text-xs text-muted">预计进攻战力 {fmt(expected.attackerPower)} · 敌防守 {fmt(expected.defenderPower)} · 胜率约 {Math.round(expected.winProbability * 100)}%</div>}
+                      <div className="flex gap-2 items-center">
+                        <Btn variant="ghost" onClick={() => reinforce(a.id, Math.min(100, pool.infantry), 0)} className="!py-1 text-xs" disabled={pool.infantry <= 0}>
+                          补充 100 步兵
+                        </Btn>
+                        <Btn variant="ghost" onClick={() => reinforce(a.id, 0, Math.min(50, pool.cavalry))} className="!py-1 text-xs" disabled={pool.cavalry <= 0}>
+                          补充 50 骑兵
+                        </Btn>
+                        <span className="text-[11px] text-muted">补充兵力从士兵池扣除</span>
+                      </div>
+                    </>
+                  )}
+
+                  {(a.status === 'MARCHING' || a.status === 'RETURNING') && (
+                    <div>
+                      <div className="flex justify-between text-xs mb-1">
+                        <span className="text-muted">{a.status === 'MARCHING' ? '行军' : '返回'}进度</span>
+                        <span className="text-muted tabular">{fmtDur(Math.max(0, arrives - now))}</span>
+                      </div>
+                      <ProgressBar value={pct} max={1} color="bg-orange" />
+                      <div className="flex gap-2 mt-1.5 items-center">
+                        {a.status === 'MARCHING' && now - departed <= balance.cancelMarchWindowSeconds * 1000 && (
+                          <Btn variant="danger" onClick={() => cancelMarch(a.id)} className="!py-0.5 !px-2 text-xs">撤回</Btn>
+                        )}
+                        <Btn variant="ghost" disabled={speedUps < 1 || busyArmyId === a.id} onClick={() => useSpeedup('army', a.id)} className="!py-0.5 !px-2 text-xs">
+                          使用加速符（-1小时）
+                        </Btn>
+                      </div>
+                    </div>
+                  )}
                 </div>
               );
             })}
-          </Card>
-        )}
+          </div>
+        </Card>
 
-        <Card title={`驻守中（${garrisoned.length}）`}>
-          {garrisoned.length === 0 ? (
-            <div className="text-xs text-muted py-1">暂无将领驻守的城市。占领城市后军队自动驻守。</div>
-          ) : (
-            <div className="space-y-1.5">
-              {garrisoned.map((c) => {
-                const g = display.generals.find((x) => x.id === c.generalId);
-                return (
-                  <div key={c.cityId} className="flex items-center justify-between text-xs bg-panel2/50 rounded px-2 py-1.5">
-                    <span>
-                      <span className="text-gold">{cityName(c.cityId)}</span> · {g?.name} · 步兵 {fmt(c.infantry)} · 骑兵 {fmt(c.cavalry)}
-                    </span>
-                    <button className="text-muted hover:text-text cursor-pointer" onClick={() => { selectCity(c.cityId); }}>
-                      详情
+        {/* 蛮族营地 */}
+        {(display.barbarianCamps ?? []).length > 0 && (
+          <Card title={`蛮族营地（${(display.barbarianCamps ?? []).length}）`}>
+            <div className="text-xs text-muted mb-2">胜利获得人口与装备，有概率掉落神行符。请选择一支空闲军团前往讨伐。</div>
+            <div className="space-y-2">
+              {(display.barbarianCamps ?? []).map((c) => (
+                <div key={c.id} className="bg-panel2/60 rounded p-2 flex items-center justify-between text-xs">
+                  <span className="text-orange">营地 · 近{cityName(c.hostCityId)} · 守军 {fmt(c.garrison)}</span>
+                  <div className="flex items-center gap-2">
+                    <select id={`camp-army-${c.id}`} className="h-7 rounded bg-bg border border-line text-text text-xs">
+                      <option value="">选择军团</option>
+                      {armies.filter((a) => a.status === 'IDLE' || a.status === 'GARRISON').map((a) => (
+                        <option key={a.id} value={a.id}>🚩 {a.name}</option>
+                      ))}
+                    </select>
+                    <Btn
+                      variant="orange"
+                      className="!py-0.5 !px-2 text-xs"
+                      onClick={async () => {
+                        const sel = document.getElementById(`camp-army-${c.id}`) as HTMLSelectElement;
+                        const army = armies.find((a) => a.id === sel.value);
+                        if (!army) return;
+                        setBusy(true);
+                        await mutate(() =>
+                          api.barbarianAttack({
+                            campId: c.id,
+                            bannerGeneralId: army.bannerGeneralId,
+                            memberGeneralIds: army.memberGeneralIds,
+                            strategy: army.strategy,
+                            infantry: army.infantry,
+                            cavalry: army.cavalry,
+                          })
+                        );
+                        setBusy(false);
+                      }}
+                      disabled={busy}
+                    >
+                      讨伐
+                    </Btn>
+                    <button className="text-muted hover:text-gold cursor-pointer" onClick={() => { selectCity(c.hostCityId); useGame.getState().setView('map'); }}>
+                      地图查看
                     </button>
                   </div>
-                );
-              })}
+                </div>
+              ))}
             </div>
-          )}
-        </Card>
+          </Card>
+        )}
       </div>
     </div>
   );

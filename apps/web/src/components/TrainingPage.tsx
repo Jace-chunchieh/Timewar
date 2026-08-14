@@ -92,9 +92,14 @@ export default function TrainingPage() {
                   <ProgressBar value={pct} max={1} />
                   <div className="flex justify-between items-center mt-1.5">
                     <span className="text-xs text-muted">完成后返回 50% 人口（取消惩罚）</span>
-                    <Btn variant="danger" onClick={() => cancelBatch(b.id)} disabled={busy} className="!py-0.5 !px-2 text-xs">
-                      取消
-                    </Btn>
+                    <div className="flex gap-1.5">
+                      <Btn variant="ghost" disabled={(display.tech?.speedUps ?? 0) < 1 || busy} onClick={() => mutate(() => api.useSpeedup('training', b.id))} className="!py-0.5 !px-2 text-xs">
+                        加速符 -1h
+                      </Btn>
+                      <Btn variant="danger" onClick={() => cancelBatch(b.id)} disabled={busy} className="!py-0.5 !px-2 text-xs">
+                        取消
+                      </Btn>
+                    </div>
                   </div>
                 </div>
               );

@@ -45,6 +45,42 @@ const post = (url: string, body?: unknown) =>
 const get = (url: string) => app.inject({ method: 'GET', url, headers: AUTH });
 const stateOf = (res: { json: () => { state: GameState } }) => res.json().state;
 
+// 注入军团旗到当前存档
+async function injectBannerFlags(n: number) {
+  const row = db.prepare('SELECT state FROM game_state LIMIT 1').get() as { state: string };
+  const injected = JSON.parse(row.state) as GameState;
+  injected.tech.bannerFlags = n;
+  db.prepare('UPDATE game_state SET state = ?').run(JSON.stringify(injected));
+}
+
+// 快速建军团（注入旗帜）：返回 armyId
+async function newArmy(opts: { generalId: string; infantry?: number; cavalry?: number }): Promise<string> {
+  await injectBannerFlags(5);
+  const create = await post('/api/armies/create', {
+    originCityId: 'acity',
+    name: '测试军团',
+    bannerGeneralId: opts.generalId,
+    memberGeneralIds: [opts.generalId],
+    strategy: 'NORMAL',
+    infantry: opts.infantry ?? 200,
+    cavalry: opts.cavalry ?? 0,
+  });
+  expect(create.statusCode, JSON.stringify(create.json())).toBe(200);
+  const s = stateOf(create);
+  return s.armies[s.armies.length - 1].id;
+}
+async function newArmyAndMarch(opts: {
+  generalId: string;
+  targetCityId: string;
+  infantry?: number;
+  useTalisman?: boolean;
+}): Promise<GameState> {
+  const armyId = await newArmy(opts);
+  const m = await post('/api/armies/march', { armyId, targetCityId: opts.targetCityId, useTalisman: opts.useTalisman ?? false });
+  expect(m.statusCode).toBe(200);
+  return stateOf(m);
+}
+
 describe('API 集成（后端权威）', () => {
   it('授权码登录：未登录 401、正确登录返回管理员、错误码拒绝', async () => {
     // 无授权码 → 401
@@ -84,13 +120,8 @@ describe('API 集成（后端权威）', () => {
     expect(p1Add.statusCode).toBe(400);
     expect(p1Add.json().code).toBe('AUTH_FORBIDDEN');
     // 管理员存档：占领清远
-    await post('/api/armies/create', {
-      originCityId: 'acity',
-      generalId: stateOf(await get('/api/game/state')).generals[0].id,
-      infantry: 200,
-      cavalry: 0,
-      targetCityId: 'qingyuan',
-    });
+    const gidAdmin = stateOf(await get('/api/game/state')).generals[0].id;
+    await newArmyAndMarch({ generalId: gidAdmin, targetCityId: 'qingyuan' });
     const s = stateOf(await get('/api/game/state'));
     // 玩家一存档独立：仍是初始状态
     const p1 = await app.inject({ method: 'GET', url: '/api/game/state', headers: { 'x-auth-code': 'player01' } });
@@ -112,7 +143,7 @@ describe('API 集成（后端权威）', () => {
     expect(s.enemyCities.find((e) => e.cityId === 'qingyuan')?.garrison).toBe(100);
     expect(s.enemyCities.find((e) => e.cityId === 'guangzhou')?.level ?? s.enemyCities.some((e) => e.cityId === 'guangzhou')).toBe(true);
     expect(s.enemyCities.length).toBeGreaterThan(330);
-    expect(s.version).toBe(5);
+    expect(s.version).toBe(6);
     expect(s.tech.researchWorkers).toBe(0);
     expect(s.welcomeShown).toBe(false);
     expect(s.tutorialStep).toBe(1);
@@ -250,33 +281,62 @@ describe('API 集成（后端权威）', () => {
     expect(s.resources.infantry).toBe(201);
   });
 
-  it('将领训练期间不能出征', async () => {
+  it('将领训练期间不能编入军团', async () => {
     await post('/api/game/new');
     const gid = stateOf(await get('/api/game/state')).generals[0].id;
     await post('/api/generals/start-training', { generalId: gid });
+    await injectBannerFlags(1);
     const bad = await post('/api/armies/create', {
       originCityId: 'acity',
-      generalId: gid,
+      name: '测试军团',
+      bannerGeneralId: gid,
+      memberGeneralIds: [gid],
       infantry: 100,
       cavalry: 0,
-      targetCityId: 'qingyuan',
     });
     expect(bad.statusCode).toBe(400);
     expect(bad.json().code).toBe('GENERAL_NOT_IDLE');
     await post('/api/generals/stop-training', { generalId: gid });
   });
 
+  it('组建军团需军团旗；军团长不可更换；成员上限 10 人', async () => {
+    await post('/api/game/new');
+    const gid = stateOf(await get('/api/game/state')).generals[0].id;
+    // 无旗帜 → 拒绝
+    const noFlag = await post('/api/armies/create', {
+      originCityId: 'acity',
+      name: '测试军团',
+      bannerGeneralId: gid,
+      memberGeneralIds: [gid],
+      infantry: 100,
+      cavalry: 0,
+    });
+    expect(noFlag.statusCode).toBe(400);
+    expect(noFlag.json().code).toBe('BANNER_FLAG_REQUIRED');
+    // 有旗帜 → 成功，消耗 1 面
+    await injectBannerFlags(3);
+    const ok = await post('/api/armies/create', {
+      originCityId: 'acity',
+      name: '虎啸营',
+      bannerGeneralId: gid,
+      memberGeneralIds: [gid],
+      infantry: 100,
+      cavalry: 0,
+    });
+    expect(ok.statusCode).toBe(200);
+    const s = stateOf(ok);
+    expect(s.tech.bannerFlags).toBe(2);
+    const armyId = s.armies[0].id;
+    // 军团长不可撤走
+    const removeBanner = await post('/api/armies/remove-general', { armyId, generalId: gid });
+    expect(removeBanner.statusCode).toBe(400);
+    expect(removeBanner.json().code).toBe('BANNER_GENERAL_FIXED');
+  });
+
   it('驻守将领可训练：占领清远后驻守将领训练，停止后恢复驻守', async () => {
     await post('/api/game/new');
     const gid = stateOf(await get('/api/game/state')).generals[0].id;
-    await post('/api/armies/create', {
-      originCityId: 'acity',
-      generalId: gid,
-      infantry: 200,
-      cavalry: 0,
-      targetCityId: 'qingyuan',
-    });
-    let s = stateOf(await get('/api/game/state'));
+    let s = await newArmyAndMarch({ generalId: gid, targetCityId: 'qingyuan' });
     now = Date.parse(s.armies[0].arrivesAt!) + 1000;
     s = stateOf(await get('/api/game/state'));
     const qy = s.cities.find((c) => c.cityId === 'qingyuan')!;
@@ -306,14 +366,7 @@ describe('API 集成（后端权威）', () => {
     injected.enemyCities = injected.enemyCities.filter((e) => e.cityId !== 'yangjiang');
     db.prepare('UPDATE game_state SET state = ?').run(JSON.stringify(injected));
     // 占领清远获得驻军
-    await post('/api/armies/create', {
-      originCityId: 'acity',
-      generalId: gid,
-      infantry: 200,
-      cavalry: 0,
-      targetCityId: 'qingyuan',
-    });
-    let s = stateOf(await get('/api/game/state'));
+    let s = await newArmyAndMarch({ generalId: gid, targetCityId: 'qingyuan' });
     now = Date.parse(s.armies[0].arrivesAt!) + 1000;
     s = stateOf(await get('/api/game/state'));
     // 无神行符时 transfer 到无路线己方城市 → 拒绝
@@ -342,19 +395,12 @@ describe('API 集成（后端权威）', () => {
   it('驻守出征：驻守将领从驻守地调兵攻打周边', async () => {
     await post('/api/game/new');
     const gid = stateOf(await get('/api/game/state')).generals[0].id;
-    await post('/api/armies/create', {
-      originCityId: 'acity',
-      generalId: gid,
-      infantry: 200,
-      cavalry: 0,
-      targetCityId: 'qingyuan',
-    });
-    let s = stateOf(await get('/api/game/state'));
+    let s = await newArmyAndMarch({ generalId: gid, targetCityId: 'qingyuan' });
     now = Date.parse(s.armies[0].arrivesAt!) + 1000;
     s = stateOf(await get('/api/game/state'));
     const qy = s.cities.find((c) => c.cityId === 'qingyuan')!;
     expect(qy.infantry).toBeGreaterThan(0);
-    // 驻守出征：清远驻军攻打相邻的阳山？——清远邻接 acity 等，选 zhaoqing（清远邻接肇庆）
+    // 驻守出征：清远驻军攻打相邻的肇庆
     const attack = await post('/api/armies/garrison-attack', {
       garrisonCityId: 'qingyuan',
       generalId: gid,
@@ -380,31 +426,31 @@ describe('API 集成（后端权威）', () => {
     expect(bad.json().code).toBe('GENERAL_NOT_GARRISON');
   });
 
-  it('统帅上限：超出200人禁止创建军团', async () => {
+  it('统帅上限：军团长 1 级(×1.5=300)超出禁止创建军团', async () => {
     await post('/api/game/new');
     const gid = stateOf(await get('/api/game/state')).generals[0].id;
+    await injectBannerFlags(1);
+    // 注入士兵池兵力
+    const row = db.prepare('SELECT state FROM game_state LIMIT 1').get() as { state: string };
+    const injected = JSON.parse(row.state) as GameState;
+    injected.resources.infantry += 500;
+    db.prepare('UPDATE game_state SET state = ?').run(JSON.stringify(injected));
     const bad = await post('/api/armies/create', {
       originCityId: 'acity',
-      generalId: gid,
-      infantry: 201,
+      name: '测试军团',
+      bannerGeneralId: gid,
+      memberGeneralIds: [gid],
+      infantry: 301,
       cavalry: 0,
     });
     expect(bad.statusCode).toBe(400);
     expect(bad.json().code).toBe('COMMAND_LIMIT_EXCEEDED');
   });
 
-  it('完整流程：200步兵攻清远 → 占领 → 增速+4/10秒 → A市升级 → 战报可查', async () => {
+  it('完整流程：200步兵攻清远 → 占领 → 增速+5/10秒 → A市升级 → 战报可查', async () => {
     await post('/api/game/new');
     const gid = stateOf(await get('/api/game/state')).generals[0].id;
-    const create = await post('/api/armies/create', {
-      originCityId: 'acity',
-      generalId: gid,
-      infantry: 200,
-      cavalry: 0,
-      targetCityId: 'qingyuan',
-    });
-    expect(create.statusCode).toBe(200);
-    let s = stateOf(create);
+    let s = await newArmyAndMarch({ generalId: gid, targetCityId: 'qingyuan' });
     expect(s.armies[0].status).toBe('MARCHING');
     const arrivesAt = Date.parse(s.armies[0].arrivesAt!);
     now = arrivesAt + 1000;
@@ -424,24 +470,17 @@ describe('API 集成（后端权威）', () => {
     await post('/api/game/new');
     const gid = stateOf(await get('/api/game/state')).generals[0].id;
     // 无神行符时不允许攻打非相邻城市
-    const noTalisman = await post('/api/armies/create', {
-      originCityId: 'acity',
-      generalId: gid,
-      infantry: 200,
-      cavalry: 0,
-      targetCityId: 'wuhan',
-    });
+    const armyId0 = await newArmy({ generalId: gid, infantry: 200 });
+    const noTalisman = await post('/api/armies/march', { armyId: armyId0, targetCityId: 'wuhan' });
     expect(noTalisman.statusCode).toBe(400);
     expect(noTalisman.json().code).toBe('NOT_ATTACKABLE');
-    // 神行符不足
-    const noTalismans = await post('/api/armies/create', {
-      originCityId: 'acity',
-      generalId: gid,
-      infantry: 200,
-      cavalry: 0,
-      targetCityId: 'wuhan',
-      useTalisman: true,
-    });
+    // 神行符不足（先补充士兵池）
+    const row0 = db.prepare('SELECT state FROM game_state LIMIT 1').get() as { state: string };
+    const inj0 = JSON.parse(row0.state) as GameState;
+    inj0.resources.infantry += 500;
+    db.prepare('UPDATE game_state SET state = ?').run(JSON.stringify(inj0));
+    const armyId = await newArmy({ generalId: gid, infantry: 1 });
+    const noTalismans = await post('/api/armies/march', { armyId, targetCityId: 'wuhan', useTalisman: true });
     expect(noTalismans.statusCode).toBe(400);
     expect(noTalismans.json().code).toBe('INSUFFICIENT_TALISMANS');
     // 注入神行符（直接写库）→ 广东→湖北 隔1省 = 2 张
@@ -449,31 +488,20 @@ describe('API 集成（后端权威）', () => {
     const injected = JSON.parse(row.state) as GameState;
     injected.tech.talismans = 5;
     db.prepare('UPDATE game_state SET state = ?').run(JSON.stringify(injected));
-    const ok = await post('/api/armies/create', {
-      originCityId: 'acity',
-      generalId: gid,
-      infantry: 200,
-      cavalry: 0,
-      targetCityId: 'wuhan',
-      useTalisman: true,
-    });
+    const ok = await post('/api/armies/march', { armyId, targetCityId: 'wuhan', useTalisman: true });
+    if (ok.statusCode !== 200) console.log('march-ok-err:', JSON.stringify(ok.json()));
     expect(ok.statusCode).toBe(200);
     const s = stateOf(ok);
     expect(s.tech.talismans).toBe(3); // 5 - 2
-    expect(s.armies[0].status).toBe('MARCHING');
-    expect(s.armies[0].arrivesAt).toBeTruthy();
+    const marched = s.armies.find((a) => a.id === armyId)!;
+    expect(marched.status).toBe('MARCHING');
+    expect(marched.arrivesAt).toBeTruthy();
   });
 
   it('军团出发60秒内可撤回，超时禁止', async () => {
     await post('/api/game/new');
     const gid = stateOf(await get('/api/game/state')).generals[0].id;
-    const create = await post('/api/armies/create', {
-      originCityId: 'acity',
-      generalId: gid,
-      infantry: 100,
-      cavalry: 0,
-    });
-    const armyId = stateOf(create).armies[0].id;
+    const armyId = await newArmy({ generalId: gid, infantry: 100 });
     await post('/api/armies/march', { armyId, targetCityId: 'qingyuan' });
     now += 30_000;
     const cancel = await post('/api/armies/cancel-march', { armyId });
@@ -489,13 +517,8 @@ describe('API 集成（后端权威）', () => {
   it('只能攻击相邻敌方城市（非相邻拒绝）', async () => {
     await post('/api/game/new');
     const gid = stateOf(await get('/api/game/state')).generals[0].id;
-    const bad = await post('/api/armies/create', {
-      originCityId: 'acity',
-      generalId: gid,
-      infantry: 100,
-      cavalry: 0,
-      targetCityId: 'zhaoqing',
-    });
+    const armyId = await newArmy({ generalId: gid, infantry: 100 });
+    const bad = await post('/api/armies/march', { armyId, targetCityId: 'zhaoqing' });
     expect(bad.statusCode).toBe(400);
     expect(bad.json().code).toBe('NOT_ATTACKABLE');
   });
@@ -503,14 +526,7 @@ describe('API 集成（后端权威）', () => {
   it('调兵（transfer）：从驻军抽调至己方城市', async () => {
     await post('/api/game/new');
     const gid = stateOf(await get('/api/game/state')).generals[0].id;
-    await post('/api/armies/create', {
-      originCityId: 'acity',
-      generalId: gid,
-      infantry: 200,
-      cavalry: 0,
-      targetCityId: 'qingyuan',
-    });
-    let s = stateOf(await get('/api/game/state'));
+    let s = await newArmyAndMarch({ generalId: gid, targetCityId: 'qingyuan' });
     now = Date.parse(s.armies[0].arrivesAt!) + 1000;
     s = stateOf(await get('/api/game/state'));
     const qy = s.cities.find((c) => c.cityId === 'qingyuan')!;

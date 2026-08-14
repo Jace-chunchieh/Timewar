@@ -22,105 +22,62 @@ import { useGame } from '../store';
 import { useDisplay } from '../hooks';
 import { Btn, Card, Field, NumInput, ProgressBar } from './ui';
 
-export function AttackForm({ targetCityId, originCityId }: { targetCityId: string; originCityId?: string }) {
+export function AttackForm({ targetCityId }: { targetCityId: string }) {
   const display = useDisplay();
   const mutate = useGame((s) => s.mutate);
-  const ownedCities = useGame((s) => s.state?.cities ?? []);
-  const generals = useGame((s) => s.state?.generals ?? []);
   const selectCity = useGame((s) => s.selectCity);
-  const [origin, setOrigin] = useState(originCityId ?? ownedCities[0]?.cityId ?? 'acity');
-  const [generalId, setGeneralId] = useState('');
-  const [infantry, setInfantry] = useState(0);
-  const [cavalry, setCavalry] = useState(0);
+  const setView = useGame((s) => s.setView);
+  const [armyId, setArmyId] = useState('');
   const [useTalisman, setUseTalisman] = useState(false);
   const [busy, setBusy] = useState(false);
-  const [localErr, setLocalErr] = useState<string | null>(null);
 
-  const idleGenerals = generals.filter((g) => g.status === 'IDLE');
-  const general = generals.find((g) => g.id === generalId);
-  const cap = general ? commandCapClient(general.level, display ?? undefined) : 0;
-  const pool = display ? troopPoolClient(display) : { infantry: 0, cavalry: 0 };
-  const maxInf = Math.min(pool.infantry, Math.max(0, cap - cavalry));
-  const maxCav = Math.min(pool.cavalry, Math.max(0, cap - infantry));
-  const speedMul = 1 + (display?.tech?.levels?.logistics ?? 0) * balance.tech.logistics.effectPerLevel;
-  const routeTime = origin && display
-    ? (marchTimeClient(origin, targetCityId, infantry, cavalry, speedMul) ||
-        marchTimeFallbackClient(origin, targetCityId, infantry, cavalry, speedMul))
+  if (!display) return null;
+  const armies = display.armies.filter((a) => a.status === 'IDLE' || a.status === 'GARRISON');
+  const army = armies.find((a) => a.id === armyId);
+  const banner = army ? display.generals.find((g) => g.id === army.bannerGeneralId) : undefined;
+  const attackable = canAttackClient(display, targetCityId);
+  const speedMul = 1 + (display.tech?.levels?.logistics ?? 0) * balance.tech.logistics.effectPerLevel;
+  const routeTime = army
+    ? (marchTimeClient(army.originCityId, targetCityId, army.infantry, army.cavalry, speedMul) ||
+        marchTimeFallbackClient(army.originCityId, targetCityId, army.infantry, army.cavalry, speedMul))
     : 0;
-  const attackable = display ? canAttackClient(display, targetCityId) : false;
-  const talismanNeed = display && origin ? talismanCostClient(cityProvinceId(origin), cityProvinceId(targetCityId)) : 0;
-  const talismanShort = useTalisman && (display?.tech.talismans ?? 0) < talismanNeed;
-  const expected = display && general
-    ? expectedBattle(display, general.level, infantry, cavalry, targetCityId)
+  const talismanNeed = army ? talismanCostClient(cityProvinceId(army.originCityId), cityProvinceId(targetCityId)) : 0;
+  const talismanShort = useTalisman && (display.tech.talismans ?? 0) < talismanNeed;
+  const expected = army && banner
+    ? expectedBattle(display, banner.level, army.infantry, army.cavalry, targetCityId)
     : null;
-  const canSubmit = !busy && !!general && infantry + cavalry > 0 && infantry <= maxInf && cavalry <= maxCav && (!useTalisman || !talismanShort);
+  const canSubmit = !!army && (!useTalisman || !talismanShort);
 
   const submit = async () => {
+    if (!army) return;
     setBusy(true);
-    setLocalErr(null);
-    const ok = await mutate(() =>
-      api.armyCreate({
-        originCityId: origin,
-        generalId,
-        infantry,
-        cavalry,
-        targetCityId,
-        useTalisman,
-      })
-    );
+    await mutate(() => api.armyMarch(army.id, targetCityId, useTalisman));
     setBusy(false);
-    if (ok) {
-      setInfantry(0);
-      setCavalry(0);
-    }
   };
 
   return (
     <Card title={`出征 · 目标 ${cityName(targetCityId)}`}>
       <div className="space-y-2.5">
-        <Field label="出发城市">
-          <select
-            className="w-full h-8 rounded bg-bg border border-line text-text text-sm"
-            value={origin}
-            onChange={(e) => setOrigin(e.target.value)}
-          >
-            {ownedCities.map((c) => (
-              <option key={c.cityId} value={c.cityId}>{cityName(c.cityId)}</option>
-            ))}
-          </select>
-        </Field>
-        <Field label="选择将领" hint={idleGenerals.length === 0 ? '没有空闲将领' : undefined}>
-          <select
-            className="w-full h-8 rounded bg-bg border border-line text-text text-sm"
-            value={generalId}
-            onChange={(e) => setGeneralId(e.target.value)}
-          >
-            <option value="">请选择空闲将领</option>
-            {idleGenerals.map((g) => (
-              <option key={g.id} value={g.id}>
-                {g.name}（Lv.{g.level} 统帅{commandCapClient(g.level, display ?? undefined)}）
+        <Field label="选择军团" hint={armies.length === 0 ? '暂无可用军团，请先到军团页组建' : undefined}>
+          <select className="w-full h-8 rounded bg-bg border border-line text-text text-sm" value={armyId} onChange={(e) => setArmyId(e.target.value)}>
+            <option value="">选择军团</option>
+            {armies.map((a) => (
+              <option key={a.id} value={a.id}>
+                🚩 {a.name}（步 {fmt(a.infantry)} · 骑 {fmt(a.cavalry)} · 驻地 {cityName(a.originCityId)}）
               </option>
             ))}
           </select>
         </Field>
-        <Field label="步兵" hint={`可用 ${fmt(pool.infantry)}`}>
-          <NumInput value={infantry} onChange={setInfantry} max={maxInf} step={10} />
-        </Field>
-        <Field label="骑兵" hint={`可用 ${fmt(pool.cavalry)}`}>
-          <NumInput value={cavalry} onChange={setCavalry} max={maxCav} step={10} />
-        </Field>
-        <div className="flex justify-between text-xs">
-          <span className="text-muted">统帅占用</span>
-          <span className={`tabular ${infantry + cavalry > cap ? 'text-danger' : 'text-text'}`}>
-            {infantry + cavalry} / {cap}
-          </span>
-        </div>
-        <ProgressBar value={infantry + cavalry} max={Math.max(1, cap)} />
+        {army && (
+          <div className="text-xs text-muted">
+            军团成员 {army.memberGeneralIds.length} 人 · 军团长 {banner?.name}（Lv.{banner?.level}，统帅 ×1.5）
+          </div>
+        )}
         <div className="flex justify-between text-xs">
           <span className="text-muted">行军时间</span>
           <span className="text-text tabular">{routeTime > 0 ? fmtDur(routeTime * 1000) : '—'}</span>
         </div>
-        {expected && infantry + cavalry > 0 && (
+        {expected && (
           <div className="bg-panel2/70 rounded p-2 space-y-1 text-xs">
             <div className="flex justify-between"><span className="text-muted">预计进攻战力</span><span className="text-gold tabular">{fmt(expected.attackerPower)}</span></div>
             <div className="flex justify-between"><span className="text-muted">敌方防守战力</span><span className="text-danger tabular">{fmt(expected.defenderPower)}</span></div>
@@ -131,48 +88,18 @@ export function AttackForm({ targetCityId, originCityId }: { targetCityId: strin
           <div className="bg-panel2/70 rounded p-2">
             <label className="flex items-center justify-between cursor-pointer">
               <span className="text-xs text-muted">
-                该城市与己方无相邻路线，可使用神行符远征（需 {talismanNeed} 张，持有 {fmt(display?.tech.talismans ?? 0)}）
+                与己方无相邻路线，可使用神行符远征（需 {talismanNeed} 张，持有 {fmt(display.tech.talismans ?? 0)}）
               </span>
-              <input
-                type="checkbox"
-                checked={useTalisman}
-                onChange={(e) => setUseTalisman(e.target.checked)}
-                className="accent-[#d4a94e] w-4 h-4"
-              />
+              <input type="checkbox" checked={useTalisman} onChange={(e) => setUseTalisman(e.target.checked)} className="accent-[#d4a94e] w-4 h-4" />
             </label>
           </div>
         )}
-        {useTalisman && (
-          <div className="text-xs text-muted">
-            神行符远征：消耗 <span className={talismanShort ? 'text-danger' : 'text-gold'}>{talismanNeed} 张</span>，突破接壤限制
-          </div>
-        )}
-        {infantry + cavalry > cap && (
-          <div className="text-danger text-xs">
-            当前军团 {infantry + cavalry} 人，将领统帅 {cap} 人，超出 {infantry + cavalry - cap} 人
-          </div>
-        )}
-        {localErr && <div className="text-danger text-xs">{localErr}</div>}
-        {!canSubmit && !busy && (
-          <div className="text-xs text-muted">
-            {!general
-              ? '请先选择将领（需空闲状态）'
-              : infantry + cavalry <= 0
-                ? '请填写步兵/骑兵数量'
-                : infantry > maxInf
-                  ? `步兵不足：可用士兵池 ${fmt(pool.infantry)}，当前上限 ${fmt(maxInf)}（受统帅与士兵池限制）`
-                  : cavalry > maxCav
-                    ? `骑兵不足：可用士兵池 ${fmt(pool.cavalry)}，当前上限 ${fmt(maxCav)}`
-                    : useTalisman && talismanShort
-                      ? `神行符不足：需要 ${talismanNeed} 张，持有 ${fmt(display?.tech.talismans ?? 0)}`
-                      : '尚不满足出征条件'}
-          </div>
-        )}
+        {talismanShort && <div className="text-danger text-xs">神行符不足：需要 {talismanNeed} 张</div>}
         <Btn variant="orange" disabled={!canSubmit} onClick={submit} className="w-full py-2">
           {busy ? '出征中…' : '确认出征'}
         </Btn>
-        <button className="w-full text-center text-xs text-muted hover:text-text" onClick={() => selectCity(null)}>
-          关闭
+        <button className="w-full text-center text-xs text-muted hover:text-text" onClick={() => { selectCity(null); setView('armies'); }}>
+          前往军团页管理军团 →
         </button>
       </div>
     </Card>

@@ -4,7 +4,7 @@ import { seededGarrison } from './enemy.js';
 import { hashString, mulberry32, randomChineseName, randomInt } from './rng.js';
 import { syncTalents } from './generals.js';
 
-export const CURRENT_VERSION = 5;
+export const CURRENT_VERSION = 6;
 
 // 存档迁移：v1（粤桂琼）→ v2（全国）→ v3（守将）→ v5（多将领/天赋/首都/营地）
 export function migrateGameState(
@@ -64,14 +64,29 @@ export function migrateGameState(
     if (!g.talents) g.talents = [];
     syncTalents(balance, g);
   }
-  for (const a of state.armies) {
-    if (!a.generalIds) {
-      a.generalIds = a.generalId ? [a.generalId] : [];
-    }
-    if (!a.strategy) a.strategy = 'NORMAL';
-  }
   if (!state.capitalCityId) state.capitalCityId = balance.capitalCityId;
   if (!state.barbarianCamps) state.barbarianCamps = [];
+
+  // v6：旧临时军团转永久军团（军团长=原主将，成员=原将领列表）；tech 补新物品字段
+  for (const a of state.armies) {
+    const legacyIds = (a as unknown as { generalIds?: string[]; generalId?: string }).generalIds;
+    const legacyLead = (a as unknown as { generalId?: string }).generalId;
+    const members = legacyIds && legacyIds.length > 0 ? legacyIds : legacyLead ? [legacyLead] : [];
+    a.memberGeneralIds = members.length > 0 ? members : [a.bannerGeneralId];
+    a.name = a.name || '旧军团';
+    if (!a.bannerGeneralId) a.bannerGeneralId = a.memberGeneralIds[0];
+    if (!a.strategy) a.strategy = 'NORMAL';
+  }
+  const t = state.tech;
+  if (t) {
+    if (t.bannerFlags === undefined) t.bannerFlags = 0;
+    if (t.speedUps === undefined) t.speedUps = 0;
+    if (!t.lastBannerRollAt) t.lastBannerRollAt = nowIso;
+    if (!t.lastSpeedupRollAt) t.lastSpeedupRollAt = nowIso;
+  }
+  for (const c of state.cities) {
+    if (!c.generalIds && c.generalId) c.generalIds = [c.generalId];
+  }
 
   return state;
 }

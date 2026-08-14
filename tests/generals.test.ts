@@ -3,8 +3,8 @@ import {
   advanceGameState,
   commandCap,
   generalPowerMultiplier,
+  itemProbability,
   talismanCost,
-  talismanProbability,
   techUpgradeCost,
   techUpgradeCostNext,
   xpNeeded,
@@ -97,13 +97,13 @@ describe('科技系统', () => {
     const ctx = makeCtx();
     const state = makeGame(ctx);
     state.tech.researchWorkers = 1000;
-    expect(talismanProbability(ctx.balance, state)).toBe(0); // 未达基准 10000
+    expect(itemProbability(ctx.balance, state, 'talisman')).toBe(0); // 未达基准 10000
     state.tech.researchWorkers = 10_000;
-    expect(talismanProbability(ctx.balance, state)).toBeCloseTo(0.0001 + 100 * 0.00001);
+    expect(itemProbability(ctx.balance, state, 'talisman')).toBeCloseTo(0.0001 + 100 * 0.00001);
     state.tech.researchWorkers = 50_000;
-    expect(talismanProbability(ctx.balance, state)).toBeCloseTo(0.0001 + 500 * 0.00001);
+    expect(itemProbability(ctx.balance, state, 'talisman')).toBeCloseTo(0.0001 + 500 * 0.00001);
     state.tech.levels.talismanMastery = 1; // +20%
-    expect(talismanProbability(ctx.balance, state)).toBeCloseTo((0.0001 + 500 * 0.00001) * 1.2);
+    expect(itemProbability(ctx.balance, state, 'talisman')).toBeCloseTo((0.0001 + 500 * 0.00001) * 1.2);
   });
 
   it('神行符判定幂等且按 10 秒周期推进', () => {

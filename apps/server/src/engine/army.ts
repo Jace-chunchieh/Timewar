@@ -68,24 +68,25 @@ export function canAttack(cities: CityConfig[], state: GameState, targetCityId: 
   return target.neighbors.some((n) => isPlayerCity(state, n));
 }
 
-// 军团将领列表（兼容旧数据）
-export function armyGeneralIds(state: GameState, army: { generalId?: string; generalIds?: string[] }): string[] {
-  if (army.generalIds && army.generalIds.length > 0) return army.generalIds;
-  return army.generalId ? [army.generalId] : [];
+// 军团成员（永久军团：memberGeneralIds 必含军团长）
+export function armyGeneralIds(state: GameState, army: { memberGeneralIds: string[]; bannerGeneralId?: string }): string[] {
+  return army.memberGeneralIds ?? (army.bannerGeneralId ? [army.bannerGeneralId] : []);
 }
 
-// 多将领合计统帅
+// 军团合计统帅：军团长 ×1.5 + 其余将领
 export function armyCommandCap(
   balance: BalanceConfig,
   state: GameState,
-  generalIds: string[]
+  army: { bannerGeneralId: string; memberGeneralIds: string[] }
 ): number {
   let sum = 0;
-  for (const id of generalIds) {
+  for (const id of army.memberGeneralIds) {
     const g = state.generals.find((x) => x.id === id);
-    if (g) sum += commandCap(balance, g.level, state, g);
+    if (!g) continue;
+    const cap = commandCap(balance, g.level, state, g);
+    sum += id === army.bannerGeneralId ? cap * (1 + balance.bannerGeneralCommandBonus) : cap;
   }
-  return sum;
+  return Math.round(sum);
 }
 
 export function marchEligibility(
@@ -94,13 +95,12 @@ export function marchEligibility(
   army: Army
 ): { ok: boolean; reason?: string; maxCommand?: number; commandUsed?: number } {
   const generalIds = armyGeneralIds(state, army);
-  if (generalIds.length === 0) return { ok: true };
   for (const id of generalIds) {
     const general = state.generals.find((g) => g.id === id);
     if (!general) return { ok: false, reason: '将领不存在' };
     if (general.status !== 'IDLE') return { ok: false, reason: '将领当前不可出征' };
   }
-  const cap = armyCommandCap(balance, state, generalIds);
+  const cap = armyCommandCap(balance, state, army);
   const used = army.infantry + army.cavalry;
   if (used > cap) {
     return {
@@ -113,37 +113,32 @@ export function marchEligibility(
   return { ok: true, maxCommand: cap, commandUsed: used };
 }
 
-// 到达己方城市：转为驻军（主将驻守，副将空闲）
+// 到达己方城市：转为驻军（军团全体成员驻守）
 export function mergeIntoCity(
   state: GameState,
   cityId: string,
   infantry: number,
   cavalry: number,
-  generalId?: string,
-  generalIds?: string[],
+  memberGeneralIds: string[],
   nowMs?: number
 ): void {
   const city = state.cities.find((c) => c.cityId === cityId);
   if (!city) return;
   city.infantry += infantry;
   city.cavalry += cavalry;
-  const ids = generalIds && generalIds.length > 0 ? generalIds : generalId ? [generalId] : [];
-  if (ids.length > 0) {
-    const lead = state.generals.find((g) => g.id === ids[0]);
-    if (lead) {
-      lead.status = 'GARRISON';
-      lead.cityId = cityId;
-      lead.armyId = undefined;
-      city.generalId = lead.id;
-    }
-    for (let i = 1; i < ids.length; i++) {
-      const sub = state.generals.find((g) => g.id === ids[i]);
-      if (sub) {
-        sub.status = 'IDLE';
-        sub.cityId = undefined;
-        sub.armyId = undefined;
+  if (memberGeneralIds.length > 0) {
+    const ids = new Set(city.generalIds ?? (city.generalId ? [city.generalId] : []));
+    for (const id of memberGeneralIds) {
+      const general = state.generals.find((g) => g.id === id);
+      if (general) {
+        general.status = 'GARRISON';
+        general.cityId = cityId;
+        general.armyId = undefined;
+        ids.add(id);
       }
     }
+    city.generalIds = [...ids];
+    city.generalId = city.generalIds[0];
   }
   if (nowMs) city.occupiedAt = new Date(nowMs).toISOString();
 }

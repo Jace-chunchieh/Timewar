@@ -61,6 +61,17 @@ export interface TalismanBalance {
   sameProvinceCost: number;
 }
 
+export interface ItemBalance {
+  researchBaseline: number;
+  baseProbability: number;
+  probabilityPer100Workers: number;
+  rollIntervalSeconds: number;
+}
+
+export interface SpeedupBalance extends ItemBalance {
+  secondsPerUse: number;
+}
+
 export interface DefenderBalance {
   recruitChance: number;
   levelBonusMin: number;
@@ -104,6 +115,7 @@ export interface BalanceConfig {
   generalPowerPerLevel: number;
   maxGeneralsPerArmy: number;
   subGeneralPowerPerLevel: number;
+  bannerGeneralCommandBonus: number;
   battleVarianceMin: number;
   battleVarianceMax: number;
   infantryAttack: number;
@@ -153,6 +165,8 @@ export interface BalanceConfig {
   maxArmyNameLength: number;
   cityLevels: Record<string, CityLevelBalance>;
   talisman: TalismanBalance;
+  banner: ItemBalance;
+  speedup: SpeedupBalance;
   defender: DefenderBalance;
   tech: TechBalance;
   startCityId: string;
@@ -220,11 +234,12 @@ export type ArmyStatus = 'IDLE' | 'MARCHING' | 'GARRISON' | 'RETURNING' | 'BATTL
 
 export type BattleStrategy = 'NORMAL' | 'DEFENSIVE' | 'CHARGE';
 
+// 永久军团：军团长不可更换，将领可加入/撤走（≤maxGeneralsPerArmy）
 export interface Army {
   id: string;
-  generalId?: string;
-  generalIds?: string[];
-  name?: string;
+  name: string;
+  bannerGeneralId: string;
+  memberGeneralIds: string[];
   strategy?: BattleStrategy;
   infantry: number;
   cavalry: number;
@@ -242,6 +257,7 @@ export interface PlayerCityState {
   infantry: number;
   cavalry: number;
   generalId?: string;
+  generalIds?: string[];
 }
 
 export interface EnemyCityState {
@@ -317,7 +333,11 @@ export interface OfflineReport {
 export interface TechState {
   researchWorkers: number;
   talismans: number;
+  bannerFlags: number;
+  speedUps: number;
   lastTalismanRollAt: string | null;
+  lastBannerRollAt: string | null;
+  lastSpeedupRollAt: string | null;
   levels: Record<TechKey, number>;
 }
 

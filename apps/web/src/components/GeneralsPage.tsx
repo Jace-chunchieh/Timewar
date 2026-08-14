@@ -14,6 +14,9 @@ export default function GeneralsPage() {
   const start = (id: string) => mutate(() => api.generalStartTraining(id));
   const stop = (id: string) => mutate(() => api.generalStopTraining(id));
   const dismiss = (id: string) => mutate(() => api.generalDismissGarrison(id));
+  const batchStart = () => mutate(() => api.batchTraining('start'));
+  const batchStop = () => mutate(() => api.batchTraining('stop'));
+  const armyOf = (id: string) => display.armies.find((a) => a.memberGeneralIds.includes(id));
 
   const statusText: Record<string, string> = {
     IDLE: '空闲',
@@ -44,6 +47,11 @@ export default function GeneralsPage() {
     <div className="h-full overflow-y-auto p-4">
       <div className="max-w-3xl mx-auto">
         <h2 className="text-lg font-bold text-gold2 mb-3">将领</h2>
+        <div className="flex gap-2 mb-3">
+          <Btn onClick={batchStart}>一键训练</Btn>
+          <Btn variant="orange" onClick={batchStop}>一键结束训练</Btn>
+          <span className="text-[11px] text-muted self-center">对所有空闲/驻守将领批量操作</span>
+        </div>
         {display.generals.length === 0 && <div className="text-muted text-sm">暂无将领</div>}
         <div className="grid md:grid-cols-2 gap-3">
           {display.generals.map((g) => {
@@ -52,8 +60,19 @@ export default function GeneralsPage() {
             const xpProgress = Math.min(1, g.xp / need);
             const etaSec = g.status === 'TRAINING' ? (need - g.xp) / 1 : 0;
             const city = g.cityId ? display.cities.find((c) => c.cityId === g.cityId) : undefined;
+            const army = armyOf(g.id);
+            const isBanner = army?.bannerGeneralId === g.id;
             return (
-              <Card key={g.id} title={`${g.name} · Lv.${g.level}`} right={<span className={`text-xs px-2 py-0.5 rounded-full border ${statusColor[g.status]}`}>{statusText[g.status]}</span>}>
+              <Card
+                key={g.id}
+                title={`${g.name}${army ? `【${army.name}】` : ''} · Lv.${g.level}`}
+                right={
+                  <div className="flex items-center gap-1.5">
+                    {isBanner && <span className="text-sm" title="军团长">🚩</span>}
+                    <span className={`text-xs px-2 py-0.5 rounded-full border ${statusColor[g.status]}`}>{statusText[g.status]}</span>
+                  </div>
+                }
+              >
                 <div className="space-y-2 text-xs">
                   <div>
                     <div className="flex justify-between text-muted mb-1">

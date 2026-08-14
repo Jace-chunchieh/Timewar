@@ -127,13 +127,20 @@ export function talismanCostClient(fromProvinceId: string, toProvinceId: string)
 
 // 神行符获得概率
 export function talismanProbabilityClient(state: GameState): number {
+  return itemProbabilityClient(state, 'talisman');
+}
+
+// 物品获得概率（神行符/军团旗/加速符）
+export function itemProbabilityClient(state: GameState, kind: 'talisman' | 'banner' | 'speedup'): number {
   const workers = state.tech?.researchWorkers ?? 0;
-  if (workers < balance.talisman.researchBaseline) return 0;
-  const base =
-    balance.talisman.baseProbability +
-    (workers / 100) * balance.talisman.probabilityPer100Workers;
-  const mastery = (state.tech?.levels?.talismanMastery ?? 0) * balance.tech.talismanMastery.effectPerLevel;
-  return base * (1 + mastery);
+  const cfg = kind === 'talisman' ? balance.talisman : kind === 'banner' ? balance.banner : balance.speedup;
+  if (workers < cfg.researchBaseline) return 0;
+  const base = cfg.baseProbability + (workers / 100) * cfg.probabilityPer100Workers;
+  if (kind === 'talisman') {
+    const mastery = (state.tech?.levels?.talismanMastery ?? 0) * balance.tech.talismanMastery.effectPerLevel;
+    return base * (1 + mastery);
+  }
+  return base;
 }
 
 // 科技升级费用

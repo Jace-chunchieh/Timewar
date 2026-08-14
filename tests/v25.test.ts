@@ -19,10 +19,13 @@ function setupMarch(
     : [state.generals[0]];
   generals[0].level = opts.level ?? 1;
   const arrivesMs = T0 + 600_000;
+  const bannerId = generals[0].id;
   const army = {
     id: opts.armyId ?? `a-${Math.random()}`,
-    generalId: generals[0].id,
-    generalIds: generals.map((g) => g.id),
+    name: '测试军团',
+    bannerGeneralId: bannerId,
+    memberGeneralIds: generals.map((g) => g.id),
+    strategy: 'NORMAL' as const,
     infantry: opts.infantry,
     cavalry: opts.cavalry,
     status: 'MARCHING' as const,
@@ -40,18 +43,20 @@ function setupMarch(
 }
 
 describe('v2.5 多将领出征', () => {
-  it('多将领合计统帅 = Σ 各将统帅；超过拒绝由服务层校验，引擎侧合计正确', () => {
+  it('多将领合计统帅 = Σ 各将统帅（军团长 ×1.5）；超过拒绝由服务层校验，引擎侧合计正确', () => {
     const ctx = makeCtx();
     const state = makeGame(ctx);
     state.generals.push(
       { id: 'g2', name: '副将甲', level: 5, xp: 0, status: 'IDLE', talents: [] },
       { id: 'g3', name: '副将乙', level: 10, xp: 0, status: 'IDLE', talents: [] }
     );
-    // 主将1级(200) + 5级(600) + 10级(1100) = 1900
-    expect(armyCommandCap(ctx.balance, state, ['g-initial', 'g2', 'g3'])).toBe(200 + 600 + 1100);
+    // 军团长1级(200×1.5=300) + 5级(600) + 10级(1100) = 2000
+    expect(
+      armyCommandCap(ctx.balance, state, { bannerGeneralId: 'g-initial', memberGeneralIds: ['g-initial', 'g2', 'g3'] })
+    ).toBe(300 + 600 + 1100);
   });
 
-  it('多将领战斗胜利：主将驻守、副将恢复空闲；战斗经验同额发放', () => {
+  it('多将领战斗胜利：军团全体成员驻守新城市；战斗经验同额发放', () => {
     const ctx = makeCtx(8);
     const state = makeGame(ctx);
     state.generals.push({ id: 'g2', name: '副将甲', level: 3, xp: 0, status: 'IDLE', talents: [] });
@@ -67,9 +72,11 @@ describe('v2.5 多将领出征', () => {
     expect(report.victory).toBe(true);
     const lead = state.generals.find((g) => g.id === 'g-initial')!;
     const sub = state.generals.find((g) => g.id === 'g2')!;
+    // 军团全体驻守新城市
     expect(lead.status).toBe('GARRISON');
     expect(lead.cityId).toBe('qingyuan');
-    expect(sub.status).toBe('IDLE');
+    expect(sub.status).toBe('GARRISON');
+    expect(sub.cityId).toBe('qingyuan');
     // 战斗经验：同额 ≥ 100（胜利基础）
     expect(lead.xp).toBeGreaterThanOrEqual(100);
     expect(sub.xp).toBeGreaterThanOrEqual(100);
@@ -186,7 +193,7 @@ describe('v2.5 将领天赋', () => {
     const state = makeGame(ctx);
     const g = state.generals[0];
     g.talents = ['majestic'];
-    expect(armyCommandCap(ctx.balance, state, [g.id])).toBe(Math.round(200 * 1.1));
+    expect(armyCommandCap(ctx.balance, state, { bannerGeneralId: g.id, memberGeneralIds: [g.id] })).toBe(Math.round(200 * 1.1 * 1.5));
   });
 });
 

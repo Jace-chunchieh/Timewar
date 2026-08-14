@@ -75,8 +75,8 @@ export interface BattleOutcome {
 interface BattleInput {
   army: {
     id: string;
-    generalId?: string;
-    generalIds?: string[];
+    bannerGeneralId: string;
+    memberGeneralIds: string[];
     infantry: number;
     cavalry: number;
     originCityId: string;
@@ -239,17 +239,13 @@ export function resolveBattle(
       infantry: survivorInfantry,
       cavalry: survivorCavalry,
       generalId: generals[0]?.id,
+      generalIds: generals.map((g) => g.id),
     });
-    // 主将驻守新城市，副将恢复空闲
-    if (generals.length > 0) {
-      generals[0].status = 'GARRISON';
-      generals[0].cityId = targetCityId;
-      generals[0].armyId = undefined;
-    }
-    for (let i = 1; i < generals.length; i++) {
-      generals[i].status = 'IDLE';
-      generals[i].cityId = undefined;
-      generals[i].armyId = undefined;
+    // 军团全体成员驻守新城市
+    for (const g of generals) {
+      g.status = 'GARRISON';
+      g.cityId = targetCityId;
+      g.armyId = undefined;
     }
     report.captured = true;
     state.armies = state.armies.filter((a) => a.id !== army.id);

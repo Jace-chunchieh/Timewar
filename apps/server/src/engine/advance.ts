@@ -7,15 +7,14 @@ import type {
   RouteConfig,
 } from '@timewar/shared';
 import { syncAcityLevel } from './acity.js';
-import { isEnemyCity, isPlayerCity, mergeIntoCity } from './army.js';
-import { resolveBattle, resolveCounterAttack } from './battle.js';
+import { armyGeneralIds, isEnemyCity, isPlayerCity, mergeIntoCity } from './army.js';
+import { resolveBattle, resolveCounterAttack, battleRng } from './battle.js';
 import { advanceEnemyGrowth } from './enemy.js';
 import { advanceGeneralXp } from './generals.js';
 import { advancePopulation } from './population.js';
 import { advanceProduction } from './production.js';
-import { battleRng } from './battle.js';
 import { completeTrainingBatches } from './training.js';
-import { rollTalisman } from './tech.js';
+import { rollItem } from './tech.js';
 
 export interface EngineContext {
   balance: BalanceConfig;
@@ -52,8 +51,10 @@ export function advanceGameState(ctx: EngineContext, state: GameState, nowMs: nu
   advanceProduction(balance, state, effectiveMs);
   // 6. 人口训练完成（含将领随机产生）
   completeTrainingBatches(balance, state, settleUntil, ctx.rng);
-  // 6.5 科研院：神行符概率判定
-  rollTalisman(balance, state, settleUntil, ctx.rng);
+  // 6.5 科研院：神行符 / 军团旗 / 加速符 概率判定（独立计时）
+  rollItem(balance, state, 'talisman', settleUntil, ctx.rng);
+  rollItem(balance, state, 'banner', settleUntil, ctx.rng);
+  rollItem(balance, state, 'speedup', settleUntil, ctx.rng);
   // 7. 将领训练经验（治军加成）
   advanceGeneralXp(balance, state, settleUntil);
   // 8. 军团行军到达 / 9. 战斗 / 10. 返回军团到达
@@ -168,50 +169,39 @@ function resolveArrivals(ctx: EngineContext, state: GameState, nowMs: number): v
     .sort((a, b) => Date.parse(a.arrivesAt!) - Date.parse(b.arrivesAt!));
 
   for (const army of marching) {
+    const battleArmy = {
+      id: army.id,
+      bannerGeneralId: army.bannerGeneralId,
+      memberGeneralIds: army.memberGeneralIds,
+      infantry: army.infantry,
+      cavalry: army.cavalry,
+      originCityId: army.originCityId,
+      targetCityId: army.targetCityId,
+      arrivesAt: army.arrivesAt,
+      strategy: army.strategy,
+      name: army.name,
+    };
     if (army.targetCityId?.startsWith('camp-')) {
       // 蛮族营地战斗
       resolveBattle(ctx.balance, ctx.cities, state, {
-        army: {
-          id: army.id,
-          generalId: army.generalId,
-          generalIds: army.generalIds,
-          infantry: army.infantry,
-          cavalry: army.cavalry,
-          originCityId: army.originCityId,
-          targetCityId: army.targetCityId,
-          arrivesAt: army.arrivesAt,
-          strategy: army.strategy,
-          name: army.name,
-        },
+        army: battleArmy,
         nowMs,
         isBarbarian: true,
       });
     } else if (isEnemyCity(state, army.targetCityId!)) {
       // 到达敌方城市：自动进入战斗
       resolveBattle(ctx.balance, ctx.cities, state, {
-        army: {
-          id: army.id,
-          generalId: army.generalId,
-          generalIds: army.generalIds,
-          infantry: army.infantry,
-          cavalry: army.cavalry,
-          originCityId: army.originCityId,
-          targetCityId: army.targetCityId,
-          arrivesAt: army.arrivesAt,
-          strategy: army.strategy,
-          name: army.name,
-        },
+        army: battleArmy,
         nowMs,
       });
     } else if (isPlayerCity(state, army.targetCityId!)) {
-      // 到达己方城市：自动转为驻军
+      // 到达己方城市：自动转为驻军（军团全体成员驻守）
       mergeIntoCity(
         state,
         army.targetCityId!,
         army.infantry,
         army.cavalry,
-        army.generalId,
-        army.generalIds,
+        army.memberGeneralIds,
         nowMs
       );
       state.armies = state.armies.filter((a) => a.id !== army.id);
@@ -228,7 +218,7 @@ function resolveArrivals(ctx: EngineContext, state: GameState, nowMs: number): v
       city.infantry += army.infantry;
       city.cavalry += army.cavalry;
     }
-    const ids = army.generalIds && army.generalIds.length > 0 ? army.generalIds : army.generalId ? [army.generalId] : [];
+    const ids = army.memberGeneralIds ?? [];
     for (const id of ids) {
       const general = state.generals.find((g) => g.id === id);
       if (general && general.status !== 'WOUNDED') {

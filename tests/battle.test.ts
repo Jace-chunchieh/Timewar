@@ -28,7 +28,10 @@ function setupMarch(
   const arrivesMs = T0 + seconds * 1000;
   state.armies.push({
     id: armyId,
-    generalId: general.id,
+    name: '测试军团',
+    bannerGeneralId: general.id,
+    memberGeneralIds: [general.id],
+    strategy: 'NORMAL',
     infantry: opts.infantry,
     cavalry: opts.cavalry,
     status: 'MARCHING',

@@ -64,23 +64,35 @@ test('全国版完整流程：教程 → 两级地图 → 生产 → 训练 → 
 
   // ---- 科技页可访问 ----
   await page.getByRole('button', { name: '科技研发' }).click();
-  await expect(page.locator('text=科研院 · 神行符')).toBeVisible();
+  await expect(page.locator('text=科研院 · 奇物产出')).toBeVisible();
 
   // ---- 编军页可访问 ----
   await page.getByRole('button', { name: '编军', exact: true }).click();
   await expect(page.locator('text=士兵合成')).toBeVisible();
 
-  // ---- 军团：200 步兵进攻清远 ----
+  // ---- 军团：注入军团旗，组建「虎啸营」并进攻清远 ----
+  {
+    const { join } = await import('node:path');
+    const { DatabaseSync } = await import('node:sqlite');
+    const db2 = new DatabaseSync(join(process.cwd(), 'apps', 'server', 'data', 'game.db'));
+    const row2 = db2.prepare('SELECT state FROM game_state LIMIT 1').get() as { state: string };
+    const st2 = JSON.parse(row2.state);
+    st2.tech.bannerFlags = 1;
+    db2.prepare('UPDATE game_state SET state = ?').run(JSON.stringify(st2));
+    db2.close();
+  }
   await page.getByRole('button', { name: '军团' }).click();
-  await expect(page.locator('text=组建军团并出征')).toBeVisible();
+  await expect(page.locator('text=组建军团（消耗 1 面军团旗）')).toBeVisible();
+  await page.locator('input[placeholder*="虎啸营"]').fill('虎啸营');
+  await page.locator('label:has-text("军团长")').locator('select').selectOption({ index: 1 });
   await setNumberInput(page, '军团步兵', 200);
-  // 多将领选择：点选第一名将领
-  await page.locator('button:has-text("统帅")').first().click();
-  await page.locator('label', { hasText: '目标城市' }).first().locator('select').selectOption('qingyuan');
-  await expect(page.locator('text=预计胜率')).toBeVisible();
-  await page.getByRole('button', { name: '确认出征' }).click();
-  await expect(page.locator('text=行军中（1）')).toBeVisible({ timeout: 10000 });
-  await expect(page.getByRole('button', { name: '撤回' })).toBeVisible();
+  await page.getByRole('button', { name: '组建军团' }).click();
+  await expect(page.locator('text=🚩 虎啸营').first()).toBeVisible({ timeout: 10000 });
+  // 出征清远
+  const targetSelect = page.locator('select').filter({ has: page.locator('option[value="qingyuan"]') }).first();
+  await targetSelect.selectOption('qingyuan');
+  await page.locator('button:has-text("出征")').first().click();
+  await expect(page.locator('text=行军中').first()).toBeVisible({ timeout: 10000 });
 
   // ---- 从地图打开清远详情（可进攻）----
   await page.getByRole('button', { name: '世界地图' }).click();

@@ -59,21 +59,24 @@ export const api = {
     request<{ state: GameState }>('/api/generals/dismiss-garrison', { generalId }),
   armyCreate: (input: {
     originCityId: string;
-    generalId?: string;
-    generalIds?: string[];
-    name?: string;
+    name: string;
+    bannerGeneralId: string;
+    memberGeneralIds: string[];
     strategy?: 'NORMAL' | 'DEFENSIVE' | 'CHARGE';
     infantry: number;
     cavalry: number;
-    targetCityId?: string;
-    useTalisman?: boolean;
   }) => request<{ state: GameState }>('/api/armies/create', input),
+  armyAddGeneral: (armyId: string, generalId: string) => request<{ state: GameState }>('/api/armies/add-general', { armyId, generalId }),
+  armyRemoveGeneral: (armyId: string, generalId: string) => request<{ state: GameState }>('/api/armies/remove-general', { armyId, generalId }),
+  armyReinforce: (armyId: string, infantry: number, cavalry: number) => request<{ state: GameState }>('/api/armies/reinforce', { armyId, infantry, cavalry }),
+  useSpeedup: (targetType: 'training' | 'army', targetId: string) => request<{ state: GameState }>('/api/items/use-speedup', { targetType, targetId }),
+  batchTraining: (action: 'start' | 'stop') => request<{ state: GameState }>('/api/generals/batch-training', { action }),
   moveCapital: (cityId: string) =>
     request<{ state: GameState }>('/api/city/move-capital', { cityId }),
   barbarianAttack: (input: {
     campId: string;
-    generalIds: string[];
-    name?: string;
+    bannerGeneralId: string;
+    memberGeneralIds: string[];
     strategy?: 'NORMAL' | 'DEFENSIVE' | 'CHARGE';
     infantry: number;
     cavalry: number;

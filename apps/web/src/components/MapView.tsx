@@ -1,4 +1,4 @@
-﻿import { useMemo } from 'react';
+import { useMemo } from 'react';
 import type { CityConfig } from '@timewar/shared';
 import { canAttackClient, cities, cityName, nationalCities, provinceName, routes } from '../lib/game';
 import { useGame } from '../store';
@@ -49,7 +49,7 @@ function MarchMarkers({ now, display }: { now: number; display: import('@timewar
         const progress = arrives > departed ? Math.min(1, Math.max(0, (now - departed) / (arrives - departed))) : 0;
         const x = from.x + (to.x - from.x) * progress;
         const y = from.y + (to.y - from.y) * progress;
-        const general = display.generals.find((g) => g.id === army.generalId);
+        const general = display.generals.find((g) => g.id === army.bannerGeneralId);
         const crossProvince = from.provinceId !== (to?.provinceId ?? from.provinceId);
         return (
           <g key={army.id}>
@@ -100,7 +100,7 @@ function NationalView({ display, now }: { display: import('@timewar/shared').Gam
         const progress = arrives > departed ? Math.min(1, Math.max(0, (now - departed) / (arrives - departed))) : 0;
         const x = a.x + (b.x - a.x) * progress;
         const y = a.y + (b.y - a.y) * progress;
-        const general = display.generals.find((g) => g.id === army.generalId);
+        const general = display.generals.find((g) => g.id === army.bannerGeneralId);
         return (
           <g key={army.id}>
             <circle cx={x} cy={y} r={7} fill="#e67e22" stroke="#0b1020" strokeWidth={2} />

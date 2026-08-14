@@ -30,14 +30,32 @@ export const generalIdSchema = z.object({
 
 export const armyCreateSchema = z.object({
   originCityId: z.string().min(1),
-  generalId: z.string().min(1).optional(),
-  generalIds: z.array(z.string().min(1)).max(3).optional(),
-  name: z.string().max(8).optional(),
+  name: z.string().min(1).max(8),
+  bannerGeneralId: z.string().min(1),
+  memberGeneralIds: z.array(z.string().min(1)).max(10),
   strategy: z.enum(['NORMAL', 'DEFENSIVE', 'CHARGE']).optional(),
   infantry: nonNegativeInt,
   cavalry: nonNegativeInt,
-  targetCityId: z.string().min(1).optional(),
-  useTalisman: z.boolean().optional(),
+});
+
+export const armyMemberSchema = z.object({
+  armyId: z.string().min(1),
+  generalId: z.string().min(1),
+});
+
+export const armyReinforceSchema = z.object({
+  armyId: z.string().min(1),
+  infantry: nonNegativeInt,
+  cavalry: nonNegativeInt,
+});
+
+export const speedupUseSchema = z.object({
+  targetType: z.enum(['training', 'army']),
+  targetId: z.string().min(1),
+});
+
+export const batchTrainingSchema = z.object({
+  action: z.enum(['start', 'stop']),
 });
 
 export const armyMarchSchema = z.object({
@@ -52,8 +70,8 @@ export const moveCapitalSchema = z.object({
 
 export const barbarianAttackSchema = z.object({
   campId: z.string().min(1),
-  generalIds: z.array(z.string().min(1)).max(3),
-  name: z.string().max(8).optional(),
+  bannerGeneralId: z.string().min(1),
+  memberGeneralIds: z.array(z.string().min(1)).max(10),
   strategy: z.enum(['NORMAL', 'DEFENSIVE', 'CHARGE']).optional(),
   infantry: nonNegativeInt,
   cavalry: nonNegativeInt,

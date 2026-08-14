@@ -5,14 +5,18 @@ import {
   armyCancelSchema,
   armyCreateSchema,
   armyMarchSchema,
+  armyMemberSchema,
+  armyReinforceSchema,
   armyTransferSchema,
   barbarianAttackSchema,
+  batchTrainingSchema,
   craftSchema,
   garrisonAttackSchema,
   generalIdSchema,
   loginSchema,
   moveCapitalSchema,
   researchSchema,
+  speedupUseSchema,
   techUpgradeSchema,
   trainingCancelSchema,
   trainingStartSchema,
@@ -150,16 +154,39 @@ export function buildApi(service: GameService): FastifyPluginAsync {
       return {
         state: service.createArmy({
           originCityId: body.originCityId,
-          generalId: body.generalId,
-          generalIds: body.generalIds,
           name: body.name,
+          bannerGeneralId: body.bannerGeneralId,
+          memberGeneralIds: body.memberGeneralIds,
           strategy: body.strategy,
           infantry: body.infantry,
           cavalry: body.cavalry,
-          targetCityId: body.targetCityId,
-          useTalisman: body.useTalisman,
         }),
       };
+    });
+
+    app.post('/api/armies/add-general', async (req, _reply) => {
+      const body = armyMemberSchema.parse(req.body);
+      return { state: service.armyAddGeneral(body.armyId, body.generalId) };
+    });
+
+    app.post('/api/armies/remove-general', async (req, _reply) => {
+      const body = armyMemberSchema.parse(req.body);
+      return { state: service.armyRemoveGeneral(body.armyId, body.generalId) };
+    });
+
+    app.post('/api/armies/reinforce', async (req, _reply) => {
+      const body = armyReinforceSchema.parse(req.body);
+      return { state: service.armyReinforce(body.armyId, body.infantry, body.cavalry) };
+    });
+
+    app.post('/api/items/use-speedup', async (req, _reply) => {
+      const body = speedupUseSchema.parse(req.body);
+      return { state: service.useSpeedup(body.targetType, body.targetId) };
+    });
+
+    app.post('/api/generals/batch-training', async (req, _reply) => {
+      const body = batchTrainingSchema.parse(req.body);
+      return { state: service.batchTraining(body.action) };
     });
 
     app.post('/api/city/move-capital', async (req, _reply) => {
@@ -172,8 +199,8 @@ export function buildApi(service: GameService): FastifyPluginAsync {
       return {
         state: service.barbarianAttack({
           campId: body.campId,
-          generalIds: body.generalIds,
-          name: body.name,
+          bannerGeneralId: body.bannerGeneralId,
+          memberGeneralIds: body.memberGeneralIds,
           strategy: body.strategy,
           infantry: body.infantry,
           cavalry: body.cavalry,
