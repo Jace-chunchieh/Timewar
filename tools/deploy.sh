@@ -11,6 +11,12 @@ DIR="${1:-/www/wwwroot/Timewar}"
 BRANCH="${2:-main}"
 PORT="${3:-5215}"
 
+# 部署日志落盘（与 Webhook 输出并存，便于事后排查）
+LOG_FILE="$DIR/deploy.log"
+touch "$LOG_FILE" 2>/dev/null || true
+exec > >(tee -a "$LOG_FILE") 2>&1
+echo "===== TimeWar 部署开始: $(date '+%Y-%m-%d %H:%M:%S') ====="
+
 if [ ! -d "$DIR/.git" ]; then
   echo "[TimeWar] 目录不存在或不是 git 仓库: $DIR"
   echo "[TimeWar] 首次部署请先执行:"
