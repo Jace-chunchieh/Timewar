@@ -21,22 +21,22 @@ export function openDatabase(dbPath: string): Database.Database {
       is_admin INTEGER NOT NULL DEFAULT 0,
       created_at INTEGER NOT NULL
     );
-    CREATE TABLE IF NOT EXISTS banner_gifts (
+    CREATE TABLE IF NOT EXISTS game_mail (
       id TEXT PRIMARY KEY,
-      for_code TEXT NOT NULL,
+      to_code TEXT NOT NULL,
+      from_code TEXT NOT NULL,
+      title TEXT NOT NULL,
+      body TEXT NOT NULL,
+      item_type TEXT,
+      item_amount INTEGER NOT NULL DEFAULT 0,
       claimed INTEGER NOT NULL DEFAULT 0,
-      created_at INTEGER NOT NULL,
-      claimed_at INTEGER
+      created_at INTEGER NOT NULL
     );
   `);
-  // 迁移：为旧存档补充授权码列（归管理员），初始化管理员授权码，并补充邮箱列
+  // 迁移：为旧存档补充授权码列（归管理员），初始化管理员授权码
   const cols = db.prepare(`PRAGMA table_info(game_state)`).all() as { name: string }[];
   if (!cols.some((c) => c.name === 'code')) {
     db.exec(`ALTER TABLE game_state ADD COLUMN code TEXT DEFAULT NULL`);
-  }
-  const authCols = db.prepare(`PRAGMA table_info(auth_codes)`).all() as { name: string }[];
-  if (!authCols.some((c) => c.name === 'email')) {
-    db.exec(`ALTER TABLE auth_codes ADD COLUMN email TEXT DEFAULT NULL`);
   }
   db.prepare(`UPDATE game_state SET code = ? WHERE code IS NULL`).run(ADMIN_CODE);
   db.prepare(

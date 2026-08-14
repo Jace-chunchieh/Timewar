@@ -62,34 +62,73 @@ export class GameRepository {
     return info;
   }
 
-  updateEmail(code: string, email: string): void {
-    this.db.prepare('UPDATE auth_codes SET email = ? WHERE code = ?').run(email, code);
+  // ---------- 游戏内邮箱 ----------
+
+  mailList(code: string): MailItem[] {
+    const rows = this.db
+      .prepare('SELECT id, to_code, from_code, title, body, item_type, item_amount, claimed, created_at FROM game_mail WHERE to_code = ? ORDER BY created_at DESC')
+      .all(code) as {
+      id: string; to_code: string; from_code: string; title: string; body: string;
+      item_type: string | null; item_amount: number; claimed: number; created_at: number;
+    }[];
+    return rows.map((r) => ({
+      id: r.id,
+      toCode: r.to_code,
+      fromCode: r.from_code,
+      title: r.title,
+      body: r.body,
+      itemType: r.item_type ?? undefined,
+      itemAmount: r.item_amount,
+      claimed: r.claimed === 1,
+      createdAt: r.created_at,
+    }));
   }
 
-  emailOf(code: string): string | undefined {
-    const row = this.db.prepare('SELECT email FROM auth_codes WHERE code = ?').get(code) as
-      | { email: string | null }
-      | undefined;
-    return row?.email ?? undefined;
-  }
-
-  createBannerGift(forCode: string): string {
-    const id = `gift-${Date.now()}-${Math.floor(Math.random() * 1e6)}`;
+  sendMailItem(mail: {
+    id: string;
+    toCode: string;
+    fromCode: string;
+    title: string;
+    body: string;
+    itemType?: string;
+    itemAmount: number;
+  }): void {
     this.db
-      .prepare('INSERT INTO banner_gifts (id, for_code, claimed, created_at) VALUES (?, ?, 0, ?)')
-      .run(id, forCode, Date.now());
-    return id;
+      .prepare(
+        `INSERT OR IGNORE INTO game_mail (id, to_code, from_code, title, body, item_type, item_amount, claimed, created_at)
+         VALUES (?, ?, ?, ?, ?, ?, ?, 0, ?)`
+      )
+      .run(mail.id, mail.toCode, mail.fromCode, mail.title, mail.body, mail.itemType ?? null, mail.itemAmount, Date.now());
   }
 
-  claimBannerGift(code: string): { forCode: string; claimed: boolean } | undefined {
-    const row = this.db.prepare('SELECT for_code, claimed FROM banner_gifts WHERE id = ?').get(code) as
-      | { for_code: string; claimed: number }
-      | undefined;
-    if (!row) return undefined;
-    if (row.claimed === 1) return { forCode: row.for_code, claimed: true };
-    this.db
-      .prepare('UPDATE banner_gifts SET claimed = 1, claimed_at = ? WHERE id = ?')
-      .run(Date.now(), code);
-    return { forCode: row.for_code, claimed: false };
+  // 领取附件：返回是否成功（不存在/非本人/已领取返回原因）
+  claimMailItem(id: string, code: string): { ok: true; itemType?: string; itemAmount: number } | { ok: false; reason: 'NOT_FOUND' | 'NOT_OWNER' | 'ALREADY_CLAIMED' } {
+    const row = this.db
+      .prepare('SELECT to_code, claimed, item_type, item_amount FROM game_mail WHERE id = ?')
+      .get(id) as { to_code: string; claimed: number; item_type: string | null; item_amount: number } | undefined;
+    if (!row) return { ok: false, reason: 'NOT_FOUND' };
+    if (row.to_code !== code) return { ok: false, reason: 'NOT_OWNER' };
+    if (row.claimed === 1) return { ok: false, reason: 'ALREADY_CLAIMED' };
+    this.db.prepare('UPDATE game_mail SET claimed = 1 WHERE id = ?').run(id);
+    return { ok: true, itemType: row.item_type ?? undefined, itemAmount: row.item_amount };
   }
+
+  unclaimedMailCount(code: string): number {
+    const row = this.db
+      .prepare('SELECT COUNT(*) as c FROM game_mail WHERE to_code = ? AND claimed = 0')
+      .get(code) as { c: number };
+    return row.c;
+  }
+}
+
+export interface MailItem {
+  id: string;
+  toCode: string;
+  fromCode: string;
+  title: string;
+  body: string;
+  itemType?: string;
+  itemAmount: number;
+  claimed: boolean;
+  createdAt: number;
 }

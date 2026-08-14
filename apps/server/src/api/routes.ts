@@ -10,11 +10,11 @@ import {
   armyTransferSchema,
   barbarianAttackSchema,
   batchTrainingSchema,
-  bindEmailSchema,
-  claimGiftSchema,
+  claimMailSchema,
   craftSchema,
   garrisonAttackSchema,
   generalIdSchema,
+  gmMailSchema,
   loginSchema,
   moveCapitalSchema,
   researchSchema,
@@ -90,18 +90,24 @@ export function buildApi(service: GameService): FastifyPluginAsync {
       return { auth: service.authAddCode(body.code, body.name) };
     });
 
-    app.post('/api/auth/bind-email', async (req, _reply) => {
-      const body = bindEmailSchema.parse(req.body);
-      return { auth: service.authBindEmail(body.email) };
+    app.get('/api/mail/list', handle(() => ({ mails: service.mailList(), unclaimed: service.unclaimedMailCount() })));
+
+    app.post('/api/mail/claim', async (req, _reply) => {
+      const body = claimMailSchema.parse(req.body);
+      return { state: service.claimMail(body.mailId) };
     });
 
-    app.post('/api/auth/send-banner-gift', async (_req, _reply) => {
-      return { sent: await service.sendBannerGift() };
-    });
-
-    app.post('/api/auth/claim-banner-gift', async (req, _reply) => {
-      const body = claimGiftSchema.parse(req.body);
-      return { state: service.claimBannerGift(body.code) };
+    app.post('/api/mail/gm-send', async (req, _reply) => {
+      const body = gmMailSchema.parse(req.body);
+      return {
+        mail: service.gmSendMail({
+          toCode: body.toCode,
+          title: body.title,
+          body: body.body ?? '',
+          itemType: body.itemType,
+          itemAmount: body.itemAmount,
+        }),
+      };
     });
 
     app.post('/api/armies/solo-attack', async (req, _reply) => {

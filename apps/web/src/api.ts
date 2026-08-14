@@ -1,5 +1,17 @@
 import type { GameState } from '@timewar/shared';
 
+export interface MailItem {
+  id: string;
+  toCode: string;
+  fromCode: string;
+  title: string;
+  body: string;
+  itemType?: string;
+  itemAmount: number;
+  claimed: boolean;
+  createdAt: number;
+}
+
 export class ApiError extends Error {
   code: string;
   constructor(code: string, message: string) {
@@ -36,11 +48,17 @@ async function request<T>(path: string, body?: unknown): Promise<T> {
 export const api = {
   login: (code: string) =>
     request<{ auth: { code: string; name: string; isAdmin: boolean } }>('/api/auth/login', { code }),
-  bindEmail: (email: string) =>
-    request<{ auth: { code: string; email: string } }>('/api/auth/bind-email', { email }),
-  sendBannerGift: () => request<{ sent: { giftCode: string } }>('/api/auth/send-banner-gift', {}),
-  claimBannerGift: (code: string) =>
-    request<{ state: GameState }>('/api/auth/claim-banner-gift', { code }),
+  mailList: () =>
+    request<{ mails: MailItem[]; unclaimed: number }>('/api/mail/list'),
+  claimMail: (mailId: string) =>
+    request<{ state: GameState }>('/api/mail/claim', { mailId }),
+  gmSendMail: (input: {
+    toCode: string;
+    title: string;
+    body?: string;
+    itemType?: string;
+    itemAmount: number;
+  }) => request<{ mail: MailItem }>('/api/mail/gm-send', input),
   addCode: (code: string, name: string) =>
     request<{ auth: { code: string; name: string; isAdmin: boolean } }>('/api/auth/add-code', { code, name }),
   listCodes: () =>

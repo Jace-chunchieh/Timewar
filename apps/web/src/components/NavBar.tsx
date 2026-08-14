@@ -9,6 +9,7 @@ const DESKTOP_NAV: { key: View; label: string }[] = [
   { key: 'generals', label: '将领' },
   { key: 'armies', label: '军团' },
   { key: 'garrison', label: '驻守总览' },
+  { key: 'mail', label: '邮箱' },
   { key: 'reports', label: '战报' },
   { key: 'settings', label: '设置' },
 ];
@@ -72,7 +73,7 @@ export function MobileNav({ onMore }: { onMore: () => void }) {
       <button
         onClick={onMore}
         className={`flex-1 py-2 text-xs border-b-2 transition-colors cursor-pointer ${
-          view === 'craft' || view === 'tech' || view === 'garrison' || view === 'reports' || view === 'settings'
+          view === 'craft' || view === 'tech' || view === 'garrison' || view === 'mail' || view === 'reports' || view === 'settings'
             ? 'border-gold text-gold2'
             : 'border-transparent text-muted'
         }`}

@@ -586,19 +586,57 @@ describe('API 集成（后端权威）', () => {
     expect(bad.json().code).toBe('GENERAL_NOT_IDLE');
   });
 
-  it('邮箱礼包：绑定邮箱、生成礼包码、兑换 2 面军团旗（未配置SMTP时提示）', async () => {
+  it('游戏内邮箱：管理员初始收到 GM 欢迎礼包（2面军团旗），领取到账，GM 可发奖', async () => {
     await post('/api/game/new');
-    // 绑定邮箱
-    const bind = await post('/api/auth/bind-email', { email: 'test@example.com' });
-    expect(bind.statusCode).toBe(200);
-    // 未配置 SMTP → 发送失败提示
-    const send = await post('/api/auth/send-banner-gift');
-    expect(send.statusCode).toBe(400);
-    expect(send.json().code).toBe('SMTP_NOT_CONFIGURED');
-    // 兑换码无效
-    const bad = await post('/api/auth/claim-banner-gift', { code: 'gift-not-exist' });
-    expect(bad.statusCode).toBe(400);
-    expect(bad.json().code).toBe('GIFT_CODE_INVALID');
+    // 管理员收件箱包含欢迎礼包
+    const list = await get('/api/mail/list');
+    expect(list.statusCode).toBe(200);
+    const mails = list.json().mails as { id: string; title: string; itemType?: string; itemAmount: number; claimed: boolean }[];
+    const welcome = mails.find((m) => m.id === 'welcome-banner-gift-1');
+    expect(welcome).toBeTruthy();
+    expect(welcome!.itemType).toBe('banner');
+    expect(welcome!.itemAmount).toBe(2);
+    // 领取 → 军团旗 +2
+    const claim = await post('/api/mail/claim', { mailId: welcome!.id });
+    expect(claim.statusCode).toBe(200);
+    const s = stateOf(claim);
+    expect(s.tech.bannerFlags).toBeGreaterThanOrEqual(2);
+    // 重复领取 → 拒绝
+    const again = await post('/api/mail/claim', { mailId: welcome!.id });
+    expect(again.statusCode).toBe(400);
+    // GM 给玩家一发邮件（附 2 面军团旗）
+    await post('/api/auth/add-code', { code: 'player01', name: '玩家一' });
+    const gm = await post('/api/mail/gm-send', {
+      toCode: 'player01',
+      title: 'GM 测试奖励',
+      body: '奖励内容',
+      itemType: 'banner',
+      itemAmount: 2,
+    });
+    expect(gm.statusCode).toBe(200);
+    // 非管理员不能发奖
+    const p1 = await app.inject({
+      method: 'POST',
+      url: '/api/mail/gm-send',
+      payload: { toCode: 'ainiyiwannian', title: 'x', itemAmount: 0 },
+      headers: { 'content-type': 'application/json', 'x-auth-code': 'player01' },
+    });
+    expect(p1.statusCode).toBe(400);
+    expect(p1.json().code).toBe('AUTH_FORBIDDEN');
+    // 玩家一领取附件
+    const p1List = await app.inject({ method: 'GET', url: '/api/mail/list', headers: { 'x-auth-code': 'player01' } });
+    const p1Mails = p1List.json().mails as { id: string; itemType?: string; itemAmount: number }[];
+    const gift = p1Mails.find((m) => m.itemType === 'banner');
+    expect(gift).toBeTruthy();
+    const p1Claim = await app.inject({
+      method: 'POST',
+      url: '/api/mail/claim',
+      payload: { mailId: gift!.id },
+      headers: { 'content-type': 'application/json', 'x-auth-code': 'player01' },
+    });
+    expect(p1Claim.statusCode).toBe(200);
+    const p1s = p1Claim.json().state as GameState;
+    expect(p1s.tech.bannerFlags).toBe(4); // 新档初始2 + GM 奖励2
   });
 
   it('数据校验错误返回统一格式', async () => {

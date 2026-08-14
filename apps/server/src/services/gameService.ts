@@ -27,10 +27,9 @@ import {
   CURRENT_VERSION,
   type EngineContext,
 } from '../engine/index.js';
-import type { GameRepository } from '../repositories/gameRepository.js';
+import type { GameRepository, MailItem } from '../repositories/gameRepository.js';
 import { fail } from './gameError.js';
 import { ADMIN_CODE } from '../db/database.js';
-import { sendMail } from './mailer.js';
 
 const nowIso = (t?: number) => new Date(t ?? Date.now()).toISOString();
 
@@ -41,7 +40,18 @@ export class GameService {
     private repo: GameRepository,
     private ctx: EngineContext,
     private clock: () => number = () => Date.now()
-  ) {}
+  ) {
+    // 系统初始化：确保管理员收到 GM 欢迎礼包（幂等）
+    this.repo.sendMailItem({
+      id: 'welcome-banner-gift-1',
+      toCode: ADMIN_CODE,
+      fromCode: 'GM',
+      title: 'GM 欢迎礼包',
+      body: '欢迎来到 TimeWar！这是 GM 赠予的军团旗礼包，可用于组建你的第一支永久军团。',
+      itemType: 'banner',
+      itemAmount: 2,
+    });
+  }
 
   // 授权码上下文：同一请求内同步执行（无 await 交错），保存/恢复安全
   withCode<T>(code: string, fn: () => T): T {
@@ -123,42 +133,76 @@ export class GameService {
     return this.repo.authCodes().map((c) => ({ code: c.code, name: c.name, isAdmin: c.isAdmin }));
   }
 
-  authBindEmail(email: string): { code: string; email: string } {
-    this.repo.updateEmail(this.code, email);
-    return { code: this.code, email };
+  // ---------- 游戏内邮箱 ----------
+
+  mailList(): MailItem[] {
+    return this.repo.mailList(this.code);
   }
 
-  authEmail(): string | undefined {
-    return this.repo.emailOf(this.code);
+  unclaimedMailCount(): number {
+    return this.repo.unclaimedMailCount(this.code);
   }
 
-  // 生成 2 枚军团旗礼包码并发往当前账号绑定邮箱
-  async sendBannerGift(): Promise<{ giftCode: string }> {
-    const email = this.repo.emailOf(this.code);
-    if (!email) fail('EMAIL_NOT_BOUND', '请先绑定邮箱');
-    const giftCode = this.repo.createBannerGift(this.code);
-    const ok = await sendMail(
-      email,
-      'TimeWar 军团旗礼包',
-      `<p>尊敬的指挥官：</p>
-       <p>您的军团旗礼包已生成，兑换码：<b>${giftCode}</b></p>
-       <p>在游戏「设置 → 邮箱礼包」输入兑换码，即可领取 <b>2 面军团旗</b>（组建永久军团所需）。</p>
-       <p>—— TimeWar 现实时间人口战争</p>`
-    );
-    if (!ok) {
-      fail('SMTP_NOT_CONFIGURED', '服务器未配置 SMTP，请联系管理员设置 SMTP_HOST/SMTP_USER/SMTP_PASS 环境变量');
+  // GM 发奖：仅管理员可向任意授权码账号发送邮件（可附奖励物品）
+  gmSendMail(input: {
+    toCode: string;
+    title: string;
+    body: string;
+    itemType?: string;
+    itemAmount: number;
+  }): MailItem {
+    const current = this.repo.authCode(this.code);
+    if (!current?.isAdmin) fail('AUTH_FORBIDDEN', '仅管理员（GM）可发送奖励邮件');
+    if (!this.repo.authCode(input.toCode)) fail('AUTH_CODE_NOT_FOUND', '收件授权码不存在');
+    if (!['banner', 'talisman', 'speedup', 'population', 'weapons', 'armors', 'horses'].includes(input.itemType ?? '')) {
+      fail('INVALID_ITEM_TYPE', '奖励类型无效（banner/talisman/speedup/population/weapons/armors/horses）');
     }
-    return { giftCode };
+    const id = `gm-${Date.now()}-${Math.floor(Math.random() * 1e6)}`;
+    this.repo.sendMailItem({
+      id,
+      toCode: input.toCode,
+      fromCode: this.code,
+      title: input.title.slice(0, 40),
+      body: input.body.slice(0, 500),
+      itemType: input.itemType,
+      itemAmount: Math.max(0, Math.floor(input.itemAmount)),
+    });
+    return this.repo.mailList(input.toCode).find((m) => m.id === id)!;
   }
 
-  // 凭兑换码领取 2 面军团旗（仅限发送给当前账号的礼包）
-  claimBannerGift(code: string): GameState {
+  // 领取邮件附件（物品直接到账）
+  claimMail(mailId: string): GameState {
     const state = this.loadAndAdvance();
-    const result = this.repo.claimBannerGift(code);
-    if (!result) fail('GIFT_CODE_INVALID', '兑换码无效');
-    if (result.claimed) fail('GIFT_CODE_USED', '该兑换码已被使用');
-    if (result.forCode !== this.code) fail('GIFT_CODE_OWNER', '该兑换码不属于当前账号');
-    state.tech.bannerFlags += 2;
+    const result = this.repo.claimMailItem(mailId, this.code);
+    if (!result.ok) {
+      const msg = result.reason === 'NOT_FOUND' ? '邮件不存在' : result.reason === 'NOT_OWNER' ? '不能领取他人的邮件' : '该邮件附件已领取';
+      fail('MAIL_CLAIM_FAILED', msg);
+    }
+    if (result.itemType && result.itemAmount > 0) {
+      switch (result.itemType) {
+        case 'banner':
+          state.tech.bannerFlags += result.itemAmount;
+          break;
+        case 'talisman':
+          state.tech.talismans += result.itemAmount;
+          break;
+        case 'speedup':
+          state.tech.speedUps += result.itemAmount;
+          break;
+        case 'population':
+          state.resources.idlePopulation += result.itemAmount;
+          break;
+        case 'weapons':
+          state.resources.weapons += result.itemAmount;
+          break;
+        case 'armors':
+          state.resources.armors += result.itemAmount;
+          break;
+        case 'horses':
+          state.resources.horses += result.itemAmount;
+          break;
+      }
+    }
     return this.commit(state);
   }
 
