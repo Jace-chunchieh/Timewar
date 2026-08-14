@@ -340,6 +340,123 @@ describe('API 集成（后端权威）', () => {
     expect(removeBanner.json().code).toBe('BANNER_GENERAL_FIXED');
   });
 
+  it('驻守将领可参与军团组建：入编后离开原驻守城', async () => {
+    await post('/api/game/new');
+    const gid = stateOf(await get('/api/game/state')).generals[0].id;
+    // 单将进攻占清远 → 将领驻守清远
+    const solo = await post('/api/armies/solo-attack', {
+      generalId: gid,
+      targetCityId: 'qingyuan',
+      infantry: 200,
+      cavalry: 0,
+    });
+    now = Date.parse(solo.json().state.armies[0].arrivesAt!) + 1000;
+    let s = stateOf(await get('/api/game/state'));
+    expect(s.generals.find((x) => x.id === gid)!.status).toBe('GARRISON');
+    expect(s.cities.find((c) => c.cityId === 'qingyuan')!.generalIds).toContain(gid);
+    // 训练中的将领仍不可组建军团
+    await post('/api/generals/start-training', { generalId: gid });
+    await injectBannerFlags(1);
+    const training = await post('/api/armies/create', {
+      originCityId: 'acity',
+      name: '测试军团',
+      bannerGeneralId: gid,
+      memberGeneralIds: [gid],
+      infantry: 100,
+      cavalry: 0,
+    });
+    expect(training.statusCode).toBe(400);
+    expect(training.json().code).toBe('GENERAL_NOT_IDLE');
+    await post('/api/generals/stop-training', { generalId: gid });
+    // 补充士兵池，驻守将领组建军团 → 成功，离开清远
+    const row = db.prepare('SELECT state FROM game_state LIMIT 1').get() as { state: string };
+    const injected = JSON.parse(row.state) as GameState;
+    injected.resources.infantry += 500;
+    injected.tech.bannerFlags = 2;
+    db.prepare('UPDATE game_state SET state = ?').run(JSON.stringify(injected));
+    const ok = await post('/api/armies/create', {
+      originCityId: 'acity',
+      name: '虎啸营',
+      bannerGeneralId: gid,
+      memberGeneralIds: [gid],
+      infantry: 100,
+      cavalry: 0,
+    });
+    expect(ok.statusCode).toBe(200);
+    s = stateOf(ok);
+    expect(s.generals.find((x) => x.id === gid)!.status).toBe('IDLE');
+    expect(s.generals.find((x) => x.id === gid)!.armyId).toBe(s.armies[0].id);
+    expect(s.cities.find((c) => c.cityId === 'qingyuan')!.generalIds).not.toContain(gid);
+  });
+
+  it('驻守将领可加入军团：空闲军团→空闲，驻守军团→就地驻守', async () => {
+    await post('/api/game/new');
+    const s0 = stateOf(await get('/api/game/state'));
+    const gid = s0.generals[0].id;
+    // 注入第二名将领 g2
+    const row0 = db.prepare('SELECT state FROM game_state LIMIT 1').get() as { state: string };
+    const inj0 = JSON.parse(row0.state) as GameState;
+    inj0.generals.push({ id: 'g2', name: '副将甲', level: 3, xp: 0, status: 'IDLE', talents: [] });
+    db.prepare('UPDATE game_state SET state = ?').run(JSON.stringify(inj0));
+    // g2 单将进攻占清远 → g2 驻守清远
+    const solo = await post('/api/armies/solo-attack', {
+      generalId: 'g2',
+      targetCityId: 'qingyuan',
+      infantry: 200,
+      cavalry: 0,
+    });
+    now = Date.parse(solo.json().state.armies[0].arrivesAt!) + 1000;
+    let s = stateOf(await get('/api/game/state'));
+    expect(s.generals.find((x) => x.id === 'g2')!.status).toBe('GARRISON');
+    // 空闲军团（gid 组建）→ 驻守将领 g2 加入后为空闲，离开清远
+    const row1 = db.prepare('SELECT state FROM game_state LIMIT 1').get() as { state: string };
+    const inj1 = JSON.parse(row1.state) as GameState;
+    inj1.resources.infantry += 500;
+    inj1.tech.bannerFlags = 2;
+    db.prepare('UPDATE game_state SET state = ?').run(JSON.stringify(inj1));
+    const create = await post('/api/armies/create', {
+      originCityId: 'acity',
+      name: '先锋营',
+      bannerGeneralId: gid,
+      memberGeneralIds: [gid],
+      infantry: 100,
+      cavalry: 0,
+    });
+    expect(create.statusCode).toBe(200);
+    const armyId = stateOf(create).armies[0].id;
+    const add = await post('/api/armies/add-general', { armyId, generalId: 'g2' });
+    expect(add.statusCode).toBe(200);
+    s = stateOf(add);
+    const joined = s.generals.find((x) => x.id === 'g2')!;
+    expect(joined.status).toBe('IDLE');
+    expect(joined.armyId).toBe(armyId);
+    expect(s.cities.find((c) => c.cityId === 'qingyuan')!.generalIds).not.toContain('g2');
+    // 行军到清远 → 军团驻守清远 → 撤走 g2 再重新加入 → 就地驻守清远
+    const m = await post('/api/armies/march', { armyId, targetCityId: 'qingyuan' });
+    now = Date.parse(stateOf(m).armies[0].arrivesAt!) + 1000;
+    s = stateOf(await get('/api/game/state'));
+    expect(s.armies.find((a) => a.id === armyId)!.status).toBe('GARRISON');
+    await post('/api/armies/remove-general', { armyId, generalId: 'g2' });
+    const add2 = await post('/api/armies/add-general', { armyId, generalId: 'g2' });
+    expect(add2.statusCode).toBe(200);
+    s = stateOf(add2);
+    expect(s.generals.find((x) => x.id === 'g2')!.status).toBe('GARRISON');
+    expect(s.generals.find((x) => x.id === 'g2')!.cityId).toBe('qingyuan');
+    expect(s.cities.find((c) => c.cityId === 'qingyuan')!.generalIds).toContain('g2');
+    // 已在军团中的将领不能再次组建新军团
+    await injectBannerFlags(1);
+    const dup = await post('/api/armies/create', {
+      originCityId: 'acity',
+      name: '第三营',
+      bannerGeneralId: 'g2',
+      memberGeneralIds: ['g2'],
+      infantry: 100,
+      cavalry: 0,
+    });
+    expect(dup.statusCode).toBe(400);
+    expect(dup.json().code).toBe('GENERAL_IN_ARMY');
+  });
+
   it('驻守将领可训练：占领清远后驻守将领训练，停止后恢复驻守', async () => {
     await post('/api/game/new');
     const gid = stateOf(await get('/api/game/state')).generals[0].id;
@@ -604,8 +721,8 @@ describe('API 集成（后端权威）', () => {
     await post('/api/game/new');
     const gid = stateOf(await get('/api/game/state')).generals[0].id;
     // 无神行符时不允许攻打非相邻城市
-    const armyId0 = await newArmy({ generalId: gid, infantry: 200 });
-    const noTalisman = await post('/api/armies/march', { armyId: armyId0, targetCityId: 'wuhan' });
+    const armyId = await newArmy({ generalId: gid, infantry: 200 });
+    const noTalisman = await post('/api/armies/march', { armyId, targetCityId: 'wuhan' });
     expect(noTalisman.statusCode).toBe(400);
     expect(noTalisman.json().code).toBe('NOT_ATTACKABLE');
     // 神行符不足（先补充士兵池）
@@ -613,7 +730,6 @@ describe('API 集成（后端权威）', () => {
     const inj0 = JSON.parse(row0.state) as GameState;
     inj0.resources.infantry += 500;
     db.prepare('UPDATE game_state SET state = ?').run(JSON.stringify(inj0));
-    const armyId = await newArmy({ generalId: gid, infantry: 1 });
     const noTalismans = await post('/api/armies/march', { armyId, targetCityId: 'wuhan', useTalisman: true });
     expect(noTalismans.statusCode).toBe(400);
     expect(noTalismans.json().code).toBe('INSUFFICIENT_TALISMANS');

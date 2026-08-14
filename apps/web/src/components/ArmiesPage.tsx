@@ -41,7 +41,9 @@ export default function ArmiesPage() {
   if (!display || !state) return null;
   const now = Date.now();
   const pool = troopPoolClient(display);
+  // 可编入将领：空闲或驻守（入编后离开驻守城）
   const idleGenerals = display.generals.filter((g) => g.status === 'IDLE');
+  const joinableGenerals = display.generals.filter((g) => g.status === 'IDLE' || g.status === 'GARRISON');
   const bannerFlags = display.tech?.bannerFlags ?? 0;
   const speedUps = display.tech?.speedUps ?? 0;
 
@@ -148,15 +150,15 @@ export default function ArmiesPage() {
               </Field>
               <Field label="军团长（不可更换）">
                 <select className="w-full h-8 rounded bg-bg border border-line text-text text-sm" value={bannerGeneralId} onChange={(e) => setBannerGeneralId(e.target.value)}>
-                  <option value="">选择军团长（空闲将领）</option>
-                  {idleGenerals.map((g) => (
-                    <option key={g.id} value={g.id}>{g.name}（Lv.{g.level}）</option>
+                  <option value="">选择军团长（空闲或驻守将领）</option>
+                  {joinableGenerals.map((g) => (
+                    <option key={g.id} value={g.id}>{g.name}（Lv.{g.level}{g.status === 'GARRISON' ? ` · 驻守${cityName(g.cityId ?? '')}` : ''}）</option>
                   ))}
                 </select>
               </Field>
               <Field label="军团成员（可多选）" hint={`${selectedGenerals.length}/${balance.maxGeneralsPerArmy}`}>
                 <div className="flex flex-wrap gap-1.5">
-                  {idleGenerals.map((g) => {
+                  {joinableGenerals.map((g) => {
                     const checked = selectedGenerals.includes(g);
                     return (
                       <button
@@ -167,7 +169,7 @@ export default function ArmiesPage() {
                           checked ? 'bg-gold/20 border-gold text-gold2' : 'bg-panel2 border-line text-muted hover:text-text'
                         }`}
                       >
-                        {g.name}
+                        {g.name}{g.status === 'GARRISON' ? `（驻${cityName(g.cityId ?? '')}）` : ''}
                       </button>
                     );
                   })}
@@ -228,7 +230,7 @@ export default function ArmiesPage() {
               const arrives = Date.parse(a.arrivesAt ?? '');
               const pct = arrives > departed ? Math.min(1, Math.max(0, (now - departed) / (arrives - departed))) : 0;
               const isStatic = a.status === 'IDLE' || a.status === 'GARRISON';
-              const addTargets = idleGenerals.filter((g) => !a.memberGeneralIds.includes(g.id));
+              const addTargets = joinableGenerals.filter((g) => !a.memberGeneralIds.includes(g.id));
               return (
                 <div key={a.id} className="bg-panel2/60 rounded p-2.5 space-y-2">
                   <div className="flex items-center justify-between">
@@ -254,7 +256,7 @@ export default function ArmiesPage() {
                       <select className="h-6 rounded bg-bg border border-line text-text text-[11px]" value="" onChange={(e) => e.target.value && addGeneral(a.id, e.target.value)}>
                         <option value="">+ 加入将领</option>
                         {addTargets.map((g) => (
-                          <option key={g.id} value={g.id}>{g.name}（Lv.{g.level}）</option>
+                          <option key={g.id} value={g.id}>{g.name}（Lv.{g.level}{g.status === 'GARRISON' ? ` · 驻${cityName(g.cityId ?? '')}` : ''}）</option>
                         ))}
                       </select>
                     )}

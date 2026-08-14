@@ -417,8 +417,11 @@ export class GameService {
     if (memberGeneralIds.length === 0) fail('EMPTY_ARMY', '军团至少需要 1 名将领');
     const generals = memberGeneralIds.map((id) => this.general(state, id));
     for (const g of generals) {
-      if (g.status !== 'IDLE') {
-        fail('GENERAL_NOT_IDLE', '只有空闲将领可以组建军团', { status: g.status, name: g.name });
+      if (g.status !== 'IDLE' && g.status !== 'GARRISON') {
+        fail('GENERAL_NOT_IDLE', '只有空闲或驻守将领可以组建军团', { status: g.status, name: g.name });
+      }
+      if (g.armyId && state.armies.some((a) => a.id === g.armyId)) {
+        fail('GENERAL_IN_ARMY', `${g.name} 已隶属其他军团，无法组建新军团`);
       }
     }
     const pool = troopPool(state);
@@ -455,6 +458,18 @@ export class GameService {
     state.armies.push(army);
     for (const g of generals) {
       g.armyId = army.id;
+      if (g.status === 'GARRISON') {
+        // 驻守将领入编：离开原驻守城
+        const city = state.cities.find((c) => c.cityId === g.cityId);
+        if (city) {
+          city.generalIds = (city.generalIds ?? (city.generalId ? [city.generalId] : [])).filter(
+            (id) => id !== g.id
+          );
+          city.generalId = city.generalIds[0] ?? undefined;
+        }
+        g.status = 'IDLE';
+        g.cityId = undefined;
+      }
     }
     return this.commit(state);
   }
@@ -472,9 +487,24 @@ export class GameService {
     }
     if (army.memberGeneralIds.includes(generalId)) fail('GENERAL_ALREADY_IN_ARMY', '该将领已在军团中');
     const g = this.general(state, generalId);
-    if (g.status !== 'IDLE') fail('GENERAL_NOT_IDLE', '只有空闲将领可以加入军团', { status: g.status });
+    if (g.status !== 'IDLE' && g.status !== 'GARRISON') {
+      fail('GENERAL_NOT_IDLE', '只有空闲或驻守将领可以加入军团', { status: g.status });
+    }
+    if (g.armyId && state.armies.some((a) => a.id === g.armyId)) {
+      fail('GENERAL_IN_ARMY', '该将领已隶属其他军团');
+    }
     army.memberGeneralIds.push(generalId);
     g.armyId = army.id;
+    // 驻守将领入编：离开原驻守城
+    if (g.status === 'GARRISON') {
+      const oldCity = state.cities.find((c) => c.cityId === g.cityId);
+      if (oldCity) {
+        oldCity.generalIds = (oldCity.generalIds ?? (oldCity.generalId ? [oldCity.generalId] : [])).filter(
+          (id) => id !== generalId
+        );
+        oldCity.generalId = oldCity.generalIds[0] ?? undefined;
+      }
+    }
     if (army.status === 'GARRISON') {
       // 驻守军团：新成员就地驻守
       g.status = 'GARRISON';
@@ -485,6 +515,10 @@ export class GameService {
         if (!city.generalIds.includes(generalId)) city.generalIds.push(generalId);
         city.generalId = city.generalIds[0];
       }
+    } else {
+      // 驻地军团：成员随军团驻于基地
+      g.status = 'IDLE';
+      g.cityId = undefined;
     }
     return this.commit(state);
   }
