@@ -36,6 +36,13 @@ try {
   }
   console.log('');
 } catch (err) {
+  const e = err as { code?: string; message?: string };
+  if (e.code === 'EADDRINUSE') {
+    console.error(`\n[TimeWar] 端口 ${PORT} 已被占用。`);
+    console.error(`  1. 可能已有实例在运行（宝塔「异常重启」或上次部署的进程），无需重复启动。`);
+    console.error(`  2. 若确需重启: 先释放端口 → ss -ltnp | grep ${PORT} → kill -9 <pid>`);
+    console.error(`  3. 然后重新启动。`);
+  }
   app.log.error(err);
   process.exit(1);
 }
