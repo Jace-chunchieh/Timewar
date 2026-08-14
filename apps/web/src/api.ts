@@ -48,6 +48,7 @@ async function request<T>(path: string, body?: unknown): Promise<T> {
 export const api = {
   login: (code: string) =>
     request<{ auth: { code: string; name: string; isAdmin: boolean } }>('/api/auth/login', { code }),
+  version: () => request<{ app: string; schema: number }>('/api/game/version'),
   mailList: () =>
     request<{ mails: MailItem[]; unclaimed: number }>('/api/mail/list'),
   claimMail: (mailId: string) =>

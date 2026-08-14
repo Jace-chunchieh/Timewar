@@ -1,11 +1,5 @@
-import type {
-  BalanceConfig,
-  BattleReport,
-  CityConfig,
-  GameState,
-  RouteConfig,
-  TechKey,
-} from '@timewar/shared';
+import { readFileSync } from 'node:fs';
+import type { BalanceConfig, BattleReport, CityConfig, GameState, RouteConfig, TechKey } from '@timewar/shared';
 import {
   advanceGameState,
   armyCommandCap,
@@ -207,6 +201,14 @@ export class GameService {
   }
 
   // ---------- 基础 ----------
+
+  // 版本信息（确认部署版本用）
+  versionInfo(): { app: string; schema: number } {
+    const pkg = JSON.parse(
+      readFileSync(new URL('../../package.json', import.meta.url), 'utf-8')
+    ) as { version: string };
+    return { app: pkg.version, schema: CURRENT_VERSION };
+  }
 
   state(): GameState {
     return this.commit(this.loadAndAdvance());

@@ -8,6 +8,7 @@ export default function TopBar() {
   const display = useDisplay();
   const setView = useGame((s) => s.setView);
   const selectCity = useGame((s) => s.selectCity);
+  const serverVersion = useGame((s) => s.serverVersion);
   if (!display) return null;
   const r = display.resources;
   const rate = populationRate(display);
@@ -46,8 +47,15 @@ export default function TopBar() {
           sub={display.armies.filter((a) => a.status === 'MARCHING' || a.status === 'RETURNING').length > 0 ? `行军中 ${display.armies.filter((a) => a.status === 'MARCHING').length}` : undefined}
           onClick={() => { setView('map'); selectCity(null); }}
         />
-        <div className="ml-auto hidden sm:flex items-center text-xs text-muted whitespace-nowrap">
-          离线收益上限 {fmt(Math.floor(balance.offlineCapSeconds / 3600))} 小时
+        <div className="ml-auto hidden sm:flex items-center gap-3 whitespace-nowrap">
+          <span
+            className="text-xs text-muted tabular cursor-default"
+            title={`服务端应用版本 ${serverVersion?.app ?? '未知'} · 存档结构版本 ${serverVersion?.schema ?? '未知'}\n部署版本确认：对比 GitHub Timewar 仓库 main 分支 package.json 版本`}
+          >
+            v{serverVersion?.app ?? '…'}
+            {serverVersion ? <span className="text-muted/60 ml-1">存档 v{serverVersion.schema}</span> : null}
+          </span>
+          <span className="text-xs text-muted">离线收益上限 {fmt(Math.floor(balance.offlineCapSeconds / 3600))} 小时</span>
         </div>
       </div>
     </header>

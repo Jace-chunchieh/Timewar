@@ -47,6 +47,7 @@ interface StoreState {
   authed: boolean;
   authName: string | null;
   isAdmin: boolean;
+  serverVersion: { app: string; schema: number } | null;
   view: View;
   selectedCityId: string | null;
   mapLevel: 'national' | 'province';
@@ -76,6 +77,7 @@ export const useGame = create<StoreState>((set, get) => ({
   authed: !!localStorage.getItem('timewar-code'),
   authName: null,
   isAdmin: false,
+  serverVersion: null,
   view: 'map',
   selectedCityId: null,
   mapLevel: 'national',
@@ -86,6 +88,13 @@ export const useGame = create<StoreState>((set, get) => ({
   lastSnapshot: null,
 
   init: async () => {
+    // 拉取服务端版本（放行接口，未登录也可用）
+    try {
+      const ver = await api.version();
+      set({ serverVersion: ver });
+    } catch {
+      /* 版本获取失败不影响主流程 */
+    }
     if (!localStorage.getItem('timewar-code')) {
       set({ loading: false, authed: false });
       return;

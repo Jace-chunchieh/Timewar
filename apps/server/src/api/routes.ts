@@ -61,9 +61,9 @@ export function buildApi(service: GameService): FastifyPluginAsync {
       return reply.code(500).send({ code: 'INTERNAL_ERROR', message: '服务器内部错误' });
     });
 
-    // 授权码校验：除登录接口外，所有请求须携带有效授权码（Header: x-auth-code）
+    // 授权码校验：除登录/版本接口外，所有请求须携带有效授权码（Header: x-auth-code）
     app.addHook('onRequest', (req, reply, done) => {
-      if (req.url === '/api/auth/login') return done();
+      if (req.url === '/api/auth/login' || req.url === '/api/game/version') return done();
       const code = (req.headers['x-auth-code'] as string | undefined) ?? '';
       const info = service.authInfo(code);
       if (!info) {
@@ -84,6 +84,9 @@ export function buildApi(service: GameService): FastifyPluginAsync {
       const body = loginSchema.parse(req.body);
       return { auth: service.authLogin(body.code) };
     });
+
+    // 服务版本（放行，便于未登录时确认部署版本）
+    app.get('/api/game/version', handle(() => service.versionInfo()));
 
     app.post('/api/auth/add-code', async (req, _reply) => {
       const body = addCodeSchema.parse(req.body);
