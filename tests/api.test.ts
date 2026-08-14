@@ -553,6 +553,42 @@ describe('API 集成（后端权威）', () => {
     expect(s3.cities.find((c) => c.cityId === 'acity')!.infantry).toBeGreaterThan(0);
   });
 
+  it('调兵（transfer）：驻守将领可随队转防，到达后驻守目标城', async () => {
+    await post('/api/game/new');
+    const gid = stateOf(await get('/api/game/state')).generals[0].id;
+    let s = await newArmyAndMarch({ generalId: gid, targetCityId: 'qingyuan' });
+    now = Date.parse(s.armies[0].arrivesAt!) + 1000;
+    s = stateOf(await get('/api/game/state'));
+    expect(s.cities.find((c) => c.cityId === 'qingyuan')!.generalIds).toContain(gid);
+    const transfer = await post('/api/armies/transfer', {
+      originCityId: 'qingyuan',
+      targetCityId: 'acity',
+      infantry: 100,
+      cavalry: 0,
+      generalId: gid,
+    });
+    expect(transfer.statusCode).toBe(200);
+    const s2 = stateOf(transfer);
+    // 出发后从清远驻守列表移除，随队行军
+    expect(s2.cities.find((c) => c.cityId === 'qingyuan')!.generalIds).not.toContain(gid);
+    expect(s2.armies[0].memberGeneralIds).toContain(gid);
+    expect(s2.generals.find((g) => g.id === gid)!.status).toBe('MARCHING');
+    now = Date.parse(s2.armies[0].arrivesAt!) + 1000;
+    const s3 = stateOf(await get('/api/game/state'));
+    expect(s3.cities.find((c) => c.cityId === 'acity')!.generalIds).toContain(gid);
+    expect(s3.generals.find((g) => g.id === gid)!.status).toBe('GARRISON');
+    // 非本城驻守将领（此时已驻守 A市）率队 → 拒绝
+    const bad = await post('/api/armies/transfer', {
+      originCityId: 'qingyuan',
+      targetCityId: 'acity',
+      infantry: 10,
+      cavalry: 0,
+      generalId: gid,
+    });
+    expect(bad.statusCode).toBe(400);
+    expect(bad.json().code).toBe('GENERAL_NOT_IDLE');
+  });
+
   it('单将进攻：无需军团旗，从首都出兵，胜利后驻守', async () => {
     await post('/api/game/new');
     const gid = stateOf(await get('/api/game/state')).generals[0].id;

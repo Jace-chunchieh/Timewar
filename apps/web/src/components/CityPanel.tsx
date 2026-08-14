@@ -41,11 +41,20 @@ export function AttackForm({ targetCityId }: { targetCityId: string }) {
   const armies = display.armies.filter((a) => a.status === 'IDLE' || a.status === 'GARRISON');
   const army = armies.find((a) => a.id === armyId);
   const banner = army ? display.generals.find((g) => g.id === army.bannerGeneralId) : undefined;
-  const idleGenerals = display.generals.filter((g) => g.status === 'IDLE');
+  // 可出征将领：空闲（士兵池出兵）或驻守（从驻守地调兵）
+  const soloCandidates = display.generals.filter((g) => g.status === 'IDLE' || g.status === 'GARRISON');
   const soloGeneral = display.generals.find((g) => g.id === soloGeneralId);
+  const soloIsGarrison = soloGeneral?.status === 'GARRISON';
+  const soloGarrisonCity = soloIsGarrison ? display.cities.find((c) => c.cityId === soloGeneral!.cityId) : undefined;
   const pool = troopPoolClient(display);
   const speedMul = 1 + (display.tech?.levels?.logistics ?? 0) * balance.tech.logistics.effectPerLevel;
-  const soloOriginCityId = soloOrigin || display.capitalCityId || display.cities[0]?.cityId || 'acity';
+  // 出兵地：驻守将领固定为驻守地；空闲将领可选手动出兵地，默认首都
+  const soloOriginCityId = soloIsGarrison
+    ? (soloGeneral!.cityId ?? display.capitalCityId ?? display.cities[0]?.cityId ?? 'acity')
+    : soloOrigin || display.capitalCityId || display.cities[0]?.cityId || 'acity';
+  // 兵力来源：驻守将领用驻军；空闲将领用士兵池
+  const soloSourceInfantry = soloIsGarrison ? (soloGarrisonCity?.infantry ?? 0) : pool.infantry;
+  const soloSourceCavalry = soloIsGarrison ? (soloGarrisonCity?.cavalry ?? 0) : pool.cavalry;
   const routeTime = mode === 'army' && army
     ? (marchTimeClient(army.originCityId, targetCityId, army.infantry, army.cavalry, speedMul) ||
         marchTimeFallbackClient(army.originCityId, targetCityId, army.infantry, army.cavalry, speedMul))
@@ -60,8 +69,8 @@ export function AttackForm({ targetCityId }: { targetCityId: string }) {
       : 0;
   const talismanShort = useTalisman && (display.tech.talismans ?? 0) < talismanNeed;
   const soloCap = soloGeneral ? commandCapClient(soloGeneral.level, display) : 0;
-  const soloMaxInf = Math.min(pool.infantry, Math.max(0, soloCap - soloCavalry));
-  const soloMaxCav = Math.min(pool.cavalry, Math.max(0, soloCap - soloInfantry));
+  const soloMaxInf = Math.min(soloSourceInfantry, Math.max(0, soloCap - soloCavalry));
+  const soloMaxCav = Math.min(soloSourceCavalry, Math.max(0, soloCap - soloInfantry));
   const expected = mode === 'army' && army && banner
     ? expectedBattle(display, banner.level, army.infantry, army.cavalry, targetCityId)
     : mode === 'solo' && soloGeneral && soloInfantry + soloCavalry > 0
@@ -80,16 +89,30 @@ export function AttackForm({ targetCityId }: { targetCityId: string }) {
       await mutate(() => api.armyMarch(army.id, targetCityId, useTalisman));
     } else {
       if (!soloGeneral) return;
-      await mutate(() =>
-        api.soloAttack({
-          generalId: soloGeneral.id,
-          targetCityId,
-          originCityId: soloOrigin || undefined,
-          infantry: soloInfantry,
-          cavalry: soloCavalry,
-          useTalisman,
-        })
-      );
+      if (soloIsGarrison) {
+        // 驻守将领：从驻守地调兵（garrison-attack）
+        await mutate(() =>
+          api.garrisonAttack({
+            garrisonCityId: soloGeneral.cityId!,
+            generalId: soloGeneral.id,
+            targetCityId,
+            infantry: soloInfantry,
+            cavalry: soloCavalry,
+            useTalisman,
+          })
+        );
+      } else {
+        await mutate(() =>
+          api.soloAttack({
+            generalId: soloGeneral.id,
+            targetCityId,
+            originCityId: soloOrigin || undefined,
+            infantry: soloInfantry,
+            cavalry: soloCavalry,
+            useTalisman,
+          })
+        );
+      }
     }
     setBusy(false);
   };
@@ -136,28 +159,36 @@ export function AttackForm({ targetCityId }: { targetCityId: string }) {
           </>
         ) : (
           <>
-            <Field label="出兵地" hint="不选则默认首都">
-              <select className="w-full h-8 rounded bg-bg border border-line text-text text-sm" value={soloOrigin} onChange={(e) => setSoloOrigin(e.target.value)}>
-                <option value="">默认（首都 {cityName(display.capitalCityId || display.cities[0]?.cityId || 'acity')}）</option>
-                {display.cities.map((c) => (
-                  <option key={c.cityId} value={c.cityId}>
-                    {cityName(c.cityId)}{c.cityId === display.capitalCityId ? '（首都）' : ''}
+            {soloIsGarrison ? (
+              <div className="bg-gold/10 border border-gold/40 rounded p-2 text-xs text-gold">
+                已选择驻守将领：从驻守地 {cityName(soloOriginCityId)} 调兵（驻军 步{fmt(soloSourceInfantry)}/骑{fmt(soloSourceCavalry)}）
+              </div>
+            ) : (
+              <Field label="出兵地" hint="不选则默认首都">
+                <select className="w-full h-8 rounded bg-bg border border-line text-text text-sm" value={soloOrigin} onChange={(e) => setSoloOrigin(e.target.value)}>
+                  <option value="">默认（首都 {cityName(display.capitalCityId || display.cities[0]?.cityId || 'acity')}）</option>
+                  {display.cities.map((c) => (
+                    <option key={c.cityId} value={c.cityId}>
+                      {cityName(c.cityId)}{c.cityId === display.capitalCityId ? '（首都）' : ''}
+                    </option>
+                  ))}
+                </select>
+              </Field>
+            )}
+            <Field label="选择将领" hint="空闲或驻守将领均可出征">
+              <select className="w-full h-8 rounded bg-bg border border-line text-text text-sm" value={soloGeneralId} onChange={(e) => setSoloGeneralId(e.target.value)}>
+                <option value="">选择将领</option>
+                {soloCandidates.map((g) => (
+                  <option key={g.id} value={g.id}>
+                    {g.name}（Lv.{g.level} 统帅{fmt(commandCapClient(g.level, display))} · {g.status === 'GARRISON' ? `驻守${cityName(g.cityId ?? '')}` : '空闲'}）
                   </option>
                 ))}
               </select>
             </Field>
-            <Field label="选择将领" hint={idleGenerals.length === 0 ? '没有空闲将领' : undefined}>
-              <select className="w-full h-8 rounded bg-bg border border-line text-text text-sm" value={soloGeneralId} onChange={(e) => setSoloGeneralId(e.target.value)}>
-                <option value="">选择空闲将领</option>
-                {idleGenerals.map((g) => (
-                  <option key={g.id} value={g.id}>{g.name}（Lv.{g.level} 统帅{fmt(commandCapClient(g.level, display))}）</option>
-                ))}
-              </select>
-            </Field>
-            <Field label="步兵" hint={`池 ${fmt(pool.infantry)}`}>
+            <Field label="步兵" hint={soloIsGarrison ? `驻军 ${fmt(soloSourceInfantry)}` : `池 ${fmt(pool.infantry)}`}>
               <NumInput value={soloInfantry} onChange={setSoloInfantry} max={soloMaxInf} step={10} ariaLabel="单将步兵" />
             </Field>
-            <Field label="骑兵" hint={`池 ${fmt(pool.cavalry)}`}>
+            <Field label="骑兵" hint={soloIsGarrison ? `驻军 ${fmt(soloSourceCavalry)}` : `池 ${fmt(pool.cavalry)}`}>
               <NumInput value={soloCavalry} onChange={setSoloCavalry} max={soloMaxCav} step={10} ariaLabel="单将骑兵" />
             </Field>
             <div className="flex justify-between text-xs">
@@ -218,7 +249,10 @@ export function TransferForm({ originCityId }: { originCityId: string }) {
   const [useTalisman, setUseTalisman] = useState(false);
   const [busy, setBusy] = useState(false);
   const city = display?.cities.find((c) => c.cityId === originCityId);
-  const idleGenerals = generals.filter((g) => g.status === 'IDLE');
+  // 可率队将领：空闲，或正驻守本城（随队转防）
+  const movableGenerals = generals.filter(
+    (g) => g.status === 'IDLE' || (g.status === 'GARRISON' && g.cityId === originCityId)
+  );
   const hasRoute = !!target && !!routeBetweenClient(originCityId, target);
   const speedMul = 1 + (display?.tech?.levels?.logistics ?? 0) * balance.tech.logistics.effectPerLevel;
   const routeTime = target && display
@@ -264,11 +298,11 @@ export function TransferForm({ originCityId }: { originCityId: string }) {
             })}
           </select>
         </Field>
-        <Field label="随行将领（可选）">
+        <Field label="随行将领（可选）" hint="空闲或本城驻守将领均可随队转移">
           <select className="w-full h-8 rounded bg-bg border border-line text-text text-sm" value={generalId} onChange={(e) => setGeneralId(e.target.value)}>
             <option value="">无将领（纯增援）</option>
-            {idleGenerals.map((g) => (
-              <option key={g.id} value={g.id}>{g.name}（Lv.{g.level}）</option>
+            {movableGenerals.map((g) => (
+              <option key={g.id} value={g.id}>{g.name}（Lv.{g.level} · {g.status === 'GARRISON' ? '驻守本城' : '空闲'}）</option>
             ))}
           </select>
         </Field>
@@ -463,11 +497,21 @@ export default function CityPanel({ cityId }: { cityId: string }) {
               </div>
             </div>
             <div className="mt-2 text-xs text-muted">
-              驻守将领：
-              {player.generalId ? (
-                <span className="text-text">{display.generals.find((g) => g.id === player.generalId)?.name ?? '—'}（可在将领页调回）</span>
+              驻守将领（{player.generalIds?.length ?? 0}）：
+              {player.generalIds && player.generalIds.length > 0 ? (
+                <span className="flex flex-wrap gap-1 mt-1">
+                  {player.generalIds.map((id) => {
+                    const g = display.generals.find((x) => x.id === id);
+                    return g ? (
+                      <span key={id} className="bg-panel border border-line rounded px-2 py-0.5 text-text">
+                        {g.name} Lv.{g.level}
+                        {g.status === 'TRAINING' && <span className="text-gold ml-1">训练中</span>}
+                      </span>
+                    ) : null;
+                  })}
+                </span>
               ) : (
-                '无'
+                <span className="text-muted">无（可在军团页/将领页指派驻守）</span>
               )}
             </div>
             <div className="mt-1 text-xs text-muted">无驻军也不影响人口产出（MVP 暂无双城反攻）</div>

@@ -726,7 +726,8 @@ export class GameService {
 
     city.infantry -= input.infantry;
     city.cavalry -= input.cavalry;
-    city.generalId = undefined;
+    city.generalIds = (city.generalIds ?? (city.generalId ? [city.generalId] : [])).filter((id) => id !== g.id);
+    city.generalId = city.generalIds[0] ?? undefined;
 
     const speedMultiplier = techEffects(this.ctx.balance, state).marchSpeed;
     const seconds = marchTimeSeconds(
@@ -943,12 +944,21 @@ export class GameService {
     let generalId: string | undefined;
     if (input.generalId) {
       const g = this.general(state, input.generalId);
-      if (g.status !== 'IDLE') fail('GENERAL_NOT_IDLE', '只有空闲将领可以率队', { status: g.status });
+      const garrisonAtOrigin = g.status === 'GARRISON' && g.cityId === input.originCityId;
+      if (g.status !== 'IDLE' && !garrisonAtOrigin) {
+        fail('GENERAL_NOT_IDLE', '只有空闲将领或出发城驻守将领可以率队', { status: g.status });
+      }
       const cap = commandCap(this.ctx.balance, g.level, state);
       if (input.infantry + input.cavalry > cap) {
         fail('COMMAND_LIMIT_EXCEEDED', `当前军团 ${input.infantry + input.cavalry} 人，将领统帅 ${cap} 人`);
       }
       generalId = g.id;
+      if (garrisonAtOrigin) {
+        origin.generalIds = (origin.generalIds ?? (origin.generalId ? [origin.generalId] : [])).filter(
+          (id) => id !== g.id
+        );
+        origin.generalId = origin.generalIds[0] ?? undefined;
+      }
     }
     origin.infantry -= input.infantry;
     origin.cavalry -= input.cavalry;
