@@ -83,13 +83,22 @@ echo "[TimeWar] 构建前端..."
 npm run build
 
 echo "[TimeWar] 重启后端（kill 端口 $PORT 进程，宝塔守护自动拉起；未拉起则脚本兜底启动）..."
+# 杀端口进程：多个 PID 展开传参（不能加引号），并等待端口释放
 if command -v lsof >/dev/null 2>&1; then
-  kill "$(lsof -ti tcp:$PORT)" 2>/dev/null || true
+  kill $(lsof -ti tcp:$PORT) 2>/dev/null || true
 elif command -v fuser >/dev/null 2>&1; then
-  fuser -k "${PORT}/tcp" 2>/dev/null || true
+  fuser -k -9 "${PORT}/tcp" 2>/dev/null || true
 else
-  pkill -f "tsx src/index.ts" 2>/dev/null || true
+  pkill -9 -f "tsx src/index.ts" 2>/dev/null || true
 fi
+for i in $(seq 1 5); do
+  PORT_FREE=1
+  if command -v lsof >/dev/null 2>&1; then
+    [ -z "$(lsof -ti tcp:$PORT 2>/dev/null)" ] || PORT_FREE=0
+  fi
+  [ "$PORT_FREE" = "1" ] && break
+  sleep 2
+done
 
 echo "[TimeWar] 等待服务恢复（最长 60 秒）..."
 for i in $(seq 1 30); do
@@ -101,8 +110,18 @@ for i in $(seq 1 30); do
   fi
 done
 
-# 兜底：宝塔守护未拉起时，脚本自行启动（生产模式）
-echo "[TimeWar] 宝塔守护未拉起，脚本兜底启动后端..."
+# 兜底：若端口仍被占用但服务可用（如宝塔守护已拉起），直接视为成功
+if curl -sf "http://127.0.0.1:$PORT/api/game/state" >/dev/null 2>&1; then
+  echo "[TimeWar] 服务已由其他进程拉起: http://127.0.0.1:$PORT"
+  echo "[TimeWar] 部署完成: $(date '+%Y-%m-%d %H:%M:%S')"
+  exit 0
+fi
+
+# 兜底：宝塔守护未拉起且端口残留占用，强杀后自行启动（生产模式）
+echo "[TimeWar] 宝塔守护未拉起，脚本强制清理并兜底启动后端..."
+pkill -9 -f "tsx src/index.ts" 2>/dev/null || true
+fuser -k -9 "${PORT}/tcp" 2>/dev/null || true
+sleep 2
 cd "$DIR"
 nohup npm start >> "$DIR/app.log" 2>&1 &
 echo $! > "$DIR/app.pid"
