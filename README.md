@@ -164,7 +164,7 @@ GET  /api/battles                # 战报列表
 4. **GitHub**：仓库 Settings → Webhooks → Add webhook：Payload URL 粘贴上一步 URL（HTTPS），Content type `application/json`，事件 `Just the push event`。
 5. **验证**：推送一次代码 → 宝塔 Webhook 日志显示 `部署完成` → 访问 `http://服务器IP:5215`。
 
-> 说明：部署脚本执行 `git pull → npm install → npm run build → kill 端口进程`，宝塔 Node 项目守护会在数秒内自动拉起新进程（脚本内含健康检查，30 秒未恢复会提示到宝塔手动重启）。存档位于 `apps/server/data/game.db`，部署不会丢失。TimeWar 是全栈 Node 应用，请勿沿用旧静态站脚本（仅 git pull 不会生效）。
+> 说明：部署脚本执行 `git pull → npm install → npm run build → kill 端口进程`，优先由宝塔 Node 项目守护自动拉起，若守护未拉起则脚本兜底 `npm start` 自启动（健康检查确认）。部署日志落盘 `deploy.log`。存档位于 `apps/server/data/game.db`，部署不会丢失。TimeWar 是全栈 Node 应用，请勿沿用旧静态站脚本（仅 git pull 不会生效）。
 
 ## 移动端适配
 
