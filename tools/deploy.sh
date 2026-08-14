@@ -44,15 +44,16 @@ echo "[TimeWar] 远程仓库:"
 git remote -v || true
 
 echo "[TimeWar] 拉取代码 ($BRANCH)..."
-# GitHub 大陆网络不稳定（时好时坏）：快速失败 + 自动重试 5 次
+# GitHub 大陆网络不稳定（时好时坏）：连接快速失败(15s) + 自动重试 5 次（间隔 5 秒），
+# 适配宝塔 Webhook 插件的执行超时（避免脚本被超时中断导致文件不更新）
 FETCH_OK=0
 for attempt in 1 2 3 4 5; do
   echo "[TimeWar] git fetch 尝试 $attempt/5 ..."
-  if git -c http.lowSpeedLimit=1000 -c http.lowSpeedTime=30 fetch origin "$BRANCH" 2>&1; then
+  if git -c http.connectTimeout=15 -c http.lowSpeedLimit=1000 -c http.lowSpeedTime=20 fetch origin "$BRANCH" 2>&1; then
     FETCH_OK=1
     break
   fi
-  [ "$attempt" -lt 5 ] && echo "[TimeWar] 连接 GitHub 失败，10 秒后重试..." && sleep 10
+  [ "$attempt" -lt 5 ] && echo "[TimeWar] 连接 GitHub 失败，5 秒后重试..." && sleep 5
 done
 
 if [ "$FETCH_OK" != "1" ]; then
