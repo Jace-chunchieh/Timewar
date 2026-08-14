@@ -249,6 +249,8 @@ export interface Army {
   targetCityId?: string;
   departedAt?: string;
   arrivesAt?: string;
+  // 永久军团：攻占/战败返回后不解散，保留编制与兵力
+  permanent?: boolean;
 }
 
 export interface PlayerCityState {

@@ -84,6 +84,7 @@ interface BattleInput {
     arrivesAt?: string;
     strategy?: string;
     name?: string;
+    permanent?: boolean;
   };
   nowMs: number;
   counterAttack?: boolean;
@@ -213,10 +214,49 @@ export function resolveBattle(
     if (campIndex >= 0) state.barbarianCamps.splice(campIndex, 1);
     report.captured = true;
     grantBarbarianReward(balance, state, nowMs);
-    state.armies = state.armies.filter((a) => a.id !== army.id);
-    for (const g of generals) {
-      g.status = 'IDLE';
-      g.armyId = undefined;
+    if (army.permanent) {
+      // 永久军团：幸存兵力保留，返回驻地休整
+      const armyRecord = state.armies.find((a) => a.id === army.id);
+      if (armyRecord) {
+        const originalMarchMs = Math.max(
+          1,
+          Date.parse(armyRecord.arrivesAt ?? '') - Date.parse(armyRecord.departedAt ?? '')
+        );
+        const returnMs = originalMarchMs * balance.returnTimeFactor;
+        armyRecord.infantry = survivorInfantry;
+        armyRecord.cavalry = survivorCavalry;
+        armyRecord.status = 'RETURNING';
+        armyRecord.targetCityId = armyRecord.originCityId;
+        armyRecord.departedAt = new Date(nowMs).toISOString();
+        armyRecord.arrivesAt = new Date(nowMs + returnMs).toISOString();
+      }
+      for (const g of generals) {
+        if (g.status !== 'WOUNDED') g.status = 'MARCHING';
+      }
+    } else {
+      state.armies = state.armies.filter((a) => a.id !== army.id);
+      for (const g of generals) {
+        // 临时讨伐军团解散：将领若隶属永久军团则回归军团
+        const legion = state.armies.find(
+          (a) => a.permanent && (a.status === 'IDLE' || a.status === 'GARRISON') && a.memberGeneralIds.includes(g.id)
+        );
+        if (legion) {
+          g.status = legion.status === 'GARRISON' ? 'GARRISON' : 'IDLE';
+          g.cityId = legion.status === 'GARRISON' ? legion.originCityId : undefined;
+          g.armyId = legion.id;
+          if (legion.status === 'GARRISON' && g.cityId) {
+            const city = state.cities.find((c) => c.cityId === g.cityId);
+            if (city) {
+              if (!city.generalIds) city.generalIds = [];
+              if (!city.generalIds.includes(g.id)) city.generalIds.push(g.id);
+              city.generalId = city.generalIds[0];
+            }
+          }
+        } else {
+          g.status = 'IDLE';
+          g.armyId = undefined;
+        }
+      }
     }
   } else if (victory) {
     state.enemyCities.splice(enemyIndex, 1);
@@ -232,23 +272,52 @@ export function resolveBattle(
       });
       report.recruitedGeneralName = defender.name;
     }
-    state.cities.push({
-      cityId: targetCityId,
-      occupiedAt: new Date(nowMs).toISOString(),
-      level: cityLevelOf(cities, targetCityId),
-      infantry: survivorInfantry,
-      cavalry: survivorCavalry,
-      generalId: generals[0]?.id,
-      generalIds: generals.map((g) => g.id),
-    });
-    // 军团全体成员驻守新城市
-    for (const g of generals) {
-      g.status = 'GARRISON';
-      g.cityId = targetCityId;
-      g.armyId = undefined;
+    const memberIds = generals.map((g) => g.id);
+    if (army.permanent) {
+      // 永久军团：不解散，军团携幸存兵力就地驻守新城（城市驻军由军团承担）
+      const armyRecord = state.armies.find((a) => a.id === army.id);
+      if (armyRecord) {
+        armyRecord.status = 'GARRISON';
+        armyRecord.originCityId = targetCityId;
+        armyRecord.targetCityId = undefined;
+        armyRecord.departedAt = undefined;
+        armyRecord.arrivesAt = undefined;
+        armyRecord.infantry = survivorInfantry;
+        armyRecord.cavalry = survivorCavalry;
+      }
+      state.cities.push({
+        cityId: targetCityId,
+        occupiedAt: new Date(nowMs).toISOString(),
+        level: cityLevelOf(cities, targetCityId),
+        infantry: 0,
+        cavalry: 0,
+        generalId: generals[0]?.id,
+        generalIds: memberIds,
+      });
+      for (const g of generals) {
+        g.status = 'GARRISON';
+        g.cityId = targetCityId;
+        g.armyId = army.id;
+      }
+    } else {
+      state.cities.push({
+        cityId: targetCityId,
+        occupiedAt: new Date(nowMs).toISOString(),
+        level: cityLevelOf(cities, targetCityId),
+        infantry: survivorInfantry,
+        cavalry: survivorCavalry,
+        generalId: generals[0]?.id,
+        generalIds: memberIds,
+      });
+      // 军团全体成员驻守新城市
+      for (const g of generals) {
+        g.status = 'GARRISON';
+        g.cityId = targetCityId;
+        g.armyId = undefined;
+      }
+      state.armies = state.armies.filter((a) => a.id !== army.id);
     }
     report.captured = true;
-    state.armies = state.armies.filter((a) => a.id !== army.id);
   } else {
     // 失败：幸存军队返回出发城市，返回时间 = 原行军时间 × 70%
     if (!input.isBarbarian) {
@@ -306,8 +375,12 @@ export function resolveCounterAttack(
 ): { report: BattleReport; lost: boolean } {
   const enemy = state.enemyCities.find((e) => e.cityId === enemyCityId)!;
   const playerCity = state.cities.find((c) => c.cityId === playerCityId)!;
+  const armiesAtCity = state.armies.filter(
+    (a) => (a.status === 'IDLE' || a.status === 'GARRISON') && a.originCityId === playerCityId
+  );
+  const armyTroops = armiesAtCity.reduce((s, a) => s + a.infantry + a.cavalry, 0);
   const variance = battleVariance(balance, `counter:${enemyCityId}:${playerCityId}:${Math.floor(nowMs / 600000)}`);
-  const defenderGarrison = playerCity.infantry + playerCity.cavalry;
+  const defenderGarrison = playerCity.infantry + playerCity.cavalry + armyTroops;
   const levelConfig = balance.cityLevels[String(cityLevelOf(cities, playerCityId))];
   const defenseBonus = levelConfig?.defenseBonus ?? 0;
   const defenderPower = defenderGarrison * balance.infantryDefense * (1 + defenseBonus) * variance;
@@ -321,7 +394,8 @@ export function resolveCounterAttack(
   );
   const lostInfantry = Math.round(playerCity.infantry * defenderCasualtyRate);
   const lostCavalry = Math.round(playerCity.cavalry * defenderCasualtyRate);
-  state.resources.deadPopulation += lostInfantry + lostCavalry;
+  const lostArmyInfantry = Math.round(armyTroops * defenderCasualtyRate);
+  state.resources.deadPopulation += lostInfantry + lostCavalry + lostArmyInfantry;
 
   const report: BattleReport = {
     id: `b-counter-${enemyCityId}-${Date.parse(enemy.lastGrowthAt)}`,
@@ -338,7 +412,7 @@ export function resolveCounterAttack(
     variance,
     attackerCasualtiesInfantry: 0,
     attackerCasualtiesCavalry: 0,
-    defenderCasualties: lostInfantry + lostCavalry,
+    defenderCasualties: lostInfantry + lostCavalry + lostArmyInfantry,
     recoveredWeapons: 0,
     recoveredArmors: 0,
     recoveredHorses: 0,
@@ -350,8 +424,36 @@ export function resolveCounterAttack(
 
   const lost = victory && playerCityId !== balance.startCityId;
   if (lost) {
-    // 城市被夺回：驻军全灭，回到敌方
+    // 城市被夺回：驻军全灭，驻守军团撤离返回首都
     state.cities = state.cities.filter((c) => c.cityId !== playerCityId);
+    const capitalId = state.capitalCityId ?? balance.capitalCityId;
+    const fromCfg = cities.find((c) => c.id === playerCityId);
+    const toCfg = cities.find((c) => c.id === capitalId);
+    let km = 1000;
+    if (fromCfg && toCfg) {
+      const R = 6371;
+      const dLat = ((toCfg.lat - fromCfg.lat) * Math.PI) / 180;
+      const dLon = ((toCfg.lon - fromCfg.lon) * Math.PI) / 180;
+      const lat1 = (fromCfg.lat * Math.PI) / 180;
+      const lat2 = (toCfg.lat * Math.PI) / 180;
+      const h = Math.sin(dLat / 2) ** 2 + Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLon / 2) ** 2;
+      km = Math.max(1, 2 * R * Math.asin(Math.sqrt(h)));
+    }
+    const returnSecs = Math.max(60, Math.round((km / 100) * balance.marchBaseSecondsPer100Km));
+    for (const a of armiesAtCity) {
+      a.status = 'RETURNING';
+      a.targetCityId = capitalId;
+      a.departedAt = new Date(nowMs).toISOString();
+      a.arrivesAt = new Date(nowMs + returnSecs * 1000).toISOString();
+      for (const id of a.memberGeneralIds) {
+        const g = state.generals.find((x) => x.id === id);
+        if (g && g.status !== 'WOUNDED') {
+          g.status = 'MARCHING';
+          g.cityId = undefined;
+          g.armyId = a.id;
+        }
+      }
+    }
     const defenderGeneral = state.generals.find((g) => g.id === playerCity.generalId);
     if (defenderGeneral) {
       defenderGeneral.status = 'IDLE';
@@ -373,9 +475,15 @@ export function resolveCounterAttack(
     report.defenderGeneralName = defenderGeneral?.name;
     void rng;
   } else {
-    // 防守成功：驻军按伤亡扣减；敌方守军损失部分
+    // 防守成功：伤亡按比例分摊到驻军与驻守军团；敌方守军损失部分
     playerCity.infantry -= lostInfantry;
     playerCity.cavalry -= lostCavalry;
+    const total = Math.max(1, defenderGarrison);
+    for (const a of armiesAtCity) {
+      const share = (a.infantry + a.cavalry) / total;
+      a.infantry = Math.max(0, a.infantry - Math.round(lostArmyInfantry * share));
+      a.cavalry = Math.max(0, a.cavalry - Math.round(lostArmyInfantry * share));
+    }
     const enemyLosses = Math.round(enemy.garrison * 0.2);
     enemy.garrison = Math.max(0, enemy.garrison - enemyLosses);
     report.attackerCasualtiesInfantry = enemyLosses;

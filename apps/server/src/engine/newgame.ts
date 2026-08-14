@@ -43,7 +43,7 @@ export function createNewGame(
 
   return {
     id: crypto.randomUUID ? crypto.randomUUID() : `game-${Date.now()}`,
-    version: 6,
+    version: 7,
     createdAt: nowIso,
     updatedAt: nowIso,
     lastCalculatedAt: nowIso,

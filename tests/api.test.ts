@@ -143,7 +143,7 @@ describe('API 集成（后端权威）', () => {
     expect(s.enemyCities.find((e) => e.cityId === 'qingyuan')?.garrison).toBe(100);
     expect(s.enemyCities.find((e) => e.cityId === 'guangzhou')?.level ?? s.enemyCities.some((e) => e.cityId === 'guangzhou')).toBe(true);
     expect(s.enemyCities.length).toBeGreaterThan(330);
-    expect(s.version).toBe(6);
+    expect(s.version).toBe(7);
     expect(s.tech.researchWorkers).toBe(0);
     expect(s.welcomeShown).toBe(false);
     expect(s.tutorialStep).toBe(1);
@@ -343,7 +343,15 @@ describe('API 集成（后端权威）', () => {
   it('驻守将领可训练：占领清远后驻守将领训练，停止后恢复驻守', async () => {
     await post('/api/game/new');
     const gid = stateOf(await get('/api/game/state')).generals[0].id;
-    let s = await newArmyAndMarch({ generalId: gid, targetCityId: 'qingyuan' });
+    // 单将进攻（临时军团，胜利后将领驻守清远）
+    let s = stateOf(
+      await post('/api/armies/solo-attack', {
+        generalId: gid,
+        targetCityId: 'qingyuan',
+        infantry: 200,
+        cavalry: 0,
+      })
+    );
     now = Date.parse(s.armies[0].arrivesAt!) + 1000;
     s = stateOf(await get('/api/game/state'));
     const qy = s.cities.find((c) => c.cityId === 'qingyuan')!;
@@ -372,10 +380,16 @@ describe('API 集成（后端权威）', () => {
     injected.cities.push({ cityId: 'yangjiang', occupiedAt: new Date().toISOString(), level: 2, infantry: 0, cavalry: 0 });
     injected.enemyCities = injected.enemyCities.filter((e) => e.cityId !== 'yangjiang');
     db.prepare('UPDATE game_state SET state = ?').run(JSON.stringify(injected));
-    // 占领清远获得驻军
-    let s = await newArmyAndMarch({ generalId: gid, targetCityId: 'qingyuan' });
-    now = Date.parse(s.armies[0].arrivesAt!) + 1000;
-    s = stateOf(await get('/api/game/state'));
+    // 占领清远获得驻军（单将进攻：胜利后驻军归入城市）
+    const solo = await post('/api/armies/solo-attack', {
+      generalId: gid,
+      targetCityId: 'qingyuan',
+      infantry: 200,
+      cavalry: 0,
+    });
+    expect(solo.statusCode).toBe(200);
+    now = Date.parse(solo.json().state.armies[0].arrivesAt!) + 1000;
+    let s = stateOf(await get('/api/game/state'));
     // 无神行符时 transfer 到无路线己方城市 → 拒绝
     const noT = await post('/api/armies/transfer', {
       originCityId: 'qingyuan',
@@ -402,7 +416,15 @@ describe('API 集成（后端权威）', () => {
   it('驻守出征：驻守将领从驻守地调兵攻打周边', async () => {
     await post('/api/game/new');
     const gid = stateOf(await get('/api/game/state')).generals[0].id;
-    let s = await newArmyAndMarch({ generalId: gid, targetCityId: 'qingyuan' });
+    // 单将进攻（临时军团）：胜利后将领与驻军都在清远
+    let s = stateOf(
+      await post('/api/armies/solo-attack', {
+        generalId: gid,
+        targetCityId: 'qingyuan',
+        infantry: 200,
+        cavalry: 0,
+      })
+    );
     now = Date.parse(s.armies[0].arrivesAt!) + 1000;
     s = stateOf(await get('/api/game/state'));
     const qy = s.cities.find((c) => c.cityId === 'qingyuan')!;
@@ -473,6 +495,111 @@ describe('API 集成（后端权威）', () => {
     expect(reports).toHaveLength(1);
   });
 
+  it('永久军团：攻占城市后不解散，携幸存兵力驻守新城；可驻守城出征、驻守己方城市', async () => {
+    await post('/api/game/new');
+    const gid = stateOf(await get('/api/game/state')).generals[0].id;
+    const armyId = await newArmy({ generalId: gid, infantry: 200 });
+    const s0 = stateOf(await get('/api/game/state'));
+    expect(s0.armies.find((a) => a.id === armyId)!.permanent).toBe(true);
+    const m = await post('/api/armies/march', { armyId, targetCityId: 'qingyuan' });
+    now = Date.parse(stateOf(m).armies[0].arrivesAt!) + 1000;
+    const s = stateOf(await get('/api/game/state'));
+    const army = s.armies.find((a) => a.id === armyId)!;
+    expect(army).toBeTruthy();
+    expect(army.status).toBe('GARRISON');
+    expect(army.originCityId).toBe('qingyuan');
+    const report = s.battleReports[0];
+    expect(report.victory).toBe(true);
+    expect(army.infantry).toBe(report.attackerInfantry - report.attackerCasualtiesInfantry);
+    expect(army.memberGeneralIds).toContain(gid);
+    // 将领驻守新城并保留军团标识
+    const g = s.generals.find((x) => x.id === gid)!;
+    expect(g.status).toBe('GARRISON');
+    expect(g.cityId).toBe('qingyuan');
+    expect(g.armyId).toBe(armyId);
+    // 城市驻军由军团承担（驻军 0，兵力在军团）
+    const qy = s.cities.find((c) => c.cityId === 'qingyuan')!;
+    expect(qy.infantry).toBe(0);
+    expect(qy.generalIds).toContain(gid);
+    // 军团成员不能脱离军团单将/驻守出征/随队转移
+    const solo = await post('/api/armies/solo-attack', {
+      generalId: gid,
+      targetCityId: 'zhaoqing',
+      infantry: 10,
+      cavalry: 0,
+    });
+    expect(solo.statusCode).toBe(400);
+    expect(solo.json().code).toBe('GENERAL_IN_ARMY');
+    const transfer = await post('/api/armies/transfer', {
+      originCityId: 'qingyuan',
+      targetCityId: 'acity',
+      infantry: 1,
+      cavalry: 0,
+      generalId: gid,
+    });
+    expect(transfer.statusCode).toBe(400);
+    expect(transfer.json().code).toBe('GENERAL_IN_ARMY');
+    // 军团从驻守城出征回 A市（己方城市）→ 就地驻守不解散
+    const m2 = await post('/api/armies/march', { armyId, targetCityId: 'acity' });
+    expect(m2.statusCode).toBe(200);
+    const s2 = stateOf(m2);
+    expect(s2.cities.find((c) => c.cityId === 'qingyuan')!.generalIds).not.toContain(gid);
+    expect(s2.armies[0].status).toBe('MARCHING');
+    now = Date.parse(s2.armies[0].arrivesAt!) + 1000;
+    const s3 = stateOf(await get('/api/game/state'));
+    const a3 = s3.armies.find((a) => a.id === armyId)!;
+    expect(a3.status).toBe('GARRISON');
+    expect(a3.originCityId).toBe('acity');
+    expect(a3.infantry).toBe(s2.armies[0].infantry);
+    expect(s3.cities.find((c) => c.cityId === 'acity')!.generalIds).toContain(gid);
+    expect(s3.generals.find((x) => x.id === gid)!.status).toBe('GARRISON');
+  });
+
+  it('永久军团：战败幸存返回驻地不解散', async () => {
+    await post('/api/game/new');
+    const gid = stateOf(await get('/api/game/state')).generals[0].id;
+    // 败给清远（10 vs 100）
+    const armyId = await newArmy({ generalId: gid, infantry: 10 });
+    let s = stateOf(await post('/api/armies/march', { armyId, targetCityId: 'qingyuan' }));
+    now = Date.parse(s.armies[0].arrivesAt!) + 1000;
+    s = stateOf(await get('/api/game/state'));
+    const returning = s.armies.find((a) => a.id === armyId)!;
+    expect(s.battleReports[0].victory).toBe(false);
+    expect(returning.status).toBe('RETURNING');
+    const survivors = returning.infantry;
+    now = Date.parse(returning.arrivesAt!) + 1000;
+    s = stateOf(await get('/api/game/state'));
+    const back = s.armies.find((a) => a.id === armyId)!;
+    expect(back).toBeTruthy();
+    expect(back.status).toBe('IDLE');
+    expect(back.originCityId).toBe('acity');
+    expect(back.infantry).toBe(survivors);
+    const g = s.generals.find((x) => x.id === gid)!;
+    expect(g.armyId).toBe(armyId);
+    if (g.status === 'WOUNDED') {
+      now = Date.parse(g.injuredUntil!) + 1000;
+      s = stateOf(await get('/api/game/state'));
+      expect(s.generals.find((x) => x.id === gid)!.status).toBe('IDLE');
+    }
+  });
+
+  it('临时军团（单将进攻）攻占后解散，仅将领驻守', async () => {
+    await post('/api/game/new');
+    const gid = stateOf(await get('/api/game/state')).generals[0].id;
+    const solo = await post('/api/armies/solo-attack', {
+      generalId: gid,
+      targetCityId: 'qingyuan',
+      infantry: 200,
+      cavalry: 0,
+    });
+    now = Date.parse(solo.json().state.armies[0].arrivesAt!) + 1000;
+    const s = stateOf(await get('/api/game/state'));
+    expect(s.armies).toHaveLength(0);
+    expect(s.cities.find((c) => c.cityId === 'qingyuan')!.infantry).toBeGreaterThan(0);
+    expect(s.generals.find((x) => x.id === gid)!.status).toBe('GARRISON');
+    expect(s.generals.find((x) => x.id === gid)!.armyId).toBeUndefined();
+  });
+
   it('神行符：突破接壤攻打远省城市，按省距消耗', async () => {
     await post('/api/game/new');
     const gid = stateOf(await get('/api/game/state')).generals[0].id;
@@ -533,7 +660,15 @@ describe('API 集成（后端权威）', () => {
   it('调兵（transfer）：从驻军抽调至己方城市', async () => {
     await post('/api/game/new');
     const gid = stateOf(await get('/api/game/state')).generals[0].id;
-    let s = await newArmyAndMarch({ generalId: gid, targetCityId: 'qingyuan' });
+    // 单将进攻（临时军团）：胜利后驻军归入清远
+    let s = stateOf(
+      await post('/api/armies/solo-attack', {
+        generalId: gid,
+        targetCityId: 'qingyuan',
+        infantry: 200,
+        cavalry: 0,
+      })
+    );
     now = Date.parse(s.armies[0].arrivesAt!) + 1000;
     s = stateOf(await get('/api/game/state'));
     const qy = s.cities.find((c) => c.cityId === 'qingyuan')!;
@@ -556,7 +691,15 @@ describe('API 集成（后端权威）', () => {
   it('调兵（transfer）：驻守将领可随队转防，到达后驻守目标城', async () => {
     await post('/api/game/new');
     const gid = stateOf(await get('/api/game/state')).generals[0].id;
-    let s = await newArmyAndMarch({ generalId: gid, targetCityId: 'qingyuan' });
+    // 单将进攻（临时军团）：胜利后将领驻守清远
+    let s = stateOf(
+      await post('/api/armies/solo-attack', {
+        generalId: gid,
+        targetCityId: 'qingyuan',
+        infantry: 200,
+        cavalry: 0,
+      })
+    );
     now = Date.parse(s.armies[0].arrivesAt!) + 1000;
     s = stateOf(await get('/api/game/state'));
     expect(s.cities.find((c) => c.cityId === 'qingyuan')!.generalIds).toContain(gid);

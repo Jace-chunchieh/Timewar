@@ -450,6 +450,7 @@ export class GameService {
       cavalry: input.cavalry,
       status: 'IDLE' as const,
       originCityId: input.originCityId,
+      permanent: true,
     };
     state.armies.push(army);
     for (const g of generals) {
@@ -474,6 +475,17 @@ export class GameService {
     if (g.status !== 'IDLE') fail('GENERAL_NOT_IDLE', '只有空闲将领可以加入军团', { status: g.status });
     army.memberGeneralIds.push(generalId);
     g.armyId = army.id;
+    if (army.status === 'GARRISON') {
+      // 驻守军团：新成员就地驻守
+      g.status = 'GARRISON';
+      g.cityId = army.originCityId;
+      const city = state.cities.find((c) => c.cityId === army.originCityId);
+      if (city) {
+        if (!city.generalIds) city.generalIds = [];
+        if (!city.generalIds.includes(generalId)) city.generalIds.push(generalId);
+        city.generalId = city.generalIds[0];
+      }
+    }
     return this.commit(state);
   }
 
@@ -537,6 +549,9 @@ export class GameService {
   }): GameState {
     const state = this.loadAndAdvance();
     const g = this.general(state, input.generalId);
+    if (state.armies.some((a) => a.permanent && a.memberGeneralIds.includes(g.id))) {
+      fail('GENERAL_IN_ARMY', '该将领隶属军团，请使用军团出征');
+    }
     if (g.status !== 'IDLE') fail('GENERAL_NOT_IDLE', '只有空闲将领可以率兵进攻', { status: g.status });
     if (!state.enemyCities.some((e) => e.cityId === input.targetCityId)) {
       fail('TARGET_NOT_ENEMY', '目标必须是敌方城市');
@@ -589,7 +604,9 @@ export class GameService {
   ): void {
     const army = state.armies.find((a) => a.id === armyId);
     if (!army) fail('ARMY_NOT_FOUND', '军团不存在', { armyId });
-    if (army.status !== 'IDLE') fail('ARMY_NOT_IDLE', '只有空闲军团可以出征', { status: army.status });
+    if (army.status !== 'IDLE' && army.status !== 'GARRISON') {
+      fail('ARMY_NOT_IDLE', '只有空闲或驻守中的军团可以出征', { status: army.status });
+    }
     if (targetCityId === army.originCityId) fail('INVALID_TARGET', '目标城市不能是出发城市');
     const targetConfig = this.cityConfig(targetCityId);
 
@@ -633,7 +650,9 @@ export class GameService {
     const generalIds = army.memberGeneralIds ?? [];
     for (const id of generalIds) {
       const general = state.generals.find((g) => g.id === id);
-      if (general && general.status !== 'IDLE') {
+      if (!general) continue;
+      const atOrigin = general.status === 'GARRISON' && general.cityId === army.originCityId;
+      if (general.status !== 'IDLE' && !atOrigin) {
         fail('GENERAL_NOT_IDLE', '将领当前状态不可出征', { status: general.status });
       }
     }
@@ -656,6 +675,16 @@ export class GameService {
       noRouteKm
     );
     const now = this.nowMs();
+    // 驻守军团出征：成员从驻地城市驻守列表移除
+    if (army.status === 'GARRISON') {
+      const city = state.cities.find((c) => c.cityId === army.originCityId);
+      if (city) {
+        city.generalIds = (city.generalIds ?? (city.generalId ? [city.generalId] : [])).filter(
+          (id) => !generalIds.includes(id)
+        );
+        city.generalId = city.generalIds[0] ?? undefined;
+      }
+    }
     army.status = 'MARCHING';
     army.targetCityId = targetCityId;
     army.departedAt = nowIso(now);
@@ -687,6 +716,9 @@ export class GameService {
         status: g.status,
         cityId: g.cityId,
       });
+    }
+    if (state.armies.some((a) => a.permanent && a.memberGeneralIds.includes(g.id))) {
+      fail('GENERAL_IN_ARMY', '该将领隶属军团，请使用军团出征');
     }
     if (input.targetCityId === input.garrisonCityId) fail('INVALID_TARGET', '目标城市不能是驻守城市');
     if (input.infantry + input.cavalry <= 0) fail('EMPTY_ARMY', '兵力必须大于 0');
@@ -818,7 +850,9 @@ export class GameService {
     }
     const generals = generalIds.map((id) => this.general(state, id));
     for (const g of generals) {
-      if (g.status !== 'IDLE') fail('GENERAL_NOT_IDLE', '只有空闲将领可以出征', { status: g.status });
+      if (g.status !== 'IDLE' && g.status !== 'GARRISON') {
+        fail('GENERAL_NOT_IDLE', '只有空闲或驻守将领可以出征', { status: g.status });
+      }
     }
     const pool = troopPool(state);
     if (input.infantry + input.cavalry <= 0) fail('EMPTY_ARMY', '兵力必须大于 0');
@@ -935,18 +969,15 @@ export class GameService {
       fail('NO_ROUTE', '两城之间没有路线，可开启神行符增援', { targetCityId: input.targetCityId });
     }
     const origin = state.cities.find((c) => c.cityId === input.originCityId)!;
-    if (input.infantry > origin.infantry || input.cavalry > origin.cavalry) {
-      fail('INSUFFICIENT_GARRISON', '出发城市驻军不足', {
-        need: { infantry: input.infantry, cavalry: input.cavalry },
-        have: { infantry: origin.infantry, cavalry: origin.cavalry },
-      });
-    }
     let generalId: string | undefined;
     if (input.generalId) {
       const g = this.general(state, input.generalId);
       const garrisonAtOrigin = g.status === 'GARRISON' && g.cityId === input.originCityId;
       if (g.status !== 'IDLE' && !garrisonAtOrigin) {
         fail('GENERAL_NOT_IDLE', '只有空闲将领或出发城驻守将领可以率队', { status: g.status });
+      }
+      if (state.armies.some((a) => a.permanent && a.memberGeneralIds.includes(g.id))) {
+        fail('GENERAL_IN_ARMY', '该将领隶属军团，请在军团页随军团行动');
       }
       const cap = commandCap(this.ctx.balance, g.level, state);
       if (input.infantry + input.cavalry > cap) {
@@ -959,6 +990,12 @@ export class GameService {
         );
         origin.generalId = origin.generalIds[0] ?? undefined;
       }
+    }
+    if (input.infantry > origin.infantry || input.cavalry > origin.cavalry) {
+      fail('INSUFFICIENT_GARRISON', '出发城市驻军不足', {
+        need: { infantry: input.infantry, cavalry: input.cavalry },
+        have: { infantry: origin.infantry, cavalry: origin.cavalry },
+      });
     }
     origin.infantry -= input.infantry;
     origin.cavalry -= input.cavalry;

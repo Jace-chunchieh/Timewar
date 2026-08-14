@@ -4,7 +4,7 @@ import { seededGarrison } from './enemy.js';
 import { hashString, mulberry32, randomChineseName, randomInt } from './rng.js';
 import { syncTalents } from './generals.js';
 
-export const CURRENT_VERSION = 6;
+export const CURRENT_VERSION = 7;
 
 // 存档迁移：v1（粤桂琼）→ v2（全国）→ v3（守将）→ v5（多将领/天赋/首都/营地）
 export function migrateGameState(
@@ -86,6 +86,13 @@ export function migrateGameState(
   }
   for (const c of state.cities) {
     if (!c.generalIds && c.generalId) c.generalIds = [c.generalId];
+  }
+
+  // v7：标记永久军团（攻占/战败返回后不解散）；临时军团（增援/讨伐/单将部）不标记
+  for (const a of state.armies) {
+    if (a.permanent !== undefined) continue;
+    const tempName = a.name === '增援' || a.name === '营地讨伐' || (a.name ?? '').endsWith('部');
+    a.permanent = a.status === 'IDLE' || a.status === 'GARRISON' || !tempName;
   }
 
   return state;

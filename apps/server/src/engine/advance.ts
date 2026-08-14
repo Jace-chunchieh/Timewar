@@ -105,12 +105,15 @@ function processCounterAttacks(ctx: EngineContext, state: GameState, nowMs: numb
       if (!config) continue;
       const neighbors = config.neighbors.filter((n) => isPlayerCity(state, n) && n !== balance.startCityId);
       if (neighbors.length === 0) continue;
-      // 找出驻军战力低于敌方×阈值的弱驻军城
+      // 找出驻军战力低于敌方×阈值的弱驻军城（含驻守军团兵力）
       const weak = neighbors.filter((n) => {
         const pc = state.cities.find((c) => c.cityId === n);
         if (!pc) return false;
+        const armyTroops = state.armies
+          .filter((a) => (a.status === 'IDLE' || a.status === 'GARRISON') && a.originCityId === n)
+          .reduce((s, a) => s + a.infantry + a.cavalry, 0);
         const levelConfig = balance.cityLevels[String(cityLevelOf(cities, n))];
-        const defenderPower = (pc.infantry + pc.cavalry) * balance.infantryDefense * (1 + (levelConfig?.defenseBonus ?? 0));
+        const defenderPower = (pc.infantry + pc.cavalry + armyTroops) * balance.infantryDefense * (1 + (levelConfig?.defenseBonus ?? 0));
         const attackerPower = enemy.garrison * balance.infantryAttack;
         return attackerPower > defenderPower * (1 / balance.counterAttackThreshold);
       });
@@ -180,6 +183,7 @@ function resolveArrivals(ctx: EngineContext, state: GameState, nowMs: number): v
       arrivesAt: army.arrivesAt,
       strategy: army.strategy,
       name: army.name,
+      permanent: army.permanent,
     };
     if (army.targetCityId?.startsWith('camp-')) {
       // 蛮族营地战斗
@@ -195,16 +199,41 @@ function resolveArrivals(ctx: EngineContext, state: GameState, nowMs: number): v
         nowMs,
       });
     } else if (isPlayerCity(state, army.targetCityId!)) {
-      // 到达己方城市：自动转为驻军（军团全体成员驻守）
-      mergeIntoCity(
-        state,
-        army.targetCityId!,
-        army.infantry,
-        army.cavalry,
-        army.memberGeneralIds,
-        nowMs
-      );
-      state.armies = state.armies.filter((a) => a.id !== army.id);
+      if (army.permanent) {
+        // 永久军团：到达己方城市就地驻守（保留编制与兵力）
+        const targetId = army.targetCityId!;
+        const city = state.cities.find((c) => c.cityId === targetId);
+        army.status = 'GARRISON';
+        army.originCityId = targetId;
+        army.targetCityId = undefined;
+        army.departedAt = undefined;
+        army.arrivesAt = undefined;
+        if (city) {
+          const ids = new Set(city.generalIds ?? (city.generalId ? [city.generalId] : []));
+          for (const id of army.memberGeneralIds) {
+            const general = state.generals.find((g) => g.id === id);
+            if (general) {
+              general.status = 'GARRISON';
+              general.cityId = targetId;
+              general.armyId = army.id;
+              ids.add(id);
+            }
+          }
+          city.generalIds = [...ids];
+          city.generalId = city.generalIds[0];
+        }
+      } else {
+        // 临时军团：到达己方城市转为驻军（全体成员驻守）
+        mergeIntoCity(
+          state,
+          army.targetCityId!,
+          army.infantry,
+          army.cavalry,
+          army.memberGeneralIds,
+          nowMs
+        );
+        state.armies = state.armies.filter((a) => a.id !== army.id);
+      }
     }
   }
 
@@ -212,22 +241,41 @@ function resolveArrivals(ctx: EngineContext, state: GameState, nowMs: number): v
     (a) => a.status === 'RETURNING' && a.arrivesAt && Date.parse(a.arrivesAt) <= nowMs
   );
   for (const army of returning) {
-    // 失败军团返回：兵力并入出发城市驻军，将领恢复空闲（负伤者保持负伤）
-    const city = state.cities.find((c) => c.cityId === army.originCityId);
-    if (city) {
-      city.infantry += army.infantry;
-      city.cavalry += army.cavalry;
-    }
     const ids = army.memberGeneralIds ?? [];
-    for (const id of ids) {
-      const general = state.generals.find((g) => g.id === id);
-      if (general && general.status !== 'WOUNDED') {
-        general.status = 'IDLE';
-        general.cityId = army.originCityId;
-        general.armyId = undefined;
+    if (army.permanent) {
+      // 永久军团：幸存兵力保留在军团，返回驻地休整（不解散）
+      army.status = 'IDLE';
+      army.originCityId = army.targetCityId ?? army.originCityId;
+      army.targetCityId = undefined;
+      army.departedAt = undefined;
+      army.arrivesAt = undefined;
+      for (const id of ids) {
+        const general = state.generals.find((g) => g.id === id);
+        if (general) {
+          general.armyId = army.id;
+          if (general.status !== 'WOUNDED') {
+            general.status = 'IDLE';
+            general.cityId = undefined;
+          }
+        }
       }
+    } else {
+      // 失败军团返回：兵力并入出发城市驻军，将领恢复空闲（负伤者保持负伤）
+      const city = state.cities.find((c) => c.cityId === army.originCityId);
+      if (city) {
+        city.infantry += army.infantry;
+        city.cavalry += army.cavalry;
+      }
+      for (const id of ids) {
+        const general = state.generals.find((g) => g.id === id);
+        if (general && general.status !== 'WOUNDED') {
+          general.status = 'IDLE';
+          general.cityId = army.originCityId;
+          general.armyId = undefined;
+        }
+      }
+      state.armies = state.armies.filter((a) => a.id !== army.id);
     }
-    state.armies = state.armies.filter((a) => a.id !== army.id);
   }
 }
 
