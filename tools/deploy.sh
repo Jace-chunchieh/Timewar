@@ -82,7 +82,7 @@ npm install --no-audit --no-fund
 echo "[TimeWar] 构建前端..."
 npm run build
 
-echo "[TimeWar] 重启后端（kill 端口 $PORT 进程，宝塔守护自动拉起）..."
+echo "[TimeWar] 重启后端（kill 端口 $PORT 进程，宝塔守护自动拉起；未拉起则脚本兜底启动）..."
 if command -v lsof >/dev/null 2>&1; then
   kill "$(lsof -ti tcp:$PORT)" 2>/dev/null || true
 elif command -v fuser >/dev/null 2>&1; then
@@ -91,8 +91,8 @@ else
   pkill -f "tsx src/index.ts" 2>/dev/null || true
 fi
 
-echo "[TimeWar] 等待宝塔守护拉起进程..."
-for i in $(seq 1 15); do
+echo "[TimeWar] 等待服务恢复（最长 60 秒）..."
+for i in $(seq 1 30); do
   sleep 2
   if curl -sf "http://127.0.0.1:$PORT/api/game/state" >/dev/null 2>&1; then
     echo "[TimeWar] 服务已恢复: http://127.0.0.1:$PORT"
@@ -101,6 +101,22 @@ for i in $(seq 1 15); do
   fi
 done
 
-echo "[TimeWar] 警告: 30 秒内服务未恢复，请到宝塔面板「网站 → Node 项目」手动重启该项目。"
-echo "[TimeWar] 日志可在宝塔 Node 项目页面或 pm2 查看（如项目使用）"
+# 兜底：宝塔守护未拉起时，脚本自行启动（生产模式）
+echo "[TimeWar] 宝塔守护未拉起，脚本兜底启动后端..."
+cd "$DIR"
+nohup npm start >> "$DIR/app.log" 2>&1 &
+echo $! > "$DIR/app.pid"
+for i in $(seq 1 15); do
+  sleep 2
+  if curl -sf "http://127.0.0.1:$PORT/api/game/state" >/dev/null 2>&1; then
+    echo "[TimeWar] 兜底启动成功: http://127.0.0.1:$PORT（pid $(cat "$DIR/app.pid")，日志 app.log）"
+    echo "[TimeWar] 部署完成: $(date '+%Y-%m-%d %H:%M:%S')"
+    exit 0
+  fi
+done
+
+echo "[TimeWar] 警告: 服务未恢复。请检查："
+echo "  1. 宝塔面板「网站 → Node 项目」是否已配置该项目且勾选进程守护"
+echo "  2. 手动执行: cd $DIR && npm start"
+echo "  3. 查看日志: tail -30 $DIR/app.log"
 exit 1
