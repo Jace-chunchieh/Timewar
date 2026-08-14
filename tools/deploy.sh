@@ -11,6 +11,9 @@ DIR="${1:-/www/wwwroot/Timewar}"
 BRANCH="${2:-main}"
 PORT="${3:-5215}"
 
+# 宝塔 Webhook 环境可能没有 HOME，git 依赖 HOME 读取 ~/.gitconfig（safe.directory 等）
+export HOME="${HOME:-/root}"
+
 # 部署日志落盘（与 Webhook 输出并存，便于事后排查）
 LOG_FILE="$DIR/deploy.log"
 touch "$LOG_FILE" 2>/dev/null || true
@@ -100,10 +103,10 @@ for i in $(seq 1 5); do
   sleep 2
 done
 
-# 健康检查：优先 curl；无 curl 时用 bash /dev/tcp 检测端口是否开放（不依赖外部命令）
+# 健康检查：带授权码请求接口；无 curl 时用 bash /dev/tcp 检测端口是否开放（不依赖外部命令）
 port_alive() {
   if command -v curl >/dev/null 2>&1; then
-    code=$(curl -s -o /dev/null -w "%{http_code}" "http://127.0.0.1:$PORT/api/game/state" 2>/dev/null)
+    code=$(curl -s -o /dev/null -w "%{http_code}" -H "x-auth-code: ainiyiwannian" "http://127.0.0.1:$PORT/api/game/state" 2>/dev/null)
     [ "$code" = "200" ] && return 0
     [ -n "$code" ] && [ "$code" != "000" ] && echo "[TimeWar] 健康检查 HTTP $code（服务在跑但接口异常，将视为已恢复并提示）" >&2 && return 0
     return 1
