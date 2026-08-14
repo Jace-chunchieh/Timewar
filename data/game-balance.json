@@ -143,6 +143,7 @@
     "infantry": 200,
     "cavalry": 0,
     "initialGeneralLevel": 1,
-    "qingyuanFixedGarrison": 100
+    "qingyuanFixedGarrison": 100,
+    "bannerFlags": 2
   }
 }

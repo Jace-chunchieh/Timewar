@@ -4,6 +4,7 @@ import AuthPage from './components/AuthPage';
 import CityPanel from './components/CityPanel';
 import CraftPage from './components/CraftPage';
 import EventLog from './components/EventLog';
+import GarrisonPage from './components/GarrisonPage';
 import GeneralsPage from './components/GeneralsPage';
 import MapView from './components/MapView';
 import { DesktopNav, MobileNav } from './components/NavBar';
@@ -100,6 +101,8 @@ export default function App() {
         return <GeneralsPage />;
       case 'armies':
         return <ArmiesPage />;
+      case 'garrison':
+        return <GarrisonPage />;
       case 'reports':
         return <ReportsPage />;
       case 'settings':
@@ -170,6 +173,7 @@ export default function App() {
               {([
                 ['craft', '编军'],
                 ['tech', '科技研发'],
+                ['garrison', '驻守总览'],
                 ['reports', '战报'],
                 ['settings', '设置'],
               ] as const).map(([key, label]) => (

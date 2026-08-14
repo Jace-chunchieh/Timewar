@@ -177,6 +177,7 @@ export interface BalanceConfig {
     cavalry: number;
     initialGeneralLevel: number;
     qingyuanFixedGarrison: number;
+    bannerFlags: number;
   };
   provinceDistances: Record<string, number>;
 }

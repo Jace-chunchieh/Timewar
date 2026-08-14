@@ -299,10 +299,17 @@ describe('API 集成（后端权威）', () => {
     await post('/api/generals/stop-training', { generalId: gid });
   });
 
+  it('新档初始拥有 2 面军团旗', async () => {
+    await post('/api/game/new');
+    const s = stateOf(await get('/api/game/state'));
+    expect(s.tech.bannerFlags).toBe(2);
+  });
+
   it('组建军团需军团旗；军团长不可更换；成员上限 10 人', async () => {
     await post('/api/game/new');
     const gid = stateOf(await get('/api/game/state')).generals[0].id;
-    // 无旗帜 → 拒绝
+    // 清空旗帜 → 拒绝
+    await injectBannerFlags(0);
     const noFlag = await post('/api/armies/create', {
       originCityId: 'acity',
       name: '测试军团',

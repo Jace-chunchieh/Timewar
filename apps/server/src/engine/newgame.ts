@@ -78,7 +78,11 @@ export function createNewGame(
     armies: [],
     battleReports: [],
     barbarianCamps: [],
-    tech: defaultTechState(nowIso),
+    tech: (() => {
+      const t = defaultTechState(nowIso);
+      t.bannerFlags = balance.newGame.bannerFlags;
+      return t;
+    })(),
     capitalCityId: balance.capitalCityId,
     tutorialStep: 1,
     welcomeShown: false,

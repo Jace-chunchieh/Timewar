@@ -1,13 +1,26 @@
-﻿import { api } from '../api';
+﻿import { useState } from 'react';
+import { api } from '../api';
 import { fmt, fmtDur } from '../lib/format';
 import { cityName, commandCapClient, xpNeededClient } from '../lib/game';
 import { useGame } from '../store';
 import { useDisplay } from '../hooks';
 import { Btn, Card, ProgressBar } from './ui';
 
+type Filter = 'ALL' | 'IDLE' | 'GARRISON' | 'TRAINING' | 'MARCHING' | 'WOUNDED';
+
+const FILTERS: { key: Filter; label: string }[] = [
+  { key: 'ALL', label: '全部' },
+  { key: 'IDLE', label: '空闲' },
+  { key: 'GARRISON', label: '驻守中' },
+  { key: 'TRAINING', label: '训练中' },
+  { key: 'MARCHING', label: '行军中' },
+  { key: 'WOUNDED', label: '负伤中' },
+];
+
 export default function GeneralsPage() {
   const display = useDisplay();
   const mutate = useGame((s) => s.mutate);
+  const [filter, setFilter] = useState<Filter>('ALL');
   if (!display) return null;
   const now = Date.now();
 
@@ -43,6 +56,8 @@ export default function GeneralsPage() {
     majestic: '威仪',
   };
 
+  const filteredGenerals = filter === 'ALL' ? display.generals : display.generals.filter((g) => g.status === filter);
+
   return (
     <div className="h-full overflow-y-auto p-4">
       <div className="max-w-3xl mx-auto">
@@ -52,9 +67,26 @@ export default function GeneralsPage() {
           <Btn variant="orange" onClick={batchStop}>一键结束训练</Btn>
           <span className="text-[11px] text-muted self-center">对所有空闲/驻守将领批量操作</span>
         </div>
-        {display.generals.length === 0 && <div className="text-muted text-sm">暂无将领</div>}
+        <div className="flex flex-wrap gap-1.5 mb-3">
+          {FILTERS.map((f) => {
+            const count = f.key === 'ALL' ? display.generals.length : display.generals.filter((g) => g.status === f.key).length;
+            return (
+              <button
+                key={f.key}
+                type="button"
+                onClick={() => setFilter(f.key)}
+                className={`px-2.5 py-1 rounded text-xs border cursor-pointer transition-colors ${
+                  filter === f.key ? 'bg-gold/20 border-gold text-gold2' : 'bg-panel2 border-line text-muted hover:text-text'
+                }`}
+              >
+                {f.label}（{count}）
+              </button>
+            );
+          })}
+        </div>
+        {filteredGenerals.length === 0 && <div className="text-muted text-sm">暂无将领</div>}
         <div className="grid md:grid-cols-2 gap-3">
-          {display.generals.map((g) => {
+          {filteredGenerals.map((g) => {
             const cap = commandCapClient(g.level, display);
             const need = xpNeededClient(g.level);
             const xpProgress = Math.min(1, g.xp / need);

@@ -11,6 +11,7 @@ export type View =
   | 'tech'
   | 'generals'
   | 'armies'
+  | 'garrison'
   | 'reports'
   | 'settings';
 
