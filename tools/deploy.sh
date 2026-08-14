@@ -138,6 +138,7 @@ fi
 
 # 兜底：宝塔守护未拉起且端口残留占用，强杀后自行启动（生产模式）
 echo "[TimeWar] 宝塔守护未拉起，脚本强制清理并兜底启动后端..."
+echo "[TimeWar] 提示: 当前服务由脚本 nohup 托管（宝塔 Node 项目未接管，界面显示未启动属正常）。建议在宝塔「网站 → Node 项目」配置本项目并勾选进程守护。"
 pkill -9 -f "tsx src/index.ts" 2>/dev/null || true
 fuser -k -9 "${PORT}/tcp" 2>/dev/null || true
 sleep 3
