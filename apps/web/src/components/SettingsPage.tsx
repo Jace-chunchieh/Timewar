@@ -16,6 +16,9 @@ export default function SettingsPage() {
   const [newName, setNewName] = useState('');
   const [codes, setCodes] = useState<{ code: string; name: string; isAdmin: boolean }[] | null>(null);
   const [msg, setMsg] = useState<string | null>(null);
+  const [email, setEmail] = useState('');
+  const [giftCode, setGiftCode] = useState('');
+  const [giftMsg, setGiftMsg] = useState<string | null>(null);
 
   useEffect(() => {
     if (state?.completedAt) {
@@ -135,6 +138,66 @@ export default function SettingsPage() {
             </div>
           </Card>
         )}
+
+        <Card title="邮箱礼包 · 军团旗 ×2">
+          <div className="space-y-2.5">
+            <div className="text-xs text-muted">
+              绑定邮箱后，可向邮箱发送一枚含兑换码的「军团旗礼包」邮件，兑换后获得 <span className="text-gold">2 面军团旗</span>。
+            </div>
+            <div className="flex gap-2">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="接收礼包的邮箱"
+                className="flex-1 h-9 px-2 rounded bg-bg border border-line text-text text-sm outline-none focus:border-gold/70"
+              />
+              <Btn
+                variant="ghost"
+                onClick={async () => {
+                  if (!email.includes('@')) return;
+                  const ok = await mutate(() => api.bindEmail(email.trim()));
+                  if (ok) setGiftMsg('邮箱已绑定');
+                }}
+              >
+                绑定邮箱
+              </Btn>
+              <Btn
+                onClick={async () => {
+                  setGiftMsg(null);
+                  const ok = await mutate(() => api.sendBannerGift());
+                  if (ok) setGiftMsg('礼包码已发送至邮箱，请查收');
+                }}
+              >
+                发送礼包到邮箱
+              </Btn>
+            </div>
+            <div className="flex gap-2">
+              <input
+                value={giftCode}
+                onChange={(e) => setGiftCode(e.target.value)}
+                placeholder="输入邮件中的兑换码"
+                className="flex-1 h-9 px-2 rounded bg-bg border border-line text-text text-sm outline-none focus:border-gold/70 tabular"
+              />
+              <Btn
+                variant="orange"
+                onClick={async () => {
+                  setGiftMsg(null);
+                  const ok = await mutate(() => api.claimBannerGift(giftCode.trim()));
+                  if (ok) {
+                    setGiftMsg('已领取 2 面军团旗！');
+                    setGiftCode('');
+                  }
+                }}
+                disabled={!giftCode.trim()}
+              >
+                领取军团旗
+              </Btn>
+            </div>
+            {giftMsg && <div className="text-gold text-xs">{giftMsg}</div>}
+            <div className="text-[11px] text-muted">SMTP 未配置时发送会提示错误，请联系服务器管理员配置环境变量。</div>
+          </div>
+        </Card>
 
         <Card title="存档">
           <div className="text-xs text-muted mb-2">游戏自动保存至服务端 SQLite（当前授权码独立存档）。重置将清除本授权码的全部进度并开始新游戏。</div>

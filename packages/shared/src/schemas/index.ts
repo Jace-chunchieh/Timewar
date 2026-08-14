@@ -58,6 +58,22 @@ export const batchTrainingSchema = z.object({
   action: z.enum(['start', 'stop']),
 });
 
+export const bindEmailSchema = z.object({
+  email: z.string().email(),
+});
+
+export const claimGiftSchema = z.object({
+  code: z.string().min(6).max(32),
+});
+
+export const soloAttackSchema = z.object({
+  generalId: z.string().min(1),
+  targetCityId: z.string().min(1),
+  infantry: nonNegativeInt,
+  cavalry: nonNegativeInt,
+  useTalisman: z.boolean().optional(),
+});
+
 export const armyMarchSchema = z.object({
   armyId: z.string().min(1),
   targetCityId: z.string().min(1),

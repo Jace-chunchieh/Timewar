@@ -27,7 +27,12 @@ export function AttackForm({ targetCityId }: { targetCityId: string }) {
   const mutate = useGame((s) => s.mutate);
   const selectCity = useGame((s) => s.selectCity);
   const setView = useGame((s) => s.setView);
+  const [mode, setMode] = useState<'army' | 'solo'>('army');
   const [armyId, setArmyId] = useState('');
+  // 单将模式
+  const [soloGeneralId, setSoloGeneralId] = useState('');
+  const [soloInfantry, setSoloInfantry] = useState(200);
+  const [soloCavalry, setSoloCavalry] = useState(0);
   const [useTalisman, setUseTalisman] = useState(false);
   const [busy, setBusy] = useState(false);
 
@@ -35,44 +40,122 @@ export function AttackForm({ targetCityId }: { targetCityId: string }) {
   const armies = display.armies.filter((a) => a.status === 'IDLE' || a.status === 'GARRISON');
   const army = armies.find((a) => a.id === armyId);
   const banner = army ? display.generals.find((g) => g.id === army.bannerGeneralId) : undefined;
-  const attackable = canAttackClient(display, targetCityId);
+  const idleGenerals = display.generals.filter((g) => g.status === 'IDLE');
+  const soloGeneral = display.generals.find((g) => g.id === soloGeneralId);
+  const pool = troopPoolClient(display);
   const speedMul = 1 + (display.tech?.levels?.logistics ?? 0) * balance.tech.logistics.effectPerLevel;
-  const routeTime = army
+  const soloOrigin = display.capitalCityId || display.cities[0]?.cityId || 'acity';
+  const routeTime = mode === 'army' && army
     ? (marchTimeClient(army.originCityId, targetCityId, army.infantry, army.cavalry, speedMul) ||
         marchTimeFallbackClient(army.originCityId, targetCityId, army.infantry, army.cavalry, speedMul))
-    : 0;
-  const talismanNeed = army ? talismanCostClient(cityProvinceId(army.originCityId), cityProvinceId(targetCityId)) : 0;
+    : mode === 'solo'
+      ? (marchTimeClient(soloOrigin, targetCityId, soloInfantry, soloCavalry, speedMul) ||
+          marchTimeFallbackClient(soloOrigin, targetCityId, soloInfantry, soloCavalry, speedMul))
+      : 0;
+  const talismanNeed = mode === 'army' && army
+    ? talismanCostClient(cityProvinceId(army.originCityId), cityProvinceId(targetCityId))
+    : mode === 'solo'
+      ? talismanCostClient(cityProvinceId(soloOrigin), cityProvinceId(targetCityId))
+      : 0;
   const talismanShort = useTalisman && (display.tech.talismans ?? 0) < talismanNeed;
-  const expected = army && banner
+  const soloCap = soloGeneral ? commandCapClient(soloGeneral.level, display) : 0;
+  const soloMaxInf = Math.min(pool.infantry, Math.max(0, soloCap - soloCavalry));
+  const soloMaxCav = Math.min(pool.cavalry, Math.max(0, soloCap - soloInfantry));
+  const expected = mode === 'army' && army && banner
     ? expectedBattle(display, banner.level, army.infantry, army.cavalry, targetCityId)
-    : null;
-  const canSubmit = !!army && (!useTalisman || !talismanShort);
+    : mode === 'solo' && soloGeneral && soloInfantry + soloCavalry > 0
+      ? expectedBattle(display, soloGeneral.level, soloInfantry, soloCavalry, targetCityId)
+      : null;
+  const canSubmit = busy
+    ? false
+    : mode === 'army'
+      ? !!army && (!useTalisman || !talismanShort)
+      : !!soloGeneral && soloInfantry + soloCavalry > 0 && soloInfantry <= soloMaxInf && soloCavalry <= soloMaxCav && (!useTalisman || !talismanShort);
 
   const submit = async () => {
-    if (!army) return;
     setBusy(true);
-    await mutate(() => api.armyMarch(army.id, targetCityId, useTalisman));
+    if (mode === 'army') {
+      if (!army) return;
+      await mutate(() => api.armyMarch(army.id, targetCityId, useTalisman));
+    } else {
+      if (!soloGeneral) return;
+      await mutate(() =>
+        api.soloAttack({
+          generalId: soloGeneral.id,
+          targetCityId,
+          infantry: soloInfantry,
+          cavalry: soloCavalry,
+          useTalisman,
+        })
+      );
+    }
     setBusy(false);
   };
+
+  const attackable = canAttackClient(display, targetCityId);
 
   return (
     <Card title={`出征 · 目标 ${cityName(targetCityId)}`}>
       <div className="space-y-2.5">
-        <Field label="选择军团" hint={armies.length === 0 ? '暂无可用军团，请先到军团页组建' : undefined}>
-          <select className="w-full h-8 rounded bg-bg border border-line text-text text-sm" value={armyId} onChange={(e) => setArmyId(e.target.value)}>
-            <option value="">选择军团</option>
-            {armies.map((a) => (
-              <option key={a.id} value={a.id}>
-                🚩 {a.name}（步 {fmt(a.infantry)} · 骑 {fmt(a.cavalry)} · 驻地 {cityName(a.originCityId)}）
-              </option>
-            ))}
-          </select>
-        </Field>
-        {army && (
-          <div className="text-xs text-muted">
-            军团成员 {army.memberGeneralIds.length} 人 · 军团长 {banner?.name}（Lv.{banner?.level}，统帅 ×1.5）
-          </div>
+        <div className="flex gap-1.5">
+          <button
+            type="button"
+            onClick={() => setMode('army')}
+            className={`px-3 py-1 rounded text-xs border cursor-pointer ${mode === 'army' ? 'bg-gold/20 border-gold text-gold2' : 'bg-panel2 border-line text-muted'}`}
+          >
+            军团进攻
+          </button>
+          <button
+            type="button"
+            onClick={() => setMode('solo')}
+            className={`px-3 py-1 rounded text-xs border cursor-pointer ${mode === 'solo' ? 'bg-gold/20 border-gold text-gold2' : 'bg-panel2 border-line text-muted'}`}
+          >
+            单将进攻（无需军团旗）
+          </button>
+        </div>
+
+        {mode === 'army' ? (
+          <>
+            <Field label="选择军团" hint={armies.length === 0 ? '暂无可用军团' : undefined}>
+              <select className="w-full h-8 rounded bg-bg border border-line text-text text-sm" value={armyId} onChange={(e) => setArmyId(e.target.value)}>
+                <option value="">选择军团</option>
+                {armies.map((a) => (
+                  <option key={a.id} value={a.id}>
+                    🚩 {a.name}（步 {fmt(a.infantry)} · 骑 {fmt(a.cavalry)} · 驻地 {cityName(a.originCityId)}）
+                  </option>
+                ))}
+              </select>
+            </Field>
+            {army && (
+              <div className="text-xs text-muted">
+                军团成员 {army.memberGeneralIds.length} 人 · 军团长 {banner?.name}（Lv.{banner?.level}，统帅 ×1.5）
+              </div>
+            )}
+          </>
+        ) : (
+          <>
+            <Field label="选择将领" hint={idleGenerals.length === 0 ? '没有空闲将领' : undefined}>
+              <select className="w-full h-8 rounded bg-bg border border-line text-text text-sm" value={soloGeneralId} onChange={(e) => setSoloGeneralId(e.target.value)}>
+                <option value="">选择空闲将领</option>
+                {idleGenerals.map((g) => (
+                  <option key={g.id} value={g.id}>{g.name}（Lv.{g.level} 统帅{fmt(commandCapClient(g.level, display))}）</option>
+                ))}
+              </select>
+            </Field>
+            <Field label="步兵" hint={`池 ${fmt(pool.infantry)}`}>
+              <NumInput value={soloInfantry} onChange={setSoloInfantry} max={soloMaxInf} step={10} ariaLabel="单将步兵" />
+            </Field>
+            <Field label="骑兵" hint={`池 ${fmt(pool.cavalry)}`}>
+              <NumInput value={soloCavalry} onChange={setSoloCavalry} max={soloMaxCav} step={10} ariaLabel="单将骑兵" />
+            </Field>
+            <div className="flex justify-between text-xs">
+              <span className="text-muted">统帅占用</span>
+              <span className={`tabular ${soloInfantry + soloCavalry > soloCap ? 'text-danger' : 'text-text'}`}>{soloInfantry + soloCavalry} / {soloCap}</span>
+            </div>
+            <div className="text-[11px] text-muted">从首都（{cityName(soloOrigin)}）出兵 · 无军团长加成</div>
+          </>
         )}
+
         <div className="flex justify-between text-xs">
           <span className="text-muted">行军时间</span>
           <span className="text-text tabular">{routeTime > 0 ? fmtDur(routeTime * 1000) : '—'}</span>
@@ -95,6 +178,11 @@ export function AttackForm({ targetCityId }: { targetCityId: string }) {
           </div>
         )}
         {talismanShort && <div className="text-danger text-xs">神行符不足：需要 {talismanNeed} 张</div>}
+        {!canSubmit && !busy && mode === 'solo' && (
+          <div className="text-xs text-muted">
+            {!soloGeneral ? '请选择空闲将领' : soloInfantry + soloCavalry <= 0 ? '请填写兵力' : soloInfantry + soloCavalry > soloCap ? '超出将领统帅上限' : talismanShort ? '神行符不足' : ''}
+          </div>
+        )}
         <Btn variant="orange" disabled={!canSubmit} onClick={submit} className="w-full py-2">
           {busy ? '出征中…' : '确认出征'}
         </Btn>

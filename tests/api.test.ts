@@ -553,6 +553,54 @@ describe('API 集成（后端权威）', () => {
     expect(s3.cities.find((c) => c.cityId === 'acity')!.infantry).toBeGreaterThan(0);
   });
 
+  it('单将进攻：无需军团旗，从首都出兵，胜利后驻守', async () => {
+    await post('/api/game/new');
+    const gid = stateOf(await get('/api/game/state')).generals[0].id;
+    // 单将进攻清远
+    const attack = await post('/api/armies/solo-attack', {
+      generalId: gid,
+      targetCityId: 'qingyuan',
+      infantry: 200,
+      cavalry: 0,
+    });
+    expect(attack.statusCode).toBe(200);
+    const s = stateOf(attack);
+    expect(s.armies[0].status).toBe('MARCHING');
+    expect(s.armies[0].bannerGeneralId).toBe(gid);
+    now = Date.parse(s.armies[0].arrivesAt!) + 1000;
+    const s2 = stateOf(await get('/api/game/state'));
+    expect(s2.cities).toHaveLength(2);
+    expect(s2.battleReports[0].victory).toBe(true);
+    // 将领驻守新城市
+    expect(s2.generals[0].status).toBe('GARRISON');
+    expect(s2.generals[0].cityId).toBe('qingyuan');
+    // 非空闲将领不可单将进攻
+    await post('/api/generals/start-training', { generalId: gid });
+    const bad = await post('/api/armies/solo-attack', {
+      generalId: gid,
+      targetCityId: 'zhaoqing',
+      infantry: 1,
+      cavalry: 0,
+    });
+    expect(bad.statusCode).toBe(400);
+    expect(bad.json().code).toBe('GENERAL_NOT_IDLE');
+  });
+
+  it('邮箱礼包：绑定邮箱、生成礼包码、兑换 2 面军团旗（未配置SMTP时提示）', async () => {
+    await post('/api/game/new');
+    // 绑定邮箱
+    const bind = await post('/api/auth/bind-email', { email: 'test@example.com' });
+    expect(bind.statusCode).toBe(200);
+    // 未配置 SMTP → 发送失败提示
+    const send = await post('/api/auth/send-banner-gift');
+    expect(send.statusCode).toBe(400);
+    expect(send.json().code).toBe('SMTP_NOT_CONFIGURED');
+    // 兑换码无效
+    const bad = await post('/api/auth/claim-banner-gift', { code: 'gift-not-exist' });
+    expect(bad.statusCode).toBe(400);
+    expect(bad.json().code).toBe('GIFT_CODE_INVALID');
+  });
+
   it('数据校验错误返回统一格式', async () => {
     const res = await post('/api/training/start', { count: -5 });
     expect(res.statusCode).toBe(400);

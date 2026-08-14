@@ -10,12 +10,15 @@ import {
   armyTransferSchema,
   barbarianAttackSchema,
   batchTrainingSchema,
+  bindEmailSchema,
+  claimGiftSchema,
   craftSchema,
   garrisonAttackSchema,
   generalIdSchema,
   loginSchema,
   moveCapitalSchema,
   researchSchema,
+  soloAttackSchema,
   speedupUseSchema,
   techUpgradeSchema,
   trainingCancelSchema,
@@ -85,6 +88,33 @@ export function buildApi(service: GameService): FastifyPluginAsync {
     app.post('/api/auth/add-code', async (req, _reply) => {
       const body = addCodeSchema.parse(req.body);
       return { auth: service.authAddCode(body.code, body.name) };
+    });
+
+    app.post('/api/auth/bind-email', async (req, _reply) => {
+      const body = bindEmailSchema.parse(req.body);
+      return { auth: service.authBindEmail(body.email) };
+    });
+
+    app.post('/api/auth/send-banner-gift', async (_req, _reply) => {
+      return { sent: await service.sendBannerGift() };
+    });
+
+    app.post('/api/auth/claim-banner-gift', async (req, _reply) => {
+      const body = claimGiftSchema.parse(req.body);
+      return { state: service.claimBannerGift(body.code) };
+    });
+
+    app.post('/api/armies/solo-attack', async (req, _reply) => {
+      const body = soloAttackSchema.parse(req.body);
+      return {
+        state: service.soloAttack({
+          generalId: body.generalId,
+          targetCityId: body.targetCityId,
+          infantry: body.infantry,
+          cavalry: body.cavalry,
+          useTalisman: body.useTalisman,
+        }),
+      };
     });
 
     app.get('/api/auth/list', handle(() => ({ codes: service.authList() })));

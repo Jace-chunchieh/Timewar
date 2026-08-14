@@ -30,6 +30,7 @@ import {
 import type { GameRepository } from '../repositories/gameRepository.js';
 import { fail } from './gameError.js';
 import { ADMIN_CODE } from '../db/database.js';
+import { sendMail } from './mailer.js';
 
 const nowIso = (t?: number) => new Date(t ?? Date.now()).toISOString();
 
@@ -120,6 +121,45 @@ export class GameService {
 
   authList(): { code: string; name: string; isAdmin: boolean }[] {
     return this.repo.authCodes().map((c) => ({ code: c.code, name: c.name, isAdmin: c.isAdmin }));
+  }
+
+  authBindEmail(email: string): { code: string; email: string } {
+    this.repo.updateEmail(this.code, email);
+    return { code: this.code, email };
+  }
+
+  authEmail(): string | undefined {
+    return this.repo.emailOf(this.code);
+  }
+
+  // 生成 2 枚军团旗礼包码并发往当前账号绑定邮箱
+  async sendBannerGift(): Promise<{ giftCode: string }> {
+    const email = this.repo.emailOf(this.code);
+    if (!email) fail('EMAIL_NOT_BOUND', '请先绑定邮箱');
+    const giftCode = this.repo.createBannerGift(this.code);
+    const ok = await sendMail(
+      email,
+      'TimeWar 军团旗礼包',
+      `<p>尊敬的指挥官：</p>
+       <p>您的军团旗礼包已生成，兑换码：<b>${giftCode}</b></p>
+       <p>在游戏「设置 → 邮箱礼包」输入兑换码，即可领取 <b>2 面军团旗</b>（组建永久军团所需）。</p>
+       <p>—— TimeWar 现实时间人口战争</p>`
+    );
+    if (!ok) {
+      fail('SMTP_NOT_CONFIGURED', '服务器未配置 SMTP，请联系管理员设置 SMTP_HOST/SMTP_USER/SMTP_PASS 环境变量');
+    }
+    return { giftCode };
+  }
+
+  // 凭兑换码领取 2 面军团旗（仅限发送给当前账号的礼包）
+  claimBannerGift(code: string): GameState {
+    const state = this.loadAndAdvance();
+    const result = this.repo.claimBannerGift(code);
+    if (!result) fail('GIFT_CODE_INVALID', '兑换码无效');
+    if (result.claimed) fail('GIFT_CODE_USED', '该兑换码已被使用');
+    if (result.forCode !== this.code) fail('GIFT_CODE_OWNER', '该兑换码不属于当前账号');
+    state.tech.bannerFlags += 2;
+    return this.commit(state);
   }
 
   // ---------- 基础 ----------
@@ -437,6 +477,49 @@ export class GameService {
     }
     army.infantry += infantry;
     army.cavalry += cavalry;
+    return this.commit(state);
+  }
+
+  // 单将进攻：无需军团/军团旗，空闲将领直接从首都出兵攻城
+  soloAttack(input: {
+    generalId: string;
+    targetCityId: string;
+    infantry: number;
+    cavalry: number;
+    useTalisman?: boolean;
+  }): GameState {
+    const state = this.loadAndAdvance();
+    const g = this.general(state, input.generalId);
+    if (g.status !== 'IDLE') fail('GENERAL_NOT_IDLE', '只有空闲将领可以率兵进攻', { status: g.status });
+    if (!state.enemyCities.some((e) => e.cityId === input.targetCityId)) {
+      fail('TARGET_NOT_ENEMY', '目标必须是敌方城市');
+    }
+    if (input.infantry + input.cavalry <= 0) fail('EMPTY_ARMY', '兵力必须大于 0');
+    const pool = troopPool(state);
+    if (input.infantry > pool.infantry || input.cavalry > pool.cavalry) {
+      fail('INSUFFICIENT_TROOPS', '可用士兵不足', { need: { infantry: input.infantry, cavalry: input.cavalry }, pool });
+    }
+    // 单将按无军团长加成的统帅约束
+    const cap = commandCap(this.ctx.balance, g.level, state, g);
+    if (input.infantry + input.cavalry > cap) {
+      fail('COMMAND_LIMIT_EXCEEDED', `当前兵力 ${input.infantry + input.cavalry} 人，将领统帅 ${cap} 人，超出 ${input.infantry + input.cavalry - cap} 人`);
+    }
+    // 从首都（或首个己方城市）出发
+    const from = state.cities.find((c) => c.cityId === state.capitalCityId) ?? state.cities[0];
+    const army = {
+      id: `a-${Date.now()}-${Math.floor(Math.random() * 1e6)}`,
+      name: `${g.name}部`,
+      bannerGeneralId: g.id,
+      memberGeneralIds: [g.id],
+      strategy: 'NORMAL' as const,
+      infantry: input.infantry,
+      cavalry: input.cavalry,
+      status: 'IDLE' as const,
+      originCityId: from.cityId,
+    };
+    state.armies.push(army);
+    g.armyId = army.id;
+    this.doMarch(state, army.id, input.targetCityId, input.useTalisman ?? false);
     return this.commit(state);
   }
 

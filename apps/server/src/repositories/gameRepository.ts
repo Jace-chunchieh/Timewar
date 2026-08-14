@@ -61,4 +61,35 @@ export class GameRepository {
     if (!info) throw new Error('AUTH_CODE_INSERT_FAILED');
     return info;
   }
+
+  updateEmail(code: string, email: string): void {
+    this.db.prepare('UPDATE auth_codes SET email = ? WHERE code = ?').run(email, code);
+  }
+
+  emailOf(code: string): string | undefined {
+    const row = this.db.prepare('SELECT email FROM auth_codes WHERE code = ?').get(code) as
+      | { email: string | null }
+      | undefined;
+    return row?.email ?? undefined;
+  }
+
+  createBannerGift(forCode: string): string {
+    const id = `gift-${Date.now()}-${Math.floor(Math.random() * 1e6)}`;
+    this.db
+      .prepare('INSERT INTO banner_gifts (id, for_code, claimed, created_at) VALUES (?, ?, 0, ?)')
+      .run(id, forCode, Date.now());
+    return id;
+  }
+
+  claimBannerGift(code: string): { forCode: string; claimed: boolean } | undefined {
+    const row = this.db.prepare('SELECT for_code, claimed FROM banner_gifts WHERE id = ?').get(code) as
+      | { for_code: string; claimed: number }
+      | undefined;
+    if (!row) return undefined;
+    if (row.claimed === 1) return { forCode: row.for_code, claimed: true };
+    this.db
+      .prepare('UPDATE banner_gifts SET claimed = 1, claimed_at = ? WHERE id = ?')
+      .run(Date.now(), code);
+    return { forCode: row.for_code, claimed: false };
+  }
 }
